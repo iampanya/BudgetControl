@@ -26,6 +26,7 @@ bin/
 obj/
 TestResults/
 Data/
+BudgetControl/Web.config
 ###################
 # Web publish log #
 ###################
