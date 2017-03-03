@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+<div ng-controller="AuthCtrl as vm">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" @*ui-sref="budget"*@ class="navbar-brand">ระบบควบคุมงบประมาณ</a>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li ui-sref-active="active"><a ui-sref="budget">1. งบที่ได้รับ</a></li>
+                    <li ui-sref-active="active"><a ui-sref="payment">2. รายการเบิกจ่าย</a></li>
+                    <li ui-sref-active="active"><a ui-sref="report">3. รายงาน</a></li>
+                </ul>
+
+                <!--- Session-->
+                <div ng-if="!vm.isAuthen">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li ui-sref-active="active"><a ui-sref="login">เข้าสู่ระบบ</a></li>
+                    </ul>
+                </div>
+
+                <div ng-if="vm.isAuthen">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                {{ vm.userinfo.Employee.FirstName + ' ' + vm.userinfo.Employee.LastName }}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">แก้ไขข้อมูลส่วนตัว</a></li>
+                                <li><a ui-sref="changepassword">เปลี่ยนรหัสผ่าน</a></li>
+                            </ul>
+                        </li>
+                        <li><a ng-click="vm.logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container-fluid">
+    <div class="container body-content">
+        <div>
+            <ol class="breadcrumb">
+                <li ng-repeat="item in breadcrumb" class="active">
+                    <a ng-if="!$last" ui-sref="{{ item.state }}"> {{ item.text }} </a>
+                    <span ng-if="$last">{{ item.text }}</span>
+                </li>
+            </ol>
+        </div>
+
+        <div class="alert text-center" ng-class="msg.type" ng-show="msg.position === 'top'">
+            <button type="button" class="close" ng-click="clearMsg()">&times;</button>
+            <h4>{{ msg.header }}</h4>
+            <h4>{{ msg.text }} </h4>
+        </div>
+
+        <div ui-view>
+
+        </div>
+
+        <div class="alert text-center" ng-class="msg.type" ng-show="msg.position === 'bottom'">
+            <button type="button" class="close" ng-click="clearMsg()">&times;</button>
+            <h4><strong>{{ msg.header }}</strong></h4>
+            <h4>{{ msg.text }} </h4>
+        </div>
+
+    </div>
+
+    <div class="navbar-fixed-bottom" style="background-color: #f7f7f7;">
+        <hr class="footer" />
+        <div class="container">
+            <footer>
+                <p>&copy; @DateTime.Now.Year - ระบบควบคุมงบประมาณ</p>
+            </footer>
+        </div>
+    </div>
+</div>

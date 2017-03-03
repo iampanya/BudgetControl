@@ -1,0 +1,74 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3">
+            <div class="card">
+                <form class="form-horizontal" name="frmUpload" ng-submit="vm.readfile()" method="post" novalidate>
+                    <fieldset>
+                        <legend align="center">นำข้อมูลเข้าจากระบบ SAP</legend>
+                        <div class="form-group">
+                            <label for="txtYear" class="col-md-5 control-label">ปีงบประมาณ :</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="txtYear" ng-model="vm.form.year" placeholder="พ.ศ." ng-required="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fileBudget" class="col-md-5 control-label">Text File :</label>
+                            <div class="col-md-4">
+                                <input type="file" id="fileBudget" style="padding-top:9px" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col-md-4 col-lg-offset-1">
+                                <a ui-sref="budget" class="btn btn-default btn-block">ยกเลิก</a>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="submit" value="{{ vm.btnRead.name }}" class="btn btn-primary btn-block" ng-disabled="frmUpload.$invalid || vm.btnRead.disabled" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-2 col-md-offset-10">
+            <button type="button" class="btn btn-primary btn-block" ng-click="vm.upload()" ng-disabled="vm.btnSave.disabled">
+                {{ vm.btnSave.name }}
+            </button>
+        </div>
+    </div>
+
+    <br />
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="text-center">ลำดับ</th>
+                <th class="text-center">ปีงบประมาณ</th>
+                <th class="text-center">รหัสบัญชี</th>
+                <th class="text-center">ชื่อบัญชี</th>
+                <th class="text-center">จำนวน</th>
+                <th class="text-center">ศูนย์ต้นทุน</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in vm.filedata" >
+                <td class="text-center">{{ $index + 1 }}</td>
+                <td class="text-center">{{ row.Year }}</td>
+                <td class="text-center">{{ row.AccountID }}</td>
+                <td class="text-center">{{ row.AccountName }}</td>
+                <td class="text-center">{{ row.Amount }}</td>
+                <td class="text-center">{{ row.CostCenterID}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

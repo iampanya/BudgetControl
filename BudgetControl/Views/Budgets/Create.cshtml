@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+}
+<div class="row">
+    <div>
+        <h3>งบประมาณ</h3>
+        <hr />
+        <div class="form-horizontal col-md-10 col-md-offset-1">
+            <div class="row">
+                <form ng-submit="submit()">
+                    <div class="form-group">
+                        <label for="txtYear" class="col-md-5 control-label">ปีงบประมาณ</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control input-sm" id="txtYear" placeholder="ปีงบประมาณ" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtAccount" class="col-md-5 control-label">บัญชี</label>
+                        <div class="col-md-2">
+                            <input placeholder="รหัสบัญชี" list="accounts" id="txtAccount" type="text" class="form-control input-sm" ng-model="Account.AccountID" ng-change="accountChange()">
+                            <datalist id="accounts">
+                                <option ng-repeat="account in accounts" value="{{ account.AccountID }}">
+                            </datalist>
+                        </div>
+                        <div class="col-md-3">
+                            <input placeholder="ชื่อบัญชี" class="form-control input-sm" type="text" ng-model="Account.AccountName" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtAmount" class="col-md-5 control-label">จำนวนเงิน</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control input-sm" id="txtAmount" placeholder="0.00" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2 col-md-offset-3">
+                            <input type="button" value="ยกเลิก" class="form-control btn btn-default btn-block" />
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" value="ตกลง" class="form-control btn btn-primary btn-block" />
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+

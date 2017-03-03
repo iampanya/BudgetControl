@@ -1,0 +1,132 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <div class="alert alert-dismissible alert-warning" ng-if="hasError">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h5>พบข้อผิดพลาด!!!</h5>
+        <p>{{ errorMsg }}</p>
+    </div>
+    <form ng-submit="submit()">
+        <!-- Payment Details -->
+        <div class="well">
+            <fieldset>
+                <legend>เบิกจ่ายเบี้ยเลี้ยง</legend>
+
+                <div class="row">
+                    <div class="form-horizontal col-md-8">
+                        <div class="form-group">
+                            <label for="txtYear" class="col-md-3 control-label">ปีงบประมาณ</label>
+                            @*<div class="col-md-6">
+                                <select class="form-control input-sm" ng-model="payment.Year" ng-options="budget.BudgetYear as budget.Year for budget in budgetlist | unique: 'BudgetYear'"></select>
+                            </div>*@
+                            <div class="col-md-6">
+                                <input ng-model="payment.Year" type="text" class="form-control input-sm" id="txtYear" placeholder="ปีงบประมาณ" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">
+                                ผู้เบิก
+                            </label>
+                            <div class="col-md-6">
+                                <select class="form-control input-sm" ng-model="payment.RequestBy" ng-options="emp.EmployeeID as emp.Description for emp in emplist">
+                                    <option value=""> === Please select === </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtDescription" class="col-md-3 control-label">รายละเอียด</label>
+                            <div class="col-md-8">
+                                <textarea ng-model="payment.Description" class="form-control input-sm" rows="5" id="txtDescription" placeholder="รายละเอียด"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">ผู้ควบคุมงบประมาณ</h3>
+                            </div>
+                            <div class="panel-body">
+                                <p>รหัสพนักงาน : {{ controller.EmployeeID }}</p>
+                                <p>ชื่อ - นามสกุล : {{ controller.Description }}</p>
+                                <p>สังกัด : {{ controller.CostCenterName }}</p>
+                                <p>ตำแหน่ง : {{ controller.JobTitle }}</p>
+                                @*<p>วันที่ : {{ }} </p>*@
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </fieldset>
+
+        </div>
+        <br />
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+
+                <!-- เลือกงบประมาณ   -->
+                <div class="row">
+                    <div class="form-group col-md-8 pull-right">
+                        <div class="input-group">
+                            <span class="input-group-addon">ชื่อบัญชี</span>
+                            <select class="form-control" ng-model="selectbudget" ng-options="budget.BudgetID as budget.Description for budget in budgetlist | filter:{ CostCenterID: payment.CostCenterID }">
+                                <option value=""> === Please select === </option>
+                            </select>
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" ng-click="addNewStatement()">ตกลง</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- ตารางรายการเบิก -->
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-md-1"> ลำดับ </th>
+                        <th> งบประมาณ </th>
+                        <th class="col-md-1"> ประจำปี </th>
+                        <th class="col-md-2"> วงเงินที่ได้รับ</th>
+                        <th class="col-md-2"> เบิก</th>
+                        <th class="col-md-1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="statement in payment.Statements | filter : { Status: 'Active' }">
+                        <th> {{ $index + 1 }}</th>
+                        <td> {{ statement.AccountName }}</td>
+                        <td> {{ statement.BudgetYear }} </td>
+                        <td> {{ statement.BudgetAmount }} </td>
+                        <td> <input type="number" ng-model="statement.WithdrawAmount" class="form-control input-sm" ng-change="updateTotalAmount()" /> </td>
+                        <td>
+                            <button type="button" ng-click="removeStatement( statement.BudgetID )" class="btn btn-danger btn-block btn-sm">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr ng-show="payment.Statements.length > 0">
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>รวมเบิก</th>
+                        <th>{{ payment.TotalAmount }}</th>
+                        <th></th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-2 pull-right">
+                <input type="submit" class="btn btn-primary btn-block btn-lg" value="ตกลง" />
+            </div>
+        </div>
+    </form>
+</div>
