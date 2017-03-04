@@ -73,6 +73,15 @@ namespace BudgetControl.Models
 
         #endregion
 
+        #region Validate
+
+        public void Validate()
+        {
+
+        }
+
+        #endregion
+
         #region Methods
         public void SetAmount(List<Budget> budgets)
         {

@@ -158,6 +158,10 @@
     <Compile Include="Migrations\201610310919051_InitialCreate.Designer.cs">
       <DependentUpon>201610310919051_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703041905455_Add field status to Transaction.cs" />
+    <Compile Include="Migrations\201703041905455_Add field status to Transaction.Designer.cs">
+      <DependentUpon>201703041905455_Add field status to Transaction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Base\IRecordTimeStamp.cs" />
@@ -295,6 +299,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201610310919051_InitialCreate.resx">
       <DependentUpon>201610310919051_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703041905455_Add field status to Transaction.resx">
+      <DependentUpon>201703041905455_Add field status to Transaction.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
