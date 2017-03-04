@@ -60,6 +60,7 @@ namespace BudgetControl.Models
         public decimal RemainAmount { get; set; }
         public Guid? RefID { get; set; }
         public TransactionType Type { get; set; }
+        public RecordStatus Status { get; set; }
 
         #endregion
 
