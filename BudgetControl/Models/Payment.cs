@@ -71,28 +71,21 @@ namespace BudgetControl.Models
 
         public Guid PaymentID { get; set; }
         public string CostCenterID { get; set; }
-
-        [Display(Name = "ปี")]
+        
         [StringLength(4)]
         public string Year { get; set; }
-
-        [Display(Name = "ลำดับ")]
+        
         public int Sequence { get; set; }
-
-        [Display(Name = "รายละเอียด")]
+        
         [StringLength(255)]
         public string Description { get; set; }
-
-        [Display(Name = "เบิกโดย")]
+        
         public string RequestBy { get; set; }
-
-        [Display(Name = "เบิกวันที่")]
+        
         public DateTime PaymentDate { get; set; }
-
-        [Display(Name = "เบิกจำนวน")]
+        
         public decimal TotalAmount { get; set; }
-
-        [Display(Name = "ผู้ควบคุมงบ")]
+        
         public string ControlBy { get; set; }
 
         public RecordStatus Status { get; set; }
@@ -115,25 +108,17 @@ namespace BudgetControl.Models
 
         #endregion
 
+        #region Validate
+
+        public void Validate()
+        {
+            
+        }
+
+        #endregion
+
         #region Additional Methods
 
-        //public void InitialPayment(PaymentViewModel paymentviewmodel)
-        //{
-        //    this.PaymentID = paymentviewmodel.PaymentID;
-        //    this.CostCenterID = paymentviewmodel.CostCenterID;
-        //    this.Year = paymentviewmodel.Year;
-        //    this.Sequence = paymentviewmodel.Sequence;
-        //    this.Description = paymentviewmodel.Description;
-        //    this.RequestBy = paymentviewmodel.RequestBy;
-        //    this.PaymentDate = paymentviewmodel.PaymentDate;
-        //    this.TotalAmount = paymentviewmodel.TotalAmount;
-        //    this.ControlBy = paymentviewmodel.ControlBy;
-            
-        //    RecordStatus rs;
-        //    Enum.TryParse(paymentviewmodel.Status, out rs);
-        //    this.Status = rs;
-
-        //}
         #endregion
 
     }
