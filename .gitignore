@@ -1,4 +1,4 @@
-###################
+﻿###################
 # compiled source #
 ###################
 *.com
@@ -27,6 +27,7 @@ obj/
 TestResults/
 Data/
 BudgetControl/Web.config
+.vs/
 ###################
 # Web publish log #
 ###################
