@@ -50,43 +50,64 @@ namespace BudgetControl.Controllers
         {
             try
             {
-                using (PaymentRepository paymentRep = new PaymentRepository())
+                CostCenter working;
+                List<Payment> payments;
+
+                // 1. Get working costcenter.
+                working = AuthManager.GetWorkingCostCenter();
+
+                // 2. Get payment data.
+                using (PaymentRepository paymentRepo = new PaymentRepository())
                 {
-                    List<PaymentViewModel> paymentviewmodels = new List<PaymentViewModel>();
-                    paymentRep.Get().ToList().ForEach(p => paymentviewmodels.Add(new PaymentViewModel(p)));
-                    returnobj.SetSuccess(paymentviewmodels);
+                    payments = paymentRepo.Get()
+                        .Where(
+                            p =>
+                                p.CostCenterID.StartsWith(working.CostCenterTrim)
+                        )
+                        .ToList();
                 }
+
             }
             catch (Exception ex)
             {
+
                 returnobj.SetError(ex.Message);
             }
 
+            // 3. Return to client
             return Content(Utility.ParseToJson(returnobj), "application/json");
+
         }
 
         [HttpGet]
         public ActionResult Payment(string id)
         {
+            // 1. If id is null or empty, then return all payments.
             if (String.IsNullOrEmpty(id))
             {
                 return Payments();
             }
 
+            // 2. Get payment by id
             try
             {
-                using (PaymentRepository paymentRep = new PaymentRepository())
+                using (PaymentRepository paymentRepo = new PaymentRepository())
                 {
-                    var paymentviewmodel = new PaymentViewModel(paymentRep.GetById(id));
-                    paymentviewmodel.GetDetails();
-                    returnobj.SetSuccess(paymentviewmodel);
+                    Payment payment = paymentRepo.GetById(id);
+                    if (payment == null)
+                    {
+                        throw new Exception("ไม่พบข้อมูลงบประมาณที่เลือก");
+                    }
+                    //TODO Get transaction details
+                    returnobj.SetSuccess(payment);
                 }
             }
             catch (Exception ex)
             {
                 returnobj.SetError(ex.Message);
             }
-            return Content(Utility.ParseToJson(returnobj), "application/json");
+            // 3. Return to client
+            return Content(returnobj.ToJson(), "application/json");
         }
 
         [HttpGet]
@@ -172,7 +193,7 @@ namespace BudgetControl.Controllers
                     budgets = budgetRep.Get().ToList();
                     budgets = budgetRep.Get()
                         .Where(
-                            b => 
+                            b =>
                                 b.CostCenterID.StartsWith(working.CostCenterTrim)
                         )
                         .ToList();
@@ -180,7 +201,7 @@ namespace BudgetControl.Controllers
 
                 // 3. Set return object.
                 returnobj.SetSuccess(budgets);
-                
+
             }
             catch (Exception ex)
             {
@@ -188,7 +209,7 @@ namespace BudgetControl.Controllers
             }
 
             return Content(returnobj.ToJson(), "application/json");
-            
+
             //try
             //{
             //    CostCenter working = AuthManager.GetWorkingCostCenter();
@@ -222,7 +243,8 @@ namespace BudgetControl.Controllers
                 using (BudgetRepository budgetRep = new BudgetRepository())
                 {
                     Budget budget = budgetRep.GetById(id);
-                    if (budget == null){
+                    if (budget == null)
+                    {
                         throw new Exception("ไม่พบข้อมูลงบประมาณที่เลือก");
                     }
                     returnobj.SetSuccess(budget);
