@@ -118,37 +118,97 @@ namespace BudgetControl.Controllers
         }
 
         [HttpPost]
-        public ActionResult Payment(PaymentViewModel paymentviewmodel)
+        public ActionResult Payment(Payment payment)
         {
             try
             {
-                using (PaymentRepository paymentRep = new PaymentRepository())
+                // Using single context
+                using (BudgetContext context = new BudgetContext())
                 {
-                    Payment payment = new Payment(paymentviewmodel);
 
-                    ////Create New Payment
-                    if (paymentviewmodel.PaymentID == Guid.Empty)
+                    // Wrap sql to transaction.
+                    using (var dbTransaction = context.Database.BeginTransaction())
                     {
-                        payment.PaymentID = Guid.NewGuid();
-                        paymentRep.Add(payment);
-                    }
-                    //Update Exist Payment
-                    else
-                    {
-                        paymentRep.Update(payment);
+                        try
+                        {
+                            // 1. Declare repository
+                            PaymentRepository paymentRepo = new PaymentRepository(context);
+                            TransactionRepository transRepo = new TransactionRepository(context);
+
+                            // 2. Add payment to context.
+                            paymentRepo.Add(payment);
+                            paymentRepo.Save();
+
+                            // 3. Add all transaction to context.
+                            var budgetTrans = payment.BudgetTransactions;
+                            if(budgetTrans != null)
+                            {
+                                foreach (var tran in budgetTrans)
+                                {
+                                    transRepo.Add(tran);
+                                }
+                                transRepo.Save();
+                            }
+                            
+                            dbTransaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            dbTransaction.Rollback();
+                            throw ex;
+                        }
                     }
 
-                    returnobj.SetSuccess(payment.PaymentID);
                 }
+                using (PaymentRepository paymentRepo = new PaymentRepository())
+                {
+
+                }
+
             }
             catch (Exception ex)
             {
                 returnobj.SetError(ex.Message);
             }
 
-            return Content(Utility.ParseToJson(returnobj), "application/json");
-        }
+            return Content(returnobj.ToJson(), "application/json");
 
+        //try
+        //{
+        //    using (PaymentRepository paymentRep = new PaymentRepository())
+        //    {
+        //        Payment payment = new Payment(paymentviewmodel);
+
+        //        ////Create New Payment
+        //        if (paymentviewmodel.PaymentID == Guid.Empty)
+        //        {
+        //            payment.PaymentID = Guid.NewGuid();
+        //            paymentRep.Add(payment);
+        //        }
+        //        //Update Exist Payment
+        //        else
+        //        {
+        //            paymentRep.Update(payment);
+        //        }
+
+        //        returnobj.SetSuccess(payment.PaymentID);
+        //    }
+        //}
+        //catch (Exception ex)
+        //{
+        //    returnobj.SetError(ex.Message);
+        //}
+
+        //return Content(Utility.ParseToJson(returnobj), "application/json");
+    }
+
+        [HttpPut]
+        [ActionName("Payment")]
+        public ActionResult UpdatePayment(Payment payment)
+        {
+            
+            return Content(returnobj.ToJson(), "application/json");
+        }
 
         [HttpDelete]
         [ActionName("Payment")]
