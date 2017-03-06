@@ -65,7 +65,10 @@ namespace BudgetControl.Controllers
                                 p.CostCenterID.StartsWith(working.CostCenterTrim)
                         )
                         .ToList();
+
                 }
+                // 3. Set Return result
+                returnobj.SetSuccess(payments);
 
             }
             catch (Exception ex)
