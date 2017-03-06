@@ -1,4 +1,44 @@
-﻿budgetApp.controller('PaymentController', ['$scope', '$location', '$state', '$stateParams', 'apiService', 'funcFactory', function ($scope, $location, $state, $stateParams, apiService, funcFactory) {
+﻿; (function () {
+    'use strict';
+    angular
+        .module('budgetApp')
+        .controller('PaymentCtrl', PaymentCtrl);
+
+    PaymentCtrl.$inject = ['$state', 'apiService', 'msgService', 'handleResponse'];
+
+    function PaymentCtrl($state, apiService, msgService, hr) {
+        var vm = this;
+        vm.payments = [];
+        vm.rowClick = rowClick;
+
+        // 1. Get payment data from server.
+        apiService.payment().get().$promise.then(callSuccess, callError);
+
+        //// 1.1 Call to server success.
+        function callSuccess(response) {
+            vm.payments = hr.respondSuccess(response);
+            console.log(vm.payments);
+        }
+
+        //// 1.2 Call to server fail.
+        function callError(e) {
+            hr.respondError(e);
+        }
+
+
+        function rowClick(paymentid) {
+            // Go to detail page.
+            $state.go('viewpayment', { id: paymentid });
+        }
+
+        
+    }
+
+
+})();
+
+
+budgetApp.controller('PaymentController', ['$scope', '$location', '$state', '$stateParams', 'apiService', 'funcFactory', function ($scope, $location, $state, $stateParams, apiService, funcFactory) {
 
     $scope.listpayment = {}
     $scope.errormessage = ''
