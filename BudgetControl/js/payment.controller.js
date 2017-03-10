@@ -158,7 +158,16 @@
 
         function submit() {
             console.log('submit call');
+            vm.payment.BudgetTransactions = vm.transactions;
+            apiService.payment().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
 
+            function callPaymentSuccess(response) {
+                hr.respondSuccess(response);
+            }
+
+            function callPaymentError(e) {
+                hr.repondError(e);
+            }
         }
 
 
