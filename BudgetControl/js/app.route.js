@@ -53,8 +53,10 @@
             .state('newpayment', {
                 url: '/payment/create',
                 templateUrl: 'Payments/Create',
-                controller: 'CreatePaymentController'
+                controller: 'CreatePaymentCtrl',
+                controllerAs: 'vm'
             })
+
             .state('editpayment', {
                 url: '/payment/edit/:id',
                 templateUrl: 'Payments/Create',

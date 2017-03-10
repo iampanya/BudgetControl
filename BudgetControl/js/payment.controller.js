@@ -31,12 +31,168 @@
             $state.go('viewpayment', { id: paymentid });
         }
 
-        
+
     }
 
 
 })();
 
+
+/****** Create Payment Controller *******/
+(function () {
+    'use strict';
+    angular
+        .module('budgetApp')
+        .controller('CreatePaymentCtrl', CreatePaymentCtrl);
+
+    CreatePaymentCtrl.$inject = ['$scope', '$state', '$filter', 'apiService', 'handleResponse', 'authInfo'];
+
+    function CreatePaymentCtrl($scope, $state, $filter, apiService, hr, authInfo) {
+        // variable
+        var vm = this;
+        vm.budgets = [];            // budget list in dropdown
+        vm.employees = [];          // employee list in dropdown
+        vm.years = [];              // budget year list in dropdown
+        vm.payment = {};            // payment form data 
+        vm.transactions = [];       // transaction inside payment
+
+        // function 
+        vm.addNewTransaction = addNewTransaction;
+        vm.removeTransaction = removeTransaction;
+        vm.updateTotalAmount = updateTotalAmount;
+        vm.submit = submit;
+
+        // initial form data
+        prepareData();
+
+        // Watching 
+        //// - Watch RequestBy to changing CostCenter
+        $scope.$watch(watchingRequestBy, onRequestByChange);
+
+        function watchingRequestBy(scope) {
+            return vm.payment.RequestBy;
+        }
+
+        function onRequestByChange() {
+            // 1. Check data are loaded.
+            if (vm.payment !== {} && vm.employees !== []) {
+
+                // 2. Get requester data from employee list
+                var requester = $filter('filter')(vm.employees, function (d) {
+                    return d.EmployeeID === vm.payment.RequestBy
+                })
+
+                // 3. if found, then set CostCenter value
+                if (requester.length > 0) {
+                    vm.payment.CostCenterID = requester[0].CostCenterID;
+                    //vm.payment.CostCenter = requester[0].CostCenter;
+                }
+
+                // 4. if not found, then set CostCenter to nothing.
+                else {
+                    vm.payment.CostCenterID = '-';
+                }
+            }
+        }
+
+        function addNewTransaction() {
+            // 1. Looking for budget is already added?
+            var index = vm.transactions.findIndex(function (obj) {
+                return obj.BudgetID == vm.selectbudget;
+            })
+
+            // 2. If exist, then set status to active
+            if (index > -1) {
+                vm.transactions[index].Status = "Active"
+            }
+                // 3. If not exist, then add to list
+            else {
+                var budget = $filter('filter')(vm.budgets, function (d) {
+                    return d.BudgetID === vm.selectbudget
+                })[0]
+
+                vm.transactions.push({
+                    BudgetTransactionID: '',
+                    BudgetID: budget.BudgetID,
+                    PaymentID: '',
+                    Description: '',
+                    Amount: 0.00,
+                    PreviousAmount: 0.00,
+                    RemainAmount: 0.00,
+                    Budget: budget,
+                    Status: 'Active',
+                })
+            }
+
+            // 4. Set selectbudget to empty
+            vm.selectbudget = ''
+
+            // 5. Update total amount
+            updateTotalAmount();
+        }
+
+        function removeTransaction(budgetid) {
+            // 1. Find index of budgetid in transactions
+            var index = vm.transactions.findIndex(function (obj) {
+                return obj.BudgetID == budgetid;
+            });
+
+            // 2. Set status to "Remove"
+            vm.transactions[index].Status = "Remove";
+
+            // 3. Update total amount on payment
+            updateTotalAmount();
+        }
+
+        function updateTotalAmount() {
+            // Initial total amount value to zero
+            vm.payment.TotalAmount = 0;
+
+            // for loop on each transaction and add to total amount.
+            for (var i = 0; i < vm.transactions.length; i++) {
+                if (vm.transactions[i].Status === 'Active') {
+                    vm.payment.TotalAmount += vm.transactions[i].Amount;
+                }
+            }
+        }
+
+        function submit() {
+            console.log('submit call');
+
+        }
+
+
+        // prepare form data function
+        function prepareData() {
+            // 1. Get list of employees
+            apiService.employee().get().$promise.then(callEmpSuccess, callError);
+
+            // 2. Get list of budgets
+            apiService.budget().get().$promise.then(callBudgetSuccess, callError);
+
+
+            // function section // 
+            function callEmpSuccess(response) {
+                vm.employees = hr.respondSuccess(response);
+                // Set default RequestBy to current user
+                vm.payment.RequestBy = authInfo.getUser().EmployeeID;
+            }
+
+            function callBudgetSuccess(response) {
+                vm.budgets = hr.respondSuccess(response);
+                vm.years = $filter('unique')(vm.budgets, 'Year');
+                vm.payment.Year = vm.years[0].Year;
+            }
+
+            function callError(e) {
+                hr.respondError(e);
+            }
+
+        }
+
+    }
+
+})();
 
 budgetApp.controller('PaymentController', ['$scope', '$location', '$state', '$stateParams', 'apiService', 'funcFactory', function ($scope, $location, $state, $stateParams, apiService, funcFactory) {
 
@@ -63,7 +219,7 @@ budgetApp.controller('PaymentController', ['$scope', '$location', '$state', '$st
 
     $scope.rowClick = function (paymentid) {
         //$location.path('/payment/' + paymentid)
-        $state.go('viewpayment', {id: paymentid})
+        $state.go('viewpayment', { id: paymentid })
     }
 }])
 
