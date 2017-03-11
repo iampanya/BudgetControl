@@ -128,30 +128,34 @@ namespace BudgetControl.Controllers
                 // Using single context
                 using (BudgetContext context = new BudgetContext())
                 {
-
                     // Wrap sql to transaction.
                     using (var dbTransaction = context.Database.BeginTransaction())
                     {
                         try
                         {
-                            // 1. Declare repository
+                            // 1. Declare variable
                             PaymentRepository paymentRepo = new PaymentRepository(context);
                             TransactionRepository transRepo = new TransactionRepository(context);
 
-                            // 2. Add payment to context.
-                            paymentRepo.Add(payment);
+                            var newpayment = new Payment(payment);
+                            var budgetTrans = payment.BudgetTransactions;
+
+                            // 2. Prepare new payment
+                            newpayment.PrepareToSave();
+
+                            // 3. Add newpayment to context.
+                            paymentRepo.Add(newpayment);
                             paymentRepo.Save();
 
-                            // 3. Add all transaction to context.
-                            var budgetTrans = payment.BudgetTransactions;
-                            if(budgetTrans != null)
-                            {
-                                foreach (var tran in budgetTrans)
-                                {
-                                    transRepo.Add(tran);
-                                }
-                                transRepo.Save();
-                            }
+                            // 4. Add all transaction to context.
+                            //if(budgetTrans != null)
+                            //{
+                            //    foreach (var tran in budgetTrans)
+                            //    {
+                            //        transRepo.Add(tran);
+                            //    }
+                            //    transRepo.Save();
+                            //}
                             
                             dbTransaction.Commit();
                         }
@@ -161,10 +165,6 @@ namespace BudgetControl.Controllers
                             throw ex;
                         }
                     }
-
-                }
-                using (PaymentRepository paymentRepo = new PaymentRepository())
-                {
 
                 }
 

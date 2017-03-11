@@ -30,17 +30,6 @@ namespace BudgetControl.Models
             this.TotalAmount = payment.TotalAmount;
             this.ControlBy = payment.ControlBy;
             this.Status = payment.Status;
-            this.Requester = payment.Requester;
-            this.Controller = payment.Controller;
-
-            this.Statements = new List<Statement>();
-
-            //TODO add all payment feilds
-
-            //foreach (var statement in payment.Statements)
-            //{
-            //    this.Statements.Add(new Statement(statement));
-            //}
 
         }
 
@@ -118,6 +107,14 @@ namespace BudgetControl.Models
         #endregion
 
         #region Additional Methods
+        
+        public void PrepareToSave()
+        {
+            this.PaymentID = Guid.NewGuid();
+            this.PaymentDate = DateTime.Today;
+            this.NewCreateTimeStamp();
+        }
+
 
         #endregion
 
