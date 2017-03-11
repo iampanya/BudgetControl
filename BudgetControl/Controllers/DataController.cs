@@ -12,7 +12,7 @@ using System.Data.Entity.Migrations;
 using Newtonsoft.Json;
 using BudgetControl.Util;
 using BudgetControl.Models.Base;
-
+using BudgetControl.Manager;
 
 namespace BudgetControl.Controllers
 {
@@ -125,52 +125,8 @@ namespace BudgetControl.Controllers
         {
             try
             {
-                // Using single context
-                using (BudgetContext context = new BudgetContext())
-                {
-                    // Wrap sql to transaction.
-                    using (var dbTransaction = context.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            // 1. Declare variable
-                            PaymentRepository paymentRepo = new PaymentRepository(context);
-                            TransactionRepository transRepo = new TransactionRepository(context);
-
-                            var newpayment = new Payment(payment);
-                            var budgetTrans = payment.BudgetTransactions;
-
-                            // 2. Prepare new payment
-                            newpayment.PrepareToSave();
-
-                            // 3. Add newpayment to context.
-                            paymentRepo.Add(newpayment);
-                            paymentRepo.Save();
-
-                            //4.Add all transaction to context.
-                            if (budgetTrans != null)
-                            {
-                                foreach (var tran in budgetTrans)
-                                {
-                                    var newtran = new BudgetTransaction(tran);
-                                    newtran.PaymentID = newpayment.PaymentID;
-                                    newtran.PrepareTransactionToSave();
-                                    transRepo.Add(newtran);
-                                }
-                                transRepo.Save();
-                            }
-
-                            dbTransaction.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            dbTransaction.Rollback();
-                            throw ex;
-                        }
-                    }
-
-                }
-
+                PaymentManager paymentManager = new PaymentManager();
+                paymentManager.Add(payment);
             }
             catch (Exception ex)
             {
