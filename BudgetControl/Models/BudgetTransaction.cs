@@ -41,6 +41,21 @@ namespace BudgetControl.Models
         }
 
 
+        public BudgetTransaction(BudgetTransaction tran)
+        {
+            this.BudgetTransactionID = tran.BudgetTransactionID;
+            this.BudgetID = tran.BudgetID;
+            this.PaymentID = tran.PaymentID;
+            this.RowVersion = tran.RowVersion;
+            this.Description = tran.Description;
+            this.Amount = tran.Amount;
+            this.PreviousAmount = tran.PreviousAmount;
+            this.RemainAmount = tran.RemainAmount;
+            this.RefID = tran.RefID;
+            this.Type = tran.Type;
+            this.Status = tran.Status;
+        }
+
 
         #endregion
 
@@ -89,6 +104,14 @@ namespace BudgetControl.Models
             this.PreviousAmount = budgets[index].BudgetAmount - budgets[index].RemainAmount;
             budgets[index].BudgetAmount = budgets[index].BudgetAmount + this.Amount;
             budgets[index].RemainAmount = budgets[index].RemainAmount + this.Amount;
+        }
+
+        // Prepare budget transaction before save
+        public void PrepareTransactionToSave()
+        {
+            this.BudgetTransactionID = Guid.NewGuid();
+            this.Type = TransactionType.Transaction;
+            this.NewCreateTimeStamp();
         }
 
     
