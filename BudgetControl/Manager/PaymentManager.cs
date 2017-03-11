@@ -28,17 +28,49 @@ namespace BudgetControl.Manager
         #region Properties
 
         public Payment Payment { get; set; }
-      
+
         #endregion
 
         #region Methods
 
         public void Add(Payment payment)
         {
-            // 1. Add Payment
+            // Create transaction
+            using (var dbTransaction = _db.Database.BeginTransaction())
+            {
+                try
+                {
+                    // 1. Inital Payment data
+                    this.Payment = new Payment(payment);
+                    this.Payment.PrepareToSave();
 
+                    // 2. Add payment to context
+                    var paymentRepo = new PaymentRepository(_db);
+                    paymentRepo.Add(this.Payment);
+                    paymentRepo.Save();
 
-            // 2. Add all transaction to payment
+                    // 3. Add each budget transaction by BudgetTransactionManager
+                    BudgetTransactionManager transactionManager = new BudgetTransactionManager(_db);
+                    var budgetTrans = payment.BudgetTransactions;
+
+                    if (budgetTrans != null)
+                    {
+                        foreach (var tran in budgetTrans)
+                        {
+                            tran.PaymentID = this.Payment.PaymentID;
+                            transactionManager.Add(tran);
+                        }
+                    }
+                    
+                    // 4. Comiit save change
+                    dbTransaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    dbTransaction.Rollback();
+                    throw ex;
+                }
+            }
         }
 
         public void Update(Payment payment)
