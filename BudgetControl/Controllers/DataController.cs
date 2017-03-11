@@ -147,16 +147,19 @@ namespace BudgetControl.Controllers
                             paymentRepo.Add(newpayment);
                             paymentRepo.Save();
 
-                            // 4. Add all transaction to context.
-                            //if(budgetTrans != null)
-                            //{
-                            //    foreach (var tran in budgetTrans)
-                            //    {
-                            //        transRepo.Add(tran);
-                            //    }
-                            //    transRepo.Save();
-                            //}
-                            
+                            //4.Add all transaction to context.
+                            if (budgetTrans != null)
+                            {
+                                foreach (var tran in budgetTrans)
+                                {
+                                    var newtran = new BudgetTransaction(tran);
+                                    newtran.PaymentID = newpayment.PaymentID;
+                                    newtran.PrepareTransactionToSave();
+                                    transRepo.Add(newtran);
+                                }
+                                transRepo.Save();
+                            }
+
                             dbTransaction.Commit();
                         }
                         catch (Exception ex)
