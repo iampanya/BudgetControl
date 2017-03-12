@@ -2,29 +2,37 @@
     Layout = null;
 }
 
+
 <div>
+    <h3>
+        <span><a ui-sref="payment"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></span>
+        
+        เบิกจ่ายงบประมาณ
+    </h3>
+    <hr />
     <form ng-submit="vm.submit()" method="post" name="frmPayment">
         <!-- Payment Details -->
         <div class="card">
             <fieldset>
-                <legend>เบิกจ่ายงบประมาณ ศูนย์ต้นทุน: <span class="text-primary"> {{ vm.payment.CostCenterID }} </span></legend>
+                <legend>ศูนย์ต้นทุน: <span class="text-primary"> {{ vm.payment.CostCenterID }} </span></legend>
 
                 <div class="row">
                     <div class="form-horizontal col-md-6">
                         <div class="form-group">
-                            <label for="txtYear" class="col-md-4 control-label">ปีงบประมาณ</label>
+                            <label for="txtYear" class="col-md-4 control-label">ปีงบประมาณ<span class="text-danger">*</span></label>
                             <div class="col-md-4">
                                 <select class="form-control input-sm" ng-model="vm.payment.Year" ng-options="y.Year as y.Year for y in vm.years"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label">
-                                ผู้เบิก
+                                ผู้เบิก<span class="text-danger">*</span>
                             </label>
                             <div class="col-md-6">
-                                <select class="form-control input-sm" ng-model="vm.payment.RequestBy" ng-options="emp.EmployeeID as emp.Description for emp in vm.employees">
+                                <select class="form-control input-sm" name="requestby" ng-model="vm.payment.RequestBy" ng-options="emp.EmployeeID as emp.Description for emp in vm.employees" ng-required="true">
                                     <option value=""> ======= กรุณาเลือก ======= </option>
                                 </select>
+                                <span class="text-danger" ng-show="frmPayment.requestby.$error.required"></span>
                             </div>
                         </div>
 
@@ -32,9 +40,9 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label class="control-label" for="txtDescription">
-                                รายละเอียด:
+                                รายละเอียด<span class="text-danger">*</span>:
                             </label>
-                            <textarea ng-model="vm.payment.Description" class="form-control input-sm" rows="3" id="txtDescription" placeholder="รายละเอียด"></textarea>
+                            <textarea ng-model="vm.payment.Description" ng-required="true" class="form-control input-sm" rows="3" id="txtDescription" placeholder="รายละเอียด"></textarea>
                         </div>
                     </div>
 
