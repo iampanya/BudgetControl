@@ -233,24 +233,6 @@ namespace BudgetControl.Controllers
 
             return Content(returnobj.ToJson(), "application/json");
 
-            //try
-            //{
-            //    CostCenter working = AuthManager.GetWorkingCostCenter();
-
-            //    using (BudgetRepository budgetRep = new BudgetRepository())
-            //    {
-            //        List<BudgetViewModel> budgetviewmodels = new List<BudgetViewModel>();
-            //        budgetRep.Get().ToList().ForEach(
-            //            b => budgetviewmodels.Add(new BudgetViewModel(b)));
-            //        returnobj = new ReturnObject(true, string.Empty, budgetviewmodels);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    returnobj = new ReturnObject(false, ex.Message, null);
-            //}
-
-            //return Content(Utility.ParseToJson(returnobj), "application/json");
         }
 
         [HttpGet]
@@ -270,6 +252,7 @@ namespace BudgetControl.Controllers
                     {
                         throw new Exception("ไม่พบข้อมูลงบประมาณที่เลือก");
                     }
+                    budget.BudgetTransactions = budget.BudgetTransactions.OrderBy(t => t.CreatedAt).ToList();
                     returnobj.SetSuccess(budget);
                 }
             }
@@ -280,26 +263,6 @@ namespace BudgetControl.Controllers
 
             return Content(Utility.ParseToJson(returnobj), "application/json");
 
-            //if (id == null)
-            //{
-            //    return Budgets();
-            //}
-
-            //try
-            //{
-            //    using (BudgetRepository budgetRep = new BudgetRepository())
-            //    {
-            //        BudgetViewModel budgetviewmodel = new BudgetViewModel(budgetRep.GetById(id));
-            //        budgetviewmodel.GetDetails();
-            //        returnobj = new ReturnObject(true, string.Empty, budgetviewmodel);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    returnobj = new ReturnObject(false, ex.Message, null);
-            //}
-
-            //return Content(Utility.ParseToJson(returnobj), "application/json");
         }
 
         [HttpPost]
@@ -314,99 +277,6 @@ namespace BudgetControl.Controllers
             returnobj.SetSuccess("test");
             return Content(Utility.ParseToJson(returnobj), "application/json");
         }
-
-        //[HttpPost]
-        //public ActionResult UploadBudget(UploadBudgetModel budgetfile)
-        //{
-        //    List<Budget> budgets = new List<Budget>();
-        //    List<Account> accounts = new List<Account>();
-
-        //    try
-        //    {
-
-        //        string[] lines = budgetfile.FileData.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-
-        //        foreach (var line in lines)
-        //        {
-        //            string[] columns = line.Split('|');
-        //            if (columns.Length == 7)
-        //            {
-        //                if (columns[2][0] == '5')
-        //                {
-        //                    accounts.Add(new Account
-        //                    {
-        //                        AccountID = columns[2].Trim(),
-        //                        AccountName = columns[3].Trim()
-        //                    });
-
-        //                    budgets.Add(new Budget
-        //                    {
-        //                        BudgetID = Guid.NewGuid(),
-        //                        AccountID = columns[2].Trim(),
-        //                        CostCenterID = columns[5].Trim(),
-        //                        Year = budgetfile.Year,
-        //                        BudgetAmount = float.Parse(columns[4]),
-        //                        Status = BudgetStatus.Active
-        //                    });
-        //                }
-        //            }
-        //        }
-
-        //        List<Account> distinctAccount = accounts.GroupBy(a => a.AccountID).Select(a => a.First()).ToList();
-
-        //        RecordTimeStamp rt = new RecordTimeStamp();
-        //        rt.NewTimeStamp();
-
-        //        using (var context = new BudgetContext())
-        //        {
-
-
-        //            distinctAccount.ForEach(a =>
-        //            {
-        //                a.SetCreateTimeStamp(rt);
-        //                context.Accounts.AddOrUpdate(c => c.AccountID, a);
-        //            });
-        //            context.SaveChanges();
-        //        }
-
-
-        //        using (var context = new BudgetContext())
-        //        {
-        //            budgets.ForEach(b =>
-        //            {
-
-        //                var budgetindb = context.Budgets
-        //                    .Where(c =>
-        //                        c.AccountID == b.AccountID &&
-        //                        c.CostCenterID == b.CostCenterID &&
-        //                        c.Year == b.Year)
-        //                    .FirstOrDefault();
-
-        //                if (budgetindb == null)
-        //                {
-        //                    b.SetCreateTimeStamp(rt);
-        //                    context.Budgets.Add(b);
-        //                }
-        //                else
-        //                {
-        //                    budgetindb.BudgetAmount = b.BudgetAmount;
-        //                    budgetindb.SetModifiedTimeStamp(rt);
-        //                    context.Budgets.Attach(budgetindb);
-        //                    context.Entry(budgetindb).State = EntityState.Modified;
-        //                }
-        //            });
-        //            context.SaveChanges();
-
-        //            returnobj.SetSuccess("Success");
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        returnobj.SetError(ex.Message);
-        //    }
-        //    return Content(Utility.ParseToJson(returnobj), "application/json");
-        //}
 
         [HttpPost]
         public ActionResult UploadBudget(List<BudgetFileModel> filedata)
