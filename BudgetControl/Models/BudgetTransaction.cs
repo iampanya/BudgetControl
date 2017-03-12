@@ -107,6 +107,15 @@ namespace BudgetControl.Models
         }
 
         // Prepare budget transaction before save
+        public void PrepareTransactionToSave(Budget budget)
+        {
+            this.BudgetTransactionID = Guid.NewGuid();
+            this.PreviousAmount = budget.WithdrawAmount;
+            this.RemainAmount = budget.RemainAmount + this.Amount;
+            this.Type = TransactionType.Transaction;
+            this.NewCreateTimeStamp();
+        }
+
         public void PrepareTransactionToSave()
         {
             this.BudgetTransactionID = Guid.NewGuid();
@@ -114,7 +123,6 @@ namespace BudgetControl.Models
             this.NewCreateTimeStamp();
         }
 
-    
 
         #endregion
     }

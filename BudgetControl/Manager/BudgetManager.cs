@@ -33,6 +33,16 @@ namespace BudgetControl.Manager
 
         #region Methods
 
+        public Budget Get(Guid budgetid)
+        {
+            using (var budgetRepo = new BudgetRepository())
+            {
+                return budgetRepo.GetById(budgetid);
+            }
+        }
+
+
+
         public void Add(Budget budget)
         {
             // 1. Add Payment
@@ -43,7 +53,10 @@ namespace BudgetControl.Manager
 
         public void Update(Budget budget)
         {
-
+            BudgetRepository budgetRepo = new BudgetRepository(_db);
+            budget.NewModifyTimeStamp();
+            budgetRepo.Update(budget);
+            budgetRepo.Save();
         }
 
         public void Delete(Budget budget)

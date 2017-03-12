@@ -58,6 +58,7 @@ namespace BudgetControl.Manager
                         foreach (var tran in budgetTrans)
                         {
                             tran.PaymentID = this.Payment.PaymentID;
+                            tran.Amount = 0 - tran.Amount;
                             transactionManager.Add(tran);
                         }
                     }

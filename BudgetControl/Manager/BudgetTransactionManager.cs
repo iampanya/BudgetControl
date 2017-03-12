@@ -32,9 +32,76 @@ namespace BudgetControl.Manager
         #endregion
 
         #region Methods
+        public Decimal GetTotalTransaction(Guid budgetid, Guid paymentid)
+        {
+            List<BudgetTransaction> transactions = new List<BudgetTransaction>();
+            Decimal summary = 0;
+            using (var tranRepo = new TransactionRepository())
+            {
+                transactions = tranRepo
+                    .Get()
+                    .Where(t => t.BudgetID == budgetid && t.PaymentID == paymentid)
+                    .ToList();
+            }
+
+            foreach (var item in transactions)
+            {
+                summary += item.Amount;
+            }
+
+            return summary;
+        }
+
 
         public void Add(BudgetTransaction transaction)
         {
+            if(_db.Database.CurrentTransaction == null)
+            {
+                using (var dbTransaction = _db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        this.WrapAdd(transaction);
+                        dbTransaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        dbTransaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            else
+            {
+                this.WrapAdd(transaction);
+            }
+
+        }
+
+        private void WrapAdd(BudgetTransaction transaction)
+        {
+
+            // 1. Get budget infomation
+            BudgetManager budgetManager = new BudgetManager(_db);
+            Budget budget = new Budget(budgetManager.Get(transaction.BudgetID));
+
+            // 1. Initial transaction data
+            this.BudgetTransaction = new BudgetTransaction(transaction);
+            this.BudgetTransaction.PrepareTransactionToSave(budget);
+            
+
+            // 2. Add transaction to context
+            var tranRepo = new TransactionRepository(_db);
+            tranRepo.Add(this.BudgetTransaction);
+
+            // 3. Save
+            tranRepo.Save();
+
+            /// Update budget
+            /// 
+            budget.WithdrawAmount -= transaction.Amount;
+            budget.RemainAmount += transaction.Amount;
+            budgetManager.Update(budget);
 
         }
 
@@ -52,5 +119,4 @@ namespace BudgetControl.Manager
         #endregion
 
     }
-}
 }

@@ -127,6 +127,7 @@ namespace BudgetControl.Controllers
             {
                 PaymentManager paymentManager = new PaymentManager();
                 paymentManager.Add(payment);
+                returnobj.SetSuccess("Create Payment success.");
             }
             catch (Exception ex)
             {
