@@ -45,9 +45,9 @@
         .module('budgetApp')
         .controller('CreatePaymentCtrl', CreatePaymentCtrl);
 
-    CreatePaymentCtrl.$inject = ['$scope', '$state', '$filter', 'apiService', 'handleResponse', 'authInfo'];
+    CreatePaymentCtrl.$inject = ['$scope', '$state', '$filter', '$uibModal', 'apiService', 'handleResponse', 'authInfo'];
 
-    function CreatePaymentCtrl($scope, $state, $filter, apiService, hr, authInfo) {
+    function CreatePaymentCtrl($scope, $state, $filter, $uibModal, apiService, hr, authInfo) {
         // variable
         var vm = this;
         vm.budgets = [];            // budget list in dropdown
@@ -155,20 +155,24 @@
                 }
             }
         }
-
         function submit() {
             console.log('submit call');
             vm.payment.BudgetTransactions = vm.transactions;
-            apiService.payment().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
+            //apiService.payment().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
+
+            openModal();
 
             function callPaymentSuccess(response) {
                 hr.respondSuccess(response);
+                //TODO modal result.
             }
 
             function callPaymentError(e) {
                 hr.repondError(e);
             }
         }
+
+
 
 
         // prepare form data function
@@ -199,9 +203,101 @@
 
         }
 
-    }
 
+
+
+        // modal test
+
+        var items = ['item1', 'item2', 'item3'];
+        function openModal (size, parentSelector) {
+            var parentElem = parentSelector ?
+                angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'myModalContent.html',
+                controller: 'ResultPaymentCtrl',
+                controllerAs: 'vm',
+                size: size,
+                backdrop: 'static',
+                keyboard: false,
+                appendTo: parentElem,
+                resolve: {
+                    paymentid: function () {
+                        return 'testpaymentid';
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $ctrl.selected = selectedItem;
+            }, function () {
+                console.log('Modal dismissed at: ' + new Date());
+            });
+        };
+    }
 })();
+
+(function () {
+    'use strict';
+    angular
+        .module('budgetApp')
+        .controller('ResultPaymentCtrl', ResultPaymentCtrl);
+
+
+    ResultPaymentCtrl.$inject = ['$state', '$uibModalInstance']
+    function ResultPaymentCtrl($state, $uibModalInstance, paymentid) {
+        var vm = this;
+        vm.paymentid = paymentid;
+
+        //vm.ok = function () {
+        //    $uibModalInstance.close($ctrl.selected.item);
+        //};
+
+        //vm.cancel = function () {
+        //    $uibModalInstance.dismiss('cancel');
+        //};
+
+        vm.next = function () {
+            $uibModalInstance.close();
+            $state.go('payment');
+        }
+
+        vm.update = function () {
+
+        }
+    }
+})();
+
+angular.module('budgetApp').component('modalComponent', {
+    templateUrl: 'myModalContent.html',
+    bindings: {
+        resolve: '<',
+        close: '&',
+        dismiss: '&'
+    },
+    controller: function () {
+        var $ctrl = this;
+
+        $ctrl.$onInit = function () {
+            $ctrl.items = $ctrl.resolve.items;
+            $ctrl.selected = {
+                item: $ctrl.items[0]
+            };
+        };
+
+        $ctrl.ok = function () {
+            $ctrl.close({ $value: $ctrl.selected.item });
+        };
+
+        $ctrl.cancel = function () {
+            $ctrl.dismiss({ $value: 'cancel' });
+        };
+    }
+});
+
+
 
 budgetApp.controller('PaymentController', ['$scope', '$location', '$state', '$stateParams', 'apiService', 'funcFactory', function ($scope, $location, $state, $stateParams, apiService, funcFactory) {
 

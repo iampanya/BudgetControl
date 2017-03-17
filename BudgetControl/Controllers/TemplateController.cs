@@ -14,7 +14,7 @@ namespace BudgetControl.Controllers
             return View();
         }
 
-        public ActionResult DialogAfterCreatePayment()
+        public ActionResult PaymentResult()
         {
             return View();
         }

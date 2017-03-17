@@ -290,6 +290,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
     <Content Include="Views\Budgets\Upload.cshtml" />
+    <Content Include="Views\Template\PaymentResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
