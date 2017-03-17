@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var budgetApp = angular.module('budgetApp', ['ngRoute', 'ngResource', 'ngProgress', 'ui.router']);
+var budgetApp = angular.module('budgetApp', ['ngRoute', 'ngResource', 'ngProgress', 'ui.router','ui.bootstrap']);
 
 
 (function () {

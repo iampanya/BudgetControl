@@ -38,7 +38,9 @@ namespace BudgetControl
                     "~/Scripts/angular-resource.min.js",
                     "~/Scripts/angular-route.min.js",
                     "~/Scripts/angular-animate.min.js",
-                    "~/Scripts/ngprogress.min.js"
+                    "~/Scripts/angular-touch.min.js",
+                    "~/Scripts/ngprogress.min.js",
+                    "~/Scripts/ui-bootstrap-tpls-2.5.0.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular-script")

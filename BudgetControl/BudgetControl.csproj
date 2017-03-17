@@ -231,6 +231,7 @@
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-resource.min.js" />
     <Content Include="Scripts\angular-route.min.js" />
+    <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular-ui-router.js" />
     <Content Include="Scripts\angular-ui-router.min.js" />
     <Content Include="Scripts\angular.js" />
