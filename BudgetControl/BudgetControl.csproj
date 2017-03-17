@@ -154,6 +154,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Manager\BudgetManager.cs" />
+    <Compile Include="Manager\BudgetTransactionManager.cs" />
+    <Compile Include="Manager\PaymentManager.cs" />
     <Compile Include="Migrations\201610310919051_InitialCreate.cs" />
     <Compile Include="Migrations\201610310919051_InitialCreate.Designer.cs">
       <DependentUpon>201610310919051_InitialCreate.cs</DependentUpon>
@@ -237,6 +240,7 @@
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="js\app.filter.js" />
     <Content Include="js\app.run.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
