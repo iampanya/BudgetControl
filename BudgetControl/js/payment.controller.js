@@ -160,7 +160,7 @@
             vm.payment.BudgetTransactions = vm.transactions;
             //apiService.payment().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
 
-            openModal();
+            openModal('lg', null, 'paymentid');
 
             function callPaymentSuccess(response) {
                 hr.respondSuccess(response);
@@ -209,7 +209,7 @@
         // modal test
 
         var items = ['item1', 'item2', 'item3'];
-        function openModal (size, parentSelector) {
+        function openModal (size, parentSelector, data) {
             var parentElem = parentSelector ?
                 angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
             var modalInstance = $uibModal.open({
@@ -225,13 +225,13 @@
                 appendTo: parentElem,
                 resolve: {
                     paymentid: function () {
-                        return 'testpaymentid';
+                        return data;
                     }
                 }
             });
 
             modalInstance.result.then(function (selectedItem) {
-                $ctrl.selected = selectedItem;
+                console.log('Modal dismissed at: ' + new Date());
             }, function () {
                 console.log('Modal dismissed at: ' + new Date());
             });
@@ -246,26 +246,19 @@
         .controller('ResultPaymentCtrl', ResultPaymentCtrl);
 
 
-    ResultPaymentCtrl.$inject = ['$state', '$uibModalInstance']
+    ResultPaymentCtrl.$inject = ['$state', '$uibModalInstance', 'paymentid'];
     function ResultPaymentCtrl($state, $uibModalInstance, paymentid) {
         var vm = this;
         vm.paymentid = paymentid;
-
-        //vm.ok = function () {
-        //    $uibModalInstance.close($ctrl.selected.item);
-        //};
-
-        //vm.cancel = function () {
-        //    $uibModalInstance.dismiss('cancel');
-        //};
-
+        console.log(paymentid);
         vm.next = function () {
             $uibModalInstance.close();
             $state.go('payment');
         }
 
         vm.update = function () {
-
+            $uibModalInstance.close();
+            $state.go('editpayment');
         }
     }
 })();
