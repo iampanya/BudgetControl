@@ -116,6 +116,27 @@ namespace BudgetControl.Manager
         }
 
 
+        public List<BudgetTransaction> SumTransaction(List<BudgetTransaction> trans)
+        {
+            List<BudgetTransaction> result = new List<BudgetTransaction>();
+
+            foreach( var item in trans)
+            {
+                int i = result.IndexOf(result.FirstOrDefault(r => r.BudgetID == item.BudgetID));
+
+                if(i > -1)
+                {
+                    result[i].Amount += item.Amount;
+                }
+                else
+                {
+                    result.Add(item);
+                }
+            }
+
+            result.ForEach(r => r.Amount = Math.Abs(r.Amount));
+            return result;
+        }
         #endregion
 
     }

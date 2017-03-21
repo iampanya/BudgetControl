@@ -7,7 +7,7 @@
     <h3>
         <span><a ui-sref="payment"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></span>
         
-        เบิกจ่ายงบประมาณ
+        เบิกจ่ายงบประมาณ 
     </h3>
     <hr />
     <form ng-submit="vm.submit()" method="post" name="frmPayment">
@@ -78,7 +78,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="transaction in vm.transactions | filter : { Status: 'Active' }">
+                    <tr ng-repeat="transaction in vm.transactions | filter : { Status: '0' }">
 
                         <td class="text-center">
                             {{ $index + 1 }}
@@ -87,7 +87,7 @@
                             {{ transaction.Budget.Account.AccountID }} - {{ transaction.Budget.Account.AccountName }}
                         </td>
                         <td class="text-center">
-                            {{ transaction.Budget.BudgetAmount | number: 2}}
+                            {{ transaction.Budget.BudgetAmount | number:2 }}
                         </td>
                         <td class="text-center">
                             <input type="number" ng-model="transaction.Amount"  ng-required="true" class="form-control input-sm text-right" ng-change="vm.updateTotalAmount()" />
@@ -124,45 +124,6 @@
     </form>
 
 
-
-    <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header">
-            <h3 class="modal-title" id="modal-title">เบิกจ่ายงบประมาณสำเร็จ</h3>
-        </div>
-        <div class="modal-body" id="modal-body">
-            {{ vm.paymentid }}
-            <table class="table table-bordered table-hover table-striped">
-                <thead>
-                    <tr>
-                        <th class="text-center">ลำดับ</th>
-                        <th class="text-center">รหัสบัญชี</th>
-                        <th class="text-center">ชื่อบัญชี</th>
-                        <th class="text-center">ปีงบประมาณ</th>
-                        <th class="text-center">งบที่ได้รับ</th>
-                        <th class="text-center">เบิกจ่ายไปแล้ว</th>
-                        <th class="text-center">เบิกจ่ายงวดนี้</th>
-                        <th class="text-center">คงเหลือ</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-default" type="button" ng-click="vm.update()">เปลี่ยนแปลง</button>
-            <button class="btn btn-primary" type="button" ng-click="vm.next()">รายการเบิกจ่าย</button>
-        </div>
-    </script>
 
 
 </div>

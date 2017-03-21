@@ -3,150 +3,39 @@
     Layout = null;
 }
 
-<md-dialog aria-label="Mango (Fruit)">
-    <form ng-cloak>
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h2> Complete </h2>
-                <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancel()">
-                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-content class="md-padding" layout="row">
-
-            <div flex-xs flex-gt-xs="50" layout="row" ng-repeat="statement in mdDialogData.Statements">
-                <md-card>
-                    <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline"> บัญชี :  {{ statement.Budget.BudgetName }} </span>
-                        </md-card-title-text>
-                    </md-card-title>
-                    <md-card-content>
-                        <p>ประจำปี : {{ statement.Year }}</p>
-                        <p>งบประมาณ : </p>
-                        <p>เบิกจ่ายไปแล้ว : </p>
-                        <p>เบิกจ่ายงวดนี้ : {{ statement.Amount }}</p>
-                        <p>คงเหลือ : </p>
-                    </md-card-content>
-                </md-card>
-            </div>
-
-
-            @*<div flex-xs flex-gt-xs="50" layout="column">
-                    <md-card>
-                        <md-card-title>
-                            <md-card-title-text>
-                                <span class="md-headline">Action buttons</span>
-                            </md-card-title-text>
-                        </md-card-title>
-                        <md-card-content>
-                            <p>
-                                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                            </p>
-                            <p>
-                                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                            </p>
-                            <p>
-                                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                            </p>
-                        </md-card-content>
-                        <md-card-actions layout="row" layout-align="end center">
-                            <md-button>Action 1</md-button>
-                            <md-button>Action 2</md-button>
-                        </md-card-actions>
-                    </md-card>
-                </div>*@
-
-
-            @*<div flex-xs flex-gt-xs="50" layout="column">
-                    <md-card>
-                        <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
-                        <md-card-title>
-                            <md-card-title-text>
-                                <span class="md-headline">Icon action buttons</span>
-                            </md-card-title-text>
-                        </md-card-title>
-                        <md-card-content>
-                            <p>
-                                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                            </p>
-                        </md-card-content>
-                        <md-card-actions layout="row" layout-align="end center">
-                            <md-button class="md-icon-button" aria-label="Favorite">
-                                <md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>
-                            </md-button>
-                            <md-button class="md-icon-button" aria-label="Settings">
-                                <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
-                            </md-button>
-                            <md-button class="md-icon-button" aria-label="Share">
-                                <md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>
-                            </md-button>
-                        </md-card-actions>
-                    </md-card>
-                    <md-card>
-                        <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
-                        <md-card-actions layout="row" layout-align="end center">
-                            <md-button class="md-icon-button" aria-label="Favorite">
-                                <md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>
-                            </md-button>
-                            <md-button class="md-icon-button" aria-label="Settings">
-                                <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
-                            </md-button>
-                            <md-button class="md-icon-button" aria-label="Share">
-                                <md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>
-                            </md-button>
-                        </md-card-actions>
-                    </md-card>
-
-                    <md-card>
-                        <md-card-header>
-                            <md-card-avatar>
-                                <img src="img/logo.svg" />
-                            </md-card-avatar>
-                            <md-card-header-text>
-                                <span class="md-title">Angular</span>
-                                <span class="md-subhead">Material</span>
-                            </md-card-header-text>
-                        </md-card-header>
-                        <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
-                        <md-card-title>
-                            <md-card-title-text>
-                                <span class="md-headline">Card header</span>
-                            </md-card-title-text>
-                        </md-card-title>
-                        <md-card-content>
-                            <p>
-                                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                            </p>
-                        </md-card-content>
-                    </md-card>
-
-                </div>*@
-        </md-content>
-
-        <md-dialog-actions layout="row">
-            <md-button class="md-raised md-primary" ng-click="cancel()">
-                ตกลง
-            </md-button>
-        </md-dialog-actions>
-        @*<md-dialog-actions layout="row">
-                <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
-                    More on Wikipedia
-                </md-button>
-                <span flex></span>
-                <md-button ng-click="answer('not useful')">
-                    Not Useful
-                </md-button>
-                <md-button ng-click="answer('useful')">
-                    Useful
-                </md-button>
-            </md-dialog-actions>*@
-    </form>
-</md-dialog>
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">เบิกจ่ายงบประมาณสำเร็จ</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    {{ vm.paymentid }}
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">ลำดับ</th>
+                <th class="text-center">รหัสบัญชี</th>
+                <th class="text-center">ชื่อบัญชี</th>
+                <th class="text-center">ปีงบประมาณ</th>
+                <th class="text-center">งบที่ได้รับ</th>
+                <th class="text-center">เบิกจ่ายไปแล้ว</th>
+                <th class="text-center">เบิกจ่ายงวดนี้</th>
+                <th class="text-center">คงเหลือ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="transaction in vm.payment.BudgetTransactions">
+                <td> {{ index + 1 }} </td>
+                <td> {{ transaction.Budget.AccountID }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" type="button" ng-click="vm.update()">เปลี่ยนแปลง</button>
+    <button class="btn btn-primary" type="button" ng-click="vm.next()">รายการเบิกจ่าย</button>
+</div>

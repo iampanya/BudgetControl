@@ -28,7 +28,8 @@
             .state('editbudget', {
                 url: '/budget/edit/:id',
                 templateUrl: 'Budgets/Create',
-                controller: 'EditBudgetController'
+                controller: 'EditBudgetController',
+                controllerAs: 'vm'
             })
             .state('uploadbudget', {
                 url: '/budget/upload',
@@ -60,7 +61,8 @@
             .state('editpayment', {
                 url: '/payment/edit/:id',
                 templateUrl: 'Payments/Create',
-                controller: 'EditPaymentController'
+                controller: 'EditPaymentCtrl',
+                controllerAs: 'vm'
             })
             .state('viewpayment', {
                 url: '/payment/:id',

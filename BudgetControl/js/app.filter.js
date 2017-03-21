@@ -46,3 +46,17 @@ budgetApp.filter('unique', function () {
 
 })();
 
+(function () {
+    angular.module('budgetApp')
+        .filter('negative', negative);
+
+    function negative() {
+        return function (input) {
+            input = input ? input : 0;
+            console.log(input);
+            return input < 0 ? "+" + input : input;
+        }
+    }
+
+})();
+

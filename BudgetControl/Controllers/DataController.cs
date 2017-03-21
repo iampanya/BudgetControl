@@ -85,6 +85,8 @@ namespace BudgetControl.Controllers
         [HttpGet]
         public ActionResult Payment(string id)
         {
+            Payment payment;
+            List<BudgetTransaction> transactions = new List<BudgetTransaction>();
             // 1. If id is null or empty, then return all payments.
             if (String.IsNullOrEmpty(id))
             {
@@ -96,12 +98,22 @@ namespace BudgetControl.Controllers
             {
                 using (PaymentRepository paymentRepo = new PaymentRepository())
                 {
-                    Payment payment = paymentRepo.GetById(id);
+                    payment = paymentRepo.GetById(id);
                     if (payment == null)
                     {
                         throw new Exception("ไม่พบข้อมูลงบประมาณที่เลือก");
                     }
-                    //TODO Get transaction details
+                }
+
+                var manager = new BudgetTransactionManager();
+                payment.BudgetTransactions = manager.SumTransaction(payment.BudgetTransactions.ToList());
+
+                using (BudgetRepository budgetRepo = new BudgetRepository())
+                {
+
+                    payment.BudgetTransactions.ToList().ForEach(t => t.Budget = budgetRepo.GetById(t.BudgetID));
+
+                    
                     returnobj.SetSuccess(payment);
                 }
             }
@@ -136,33 +148,6 @@ namespace BudgetControl.Controllers
 
             return Content(returnobj.ToJson(), "application/json");
 
-        //try
-        //{
-        //    using (PaymentRepository paymentRep = new PaymentRepository())
-        //    {
-        //        Payment payment = new Payment(paymentviewmodel);
-
-        //        ////Create New Payment
-        //        if (paymentviewmodel.PaymentID == Guid.Empty)
-        //        {
-        //            payment.PaymentID = Guid.NewGuid();
-        //            paymentRep.Add(payment);
-        //        }
-        //        //Update Exist Payment
-        //        else
-        //        {
-        //            paymentRep.Update(payment);
-        //        }
-
-        //        returnobj.SetSuccess(payment.PaymentID);
-        //    }
-        //}
-        //catch (Exception ex)
-        //{
-        //    returnobj.SetError(ex.Message);
-        //}
-
-        //return Content(Utility.ParseToJson(returnobj), "application/json");
     }
 
         [HttpPut]
