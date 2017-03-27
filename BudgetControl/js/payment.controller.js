@@ -140,6 +140,7 @@
             });
 
             // 2. Set status to "Remove"
+            //vm.transactions.splice(index, 1);
             vm.transactions[index].Status = "Remove";
 
             // 3. Update total amount on payment
@@ -394,7 +395,8 @@
             });
 
             // 2. Set status to "Remove"
-            vm.transactions[index].Status = "Remove";
+            vm.transactions.splice(index, 1);
+            //vm.transactions[index].Status = "Remove";
 
             // 3. Update total amount on payment
             updateTotalAmount();
@@ -406,13 +408,10 @@
 
             // for loop on each transaction and add to total amount.
             for (var i = 0; i < vm.transactions.length; i++) {
-                if (vm.transactions[i].Status === '0') {
-                    vm.payment.TotalAmount += vm.transactions[i].Amount;
-                }
+                vm.payment.TotalAmount += vm.transactions[i].Amount;
             }
         }
         function submit() {
-            console.log('submit call');
             vm.payment.BudgetTransactions = vm.transactions;
             apiService.payment().update(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
 
@@ -420,8 +419,7 @@
 
             function callPaymentSuccess(response) {
                 hr.respondSuccess(response);
-                console.log(response);
-                //TODO modal result.
+                openModal('lg', null, vm.payment.PaymentID);
             }
 
             function callPaymentError(e) {

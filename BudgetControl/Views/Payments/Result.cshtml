@@ -4,10 +4,11 @@
 }
 
 <div class="modal-header">
-    <h3 class="modal-title" id="modal-title">เบิกจ่ายงบประมาณสำเร็จ</h3>
+    <h3 class="modal-title" id="modal-title">เบิกจ่ายงบประมาณสำเร็จ : <span class="text-primary">{{ vm.payment.CostCenter.CostCenterName }}</span></h3>
 </div>
 <div class="modal-body" id="modal-body">
-    {{ vm.paymentid }}
+    <h4>ลำดับการเบิกที่: <span class="text-primary"> {{ vm.payment.Sequence }}</span></h4>
+    <h4>ผู้เบิก: <span class="text-primary"> {{ vm.payment.Requester.FullName }}</span></h4>
     <table class="table table-bordered table-hover table-striped">
         <thead>
             <tr>
@@ -23,18 +24,24 @@
         </thead>
         <tbody>
             <tr ng-repeat="transaction in vm.payment.BudgetTransactions">
-                <td> {{ index + 1 }} </td>
-                <td> {{ transaction.Budget.AccountID }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="text-center"> {{ $index + 1 }} </td>
+                <td class="text-center"> {{ transaction.Budget.AccountID }}</td>
+                <td class="text-center"> {{ transaction.Budget.Account.AccountName }}</td>
+                <td class="text-center"> {{ transaction.Budget.Year }}</td>
+                <td class="text-right"> {{ transaction.Budget.BudgetAmount | number: 2}}</td>
+                <td class="text-right"> {{ transaction.PreviousAmount | number: 2 }}</td>
+                <td class="text-right"> {{ transaction.Amount | number: 2 }}</td>
+                <td class="text-right"> {{ transaction.RemainAmount | number: 2}}</td>
+            </tr>
+            <tr>
+                <th colspan="6" class="text-right">รวมเบิก</th>
+                <th class="text-right">{{ vm.payment.TotalAmount | number: 2 }}</th>
+                <th class="text-center">บาท</th>
             </tr>
         </tbody>
     </table>
 </div>
+
 <div class="modal-footer">
     <button class="btn btn-default" type="button" ng-click="vm.update()">เปลี่ยนแปลง</button>
     <button class="btn btn-primary" type="button" ng-click="vm.next()">รายการเบิกจ่าย</button>

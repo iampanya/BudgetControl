@@ -154,7 +154,18 @@ namespace BudgetControl.Controllers
         [ActionName("Payment")]
         public ActionResult UpdatePayment(Payment payment)
         {
-            
+            try
+            {
+                PaymentManager paymentManager = new PaymentManager();
+                paymentManager.Update(payment);
+                returnobj.SetSuccess(payment.PaymentID);
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+                throw;
+            }
+
             return Content(returnobj.ToJson(), "application/json");
         }
 

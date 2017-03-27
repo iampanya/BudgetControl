@@ -62,7 +62,7 @@ namespace BudgetControl.Manager
                             transactionManager.Add(tran);
                         }
                     }
-                    
+
                     // 4. Comiit save change
                     dbTransaction.Commit();
                 }
@@ -76,7 +76,94 @@ namespace BudgetControl.Manager
 
         public void Update(Payment payment)
         {
+            using (var dbTransaction = _db.Database.BeginTransaction())
+            {
+                try
+                {
+                    //1. Get  payment
+                    Payment paymentindb;
 
+                    List<BudgetTransaction> newtransactions = new List<BudgetTransaction>();
+
+                    this.Payment = new Payment(payment);
+
+                    var paymentRepo = new PaymentRepository(_db);
+                    paymentindb = paymentRepo.GetById(payment.PaymentID);
+                    paymentRepo.Update(this.Payment);
+                    paymentRepo.Save();
+
+
+
+                    var manager = new BudgetTransactionManager(_db);
+                    paymentindb.BudgetTransactions = manager.SumTransaction(paymentindb.BudgetTransactions.ToList());
+
+
+                    foreach (var item in paymentindb.BudgetTransactions)
+                    {
+                        var tran = payment.BudgetTransactions.Where(t => t.BudgetID == item.BudgetID).FirstOrDefault();
+
+                        if (tran == null)
+                        {
+                            // delete 
+                            newtransactions.Add(new BudgetTransaction()
+                            {
+                                PaymentID = payment.PaymentID,
+                                BudgetID = item.BudgetID,
+                                Amount = item.Amount,
+                                RefID = item.BudgetTransactionID
+                                
+                            });
+                        }
+                        else
+                        {
+                            if (tran.Amount == item.Amount)
+                            {
+                                payment.BudgetTransactions.Remove(tran);
+                            }
+                            else
+                            {
+                                // Add new transaction
+                                newtransactions.Add(new BudgetTransaction()
+                                {
+                                    PaymentID = payment.PaymentID,
+                                    BudgetID = item.BudgetID,
+                                    Amount = item.Amount - tran.Amount,
+                                    RefID = item.BudgetTransactionID
+
+                                });
+                            }
+                        }
+                    }
+
+                    foreach (var item in payment.BudgetTransactions)
+                    {
+                        var tran = newtransactions.FirstOrDefault(t => t.BudgetID == item.BudgetID);
+                        if(tran == null)
+                        {
+                            newtransactions.Add(new BudgetTransaction()
+                            {
+                                PaymentID = payment.PaymentID,
+                                BudgetID = item.BudgetID,
+                                Amount = 0 - item.Amount
+                            });
+                        }
+                    }
+
+                    foreach (var item in newtransactions)
+                    {
+                        manager.Add(item);
+                    }
+
+                    dbTransaction.Commit();
+
+
+                }
+                catch (Exception ex)
+                {
+                    dbTransaction.Rollback();
+                    throw;
+                }
+            }
         }
 
         public void Delete(Payment payment)

@@ -56,6 +56,7 @@ namespace BudgetControl.Models
             this.Status = tran.Status;
         }
 
+       
 
         #endregion
 
