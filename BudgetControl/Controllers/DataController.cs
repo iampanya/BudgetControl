@@ -64,6 +64,7 @@ namespace BudgetControl.Controllers
                             p =>
                                 p.CostCenterID.StartsWith(working.CostCenterTrim)
                         )
+                        .OrderBy(p => p.Sequence)
                         .ToList();
 
                 }
@@ -138,8 +139,8 @@ namespace BudgetControl.Controllers
             try
             {
                 PaymentManager paymentManager = new PaymentManager();
-                paymentManager.Add(payment);
-                returnobj.SetSuccess("Create Payment success.");
+                var result = paymentManager.Add(payment);
+                returnobj.SetSuccess(result.PaymentID);
             }
             catch (Exception ex)
             {

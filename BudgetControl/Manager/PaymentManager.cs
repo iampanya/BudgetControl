@@ -33,7 +33,7 @@ namespace BudgetControl.Manager
 
         #region Methods
 
-        public void Add(Payment payment)
+        public Payment Add(Payment payment)
         {
             // Create transaction
             using (var dbTransaction = _db.Database.BeginTransaction())
@@ -46,6 +46,7 @@ namespace BudgetControl.Manager
 
                     // 2. Add payment to context
                     var paymentRepo = new PaymentRepository(_db);
+                    this.Payment.Sequence = paymentRepo.Get().Where(p => p.CostCenterID == this.Payment.CostCenterID).ToList().Count + 1;
                     paymentRepo.Add(this.Payment);
                     paymentRepo.Save();
 
@@ -65,6 +66,7 @@ namespace BudgetControl.Manager
 
                     // 4. Comiit save change
                     dbTransaction.Commit();
+                    return this.Payment;
                 }
                 catch (Exception ex)
                 {
@@ -94,51 +96,74 @@ namespace BudgetControl.Manager
 
 
 
-                    var manager = new BudgetTransactionManager(_db);
-                    paymentindb.BudgetTransactions = manager.SumTransaction(paymentindb.BudgetTransactions.ToList());
+                    var transmanager = new BudgetTransactionManager(_db);
+                    paymentindb.BudgetTransactions = transmanager.SumTransaction(paymentindb.BudgetTransactions.ToList());
 
-
-                    foreach (var item in paymentindb.BudgetTransactions)
+                    // for update transaction
+                    foreach (var itemindb in paymentindb.BudgetTransactions)
                     {
-                        var tran = payment.BudgetTransactions.Where(t => t.BudgetID == item.BudgetID).FirstOrDefault();
+                        var tran = payment.BudgetTransactions.Where(t => t.BudgetID == itemindb.BudgetID).FirstOrDefault();
+
 
                         if (tran == null)
                         {
                             // delete 
-                            newtransactions.Add(new BudgetTransaction()
+                            if (isLastTransaction(itemindb))
                             {
-                                PaymentID = payment.PaymentID,
-                                BudgetID = item.BudgetID,
-                                Amount = item.Amount,
-                                RefID = item.BudgetTransactionID
-                                
-                            });
+                                // Delete
+                                transmanager.Delete(itemindb);
+                            }
+                            else
+                            {
+                                newtransactions.Add(new BudgetTransaction()
+                                {
+                                    PaymentID = payment.PaymentID,
+                                    BudgetID = itemindb.BudgetID,
+                                    Amount = itemindb.Amount,
+                                    RefID = itemindb.BudgetTransactionID
+                                });
+                            }
                         }
                         else
                         {
-                            if (tran.Amount == item.Amount)
+                            if (tran.Amount == itemindb.Amount)
                             {
                                 payment.BudgetTransactions.Remove(tran);
                             }
                             else
                             {
-                                // Add new transaction
-                                newtransactions.Add(new BudgetTransaction()
+                                if (isLastTransaction(itemindb))
                                 {
-                                    PaymentID = payment.PaymentID,
-                                    BudgetID = item.BudgetID,
-                                    Amount = item.Amount - tran.Amount,
-                                    RefID = item.BudgetTransactionID
+                                    BudgetTransaction updateitem;
+                                    //Update
+                                    using (var transRepo = new TransactionRepository())
+                                    {
+                                        updateitem = transRepo.GetById(itemindb.BudgetTransactionID);
+                                    }
+                                    updateitem.Amount = updateitem.Amount + (itemindb.Amount - tran.Amount);
+                                    transmanager.Update(itemindb);
+                                }
+                                else
+                                {
+                                    // Add new transaction
+                                    newtransactions.Add(new BudgetTransaction()
+                                    {
+                                        PaymentID = payment.PaymentID,
+                                        BudgetID = itemindb.BudgetID,
+                                        Amount = itemindb.Amount - tran.Amount,
+                                        RefID = itemindb.BudgetTransactionID
 
-                                });
+                                    });
+                                }
                             }
                         }
                     }
 
+                    // for new transaction
                     foreach (var item in payment.BudgetTransactions)
                     {
                         var tran = newtransactions.FirstOrDefault(t => t.BudgetID == item.BudgetID);
-                        if(tran == null)
+                        if (tran == null)
                         {
                             newtransactions.Add(new BudgetTransaction()
                             {
@@ -151,7 +176,7 @@ namespace BudgetControl.Manager
 
                     foreach (var item in newtransactions)
                     {
-                        manager.Add(item);
+                        transmanager.Add(item);
                     }
 
                     dbTransaction.Commit();
@@ -171,6 +196,15 @@ namespace BudgetControl.Manager
 
         }
 
+        private bool isLastTransaction(BudgetTransaction transaction)
+        {
+            // disable last transaction
+            return false;
+            //using (var transRepo = new TransactionRepository())
+            //{
+            //    return !(transRepo.Get().Any(t => t.BudgetID == transaction.BudgetID && t.CreatedAt > transaction.CreatedAt));
+            //}
+        }
 
         #endregion
 

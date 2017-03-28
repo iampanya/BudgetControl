@@ -140,8 +140,8 @@
             });
 
             // 2. Set status to "Remove"
-            //vm.transactions.splice(index, 1);
-            vm.transactions[index].Status = "Remove";
+            vm.transactions.splice(index, 1);
+            //vm.transactions[index].Status = "Remove";
 
             // 3. Update total amount on payment
             updateTotalAmount();
@@ -153,21 +153,25 @@
 
             // for loop on each transaction and add to total amount.
             for (var i = 0; i < vm.transactions.length; i++) {
-                if (vm.transactions[i].Status === '0') {
-                    vm.payment.TotalAmount += vm.transactions[i].Amount;
-                }
+                vm.payment.TotalAmount += vm.transactions[i].Amount;
+
+                //if (vm.transactions[i].Status === '0') {
+                //    vm.payment.TotalAmount += vm.transactions[i].Amount;
+                //}
             }
         }
         function submit() {
             console.log('submit call');
             vm.payment.BudgetTransactions = vm.transactions;
-            //apiService.payment().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
+            apiService.payment().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
 
-            openModal('lg', null, '4FED2241-8896-403B-998F-4069F196D190');
+            //openModal('lg', null, '4FED2241-8896-403B-998F-4069F196D190');
 
             function callPaymentSuccess(response) {
-                hr.respondSuccess(response);
+                var paymentid = hr.respondSuccess(response);
+                console.log(response);
                 //TODO modal result.
+                openModal('lg', null, paymentid);
             }
 
             function callPaymentError(e) {

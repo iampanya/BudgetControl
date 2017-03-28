@@ -31,7 +31,7 @@ namespace BudgetControl.Models
         public BudgetTransaction(BudgetFileModel budgetfile, Budget budget)
         {
             this.BudgetTransactionID = Guid.NewGuid();
-            this.Description = "";
+            this.Description = "นำเข้าจาก SAP";
             this.Amount = budgetfile.Amount;
             this.Type = TransactionType.Definition;
 

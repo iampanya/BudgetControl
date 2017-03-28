@@ -110,6 +110,8 @@ namespace BudgetControl.Manager
 
         }
 
+        
+
         public void Delete(BudgetTransaction transaction)
         {
 
@@ -126,7 +128,9 @@ namespace BudgetControl.Manager
 
                 if(i > -1)
                 {
-                    result[i].Amount += item.Amount;
+                    item.Amount = item.Amount + result[i].Amount;
+                    result[i] = item;
+                    //result[i].Amount += item.Amount;
                 }
                 else
                 {
