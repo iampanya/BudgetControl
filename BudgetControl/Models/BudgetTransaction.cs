@@ -31,7 +31,7 @@ namespace BudgetControl.Models
         public BudgetTransaction(BudgetFileModel budgetfile, Budget budget)
         {
             this.BudgetTransactionID = Guid.NewGuid();
-            this.Description = "";
+            this.Description = "นำเข้าจาก SAP";
             this.Amount = budgetfile.Amount;
             this.Type = TransactionType.Definition;
 
@@ -41,6 +41,22 @@ namespace BudgetControl.Models
         }
 
 
+        public BudgetTransaction(BudgetTransaction tran)
+        {
+            this.BudgetTransactionID = tran.BudgetTransactionID;
+            this.BudgetID = tran.BudgetID;
+            this.PaymentID = tran.PaymentID;
+            this.RowVersion = tran.RowVersion;
+            this.Description = tran.Description;
+            this.Amount = tran.Amount;
+            this.PreviousAmount = tran.PreviousAmount;
+            this.RemainAmount = tran.RemainAmount;
+            this.RefID = tran.RefID;
+            this.Type = tran.Type;
+            this.Status = tran.Status;
+        }
+
+       
 
         #endregion
 
@@ -60,6 +76,7 @@ namespace BudgetControl.Models
         public decimal RemainAmount { get; set; }
         public Guid? RefID { get; set; }
         public TransactionType Type { get; set; }
+        public RecordStatus Status { get; set; }
 
         #endregion
 
@@ -72,6 +89,15 @@ namespace BudgetControl.Models
 
         #endregion
 
+        #region Validate
+
+        public void Validate()
+        {
+
+        }
+
+        #endregion
+
         #region Methods
         public void SetAmount(List<Budget> budgets)
         {
@@ -81,7 +107,23 @@ namespace BudgetControl.Models
             budgets[index].RemainAmount = budgets[index].RemainAmount + this.Amount;
         }
 
-    
+        // Prepare budget transaction before save
+        public void PrepareTransactionToSave(Budget budget)
+        {
+            this.BudgetTransactionID = Guid.NewGuid();
+            this.PreviousAmount = budget.WithdrawAmount;
+            this.RemainAmount = budget.RemainAmount + this.Amount;
+            this.Type = TransactionType.Transaction;
+            this.NewCreateTimeStamp();
+        }
+
+        public void PrepareTransactionToSave()
+        {
+            this.BudgetTransactionID = Guid.NewGuid();
+            this.Type = TransactionType.Transaction;
+            this.NewCreateTimeStamp();
+        }
+
 
         #endregion
     }

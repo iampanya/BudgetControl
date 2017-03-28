@@ -1,6 +1,8 @@
 ﻿using BudgetControl.Models;
+using BudgetControl.Models.Base;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -22,45 +24,88 @@ namespace BudgetControl.DAL
             this._db = context;
         }
 
+
         #endregion
 
 
         #region IRepository
+        public IEnumerable<BudgetTransaction> GetAll()
+        {
+            return _db.BudgetTransactions
+                .AsNoTracking()
+                .Include(t => t.Budget)
+                .Include(t => t.Budget.Account)
+                .Include(t => t.Budget.CostCenter)
+                .Include(t => t.Payment)
+                .Include(t => t.Reference);
+        }
 
         public IEnumerable<BudgetTransaction> Get()
         {
-            throw new NotImplementedException();
+            return GetAll().Where(t => t.Status == RecordStatus.Active);
         }
 
         public void Add(BudgetTransaction entity)
         {
+            // 1. Validate entity
+            entity.Validate();
+
+            // 2. Mark timestamp
             entity.NewCreateTimeStamp();
+
+            // 3. Add to context
             _db.BudgetTransactions.Add(entity);
         }
 
         public void AddOrUpdate(BudgetTransaction entity)
         {
-            throw new NotImplementedException();
+            if (GetById(entity.BudgetTransactionID) == null)
+            {
+                Add(entity);
+            }
+            else
+            {
+                Update(entity);
+            }
         }
+
 
         public void Delete(object id)
         {
-            throw new NotImplementedException();
+            this.Delete(this.GetById(id));
         }
 
         public void Delete(BudgetTransaction entity)
         {
-            throw new NotImplementedException();
+            entity.Status = RecordStatus.Remove;
         }
 
         public void Update(BudgetTransaction entity)
         {
-            throw new NotImplementedException();
+            // 1. Validate
+            entity.Validate();
+
+            // 2. Mark timestamp
+            entity.NewModifyTimeStamp();
+
+            // 3. Add to context
+            _db.Entry(entity).State = EntityState.Modified;
+            _db.Entry(entity).Property(x => x.CreatedAt).IsModified = false;
+            _db.Entry(entity).Property(x => x.CreatedBy).IsModified = false;
         }
 
         public BudgetTransaction GetById(object id)
         {
-            throw new NotImplementedException();
+            Guid transactionid;
+            try
+            {
+                transactionid = new Guid(id.ToString());
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return GetAll().FirstOrDefault(p => p.BudgetTransactionID == transactionid);
         }
 
         public void Save()
@@ -95,9 +140,6 @@ namespace BudgetControl.DAL
 
         #endregion
 
-        public IEnumerable<BudgetTransaction> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

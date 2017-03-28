@@ -16,7 +16,11 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
     }
 
     api.payment = function () {
-        return $resource('data/payment/:id')
+        return $resource('data/payment/:id', null, {
+            'save': { method: 'POST' },
+            'update': { method: 'PUT' },
+            'remove': { method: 'DELETE'}
+        });
     }
 
     api.emptypayment = function () {

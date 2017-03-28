@@ -12,7 +12,7 @@ using System.Data.Entity.Migrations;
 using Newtonsoft.Json;
 using BudgetControl.Util;
 using BudgetControl.Models.Base;
-
+using BudgetControl.Manager;
 
 namespace BudgetControl.Controllers
 {
@@ -50,43 +50,80 @@ namespace BudgetControl.Controllers
         {
             try
             {
-                using (PaymentRepository paymentRep = new PaymentRepository())
+                CostCenter working;
+                List<Payment> payments;
+
+                // 1. Get working costcenter.
+                working = AuthManager.GetWorkingCostCenter();
+
+                // 2. Get payment data.
+                using (PaymentRepository paymentRepo = new PaymentRepository())
                 {
-                    List<PaymentViewModel> paymentviewmodels = new List<PaymentViewModel>();
-                    paymentRep.Get().ToList().ForEach(p => paymentviewmodels.Add(new PaymentViewModel(p)));
-                    returnobj.SetSuccess(paymentviewmodels);
+                    payments = paymentRepo.Get()
+                        .Where(
+                            p =>
+                                p.CostCenterID.StartsWith(working.CostCenterTrim)
+                        )
+                        .OrderBy(p => p.Sequence)
+                        .ToList();
+
                 }
+                // 3. Set Return result
+                returnobj.SetSuccess(payments);
+
             }
             catch (Exception ex)
             {
+
                 returnobj.SetError(ex.Message);
             }
 
+            // 3. Return to client
             return Content(Utility.ParseToJson(returnobj), "application/json");
+
         }
 
         [HttpGet]
         public ActionResult Payment(string id)
         {
+            Payment payment;
+            List<BudgetTransaction> transactions = new List<BudgetTransaction>();
+            // 1. If id is null or empty, then return all payments.
             if (String.IsNullOrEmpty(id))
             {
                 return Payments();
             }
 
+            // 2. Get payment by id
             try
             {
-                using (PaymentRepository paymentRep = new PaymentRepository())
+                using (PaymentRepository paymentRepo = new PaymentRepository())
                 {
-                    var paymentviewmodel = new PaymentViewModel(paymentRep.GetById(id));
-                    paymentviewmodel.GetDetails();
-                    returnobj.SetSuccess(paymentviewmodel);
+                    payment = paymentRepo.GetById(id);
+                    if (payment == null)
+                    {
+                        throw new Exception("ไม่พบข้อมูลงบประมาณที่เลือก");
+                    }
+                }
+
+                var manager = new BudgetTransactionManager();
+                payment.BudgetTransactions = manager.SumTransaction(payment.BudgetTransactions.ToList());
+
+                using (BudgetRepository budgetRepo = new BudgetRepository())
+                {
+
+                    payment.BudgetTransactions.ToList().ForEach(t => t.Budget = budgetRepo.GetById(t.BudgetID));
+
+                    
+                    returnobj.SetSuccess(payment);
                 }
             }
             catch (Exception ex)
             {
                 returnobj.SetError(ex.Message);
             }
-            return Content(Utility.ParseToJson(returnobj), "application/json");
+            // 3. Return to client
+            return Content(returnobj.ToJson(), "application/json");
         }
 
         [HttpGet]
@@ -97,37 +134,41 @@ namespace BudgetControl.Controllers
         }
 
         [HttpPost]
-        public ActionResult Payment(PaymentViewModel paymentviewmodel)
+        public ActionResult Payment(Payment payment)
         {
             try
             {
-                using (PaymentRepository paymentRep = new PaymentRepository())
-                {
-                    Payment payment = new Payment(paymentviewmodel);
-
-                    ////Create New Payment
-                    if (paymentviewmodel.PaymentID == Guid.Empty)
-                    {
-                        payment.PaymentID = Guid.NewGuid();
-                        paymentRep.Add(payment);
-                    }
-                    //Update Exist Payment
-                    else
-                    {
-                        paymentRep.Update(payment);
-                    }
-
-                    returnobj.SetSuccess(payment.PaymentID);
-                }
+                PaymentManager paymentManager = new PaymentManager();
+                var result = paymentManager.Add(payment);
+                returnobj.SetSuccess(result.PaymentID);
             }
             catch (Exception ex)
             {
                 returnobj.SetError(ex.Message);
             }
 
-            return Content(Utility.ParseToJson(returnobj), "application/json");
-        }
+            return Content(returnobj.ToJson(), "application/json");
 
+    }
+
+        [HttpPut]
+        [ActionName("Payment")]
+        public ActionResult UpdatePayment(Payment payment)
+        {
+            try
+            {
+                PaymentManager paymentManager = new PaymentManager();
+                paymentManager.Update(payment);
+                returnobj.SetSuccess(payment.PaymentID);
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+                throw;
+            }
+
+            return Content(returnobj.ToJson(), "application/json");
+        }
 
         [HttpDelete]
         [ActionName("Payment")]
@@ -172,7 +213,7 @@ namespace BudgetControl.Controllers
                     budgets = budgetRep.Get().ToList();
                     budgets = budgetRep.Get()
                         .Where(
-                            b => 
+                            b =>
                                 b.CostCenterID.StartsWith(working.CostCenterTrim)
                         )
                         .ToList();
@@ -180,7 +221,7 @@ namespace BudgetControl.Controllers
 
                 // 3. Set return object.
                 returnobj.SetSuccess(budgets);
-                
+
             }
             catch (Exception ex)
             {
@@ -188,25 +229,7 @@ namespace BudgetControl.Controllers
             }
 
             return Content(returnobj.ToJson(), "application/json");
-            
-            //try
-            //{
-            //    CostCenter working = AuthManager.GetWorkingCostCenter();
 
-            //    using (BudgetRepository budgetRep = new BudgetRepository())
-            //    {
-            //        List<BudgetViewModel> budgetviewmodels = new List<BudgetViewModel>();
-            //        budgetRep.Get().ToList().ForEach(
-            //            b => budgetviewmodels.Add(new BudgetViewModel(b)));
-            //        returnobj = new ReturnObject(true, string.Empty, budgetviewmodels);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    returnobj = new ReturnObject(false, ex.Message, null);
-            //}
-
-            //return Content(Utility.ParseToJson(returnobj), "application/json");
         }
 
         [HttpGet]
@@ -222,9 +245,11 @@ namespace BudgetControl.Controllers
                 using (BudgetRepository budgetRep = new BudgetRepository())
                 {
                     Budget budget = budgetRep.GetById(id);
-                    if (budget == null){
+                    if (budget == null)
+                    {
                         throw new Exception("ไม่พบข้อมูลงบประมาณที่เลือก");
                     }
+                    budget.BudgetTransactions = budget.BudgetTransactions.OrderBy(t => t.CreatedAt).ToList();
                     returnobj.SetSuccess(budget);
                 }
             }
@@ -235,26 +260,6 @@ namespace BudgetControl.Controllers
 
             return Content(Utility.ParseToJson(returnobj), "application/json");
 
-            //if (id == null)
-            //{
-            //    return Budgets();
-            //}
-
-            //try
-            //{
-            //    using (BudgetRepository budgetRep = new BudgetRepository())
-            //    {
-            //        BudgetViewModel budgetviewmodel = new BudgetViewModel(budgetRep.GetById(id));
-            //        budgetviewmodel.GetDetails();
-            //        returnobj = new ReturnObject(true, string.Empty, budgetviewmodel);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    returnobj = new ReturnObject(false, ex.Message, null);
-            //}
-
-            //return Content(Utility.ParseToJson(returnobj), "application/json");
         }
 
         [HttpPost]
@@ -269,99 +274,6 @@ namespace BudgetControl.Controllers
             returnobj.SetSuccess("test");
             return Content(Utility.ParseToJson(returnobj), "application/json");
         }
-
-        //[HttpPost]
-        //public ActionResult UploadBudget(UploadBudgetModel budgetfile)
-        //{
-        //    List<Budget> budgets = new List<Budget>();
-        //    List<Account> accounts = new List<Account>();
-
-        //    try
-        //    {
-
-        //        string[] lines = budgetfile.FileData.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-
-        //        foreach (var line in lines)
-        //        {
-        //            string[] columns = line.Split('|');
-        //            if (columns.Length == 7)
-        //            {
-        //                if (columns[2][0] == '5')
-        //                {
-        //                    accounts.Add(new Account
-        //                    {
-        //                        AccountID = columns[2].Trim(),
-        //                        AccountName = columns[3].Trim()
-        //                    });
-
-        //                    budgets.Add(new Budget
-        //                    {
-        //                        BudgetID = Guid.NewGuid(),
-        //                        AccountID = columns[2].Trim(),
-        //                        CostCenterID = columns[5].Trim(),
-        //                        Year = budgetfile.Year,
-        //                        BudgetAmount = float.Parse(columns[4]),
-        //                        Status = BudgetStatus.Active
-        //                    });
-        //                }
-        //            }
-        //        }
-
-        //        List<Account> distinctAccount = accounts.GroupBy(a => a.AccountID).Select(a => a.First()).ToList();
-
-        //        RecordTimeStamp rt = new RecordTimeStamp();
-        //        rt.NewTimeStamp();
-
-        //        using (var context = new BudgetContext())
-        //        {
-
-
-        //            distinctAccount.ForEach(a =>
-        //            {
-        //                a.SetCreateTimeStamp(rt);
-        //                context.Accounts.AddOrUpdate(c => c.AccountID, a);
-        //            });
-        //            context.SaveChanges();
-        //        }
-
-
-        //        using (var context = new BudgetContext())
-        //        {
-        //            budgets.ForEach(b =>
-        //            {
-
-        //                var budgetindb = context.Budgets
-        //                    .Where(c =>
-        //                        c.AccountID == b.AccountID &&
-        //                        c.CostCenterID == b.CostCenterID &&
-        //                        c.Year == b.Year)
-        //                    .FirstOrDefault();
-
-        //                if (budgetindb == null)
-        //                {
-        //                    b.SetCreateTimeStamp(rt);
-        //                    context.Budgets.Add(b);
-        //                }
-        //                else
-        //                {
-        //                    budgetindb.BudgetAmount = b.BudgetAmount;
-        //                    budgetindb.SetModifiedTimeStamp(rt);
-        //                    context.Budgets.Attach(budgetindb);
-        //                    context.Entry(budgetindb).State = EntityState.Modified;
-        //                }
-        //            });
-        //            context.SaveChanges();
-
-        //            returnobj.SetSuccess("Success");
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        returnobj.SetError(ex.Message);
-        //    }
-        //    return Content(Utility.ParseToJson(returnobj), "application/json");
-        //}
 
         [HttpPost]
         public ActionResult UploadBudget(List<BudgetFileModel> filedata)

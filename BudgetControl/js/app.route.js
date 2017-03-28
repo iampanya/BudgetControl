@@ -1,62 +1,4 @@
-﻿//budgetApp.config(function ($routeProvider) {
-//    $routeProvider
-//        .when('/', {
-//            templateUrl: 'Home/Home'
-//        })
-
-//        /************************************/
-//        .when('/budget', {
-//            templateUrl: 'Budgets/Index',
-//            controller: 'BudgetController'
-//        })
-//        .when('/budget/create', {
-//            templateUrl: 'Budgets/Create',
-//            controller: 'CreateBudgetController'
-//        })
-//        .when('/budget/edit/:id', {
-//            templateUrl: 'Budgets/Create',
-//            controller: 'EditBudgetController'
-//        })
-//        .when('/budget/upload', {
-//            templateUrl: 'Budgets/Upload',
-//            controller: 'UploadBudgetController'
-//        })
-//        .when('/budget/:id', {
-//            templateUrl: 'Budgets/Details',
-//            controller: 'DetailBudgetController'
-//        })
-
-//        /***********************************/
-//        .when('/payment', {
-//            templateUrl: 'Payments/Index',
-//            controller: 'PaymentController'
-//        })
-//        .when('/payment/create', {
-//            templateUrl: 'Payments/Create',
-//            controller: 'CreatePaymentController'
-//        })
-//        .when('/payment/edit/:id', {
-//            templateUrl: 'Payments/Create',
-//            controller: 'EditPaymentController'
-//        })
-//        .when('/payment/:id', {
-//            templateUrl: 'Payments/Details',
-//            controller: 'DetailPaymentController'
-//        })
-
-//    /***********************************/
-//        .when('/user', {
-//            templateUrl: 'User/Index',
-//            controller: ''
-//        })
-//        .when('/signin', {
-//            templateUrl: 'User/Signin',
-//            controller: 'SigninController'
-//        })
-//})
-
-
-
+﻿;
 (function () {
     angular
         .module('budgetApp')
@@ -86,7 +28,8 @@
             .state('editbudget', {
                 url: '/budget/edit/:id',
                 templateUrl: 'Budgets/Create',
-                controller: 'EditBudgetController'
+                controller: 'EditBudgetController',
+                controllerAs: 'vm'
             })
             .state('uploadbudget', {
                 url: '/budget/upload',
@@ -101,21 +44,25 @@
                 controllerAs: 'vm'
             })
             
-            //
+            // Payment page
             .state('payment', {
                 url: '/payment',
                 templateUrl: 'Payments/Index',
-                controller: 'PaymentController'
+                controller: 'PaymentCtrl',
+                controllerAs: 'vm'
             })
             .state('newpayment', {
                 url: '/payment/create',
                 templateUrl: 'Payments/Create',
-                controller: 'CreatePaymentController'
+                controller: 'CreatePaymentCtrl',
+                controllerAs: 'vm'
             })
+
             .state('editpayment', {
                 url: '/payment/edit/:id',
                 templateUrl: 'Payments/Create',
-                controller: 'EditPaymentController'
+                controller: 'EditPaymentCtrl',
+                controllerAs: 'vm'
             })
             .state('viewpayment', {
                 url: '/payment/:id',

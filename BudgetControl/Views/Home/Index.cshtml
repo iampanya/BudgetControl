@@ -26,7 +26,7 @@
                 <!--- Session-->
                 <div ng-if="!vm.isAuthen">
                     <ul class="nav navbar-nav navbar-right">
-                        <li ui-sref-active="active"><a ui-sref="login">เข้าสู่ระบบ</a></li>
+                        <li ui-sref-active="active"><a ui-sref="login"><i class="fa fa-sign-in" aria-hidden="true"></i>  เข้าสู่ระบบ</a></li>
                     </ul>
                 </div>
 
@@ -34,7 +34,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ vm.userinfo.Employee.FirstName + ' ' + vm.userinfo.Employee.LastName }}
+                                <i class="fa fa-user" aria-hidden="true"></i> {{ vm.userinfo.Employee.FirstName + ' ' + vm.userinfo.Employee.LastName }}
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
@@ -42,7 +42,7 @@
                                 <li><a ui-sref="changepassword">เปลี่ยนรหัสผ่าน</a></li>
                             </ul>
                         </li>
-                        <li><a ng-click="vm.logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                        <li><a ng-click="vm.logout()">ออกจากระบบ <i class="fa fa-sign-out" aria-hidden="true"></i>  </a></li>
                     </ul>
                 </div>
             </div>

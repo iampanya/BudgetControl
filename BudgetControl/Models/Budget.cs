@@ -29,6 +29,19 @@ namespace BudgetControl.Models
 
         }
 
+        public Budget(Budget budget)
+        {
+            this.BudgetID = budget.BudgetID;
+            this.AccountID = budget.AccountID;
+            this.CostCenterID = budget.CostCenterID;
+            this.Sequence = budget.Sequence;
+            this.Year = budget.Year;
+            this.BudgetAmount = budget.BudgetAmount;
+            this.WithdrawAmount = budget.WithdrawAmount;
+            this.RemainAmount = budget.RemainAmount;
+            this.Status = budget.Status;
+        }
+
         public Budget(BudgetFileModel budgetfile)
         {
             this.BudgetID = Guid.NewGuid();
