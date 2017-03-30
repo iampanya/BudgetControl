@@ -406,7 +406,7 @@ namespace BudgetControl.Controllers
                         // Sum amount to exist budget
                         int index = budgets.IndexOf(budget);
                         budgets[index].BudgetAmount += row.Amount;
-                        budgets[index].RemainAmount += row.Amount;
+                        //budgets[index].RemainAmount += row.Amount;
                     }
                 }
 

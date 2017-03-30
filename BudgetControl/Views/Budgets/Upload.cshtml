@@ -27,7 +27,10 @@
                                 <a ui-sref="budget" class="btn btn-default btn-block">ยกเลิก</a>
                             </div>
                             <div class="col-md-4">
-                                <input type="submit" value="{{ vm.btnRead.name }}" class="btn btn-primary btn-block" ng-disabled="frmUpload.$invalid || vm.btnRead.disabled" />
+
+                                <button type="submit" class="btn btn-primary btn-block" ng-disabled="frmUpload.$invalid || vm.btnRead.disabled" >
+                                        {{ vm.btnRead.name }} <i class="fa fa-file-text-o" aria-hidden="true"></i> 
+                                </button>
                             </div>
                         </div>
                     </fieldset>
@@ -42,7 +45,7 @@
     <div class="row">
         <div class="col-md-2 col-md-offset-10">
             <button type="button" class="btn btn-primary btn-block" ng-click="vm.upload()" ng-disabled="vm.btnSave.disabled">
-                {{ vm.btnSave.name }}
+                <i class="fa fa-floppy-o" aria-hidden="true"></i> {{ vm.btnSave.name }}
             </button>
         </div>
     </div>
@@ -66,8 +69,8 @@
                 <td class="text-center">{{ row.Year }}</td>
                 <td class="text-center">{{ row.AccountID }}</td>
                 <td class="text-center">{{ row.AccountName }}</td>
-                <td class="text-center">{{ row.Amount }}</td>
-                <td class="text-center">{{ row.CostCenterID}}</td>
+                <td class="text-center">{{ row.Amount | number: 2 }}</td>
+                <td class="text-center">{{ row.CostCenterID }}</td>
             </tr>
         </tbody>
     </table>
