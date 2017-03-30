@@ -114,7 +114,7 @@ namespace BudgetControl.Controllers
 
                     payment.BudgetTransactions.ToList().ForEach(t => t.Budget = budgetRepo.GetById(t.BudgetID));
 
-                    
+
                     returnobj.SetSuccess(payment);
                 }
             }
@@ -149,7 +149,7 @@ namespace BudgetControl.Controllers
 
             return Content(returnobj.ToJson(), "application/json");
 
-    }
+        }
 
         [HttpPut]
         [ActionName("Payment")]
@@ -275,13 +275,97 @@ namespace BudgetControl.Controllers
             return Content(Utility.ParseToJson(returnobj), "application/json");
         }
 
+        //[HttpPost]
+        //public ActionResult UploadBudget(List<BudgetFileModel> filedata)
+        //{
+        //    List<Account> accounts = new List<Account>();
+        //    List<Budget> budgets = new List<Budget>();
+        //    List<BudgetTransaction> transactions = new List<BudgetTransaction>();
+
+        //    try
+        //    {
+        //        // 1. Validate POST parameter
+        //        if (filedata == null)
+        //        {
+        //            throw new ArgumentNullException("filedata");
+        //        }
+
+        //        // 2. Read each row and process data.
+        //        filedata = filedata.OrderBy(f => f.CostCenterID).ThenBy(f => f.AccountID).ToList();
+        //        foreach (var row in filedata)
+        //        {
+        //            // 2.1 Check existing and add to Accounts.
+        //            var account = accounts.Where(a => a.AccountID == row.AccountID).FirstOrDefault();
+        //            if (account == null)
+        //            {
+        //                account = new Account(row);
+        //                accounts.Add(account);
+        //            }
+        //            accounts.Add(account);
+
+        //            // 2.2 Check existing and add to Budgets Header.
+        //            var budget = budgets.Where(b =>
+        //                    b.AccountID == row.AccountID &&
+        //                    b.CostCenterID == row.CostCenterID &&
+        //                    b.Year == row.Year
+        //                ).FirstOrDefault();
+
+        //            if (budget == null)
+        //            {
+        //                budget = new Budget(row);
+        //                budgets.Add(budget);
+        //            }
+
+        //            // 2.3 Add to Budget Transaction.
+        //            var transaction = new BudgetTransaction(row, budget);
+        //            transaction.SetAmount(budgets); // Get previous amount and update budget amount
+        //            transactions.Add(transaction);
+        //        }
+
+        //        // 3. Save to database
+        //        using (var context = new BudgetContext())
+        //        {
+        //            using (var db_transaction = context.Database.BeginTransaction())
+        //            {
+        //                try
+        //                {
+        //                    var accRepo = new AccountRepository(context);
+        //                    var budgetRepo = new BudgetRepository(context);
+        //                    var transRepo = new TransactionRepository(context);
+
+        //                    accounts.ForEach(a => accRepo.AddOrUpdate(a));
+        //                    accRepo.Save();
+
+        //                    budgets.ForEach(b => budgetRepo.AddOrUpdate(b));
+        //                    budgetRepo.Save();
+
+        //                    transactions.ForEach(t => transRepo.Add(t));
+        //                    transRepo.Save();
+
+        //                    db_transaction.Commit();
+        //                    returnobj.SetSuccess(filedata);
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    db_transaction.Rollback();
+        //                    throw ex;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        returnobj.SetError(ex.Message);
+        //    }
+
+        //    return Content(returnobj.ToJson(), "application/json");
+        //}
+
         [HttpPost]
         public ActionResult UploadBudget(List<BudgetFileModel> filedata)
         {
             List<Account> accounts = new List<Account>();
             List<Budget> budgets = new List<Budget>();
-            List<BudgetTransaction> transactions = new List<BudgetTransaction>();
-
             try
             {
                 // 1. Validate POST parameter
@@ -301,9 +385,10 @@ namespace BudgetControl.Controllers
                         account = new Account(row);
                         accounts.Add(account);
                     }
-                    accounts.Add(account);
+                    //accounts.Add(account);
 
                     // 2.2 Check existing and add to Budgets Header.
+                    //TODO: Check existing in db
                     var budget = budgets.Where(b =>
                             b.AccountID == row.AccountID &&
                             b.CostCenterID == row.CostCenterID &&
@@ -312,14 +397,17 @@ namespace BudgetControl.Controllers
 
                     if (budget == null)
                     {
+                        // Add new budget
                         budget = new Budget(row);
                         budgets.Add(budget);
                     }
-
-                    // 2.3 Add to Budget Transaction.
-                    var transaction = new BudgetTransaction(row, budget);
-                    transaction.SetAmount(budgets); // Get previous amount and update budget amount
-                    transactions.Add(transaction);
+                    else
+                    {
+                        // Sum amount to exist budget
+                        int index = budgets.IndexOf(budget);
+                        budgets[index].BudgetAmount += row.Amount;
+                        budgets[index].RemainAmount += row.Amount;
+                    }
                 }
 
                 // 3. Save to database
@@ -331,16 +419,12 @@ namespace BudgetControl.Controllers
                         {
                             var accRepo = new AccountRepository(context);
                             var budgetRepo = new BudgetRepository(context);
-                            var transRepo = new TransactionRepository(context);
 
                             accounts.ForEach(a => accRepo.AddOrUpdate(a));
                             accRepo.Save();
 
                             budgets.ForEach(b => budgetRepo.AddOrUpdate(b));
                             budgetRepo.Save();
-
-                            transactions.ForEach(t => transRepo.Add(t));
-                            transRepo.Save();
 
                             db_transaction.Commit();
                             returnobj.SetSuccess(filedata);
@@ -352,14 +436,17 @@ namespace BudgetControl.Controllers
                         }
                     }
                 }
+
+
             }
             catch (Exception ex)
             {
                 returnobj.SetError(ex.Message);
+                throw;
             }
-
             return Content(returnobj.ToJson(), "application/json");
         }
+
 
         [HttpPost]
         public ActionResult ReadBudgetFile(UploadBudgetModel formdata)
@@ -397,7 +484,7 @@ namespace BudgetControl.Controllers
                 //budgetfile = budgetfile.Where(b => b.CostCenterID == AuthManager.GetWorkingCostCenter().CostCenterID).ToList();
 
                 budgetfile = budgetfile
-                    .Where(b => b.CostCenterID.StartsWith("H301023"))
+                    .Where(b => b.CostCenterID.StartsWith("H301023") || b.CostCenterID == "H301000000")
                     .ToList();
 
                 returnobj.SetSuccess(budgetfile);

@@ -47,6 +47,9 @@ namespace BudgetControl.Models
             this.BudgetID = Guid.NewGuid();
             this.AccountID = budgetfile.AccountID;
             this.CostCenterID = budgetfile.CostCenterID;
+            this.BudgetAmount = budgetfile.Amount;
+            this.RemainAmount = budgetfile.Amount;
+            this.WithdrawAmount = 0;
             this.Year = budgetfile.Year;
             this.Status = BudgetStatus.Active;
         }

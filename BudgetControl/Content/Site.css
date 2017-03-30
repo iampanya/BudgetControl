@@ -17,6 +17,9 @@ body {
     padding-bottom: 70px;
 }
 
+/*textarea{
+    font-size: 1.2em !important;
+}*/
 
 hr.footer {
     margin-top: 0;
