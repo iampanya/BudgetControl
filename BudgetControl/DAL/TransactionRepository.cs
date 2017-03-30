@@ -16,7 +16,7 @@ namespace BudgetControl.DAL
 
         public TransactionRepository()
         {
-
+            _db = new BudgetContext();
         }
 
         public TransactionRepository(BudgetContext context)
@@ -78,6 +78,7 @@ namespace BudgetControl.DAL
         public void Delete(BudgetTransaction entity)
         {
             entity.Status = RecordStatus.Remove;
+
         }
 
         public void Update(BudgetTransaction entity)

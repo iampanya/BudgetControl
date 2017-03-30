@@ -169,9 +169,10 @@
 
             function callPaymentSuccess(response) {
                 var paymentid = hr.respondSuccess(response);
-                console.log(response);
                 //TODO modal result.
-                openModal('lg', null, paymentid);
+                if (response.isSuccess) {
+                    openModal('lg', null, paymentid);
+                }
             }
 
             function callPaymentError(e) {

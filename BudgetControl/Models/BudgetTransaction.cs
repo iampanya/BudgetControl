@@ -117,11 +117,28 @@ namespace BudgetControl.Models
             this.NewCreateTimeStamp();
         }
 
-        public void PrepareTransactionToSave()
+        public void ClearRelatedEntitiy()
         {
+            this.Reference = null;
+            this.Payment = null;
+            this.Budget = null; 
+        }
+
+        public void PrepareToCrate()
+        {
+            ClearRelatedEntitiy();
             this.BudgetTransactionID = Guid.NewGuid();
             this.Type = TransactionType.Transaction;
+            this.Status = RecordStatus.Active;
             this.NewCreateTimeStamp();
+        }
+
+        public void PrepareToUpdate()
+        {
+            ClearRelatedEntitiy();
+            this.Type = TransactionType.Transaction;
+            this.Status = RecordStatus.Active;
+            this.NewModifyTimeStamp();
         }
 
 

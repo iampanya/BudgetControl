@@ -35,6 +35,77 @@ namespace BudgetControl.Manager
 
         public Payment Add(Payment payment)
         {
+            var transactions = payment.BudgetTransactions;
+
+            using (var dbTransaction = _db.Database.BeginTransaction())
+            {
+                try
+                {
+                    // 1. Inital Payment data
+                    payment = new Payment(payment);
+                    payment.PrepareToSave();
+
+                    // 2. Add payment to context
+                    var paymentRepo = new PaymentRepository(_db);
+                    payment.Sequence = paymentRepo.Get().Where(p => p.CostCenterID == payment.CostCenterID).ToList().Count + 1;
+                    paymentRepo.Add(payment);
+                    paymentRepo.Save();
+
+                    // 3. Add each budget transaction by BudgetTransactionManager
+                    BudgetTransactionManager transactionManager = new BudgetTransactionManager(_db);
+                    if (transactions != null)
+                    {
+                        foreach (var item in transactions)
+                        {
+                            item.PaymentID = payment.PaymentID;
+                            transactionManager.AddOrUpdate(item);
+                        }
+                    }
+
+                    dbTransaction.Commit();
+                    return payment;
+                }
+                catch (Exception ex)
+                {
+                    dbTransaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        public void Update(Payment payment)
+        {
+            var transactions = payment.BudgetTransactions.ToList();
+
+            using (var dbTransaction = _db.Database.BeginTransaction())
+            {
+                try
+                {
+
+                    payment = new Payment(payment);
+
+                    // Add payment to context
+                    var paymentRepo = new PaymentRepository(_db);
+                    paymentRepo.Update(payment);
+                    paymentRepo.Save();
+
+                    // Update transaction
+                    var transmanager = new BudgetTransactionManager(_db);
+                    transmanager.UpdateByPayment(payment, transactions);
+
+                    dbTransaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    dbTransaction.Rollback();
+                    throw ex;
+                }
+            }
+
+        }
+
+        public Payment Add_old(Payment payment)
+        {
             // Create transaction
             using (var dbTransaction = _db.Database.BeginTransaction())
             {
@@ -76,7 +147,7 @@ namespace BudgetControl.Manager
             }
         }
 
-        public void Update(Payment payment)
+        public void Update_old(Payment payment)
         {
             using (var dbTransaction = _db.Database.BeginTransaction())
             {

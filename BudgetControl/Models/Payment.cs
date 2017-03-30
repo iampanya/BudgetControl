@@ -111,8 +111,9 @@ namespace BudgetControl.Models
         public void PrepareToSave()
         {
             this.PaymentID = Guid.NewGuid();
-            this.PaymentDate = DateTime.Today;
+            this.PaymentDate = DateTime.Now;
             this.NewCreateTimeStamp();
+            this.Status = RecordStatus.Active;
         }
 
 

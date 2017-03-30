@@ -52,81 +52,181 @@ namespace BudgetControl.Manager
             return summary;
         }
 
-
-        public void Add(BudgetTransaction transaction)
+        public void UpdateByPayment(Payment payment, List<BudgetTransaction> transactions)
         {
-            if(_db.Database.CurrentTransaction == null)
+            try
             {
-                using (var dbTransaction = _db.Database.BeginTransaction())
+                // 1. Get transaction in database
+                List<BudgetTransaction> trans_indb;
+                using (var transRepo = new TransactionRepository())
                 {
-                    try
+                    trans_indb = transRepo.Get().Where(t => t.PaymentID == payment.PaymentID).ToList();
+                }
+                
+                // 2. Compare transaction between user input and database
+                foreach(var item in transactions)
+                {
+                    var indb = trans_indb.FirstOrDefault(t => t.PaymentID == item.PaymentID && t.BudgetID == item.BudgetID);
+                    if(indb == null)
                     {
-                        this.WrapAdd(transaction);
-                        dbTransaction.Commit();
+                        //Add new budget transaction
+                        item.PaymentID = payment.PaymentID;
+                        Add(item);
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        dbTransaction.Rollback();
-                        throw ex;
+                        //Update budget transaction
+                        trans_indb.Remove(indb);    //
+                        indb.Amount = item.Amount;
+                        Update(indb);
                     }
                 }
+
+                // 3. if indb not exist in user input --> Delete it
+                foreach(var item in trans_indb)
+                {
+                    
+                    Delete(item);
+                }
+
+
             }
-            else
+            catch (Exception ex)
             {
-                this.WrapAdd(transaction);
+
+                throw;
             }
 
         }
 
-        private void WrapAdd(BudgetTransaction transaction)
+        public void AddOrUpdate(BudgetTransaction transaction)
         {
+            try
+            {
+                BudgetTransaction tranindb;
 
-            // 1. Get budget infomation
-            BudgetManager budgetManager = new BudgetManager(_db);
-            Budget budget = new Budget(budgetManager.Get(transaction.BudgetID));
+                // Get data from database
+                using (var transRepo = new TransactionRepository())
+                {
 
-            // 1. Initial transaction data
-            this.BudgetTransaction = new BudgetTransaction(transaction);
-            this.BudgetTransaction.PrepareTransactionToSave(budget);
-            
+                    tranindb = transRepo.Get()
+                    .FirstOrDefault(
+                        t =>
+                            t.PaymentID == transaction.PaymentID &&
+                            t.BudgetID == transaction.BudgetID
+                        );
+                }
 
-            // 2. Add transaction to context
+                if(tranindb == null)
+                {
+                    // if not found, then add new transaction
+                    Add(transaction);
+                }
+                else
+                {
+                    // if exiting in db, then update
+                    tranindb.Amount = transaction.Amount;
+                    Update(tranindb);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
+        }
+
+        public void Add(BudgetTransaction transaction)
+        {
             var tranRepo = new TransactionRepository(_db);
-            tranRepo.Add(this.BudgetTransaction);
-
-            // 3. Save
+            transaction.PrepareToCrate();
+            tranRepo.Add(transaction);
             tranRepo.Save();
-
-            /// Update budget
-            /// 
-            budget.WithdrawAmount -= transaction.Amount;
-            budget.RemainAmount += transaction.Amount;
-            budgetManager.Update(budget);
-
         }
 
         public void Update(BudgetTransaction transaction)
         {
-
+            var tranRepo = new TransactionRepository(_db);
+            transaction.PrepareToUpdate();
+            tranRepo.Update(transaction);
+            tranRepo.Save();
         }
-
-        
 
         public void Delete(BudgetTransaction transaction)
         {
-
+            //var tranRepo = new TransactionRepository(_db);
+            transaction.Status = Models.Base.RecordStatus.Remove;
+            Update(transaction);
         }
+        //public void Add(BudgetTransaction transaction)
+        //{
+        //    if (_db.Database.CurrentTransaction == null)
+        //    {
+        //        using (var dbTransaction = _db.Database.BeginTransaction())
+        //        {
+        //            try
+        //            {
+        //                this.WrapAdd(transaction);
+        //                dbTransaction.Commit();
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                dbTransaction.Rollback();
+        //                throw ex;
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        this.WrapAdd(transaction);
+        //    }
+
+        //}
+
+        //private void WrapAdd(BudgetTransaction transaction)
+        //{
+
+        //    // 1. Get budget infomation
+        //    BudgetManager budgetManager = new BudgetManager(_db);
+        //    Budget budget = new Budget(budgetManager.Get(transaction.BudgetID));
+
+        //    // 1. Initial transaction data
+        //    this.BudgetTransaction = new BudgetTransaction(transaction);
+        //    this.BudgetTransaction.PrepareTransactionToSave(budget);
+
+
+        //    // 2. Add transaction to context
+        //    var tranRepo = new TransactionRepository(_db);
+        //    tranRepo.Add(this.BudgetTransaction);
+
+        //    // 3. Save
+        //    tranRepo.Save();
+
+        //    /// Update budget
+        //    /// 
+        //    budget.WithdrawAmount -= transaction.Amount;
+        //    budget.RemainAmount += transaction.Amount;
+        //    budgetManager.Update(budget);
+
+        //}
+
+
+
+
+
+
 
 
         public List<BudgetTransaction> SumTransaction(List<BudgetTransaction> trans)
         {
             List<BudgetTransaction> result = new List<BudgetTransaction>();
 
-            foreach( var item in trans)
+            foreach (var item in trans)
             {
                 int i = result.IndexOf(result.FirstOrDefault(r => r.BudgetID == item.BudgetID));
 
-                if(i > -1)
+                if (i > -1)
                 {
                     item.Amount = item.Amount + result[i].Amount;
                     result[i] = item;

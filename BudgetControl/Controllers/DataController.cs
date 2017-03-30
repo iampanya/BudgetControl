@@ -106,8 +106,8 @@ namespace BudgetControl.Controllers
                     }
                 }
 
-                var manager = new BudgetTransactionManager();
-                payment.BudgetTransactions = manager.SumTransaction(payment.BudgetTransactions.ToList());
+                //var manager = new BudgetTransactionManager();
+                //payment.BudgetTransactions = manager.SumTransaction(payment.BudgetTransactions.ToList());
 
                 using (BudgetRepository budgetRepo = new BudgetRepository())
                 {
