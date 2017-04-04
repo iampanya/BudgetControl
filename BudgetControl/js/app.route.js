@@ -88,6 +88,13 @@
                 controller: 'LoginCtrl',
                 controllerAs: 'vm'
             })
+
+            .state('summaryreport', {
+                url: '/report',
+                templateUrl: 'Report/Summary',
+                controller: 'ReportCtrl',
+                controllerAs: 'vm'
+            })
             
     }
 

@@ -135,6 +135,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\BudgetsController.cs" />
     <Compile Include="Controllers\DataController.cs" />
@@ -217,6 +218,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="js\handle.response.service.js" />
     <Content Include="js\message.service.js" />
+    <Content Include="js\report.controller.js" />
     <Content Include="js\user.controller.js" />
     <Content Include="js\user.service.js" />
     <Content Include="js\app.js" />
@@ -291,6 +293,7 @@
     <Content Include="Views\User\ChangePassword.cshtml" />
     <Content Include="Views\Budgets\Upload.cshtml" />
     <Content Include="Views\Template\PaymentResult.cshtml" />
+    <Content Include="Views\Report\Summary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

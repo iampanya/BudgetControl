@@ -55,7 +55,8 @@ namespace BudgetControl
                     "~/js/message.service.js",
                     "~/js/budget.controller.js",
                     "~/js/payment.controller.js",
-                    "~/js/user.controller.js"
+                    "~/js/user.controller.js",
+                    "~/js/report.controller.js"
                 ));
         }
     }
