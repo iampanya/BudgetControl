@@ -111,13 +111,26 @@ namespace BudgetControl.Controllers
 
                 payment.BudgetTransactions = payment.BudgetTransactions.Where(t => t.Status == RecordStatus.Active).ToList();
 
+
+                //Get budget data
                 using (BudgetRepository budgetRepo = new BudgetRepository())
                 {
 
                     payment.BudgetTransactions.ToList().ForEach(t => t.Budget = budgetRepo.GetById(t.BudgetID));
 
-
+                    payment.BudgetTransactions = payment.BudgetTransactions.OrderBy(t => t.Budget.AccountID).ToList();
                     returnobj.SetSuccess(payment);
+                }
+
+                foreach(var item in payment.BudgetTransactions)
+                {
+                    List<BudgetTransaction> listTransInBudget = item.Budget.BudgetTransactions
+                        .Where(t => t.Status == RecordStatus.Active && t.CreatedAt < item.CreatedAt).ToList();
+
+                    item.PreviousAmount = 0;
+                    listTransInBudget.ForEach(t => item.PreviousAmount += t.Amount);
+
+                    item.RemainAmount = item.Budget.BudgetAmount - item.PreviousAmount - item.Amount ;
                 }
             }
             catch (Exception ex)
