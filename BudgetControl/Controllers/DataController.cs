@@ -221,6 +221,18 @@ namespace BudgetControl.Controllers
                         .ToList();
                 }
 
+                // 3. Get budget details
+                foreach (var budget in budgets)
+                {
+                    List<BudgetTransaction> transactions = budget.BudgetTransactions.Where(t => t.Status == RecordStatus.Active).ToList();
+
+                    decimal wdAmount = 0;
+                    transactions.ForEach(t => wdAmount += t.Amount);
+
+                    budget.WithdrawAmount = wdAmount;
+                    budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
+                }
+
                 // 3. Set return object.
                 returnobj.SetSuccess(budgets);
 
@@ -242,18 +254,39 @@ namespace BudgetControl.Controllers
                 return Budgets();
             }
 
+
             try
             {
+                Budget budget;
                 using (BudgetRepository budgetRep = new BudgetRepository())
                 {
-                    Budget budget = budgetRep.GetById(id);
+                    budget = budgetRep.GetById(id);
                     if (budget == null)
                     {
                         throw new Exception("ไม่พบข้อมูลงบประมาณที่เลือก");
                     }
-                    budget.BudgetTransactions = budget.BudgetTransactions.OrderBy(t => t.CreatedAt).ToList();
-                    returnobj.SetSuccess(budget);
                 }
+
+                budget.BudgetTransactions = budget.BudgetTransactions.Where(t => t.Status == RecordStatus.Active).OrderBy(t => t.CreatedAt).ToList();
+
+                decimal previousAmount = 0;
+                decimal total = 0;
+                foreach (var item in budget.BudgetTransactions)
+                {
+                    using (var paymentRepo = new PaymentRepository())
+                    {
+                        item.Payment = paymentRepo.GetById(item.PaymentID);
+                    }
+                    total += item.Amount;
+                    item.PreviousAmount = previousAmount;
+                    item.RemainAmount = budget.BudgetAmount - item.PreviousAmount - item.Amount;
+
+                    previousAmount = item.Amount + item.PreviousAmount;
+                }
+                budget.WithdrawAmount = total;
+                budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
+
+                returnobj.SetSuccess(budget);
             }
             catch (Exception ex)
             {

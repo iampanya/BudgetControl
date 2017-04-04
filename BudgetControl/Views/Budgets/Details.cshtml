@@ -56,6 +56,7 @@
                     <th class="text-center col-md-1">ยอดก่อนหน้า</th>
                     <th class="text-center col-md-1">คงเหลือ</th>
                     <th class="text-center col-md-2">ผู้ควบคุมงบ</th>
+                    <th></th>
                 </tr>
             </thead>
 
@@ -63,55 +64,18 @@
                 <tr ng-repeat="transaction in vm.budget.BudgetTransactions">
                     <td class="text-center"> {{ $index + 1 }} </td>
                     <td class="text-center"> {{ transaction.CreatedAt | date:'dd MMM yyyy' }} </td>
-                    <td class="text-left"> {{ transaction.Description }} </td>
+                    <td class="text-left"> {{ transaction.Payment.Description }} </td>
                     <td class="text-right"> {{ transaction.Amount | number:2 }} </td>
                     <td class="text-right"> {{ transaction.PreviousAmount | number:2 }} </td>
                     <td class="text-right"> {{ transaction.RemainAmount | number:2 }} </td>
                     <td class="text-center"> {{ transaction.CreatedBy }} </td>
+                    <th></th>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
 
-    @*<div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading">
-            <h4>ประจำปี: {{ budget.Year }}</h4>
-            <h4>สังกัด: {{ budget.CostCenterName }}</h4>
-            <h4>งบที่ได้รับ: {{ budget.BudgetAmount }}</h4>
-
-        </div>
-
-        <!-- Table -->
-
-        <table class="table table-bordered table-hover table-striped">
-            <thead>
-                <tr>
-                    <th class="col-md-1 text-center">ลำดับ</th>
-                    <th class="text-center col-md-2">วันที่</th>
-                    <th class="text-center">รายละเอียด</th>
-                    <th class="text-center col-md-1">เบิกงวดนี้</th>
-                    <th class="text-center col-md-1">ยอดก่อนหน้า</th>
-                    <th class="text-center col-md-1">คงเหลือ</th>
-                    <th class="text-center col-md-2">ผู้ควบคุมงบ</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr ng-repeat="statement in budget.Statements" ng-click="rowClick(statement.Payment.PaymentID)">
-                    <td class="text-center"> {{ $index + 1 }} </td>
-                    <td class="text-center"> {{ statement.Payment.PaymentDate | date:'dd MMM yyyy' }} </td>
-                    <td class="text-left"> {{ statement.Payment.Description }} </td>
-                    <td class="text-right"> {{ statement.WithdrawAmount | number:0 }} </td>
-                    <td class="text-right"> {{ statement.PreviousAmount | number:0 }} </td>
-                    <td class="text-right"> {{ statement.RemainAmount | number:0 }} </td>
-                    <td class="text-center"> {{ statement.Payment.Controller.FirstName }} </td>
-                </tr>
-            </tbody>
-        </table>
-
-    </div>*@
 
 <div class="row">
     <div class="col-md-offset-10 col-md-2">
