@@ -10,7 +10,7 @@
         เบิกจ่ายงบประมาณ 
     </h3>
     <hr />
-    <form ng-submit="vm.submit()" method="post" name="frmPayment">
+    <form @*ng-submit="vm.submit()"*@ method="post" name="frmPayment">
         <!-- Payment Details -->
         <div class="card">
             <fieldset>
@@ -64,6 +64,9 @@
                         </span>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <p class="text-danger"> {{ vm.addNewTransactionError }}</p>
+                </div>
             </div>
 
             <!-- ตารางรายการเบิก -->
@@ -78,7 +81,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="transaction in vm.transactions | filter : { Status: '0' }">
+                    <tr ng-repeat="transaction in vm.transactions">
 
                         <td class="text-center">
                             {{ $index + 1 }}
@@ -113,7 +116,7 @@
             </table>
             <div class="row">
                 <div class="col-md-2 col-md-offset-10">
-                    <button type="submit" class="btn btn-primary btn-lg pull-right" ng-disabled="frmPayment.$invalid">
+                    <button type="button" ng-click="vm.submit()" class="btn btn-primary btn-lg pull-right" ng-disabled="frmPayment.$invalid">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i>
                         บันทึก
                     </button>

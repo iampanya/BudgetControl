@@ -109,6 +109,8 @@ namespace BudgetControl.Controllers
                 //var manager = new BudgetTransactionManager();
                 //payment.BudgetTransactions = manager.SumTransaction(payment.BudgetTransactions.ToList());
 
+                payment.BudgetTransactions = payment.BudgetTransactions.Where(t => t.Status == RecordStatus.Active).ToList();
+
                 using (BudgetRepository budgetRepo = new BudgetRepository())
                 {
 

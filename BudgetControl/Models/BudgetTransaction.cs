@@ -137,7 +137,7 @@ namespace BudgetControl.Models
         {
             ClearRelatedEntitiy();
             this.Type = TransactionType.Transaction;
-            this.Status = RecordStatus.Active;
+            //this.Status = RecordStatus.Active;
             this.NewModifyTimeStamp();
         }
 

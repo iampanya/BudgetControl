@@ -98,14 +98,18 @@
         }
 
         function addNewTransaction() {
+            //
+            vm.addNewTransactionError = "";
+
             // 1. Looking for budget is already added?
             var index = vm.transactions.findIndex(function (obj) {
                 return obj.BudgetID == vm.selectbudget;
             })
 
+            console.log(index);
             // 2. If exist, then set status to active
             if (index > -1) {
-                vm.transactions[index].Status = "0"
+                vm.addNewTransactionError = "*บัญชีนี้มีอยู่แล้วในรายการ";
             }
             // 3. If not exist, then add to list
             else {
@@ -358,6 +362,9 @@
         }
 
         function addNewTransaction() {
+
+            vm.addNewTransactionError = "";
+
             // 1. Looking for budget is already added?
             var index = vm.transactions.findIndex(function (obj) {
                 return obj.BudgetID == vm.selectbudget;
@@ -365,7 +372,7 @@
 
             // 2. If exist, then set status to active
             if (index > -1) {
-                vm.transactions[index].Status = "0"
+                vm.addNewTransactionError = "* บัญชีนี้มีอยู่แล้วในรายการ";
             }
             // 3. If not exist, then add to list
             else {
