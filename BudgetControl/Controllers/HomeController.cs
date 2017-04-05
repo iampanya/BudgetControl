@@ -11,13 +11,17 @@ namespace BudgetControl.Controllers
         public ActionResult Index()
         {
             return View();
-            //return new RedirectResult(Url.Action("Index") + "#first");
         }
+
         public ActionResult Home()
         {
             return View();
         }
 
+        public ActionResult Error401()
+        {
+            return View();
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -31,5 +35,7 @@ namespace BudgetControl.Controllers
 
             return View();
         }
+
+
     }
 }

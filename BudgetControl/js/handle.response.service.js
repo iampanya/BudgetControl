@@ -4,9 +4,9 @@
         .module('budgetApp')
         .factory('handleResponse', handleResponse);
 
-    handleResponse.$inject = ['msgService'];
+    handleResponse.$inject = ['msgService', '$state'];
 
-    function handleResponse(msgService) {
+    function handleResponse(msgService, $state) {
         var fn = {
             respondSuccess: respondSuccess,
             respondError: respondError
@@ -24,7 +24,12 @@
         }
 
         function respondError(response, keepto) {
-            msgService.setErrorMsg(response);
+            if (response.status === 401) {
+                $state.go('error401');
+            }
+            else {
+                msgService.setErrorMsg(response);
+            }
         }
     }
 

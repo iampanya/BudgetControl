@@ -89,11 +89,19 @@
                 controllerAs: 'vm'
             })
 
+            // Report
             .state('summaryreport', {
                 url: '/report',
                 templateUrl: 'Report/Summary',
                 controller: 'ReportCtrl',
                 controllerAs: 'vm'
+            })
+
+
+            // Error
+            .state('error401', {
+                url: '/error401',
+                templateUrl: 'Home/Error401'
             })
             
     }

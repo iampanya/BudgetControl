@@ -21,6 +21,10 @@ var budgetApp = angular.module('budgetApp', ['ngRoute', 'ngResource', 'ngAnimate
 
             responseError: function (response) {
                 if (--loadingCount === 0) $rootScope.$broadcast('loading:finish');
+                if (response.status === 401) {
+                    console.log('unauthorize');
+                    console.log(response);
+                }
                 return $q.reject(response);
             }
         };
