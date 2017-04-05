@@ -20,6 +20,7 @@
             }
             else {
                 respondError(response.Message);
+                return false;
             }
         }
 

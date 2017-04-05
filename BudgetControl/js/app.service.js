@@ -8,7 +8,11 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
     }
 
     api.budget = function () {
-        return $resource('data/budget/:id')
+        return $resource('data/budget/:id', null, {
+            'save': { method: 'POST' },
+            'update': { method: 'PUT' },
+            'remove': { method: 'DELETE' }
+        });
     }
 
     api.uploadbudget = function () {

@@ -19,12 +19,21 @@
 
         return msg;
 
-        function setMsg(type, text, position) {
+        function setMsg(type, text, position, state) {
             registerClearMsg();
             $rootScope.msg = {
                 type: type,
                 position: position || 'top',
                 text: text
+            }
+            if (state) {
+                $rootScope.state = {
+                    name: state.name || '',
+                    title: state.title || ''
+                }
+            }
+            else {
+                $rootScope.state = {};
             }
 
             
@@ -42,8 +51,8 @@
             setMsg('alert-danger', text);
         }
 
-        function setSuccessMsg(text) {
-            setMsg('alert-success', text);
+        function setSuccessMsg(text, state) {
+            setMsg('alert-success', text, null, state);
         }
 
         function setBottomErrorMsg(text) {

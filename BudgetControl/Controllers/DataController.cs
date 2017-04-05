@@ -316,6 +316,40 @@ namespace BudgetControl.Controllers
             return View();
         }
 
+        [HttpPut]
+        [ActionName("Budget")]
+        public ActionResult UpdateBudget(Budget budget)
+        {
+            try
+            {
+                var budgetManager = new BudgetManager();
+                budget = new Budget(budget);
+                budgetManager.Update(budget);
+                returnobj.SetSuccess(budget);
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
+        [HttpDelete]
+        [ActionName("Budget")]
+        public ActionResult DeleteBudget()
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
         [HttpGet]
         public ActionResult UploadBudget()
         {

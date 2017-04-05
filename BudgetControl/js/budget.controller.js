@@ -121,10 +121,11 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
             hr.respondError(e);
         }
 
-        function rowClick(budgetid) {
-            // Go to detail page.
-            $state.go('viewbudget', { id: budgetid });
+        function deleteBudget(id) {
+
         }
+
+        
     }
 
 
@@ -264,6 +265,48 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
             }
         }
 
+    }
+
+})();
+
+
+/******** Edit CONTROLLER ******************/
+(function () {
+    angular.module('budgetApp')
+        .controller('EditBudgetCtrl', EditBudgetCtrl);
+
+    EditBudgetCtrl.$inject = ['$state', '$stateParams', 'apiService', 'msgService', 'handleResponse'];
+
+    function EditBudgetCtrl($state, $stateParams, apiService, msgService, hr) {
+        var id = $stateParams.id;
+        var vm = this;
+        vm.submit = submit;
+
+        apiService.budget().get({ id: id }).$promise.then(callSuccess, callError);
+
+        function callSuccess(response) {
+            vm.budget = hr.respondSuccess(response);
+        }
+
+        function callError(e) {
+            hr.respondError(e);
+        }
+
+        function submit() {
+            apiService.budget().update({ budget: vm.budget }).$promise.then(updateSuccess, updateError);
+
+            function updateSuccess(response) {
+                if (hr.respondSuccess(response)) {
+                    var state = { name: 'budget', title: 'รายการงบประมาณ' };
+                    msgService.setSuccessMsg('แก้ไขข้อมูลงบประมาณสำเร็จ', state);
+                }
+            }
+
+            function updateError(e) {
+                hr.respondError(e);
+            }
+        }
+        
     }
 
 })();

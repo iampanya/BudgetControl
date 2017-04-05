@@ -40,6 +40,9 @@ namespace BudgetControl.Models
             this.WithdrawAmount = budget.WithdrawAmount;
             this.RemainAmount = budget.RemainAmount;
             this.Status = budget.Status;
+            this.Account = null;
+            this.BudgetTransactions = null;
+            
         }
 
         public Budget(BudgetFileModel budgetfile)
@@ -96,7 +99,14 @@ namespace BudgetControl.Models
         public string BudgetName {
             get
             {
-                return AccountID + " - " + Account.AccountName;
+                try
+                {
+                    return AccountID + " - " + Account.AccountName;
+                }
+                catch(Exception ex)
+                {
+                    return AccountID;
+                }
             }
         }
 

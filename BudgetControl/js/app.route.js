@@ -27,8 +27,8 @@
             })
             .state('editbudget', {
                 url: '/budget/edit/:id',
-                templateUrl: 'Budgets/Create',
-                controller: 'EditBudgetController',
+                templateUrl: 'Budgets/Edit',
+                controller: 'EditBudgetCtrl',
                 controllerAs: 'vm'
             })
             .state('uploadbudget', {

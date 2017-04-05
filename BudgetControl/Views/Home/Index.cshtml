@@ -75,6 +75,7 @@
             <button type="button" class="close" ng-click="clearMsg()">&times;</button>
             <h4>{{ msg.header }}</h4>
             <h4>{{ msg.text }} </h4>
+            <a ui-sref="{{ state.name }}" ng-if="state.name">{{ state.title }}</a>
         </div>
 
         <div ui-view>
@@ -85,6 +86,7 @@
             <button type="button" class="close" ng-click="clearMsg()">&times;</button>
             <h4><strong>{{ msg.header }}</strong></h4>
             <h4>{{ msg.text }} </h4>
+            <a ui-sref="{{ state.name }}" ng-if="state.name">{{ state.title }}</a>
         </div>
 
     </div>
