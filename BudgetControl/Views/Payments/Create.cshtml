@@ -4,24 +4,24 @@
 
 
 <div>
-    <h3>
-        <span><a ui-sref="payment"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></span>
-        
-        เบิกจ่ายงบประมาณ 
-    </h3>
-    <hr />
+    @*<h3>
+            <span><a ui-sref="payment"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></span>
+
+            เบิกจ่ายงบประมาณ
+        </h3>
+        <hr />*@
     <form @*ng-submit="vm.submit()"*@ method="post" name="frmPayment">
         <!-- Payment Details -->
         <div class="card">
             <fieldset>
-                <legend>ศูนย์ต้นทุน: <span class="text-primary"> {{ vm.payment.CostCenterID }} </span></legend>
+                <legend>เบิกจ่ายงบประมาณ ศูนย์ต้นทุน: <span class="text-primary"> {{ vm.payment.CostCenterID }} </span></legend>
 
                 <div class="row">
                     <div class="form-horizontal col-md-6">
                         <div class="form-group">
                             <label for="txtYear" class="col-md-4 control-label">ปีงบประมาณ<span class="text-danger">*</span></label>
                             <div class="col-md-4">
-                                <select class="form-control input-sm" ng-model="vm.payment.Year" ng-options="y.Year as y.Year for y in vm.years"></select>
+                                <select class="form-control" ng-model="vm.payment.Year" ng-options="y.Year as y.Year for y in vm.years"></select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -29,7 +29,7 @@
                                 ผู้เบิก<span class="text-danger">*</span>
                             </label>
                             <div class="col-md-6">
-                                <select class="form-control input-sm" name="requestby" ng-model="vm.payment.RequestBy" ng-options="emp.EmployeeID as emp.Description for emp in vm.employees" ng-required="true">
+                                <select class="form-control" name="requestby" ng-model="vm.payment.RequestBy" ng-options="emp.EmployeeID as emp.Description for emp in vm.employees" ng-required="true">
                                     <option value=""> ======= กรุณาเลือก ======= </option>
                                 </select>
                                 <span class="text-danger" ng-show="frmPayment.requestby.$error.required"></span>
@@ -42,7 +42,7 @@
                             <label class="control-label" for="txtDescription">
                                 รายละเอียด<span class="text-danger">*</span>:
                             </label>
-                            <textarea ng-model="vm.payment.Description" ng-required="true" class="form-control input-sm" rows="3" id="txtDescription" placeholder="รายละเอียด"></textarea>
+                            <textarea ng-model="vm.payment.Description" ng-required="true" class="form-control" rows="3" id="txtDescription" placeholder="รายละเอียด"></textarea>
                         </div>
                     </div>
 
@@ -52,22 +52,38 @@
 
             <!-- เลือกงบประมาณ   -->
             <hr />
+            @*<div class="row">
+                    <div class="form-group col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">เลือกบัญชี</span>
+                            <select class="form-control" ng-model="vm.selectbudget" ng-options="budget.BudgetID as budget.BudgetName for budget in vm.budgets | filter:{ CostCenterID: vm.payment.CostCenterID }">
+                                <option value=""> =========== กรุณาเลือก =========== </option>
+                            </select>
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" ng-click="vm.addNewTransaction()">ตกลง</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="text-danger"> {{ vm.addNewTransactionError }}</p>
+                    </div>
+                </div>*@
+
             <div class="row">
-                <div class="form-group col-md-6">
-                    <div class="input-group">
-                        <span class="input-group-addon">เลือกบัญชี</span>
-                        <select class="form-control" ng-model="vm.selectbudget" ng-options="budget.BudgetID as budget.BudgetName for budget in vm.budgets | filter:{ CostCenterID: vm.payment.CostCenterID }">
-                            <option value=""> =========== กรุณาเลือก =========== </option>
-                        </select>
-                        <span class="input-group-btn">
+                <div class="col-md-12">
+                    <div class="form-inline col-md-offset-1">
+                        <div class="form-group">
+                            <label class="control-label">เลือกบัญชี<span class="text-danger">*</span></label>
+                            <select class="form-control" ng-model="vm.selectbudget" ng-options="budget.BudgetID as budget.BudgetName for budget in vm.budgets | filter:{ CostCenterID: vm.payment.CostCenterID }">
+                                <option value=""> =========== กรุณาเลือก =========== </option>
+                            </select>
                             <button class="btn btn-primary" type="button" ng-click="vm.addNewTransaction()">ตกลง</button>
-                        </span>
+                            <span class="text-danger"> {{ vm.addNewTransactionError }}</span>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <p class="text-danger"> {{ vm.addNewTransactionError }}</p>
-                </div>
             </div>
+            <br />
 
             <!-- ตารางรายการเบิก -->
             <table class="table table-bordered table-hover table-striped">
@@ -93,7 +109,7 @@
                             {{ transaction.Budget.BudgetAmount | number:2 }}
                         </td>
                         <td class="text-center">
-                            <input type="number" ng-model="transaction.Amount"  ng-required="true" class="form-control input-sm text-right" ng-change="vm.updateTotalAmount()" />
+                            <input type="number" ng-model="transaction.Amount" ng-required="true" class="form-control input-sm text-right" ng-change="vm.updateTotalAmount()" />
                             <span ng-show="frmPayment.transaction.Amount.$error.min">
                                 Please fill form.
                             </span>
@@ -115,11 +131,17 @@
                 </tbody>
             </table>
             <div class="row">
-                <div class="col-md-2 col-md-offset-10">
-                    <button type="button" ng-click="vm.submit()" class="btn btn-primary btn-lg pull-right" ng-disabled="frmPayment.$invalid">
+                <div class="col-md-2 col-sm-3 col-xs-6 col-md-offset-8 col-sm-offset-6">
+                    <button type="button" class="btn btn-lg btn-default btn-block">
+                        ยกเลิก
+                    </button>
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-6">
+                    <button type="button" ng-click="vm.submit()" class="btn btn-primary btn-lg btn-block" ng-disabled="frmPayment.$invalid">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i>
                         บันทึก
                     </button>
+
                 </div>
             </div>
 
