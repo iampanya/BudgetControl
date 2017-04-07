@@ -97,7 +97,6 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
         vm.budgets = [];
         vm.budgetyear = [];
         vm.costcenters = [];
-        vm.rowClick = rowClick;
 
         // 1. Get budget data from server.
         apiService.budget().get().$promise.then(callSuccess, callError);
