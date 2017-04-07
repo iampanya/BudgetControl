@@ -18,5 +18,10 @@ namespace BudgetControl.Controllers
         {
             return View();
         }
+
+        public ActionResult Individual()
+        {
+            return View();
+        }
     }
 }

@@ -296,6 +296,7 @@
     <Content Include="Views\Report\Summary.cshtml" />
     <Content Include="Views\Home\Error401.cshtml" />
     <Content Include="Views\Budgets\Edit.cshtml" />
+    <Content Include="Views\Report\Individual.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

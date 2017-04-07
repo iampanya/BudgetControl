@@ -93,9 +93,16 @@
 
             // Report
             .state('summaryreport', {
-                url: '/report',
+                url: '/report/summary',
                 templateUrl: 'Report/Summary',
                 controller: 'ReportCtrl',
+                controllerAs: 'vm'
+            })
+            
+            .state('individualreport', {
+                url: '/report/individual',
+                templateUrl: 'Report/Individual',
+                controller: 'IndividualReportCtrl',
                 controllerAs: 'vm'
             })
 
