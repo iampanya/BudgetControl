@@ -64,10 +64,12 @@
                 controller: 'EditPaymentCtrl',
                 controllerAs: 'vm'
             })
+
             .state('viewpayment', {
                 url: '/payment/:id',
                 templateUrl: 'Payments/Details',
-                controller: 'DetailPaymentController'
+                controller: 'DetailPaymentCtrl',
+                controllerAs: 'vm'
             })
 
             .state('user', {
