@@ -61,7 +61,7 @@ namespace BudgetControl.Manager
 
         public void Delete(Budget budget)
         {
-
+           
         }
 
 

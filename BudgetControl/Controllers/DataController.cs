@@ -337,11 +337,16 @@ namespace BudgetControl.Controllers
 
         [HttpDelete]
         [ActionName("Budget")]
-        public ActionResult DeleteBudget()
+        public ActionResult DeleteBudget(string id)
         {
             try
             {
-
+                using (var budgetRepo = new BudgetRepository())
+                {
+                    budgetRepo.Delete(id);
+                    budgetRepo.Save();
+                }
+                returnobj.SetSuccess("delete success");
             }
             catch (Exception ex)
             {

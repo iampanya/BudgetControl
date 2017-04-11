@@ -90,14 +90,18 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
     angular.module('budgetApp')
         .controller('BudgetCtrl', BudgetCtrl);
 
-    BudgetCtrl.$inject = ['$state', '$filter', 'apiService', 'msgService', 'handleResponse'];
+    BudgetCtrl.$inject = ['$state', '$filter', '$uibModal', 'apiService', 'msgService', 'handleResponse'];
 
-    function BudgetCtrl($state, $filter, apiService, msgService, hr) {
+    function BudgetCtrl($state, $filter, $uibModal, apiService, msgService, hr) {
         var vm = this;
         vm.budgets = [];
         vm.budgetyear = [];
         vm.costcenters = [];
+        vm.deleteBudget = deleteBudget;
 
+        initialData();
+
+        function initialData() {
         // 1. Get budget data from server.
         apiService.budget().get().$promise.then(callSuccess, callError);
 
@@ -119,17 +123,80 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
         function callError(e){
             hr.respondError(e);
         }
-
-        function deleteBudget(id) {
-
+        }
+        function deleteBudget(budget) {
+            openModal('', null, budget)
         }
 
-        
+
+        function openModal(size, parentSelector, data) {
+            var parentElem = parentSelector ?
+                angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'budgets/ConfirmDelete',
+                controller: 'ConfirmDeleteBudgetCtrl',
+                controllerAs: 'vm',
+                size: size,
+                //backdrop: 'static',
+                //keyboard: false,
+                appendTo: parentElem,
+                resolve: {
+                    budget: function () {
+                        return data;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                console.log('result modal');
+                initialData();
+            });
+        };
     }
-
-
+    
 })();
 
+
+(function () {
+    angular.module('budgetApp')
+        .controller('ConfirmDeleteBudgetCtrl', ConfirmDeleteBudgetCtrl);
+
+    ConfirmDeleteBudgetCtrl.$inject = ['$state', '$uibModalInstance', 'apiService', 'handleResponse', 'msgService', 'budget']
+    function ConfirmDeleteBudgetCtrl($state, $uibModalInstance, apiService, hr, msgService, budget) {
+
+        var vm = this;
+        vm.budget = budget;
+        vm.closemodal = closemodal;
+        vm.removebudget = removebudget;
+
+
+        function closemodal() {
+            $uibModalInstance.close();
+        }
+
+        function removebudget() {
+            apiService.budget().remove({ id: budget.BudgetID }).$promise.then(deleteSuccess, deleteError);
+            
+
+
+            function deleteSuccess(response) {
+                if (hr.respondSuccess(response)) {
+                    msgService.setSuccessMsg('ลบรายการสำเร็จ');
+                    $uibModalInstance.close();
+                }
+            }
+
+            function deleteError(e) {
+                hr.respondError(e);
+                $uibModalInstance.close();
+            }
+        }
+    }
+
+})();
 
 /********** DETAIL CONTROLLER *****************/
 (function () {

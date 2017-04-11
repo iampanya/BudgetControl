@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <h3 class="modal-title text-center" id="modal-title">ลบข้อมูลงบประมาณ</h3>
+    <hr/>
+    <table class="table table-bordered table-condensed table-hover">
+        <tbody>
+            <tr>
+                <th class="col-md-6 text-center">รหัสบัญชี</th>
+                <td class="text-primary text-center">{{ vm.budget.AccountID }}</td>
+            </tr>
+
+            <tr>
+                <th class="col-md-6 text-center">ชื่อบัญชี</th>
+                <td class="text-primary text-center"> {{ vm.budget.Account.AccountName}}</td>
+            </tr>
+            <tr>
+                <th class="col-md-6 text-center">ประจำปี</th>
+                <td class="text-primary text-center"> {{ vm.budget.Year }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br/>
+
+    <div class="row">
+            <div class="col-md-3 col-md-offset-6">
+                <button class="btn btn-default btn-block" type="button" ng-click="vm.closemodal()">ยกเลิกการลบ</button>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary btn-block" type="button" ng-click="vm.removebudget()">ยืนยันการลบ</button>
+            </div>
+    </div>
+   
+</div>
+
+
+

@@ -120,7 +120,7 @@ namespace BudgetControl.DAL
             {
                 return null;
             }
-            return Get().FirstOrDefault(b => b.BudgetID == budgetid);
+            return GetAll().FirstOrDefault(b => b.BudgetID == budgetid);
         }
 
         public void Save()

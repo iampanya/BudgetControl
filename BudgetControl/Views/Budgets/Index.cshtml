@@ -77,7 +77,7 @@
                             <a ui-sref="editbudget({ id: budget.BudgetID })" title="แก้ไข">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             </a>|
-                            <a ui-sref="deletebudget({ id: budget.BudgetID })" title="ยกเลิกงบประมาณ">
+                            <a ng-click="vm.deleteBudget(budget)" title="ยกเลิกงบประมาณ">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </a>
                         </td>

@@ -42,6 +42,11 @@ namespace BudgetControl.Controllers
             return View();
         }
 
+
+        public ActionResult ConfirmDelete()
+        {
+            return View();
+        }
         #endregion
 
         #region Services TEMP
