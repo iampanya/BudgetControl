@@ -122,7 +122,7 @@ namespace BudgetControl.Controllers
                     returnobj.SetSuccess(payment);
                 }
 
-                foreach(var item in payment.BudgetTransactions)
+                foreach (var item in payment.BudgetTransactions)
                 {
                     List<BudgetTransaction> listTransInBudget = item.Budget.BudgetTransactions
                         .Where(t => t.Status == RecordStatus.Active && t.CreatedAt < item.CreatedAt).ToList();
@@ -130,7 +130,7 @@ namespace BudgetControl.Controllers
                     item.PreviousAmount = 0;
                     listTransInBudget.ForEach(t => item.PreviousAmount += t.Amount);
 
-                    item.RemainAmount = item.Budget.BudgetAmount - item.PreviousAmount - item.Amount ;
+                    item.RemainAmount = item.Budget.BudgetAmount - item.PreviousAmount - item.Amount;
                 }
             }
             catch (Exception ex)
@@ -179,7 +179,6 @@ namespace BudgetControl.Controllers
             catch (Exception ex)
             {
                 returnobj.SetError(ex.Message);
-                throw;
             }
 
             return Content(returnobj.ToJson(), "application/json");
@@ -645,6 +644,80 @@ namespace BudgetControl.Controllers
 
         #endregion
 
+        #region Report
+        public ActionResult Individual(string id, string year)
+        {
+            try
+            {
+                List<Budget> budgets;
+                Employee employee;
+
+                if(String.IsNullOrEmpty(year))
+                {
+                    year = (DateTime.Today.Year + 543 ).ToString();
+                }
+
+                using (var empRepo = new EmployeeRepository())
+                {
+            
+                    employee = empRepo.GetById(id);
+                    if (employee == null)
+                    {
+                        throw new Exception("ไม่พบรายชื่อพนักงาน");
+                    }
+                }
+
+                using (BudgetRepository budgetRep = new BudgetRepository())
+                {
+                    budgets = budgetRep.Get().ToList();
+                    budgets = budgetRep.Get()
+                        .Where(
+                            b =>
+                                b.CostCenterID == employee.CostCenterID &&
+                                b.Year == year
+                        )
+                        .ToList();
+                }
+
+                foreach (var budget in budgets)
+                {
+                    using (PaymentRepository paymentRepo = new PaymentRepository())
+                    {
+                        //budget.BudgetTransactions = budget.BudgetTransactions.ToList().ForEach(t => t.Payment = paymentRepo.GetById(t.PaymentID));
+
+                        foreach (var item in budget.BudgetTransactions)
+                        {
+                            item.Payment = paymentRepo.GetById(item.PaymentID);
+                        }
+                    }
+                    List<BudgetTransaction> transactions = budget.BudgetTransactions
+                        .Where(
+                            t =>
+                                t.Status == RecordStatus.Active &&
+                                t.Payment.RequestBy == employee.EmployeeID)
+                        .ToList();
+
+                    decimal wdAmount = 0;
+                    transactions.ForEach(t => wdAmount += t.Amount);
+
+                    budget.WithdrawAmount = wdAmount;
+                    budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
+                }
+
+                returnobj.SetSuccess(budgets);
+
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
+
+        #endregion
+
         #region Temp
 
         //public ActionResult PopulateBudget()
@@ -756,6 +829,8 @@ namespace BudgetControl.Controllers
             return Content(Utility.ParseToJson(returnobj), "application/json");
         }
         #endregion
+
+
 
 
     }

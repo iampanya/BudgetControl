@@ -100,7 +100,7 @@
             })
             
             .state('individualreport', {
-                url: '/report/individual',
+                url: '/report/individual/:id',
                 templateUrl: 'Report/Individual',
                 controller: 'IndividualReportCtrl',
                 controllerAs: 'vm'

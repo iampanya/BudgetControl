@@ -27,6 +27,10 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
         });
     }
 
+    api.individualreport = function () {
+        return $resource('data/Individual/:id?year=:year');
+    }
+
     api.emptypayment = function () {
         return $resource('data/emptypayment')
     }

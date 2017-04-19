@@ -124,6 +124,7 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
             hr.respondError(e);
         }
         }
+
         function deleteBudget(budget) {
             openModal('', null, budget)
         }

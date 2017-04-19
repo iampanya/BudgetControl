@@ -73,11 +73,12 @@ namespace BudgetControl.DAL
 
         public Employee GetById(object id)
         {
+            if (id == null) { throw new Exception("ไม่พบรายชื่อพนักงาน"); }
             var employee = Get().FirstOrDefault(e => e.EmployeeID == id.ToString());
 
             if (employee == null) 
             { 
-                throw new Exception("Employee not found."); 
+                throw new Exception("ไม่พบรายชื่อพนักงาน"); 
             }
             else 
             { 
