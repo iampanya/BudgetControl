@@ -73,13 +73,15 @@
 
     authInfo.$inject = ['$window'];
     function authInfo($window) {
-        var session
-        var user
+        var session;
+        var user;
+        var working;
         var auth = {
             setSession: setSession,
             getSession: getSession,
             clearSession: clearSession,
             getUser: getUser,
+            getWorkingCostCenter: getWorkingCostCenter,
             isLoggedIn: isLoggedIn
         }
         return auth;
@@ -87,6 +89,7 @@
         function setSession(aSession) {
             session = aSession
             user = session.User
+            working = session.WorkingCostCenter
             $window.sessionStorage["userInfo"] = JSON.stringify(session);
         }
 
@@ -102,6 +105,10 @@
 
         function getUser() {
             return user;
+        }
+
+        function getWorkingCostCenter() {
+            return working;
         }
 
 

@@ -2,9 +2,27 @@
     angular.module('budgetApp')
         .controller('ReportCtrl', ReportCtrl);
 
-    function ReportCtrl() {
+    ReportCtrl.$inject = ['apiService', 'handleResponse', 'authInfo'];
+
+    function ReportCtrl(apiService, hr, authInfo) {
         var vm = this;
-        vm.test = 'test page';
+        vm.working = authInfo.getWorkingCostCenter();
+        vm.budgets = [];
+        vm.year = '2560';
+        getReportData();
+
+        function getReportData() {
+            apiService.summaryreport().get({ year: vm.year }).$promise.then(callApiSuccess, callApiError);
+        }
+
+        function callApiSuccess(response) {
+            vm.budgets = hr.respondSuccess(response);
+            console.log(vm.budgets);
+        }
+
+        function callApiError(e) {
+            hr.respondError(e);
+        }
     }
 })();
 

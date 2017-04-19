@@ -645,6 +645,69 @@ namespace BudgetControl.Controllers
         #endregion
 
         #region Report
+        public ActionResult SummaryReport(string year)
+        {
+            try
+            {
+                CostCenter working;
+                List<Budget> budgets;
+
+                if (String.IsNullOrEmpty(year))
+                {
+                    year = (DateTime.Today.Year + 543).ToString();
+                }
+
+                // 1. Get working costcenter.
+                working = AuthManager.GetWorkingCostCenter();
+
+                // 2. Get budget data.
+                using (BudgetRepository budgetRep = new BudgetRepository())
+                {
+                    budgets = budgetRep.Get().ToList();
+                    budgets = budgetRep.Get()
+                        .Where(
+                            b =>
+                                b.CostCenterID == working.CostCenterID &&
+                                b.Year == year &&
+                                b.Status == BudgetStatus.Active
+                                
+                        )
+                        .ToList();
+                }
+
+                // 3. Get budget details
+                foreach (var budget in budgets)
+                {
+                    List<BudgetTransaction> transactions;
+                    using (var tranRepo = new TransactionRepository())
+                    {
+                        transactions = tranRepo.Get().Where(
+                            t => 
+                                t.Budget.AccountID == budget.AccountID && 
+                                t.Status == RecordStatus.Active &&
+                                t.Budget.Year == year
+                            ).ToList();
+                    }
+                    decimal wdAmount = 0;
+                    transactions.ForEach(t => wdAmount += t.Amount);
+
+                    budget.WithdrawAmount = wdAmount;
+                    budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
+                }
+
+                // 3. Set return object.
+                returnobj.SetSuccess(budgets);
+
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+
+            return Content(returnobj.ToJson(), "applicaton/json");
+        }
+
+
         public ActionResult Individual(string id, string year)
         {
             try

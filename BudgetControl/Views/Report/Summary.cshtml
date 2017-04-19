@@ -1,11 +1,12 @@
 ﻿<div>
     <h2 class="text-center">ตารางสรุปการเบิกจ่ายเปรียบเทียบกับงบประมาณ</h2>
-    <h3 class="text-center">สำหรับปี 2560</h3>
-    <h4 class="text-center">กองระบบสารสนเทศ</h4>
+    <h3 class="text-center">สำหรับปี {{ vm.year }}</h3>
+    <h4 class="text-center">{{ vm.working.CostCenterName }}</h4>
     <br/>
     <table class="table table-bordered table-hover table-striped">
         <thead>
             <tr>
+                <th class="col-md-1 text-center">ลำดับ</th>
                 <th class="text-center">รหัสบัญชี</th>
                 <th class="text-center">ชื่อบัญชี</th>
                 <th class="text-center">รวมเบิกจ่ายงบทำการ</th>
@@ -14,18 +15,21 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            <tr ng-repeat="budget in vm.budgets">
+                <td class="text-center">{{ $index + 1 }}</td>
+                <td class="text-center">{{ budget.AccountID }}</td>
+                <td class="text-center">{{ budget.Account.AccountName }}</td>
+                <td class="text-center">{{ budget.WithdrawAmount | number:2}}</td>
+                <td class="text-center">{{ budget.BudgetAmount | number:2}}</td>
+                <td class="text-center text-success" ng-if="budget.BudgetAmount - budget.WithdrawAmount >= 0">{{ budget.BudgetAmount - budget.WithdrawAmount | number:2 }}</td>
+                <td class="text-center text-danger" ng-if="budget.BudgetAmount - budget.WithdrawAmount < 0">({{ budget.WithdrawAmount - budget.BudgetAmount | number:2 }})</td>
             </tr>
             <tr>
-                <th class="text-right" colspan="2">รวม</th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th class="text-right" colspan="3">รวม</th>
+                <th class="text-center">{{ vm.budgets | total: 'WithdrawAmount' | number:2 }}</th>
+                <th class="text-center">{{ vm.budgets | total: 'BudgetAmount' | number:2 }}</th>
+                <th class="text-center text-success" ng-if="(vm.budgets | total: 'BudgetAmount') - (vm.budgets | total: 'WithdrawAmount') >= 0">{{ (vm.budgets | total: 'BudgetAmount') - (vm.budgets | total: 'WithdrawAmount')  | number: 2}}</th>
+                <th class="text-center text-danger" ng-if="(vm.budgets | total: 'BudgetAmount') - (vm.budgets | total: 'WithdrawAmount') < 0">({{ (vm.budgets | total: 'WithdrawAmount') - (vm.budgets | total: 'BudgetAmount') | number: 2}})</th>
             </tr>
         </tbody>
     </table>
