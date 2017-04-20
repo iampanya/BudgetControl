@@ -127,7 +127,13 @@ namespace BudgetControl.Sessions
             var authen = (SessionItems)HttpContext.Current.Session["Authentication"];
             if (authen == null)
             {
-                throw new Exception("กรุณาเข้าสู่ระบบ");
+                LoginByToken();
+                authen = (SessionItems)HttpContext.Current.Session["Authentication"]; 
+                if(authen == null)
+                {
+                    throw new Exception("กรุณาเข้าสู่ระบบ");
+                }
+                return authen;
             }
             else
             {
