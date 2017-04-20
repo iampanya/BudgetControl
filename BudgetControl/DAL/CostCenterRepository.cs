@@ -8,17 +8,17 @@ namespace BudgetControl.DAL
 {
     public class CostCenterRepository : IRepository<CostCenter>, IDisposable
     {
-        private BudgetContext context;
+        private BudgetContext _db;
 
         #region Constructor
         public CostCenterRepository()
         {
-            context = new BudgetContext();
+            _db = new BudgetContext();
         }
 
         public CostCenterRepository(BudgetContext context)
         {
-            this.context = context;
+            this._db = context;
         }
 
         #endregion
@@ -31,7 +31,7 @@ namespace BudgetControl.DAL
         }
         public IEnumerable<CostCenter> Get()
         {
-            throw new NotImplementedException();
+            return _db.CostCenters.AsNoTracking();
         }
 
         public void Add(CostCenter entity)
@@ -56,7 +56,7 @@ namespace BudgetControl.DAL
 
         public CostCenter GetById(object id)
         {
-            throw new NotImplementedException();
+            return _db.CostCenters.Find(id.ToString());
         }
 
         public void Save()
@@ -76,7 +76,7 @@ namespace BudgetControl.DAL
             {
                 if (disposing)
                 {
-                    context.Dispose();
+                    _db.Dispose();
                 }
             }
             this.disposed = true;

@@ -781,6 +781,57 @@ namespace BudgetControl.Controllers
 
         #endregion
 
+        #region CostCenter
+        public ActionResult CostCenter(string id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return CostCenters();
+                }
+
+                CostCenter costcenter;
+                using (var ccRepo = new CostCenterRepository())
+                {
+                    costcenter = ccRepo.GetById(id);
+                }
+
+                returnobj.SetSuccess(costcenter);
+
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
+        public ActionResult CostCenters()
+        {
+            try
+            {
+                List<CostCenter> costcenters;
+                CostCenter working = AuthManager.GetWorkingCostCenter();
+                using (var ccRepo = new CostCenterRepository())
+                {
+                    costcenters = ccRepo.Get()
+                        .Where(c => 
+                            c.CostCenterID.StartsWith(working.CostCenterTrim) &&
+                            c.Status == RecordStatus.Active
+                        ).OrderBy(c => c.CostCenterID).ToList();
+                }
+                returnobj.SetSuccess(costcenters);
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
+        #endregion
+
         #region Temp
 
         //public ActionResult PopulateBudget()

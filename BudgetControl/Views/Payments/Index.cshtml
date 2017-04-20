@@ -10,6 +10,32 @@
         </a>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <h3>
+                <span class="pull-left">
+                    ปีงบประมาณ:
+                </span>
+                <span class="col-md-6">
+                    <select class="form-control input-sm" ng-model="vm.year" ng-options="c.Year as c.Year for c in vm.years | orderBy:'Year'" >
+                    </select>
+                </span>
+            </h3>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <h3>
+            <span class="pull-left">
+                ศูนย์ต้นทุน:
+            </span>
+            <span class="col-md-8">
+                <select class="form-control input-sm" ng-model="vm.costcenter" ng-options="c.CostCenterID as c.CostCenterName for c in vm.costcenters"></select>
+            </span>
+        </h3>
+    </div>
+</div>
 <br />
 <table class="table table-hover table-striped table-bordered">
     <thead>
@@ -23,11 +49,11 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="payment in vm.payments">
+        <tr ng-repeat="payment in vm.payments | filter: vm.year | filter:vm.costcenter">
             <td class="text-center"> {{ $index + 1 }} </td>
             <td> {{ payment.Description }} </td>
             <td class="text-center"> {{ payment.Requester.FullName }} </td>
-            <td class="text-center"> {{ payment.TotalAmount | number:0 }} </td>
+            <td class="text-center"> {{ payment.TotalAmount | number:2 }} </td>
             <td class="text-center"> {{ payment.PaymentDate | date:'dd MMM yyyy' }} </td>
             <td class="text-center">
                 <a ui-sref="viewpayment({id:payment.PaymentID})" title="รายละเอียด">

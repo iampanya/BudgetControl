@@ -6,20 +6,31 @@
         .module('budgetApp')
         .controller('PaymentCtrl', PaymentCtrl);
 
-    PaymentCtrl.$inject = ['$state', 'apiService', 'msgService', 'handleResponse'];
+    PaymentCtrl.$inject = ['$state', '$filter', 'apiService', 'msgService', 'handleResponse', 'authInfo'];
 
-    function PaymentCtrl($state, apiService, msgService, hr) {
+    function PaymentCtrl($state, $filter, apiService, msgService, hr, authInfo) {
         var vm = this;
         vm.payments = [];
-        vm.rowClick = rowClick;
+        vm.costcenters = [];
+        vm.costcenter = '';
+        vm.years = [];
+        vm.year = '';
 
         // 1. Get payment data from server.
         apiService.payment().get().$promise.then(callSuccess, callError);
 
+
+        apiService.costcenter().get().$promise.then(callCostCenterSuccess, callError);
+
         //// 1.1 Call to server success.
         function callSuccess(response) {
             vm.payments = hr.respondSuccess(response);
-            console.log(vm.payments);
+            
+            vm.years = $filter('unique')(vm.payments, 'Year') || [{ Year: '2560' }];
+            if (vm.years.length < 1) {
+                vm.years.push({ Year: new Date().getFullYear() + 543 + '' });
+            }
+            vm.year = vm.years[0].Year;
         }
 
         //// 1.2 Call to server fail.
@@ -27,13 +38,13 @@
             hr.respondError(e);
         }
 
-
-        function rowClick(paymentid) {
-            // Go to detail page.
-            $state.go('viewpayment', { id: paymentid });
+        function callCostCenterSuccess(response) {
+            vm.costcenters = hr.respondSuccess(response);
+            if (vm.costcenters.length < 1) {
+                vm.costcenters.push({ CostCenterID: authInfo.getWorkingCostCenter().CostCenterID, CostCenter: authInfo.getWorkingCostCenter() });
+            }
+            vm.costcenter = authInfo.getWorkingCostCenter().CostCenterID;
         }
-
-
     }
 
 
@@ -57,6 +68,7 @@
         vm.years = [];              // budget year list in dropdown
         vm.payment = {};            // payment form data 
         vm.transactions = [];       // transaction inside payment
+
 
         // function 
         vm.addNewTransaction = addNewTransaction;
