@@ -59,6 +59,7 @@
                         <th class="col-md-1 text-center"> งบที่ได้รับ </th>
                         <th class="col-md-1 text-center"> เบิกจ่าย </th>
                         <th class="col-md-1 text-center"> คงเหลือ </th>
+                        <th class="col-md-1 text-center"> สัดส่วน (%) </th>
                         <th class="col-md-1 text-center"></th>
                     </tr>
                 </thead>
@@ -69,7 +70,8 @@
                         <td class="text-center"> {{ budget.CostCenterID }}</td>
                         <td class="text-right"> {{ budget.BudgetAmount | number:2 }}</td>
                         <td class="text-right"> {{ budget.WithdrawAmount | number:2 }}</td>
-                        <td class="text-right"> {{ budget.RemainAmount | number:2 }}</td>
+                        <td class="text-right" ng-class="{'text-success': budget.RemainAmount >= 0 , 'text-danger': budget.RemainAmount < 0 }"> {{ budget.RemainAmount | number:2 }}</td>
+                        <td class="text-center" ng-class="{'text-success' : budget.RemainAmount >= 0 , 'text-danger': budget.RemainAmount < 0 }"> {{ budget.RemainAmount / budget.BudgetAmount * 100 | number: 2}} %</td>
                         <td class="text-center">
                             <a ui-sref="viewbudget({ id: budget.BudgetID })" title="รายละเอียด">
                                 <i class="fa fa-list" aria-hidden="true"></i>
@@ -89,6 +91,9 @@
                         <th class="text-right"> {{ vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'BudgetAmount' | number:2 }} </th>
                         <th class="text-right"> {{ vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'WithdrawAmount' | number:2 }} </th>
                         <th class="text-right"> {{ vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'RemainAmount' | number:2 }} </th>
+                        <th class="text-center" ng-class="{'text-success': (vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'RemainAmount') >=0, 'text-danger': (vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'RemainAmount') < 0  }">
+                            {{ ((vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'RemainAmount') / (vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'BudgetAmount' ) * 100 | number: 2)}} %
+                        </th>
                         <th class="text-center"></th>
                     </tr>
                 </tbody>
