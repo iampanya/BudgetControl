@@ -569,9 +569,9 @@ namespace BudgetControl.Controllers
                 //Remove data for test
                 //budgetfile = budgetfile.Where(b => b.CostCenterID == AuthManager.GetWorkingCostCenter().CostCenterID).ToList();
 
-                budgetfile = budgetfile
-                    .Where(b => b.CostCenterID.StartsWith("H301023") || b.CostCenterID == "H301000000")
-                    .ToList();
+                //budgetfile = budgetfile
+                //    .Where(b => b.CostCenterID.StartsWith("H301023") || b.CostCenterID == "H301000000")
+                //    .ToList();
 
                 returnobj.SetSuccess(budgetfile);
 
