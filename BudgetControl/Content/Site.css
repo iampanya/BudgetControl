@@ -66,3 +66,36 @@ label {
 .form-inline label {
     margin-left: 20px;
 }
+
+.text-primary {
+    color: #7E57C2;
+}
+
+.text-info {
+    color: #03A9F4;
+}
+
+.jumbotron h1 {
+    color: #311B92;
+}
+
+
+/* Ghost Button */
+.btn-ghost {
+    border: 1px solid #673AB7;
+    color: #673AB7;
+    transition: background-color 0.2s ease-in-out ;
+}
+
+.btn-ghost:hover {
+    background-color: #673AB7;
+    color: #fff;
+}
+
+.btn-ghost:active{
+    background-color: #311B92;
+}
+
+.lead{
+    font-size: 1.2em;
+}
