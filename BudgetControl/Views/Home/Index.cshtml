@@ -18,9 +18,27 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li ui-sref-active="active"><a ui-sref="budget">1. งบที่ได้รับ</a></li>
-                    <li ui-sref-active="active"><a ui-sref="payment">2. รายการเบิกจ่าย</a></li>
-                    @*<li ui-sref-active="active"><a ui-sref="report">3. รายงาน</a></li>*@
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            1. งบประมาณ
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a ui-sref="budget">1.1 รายการงบที่ได้รับ</a></li>
+                            <li><a ui-sref="newbudget">1.2 เพิ่มงบประมาณ</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            2. เบิกจ่าย
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a ui-sref="payment">2.1 รายการเบิกจ่าย</a></li>
+                            <li><a ui-sref="newpayment">2.2 เบิกจ่ายงบประมาณ</a></li>
+                            @*<li><a ui-sref="summaryreport">3.2 ภาพรวม</a></li>*@
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             3. รายงาน
