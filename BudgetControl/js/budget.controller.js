@@ -18,16 +18,16 @@ budgetApp.controller('BudgetController', ['$scope', '$location', 'apiService', f
 
 
 
-budgetApp.controller('DetailBudgetController', [ '$scope', '$location', '$routeParams', 'apiService', 'funcFactory', function ($scope, $location, $routeParams, apiService, funcFoctory) {
+budgetApp.controller('DetailBudgetController', ['$scope', '$location', '$routeParams', 'apiService', 'funcFactory', function ($scope, $location, $routeParams, apiService, funcFoctory) {
 
     $scope.BudgetID = $routeParams.id
-    
+
     apiService.budget().get({ id: $scope.BudgetID }).$promise.then(function (data) {
         funcFoctory.getData($scope, 'budget', data)
     }, function (error) {
         funcFoctory.handleError($scope.error)
     })
-    
+
     $scope.rowClick = function (paymentid) {
         $location.path('/payment/' + paymentid)
     }
@@ -43,9 +43,9 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
         funcFactory.handleError($scope, error)
     })
 
-    $scope.Account = { 
-        AccountID : '',
-        AccountName : ''
+    $scope.Account = {
+        AccountID: '',
+        AccountName: ''
     }
 
     $scope.Budget = {
@@ -60,13 +60,13 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
         var index = $scope.accounts.findIndex(function (obj) {
             return obj.AccountID == accountid
         })
-        if(index >= 0){
+        if (index >= 0) {
             return $scope.accounts[index].AccountName
         }
         else {
             return '';
         }
-        
+
     }
 
 
@@ -82,7 +82,7 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
 }])
 
 
-;
+    ;
 
 /********** BUDGET CONTROLLER *****************/
 
@@ -102,27 +102,27 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
         initialData();
 
         function initialData() {
-        // 1. Get budget data from server.
-        apiService.budget().get().$promise.then(callSuccess, callError);
+            // 1. Get budget data from server.
+            apiService.budget().get().$promise.then(callSuccess, callError);
 
-        //// 1.1 Call to server success.
-        function callSuccess(response) {
-            // Move data to budget list
-            vm.budgets = hr.respondSuccess(response);
-            
-            // Get unique Costcenter and initial it.
-            vm.costcenters = $filter('unique')(vm.budgets, 'CostCenterID');
-            vm.costcenter = vm.costcenters[0].CostCenterID
+            //// 1.1 Call to server success.
+            function callSuccess(response) {
+                // Move data to budget list
+                vm.budgets = hr.respondSuccess(response);
 
-            // Get unique budget year and initial it.
-            vm.years = $filter('unique')(vm.budgets, 'Year');
-            vm.year = '2560';//vm.years[0].Year;
-        }
+                // Get unique Costcenter and initial it.
+                vm.costcenters = $filter('unique')(vm.budgets, 'CostCenterID');
+                vm.costcenter = vm.costcenters[0].CostCenterID
 
-        //// 1.2 Call to server fail.
-        function callError(e){
-            hr.respondError(e);
-        }
+                // Get unique budget year and initial it.
+                vm.years = $filter('unique')(vm.budgets, 'Year');
+                vm.year = '2560';//vm.years[0].Year;
+            }
+
+            //// 1.2 Call to server fail.
+            function callError(e) {
+                hr.respondError(e);
+            }
         }
 
         function deleteBudget(budget) {
@@ -157,7 +157,7 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
             });
         };
     }
-    
+
 })();
 
 
@@ -180,7 +180,7 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
 
         function removebudget() {
             apiService.budget().remove({ id: budget.BudgetID }).$promise.then(deleteSuccess, deleteError);
-            
+
 
 
             function deleteSuccess(response) {
@@ -220,7 +220,7 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
         function callError(e) {
             hr.respondError(e);
         }
-        
+
     }
 
 })();
@@ -246,7 +246,7 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
             year: '2560',
             filedata: ''
         };
-        
+
 
         vm.filedata = [];
 
@@ -263,7 +263,7 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
                 vm.form.filedata = e.target.result;
                 $http.post('data/ReadBudgetFile', vm.form)
                     .then(readFileSuccess, readFileError)
-                    
+
             }
 
             r.readAsText(f);
@@ -337,6 +337,70 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
 })();
 
 
+/********** CREATE CONTROLLER **************/
+
+(function () {
+    angular.module('budgetApp')
+        .controller('CreateBudgetCtrl', CreateBudgetCtrl);
+
+    CreateBudgetCtrl.$inject = ['apiService', 'handleResponse'];
+
+    function CreateBudgetCtrl(apiService, hr) {
+        var vm = this;
+        vm.accountChange = accountChange;
+
+        vm.accounts = [];
+
+        vm.form = {
+            year: new Date().getFullYear() + 543 + '',
+            accountid: '',
+            accountname: '',
+            amount: 0
+        }
+
+
+        apiService.account().get().$promise.then(callAccountSuccess, callError);
+
+
+
+        function callAccountSuccess(response) {
+            vm.accounts = hr.respondSuccess(response);
+            console.log(vm.accounts)
+        }
+
+        function callError(e) {
+            hr.respondError(e);
+        }
+
+        function accountChange() {
+            vm.form.accountname = findAccount(vm.form.accountid)
+        }
+
+        function findAccount(accountid) {
+            var index = vm.accounts.findIndex(function (obj) {
+                return obj.AccountID == accountid
+            })
+            if (index >= 0) {
+                return vm.accounts[index].AccountName
+            }
+            else {
+                return '';
+            }
+
+        }
+
+
+        //apiService.account().get().$promise.then(function (data) {
+        //    funcFactory.getData($scope, 'accounts', data)
+        //    console.log($scope.accounts)
+        //}, function (error) {
+        //    funcFactory.handleError($scope, error)
+        //})
+    }
+
+})();
+
+
 /******** Edit CONTROLLER ******************/
 (function () {
     angular.module('budgetApp')
@@ -373,7 +437,7 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
                 hr.respondError(e);
             }
         }
-        
+
     }
 
 })();

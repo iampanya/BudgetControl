@@ -23,7 +23,8 @@
             .state('newbudget', {
                 url: '/budget/create',
                 templateUrl: 'Budgets/Create',
-                controller: 'CreateBudgetController'
+                controller: 'CreateBudgetCtrl',
+                controllerAs: 'vm'
             })
             .state('editbudget', {
                 url: '/budget/edit/:id',
