@@ -58,13 +58,15 @@ namespace BudgetControl.Manager
             {
                 // 1. Get transaction in database
                 List<BudgetTransaction> trans_indb;
-                using (var transRepo = new TransactionRepository())
-                {
-                    trans_indb = transRepo.Get().Where(t => t.PaymentID == payment.PaymentID).ToList();
-                }
-                
+                //using (var transRepo = new TransactionRepository())
+                //{
+                //    trans_indb = transRepo.Get().Where(t => t.PaymentID == payment.PaymentID).ToList();
+                //}
+                var transRepo = new TransactionRepository(_db);
+                trans_indb = transRepo.Get().Where(t => t.PaymentID == payment.PaymentID).ToList();
+
                 // 2. Compare transaction between user input and database
-                foreach(var item in transactions)
+                foreach (var item in transactions)
                 {
                     var indb = trans_indb.FirstOrDefault(t => t.PaymentID == item.PaymentID && t.BudgetID == item.BudgetID);
                     if(indb == null)
@@ -106,18 +108,27 @@ namespace BudgetControl.Manager
                 BudgetTransaction tranindb;
 
                 // Get data from database
-                using (var transRepo = new TransactionRepository())
-                {
+                //using (var transRepo = new TransactionRepository())
+                //{
 
-                    tranindb = transRepo.Get()
-                    .FirstOrDefault(
+                //    tranindb = transRepo.Get()
+                //    .FirstOrDefault(
+                //        t =>
+                //            t.PaymentID == transaction.PaymentID &&
+                //            t.BudgetID == transaction.BudgetID
+                //        );
+                //}
+                var transRepo = new TransactionRepository(_db);
+                var tranindbs = transRepo.Get()
+                    .Where(
                         t =>
                             t.PaymentID == transaction.PaymentID &&
                             t.BudgetID == transaction.BudgetID
-                        );
-                }
+                        ).ToList();
 
-                if(tranindb == null)
+                tranindb = tranindbs.FirstOrDefault();
+
+                if (tranindb == null)
                 {
                     // if not found, then add new transaction
                     Add(transaction);

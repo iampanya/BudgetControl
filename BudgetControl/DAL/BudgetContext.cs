@@ -13,6 +13,7 @@ namespace BudgetControl.DAL
         public BudgetContext() : base("BudgetContext")
         {
             this.Configuration.ProxyCreationEnabled = false;
+            //this.Database.CommandTimeout = 180;
         }
         public BudgetContext(bool isProxyEnabled) : base("BudgetContext")
         {
