@@ -458,7 +458,10 @@
 
             function callPaymentSuccess(response) {
                 hr.respondSuccess(response);
-                openModal('lg', null, vm.payment.PaymentID);
+                
+                if (response.isSuccess) {
+                    openModal('lg', null, vm.payment.PaymentID);
+                }
             }
 
             function callPaymentError(e) {
