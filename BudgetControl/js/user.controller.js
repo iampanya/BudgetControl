@@ -29,7 +29,7 @@
         function callApiSuccess(data) {
             if (data.isSuccess) {
                 authInfo.setSession(data.Result);
-                $state.go('budget');
+                $state.go('home');
             }
             else {
                 callApiFailed(data.Message);
