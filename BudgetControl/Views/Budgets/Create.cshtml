@@ -85,8 +85,8 @@
                                 <a ui-sref="budget" class="btn btn-default btn-block">ยกเลิก</a>
                             </div>
                             <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary btn-block">
-                                    <i class="fa fa-save" aria-hidden="true"></i> บันทึก
+                                <button type="submit" class="btn btn-primary btn-block" ng-disabled="vm.btnSubmit.disabled">
+                                    <i class="fa fa-save" aria-hidden="true"></i> {{ vm.btnSubmit.text }}
                                 </button>
                             </div>
                         </div>

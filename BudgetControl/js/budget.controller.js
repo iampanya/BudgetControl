@@ -347,18 +347,24 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
 
     function CreateBudgetCtrl(apiService, hr, msgService) {
         var vm = this;
+        // function
         vm.accountChange = accountChange;
         vm.submit = submit;
+
+        // variable
         vm.accounts = [];
         vm.costcenters = [];
+        vm.readonly = false;
         vm.form = {
             year: new Date().getFullYear() + 543 + '',
             accountid: '',
             accountname: '',
-            costcenterid: ''
+            costcenterid: '',
         }
-        vm.readonly = false;
-
+        vm.btnSubmit = {
+            text: 'บันทึก',
+            disabled: false
+        }
 
         apiService.account().get().$promise.then(callAccountSuccess, callError);
 
@@ -375,6 +381,7 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
         }
 
         function callError(e) {
+            resetBtnSubmit();
             hr.respondError(e);
         }
 
@@ -398,10 +405,8 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
         }
 
         function submit(form) {
-
-            console.log(vm.form);
             if (form.$valid) {
-                console.log('submit fired');
+                disabledBtnSubmit();
                 apiService.budget().save({ form: vm.form }).$promise.then(callCreateBudgetSuccess, callError);
             }
         }
@@ -411,8 +416,18 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
             if (vm.result) {
                 msgService.setSuccessMsg('เพิ่มข้อมูลงบประมาณสำเร็จ');
             }
+            resetBtnSubmit();
         }
 
+        function resetBtnSubmit() {
+            vm.btnSubmit.text = 'บันทึก';
+            vm.btnSubmit.disabled = false;
+        }
+
+        function disabledBtnSubmit() {
+            vm.btnSubmit.text = 'กำลังบันทึก . . .';
+            vm.btnSubmit.disabled = true;
+        }
 
         //apiService.account().get().$promise.then(function (data) {
         //    funcFactory.getData($scope, 'accounts', data)
