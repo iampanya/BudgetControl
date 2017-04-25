@@ -343,29 +343,35 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
     angular.module('budgetApp')
         .controller('CreateBudgetCtrl', CreateBudgetCtrl);
 
-    CreateBudgetCtrl.$inject = ['apiService', 'handleResponse'];
+    CreateBudgetCtrl.$inject = ['apiService', 'handleResponse', 'msgService'];
 
-    function CreateBudgetCtrl(apiService, hr) {
+    function CreateBudgetCtrl(apiService, hr, msgService) {
         var vm = this;
         vm.accountChange = accountChange;
-
+        vm.submit = submit;
         vm.accounts = [];
-
+        vm.costcenters = [];
         vm.form = {
             year: new Date().getFullYear() + 543 + '',
             accountid: '',
             accountname: '',
-            amount: 0
+            costcenterid: ''
         }
+        vm.readonly = false;
 
 
         apiService.account().get().$promise.then(callAccountSuccess, callError);
 
+        apiService.costcenter().get().$promise.then(callCostCenterSuccess, callError);
 
 
         function callAccountSuccess(response) {
             vm.accounts = hr.respondSuccess(response);
-            console.log(vm.accounts)
+        }
+
+        function callCostCenterSuccess(response) {
+            vm.costcenters = hr.respondSuccess(response);
+            console.log(vm.costcenters);
         }
 
         function callError(e) {
@@ -381,12 +387,30 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
                 return obj.AccountID == accountid
             })
             if (index >= 0) {
+                vm.readonly = true;
                 return vm.accounts[index].AccountName
             }
             else {
+                vm.readonly = false;
                 return '';
             }
 
+        }
+
+        function submit(form) {
+
+            console.log(vm.form);
+            if (form.$valid) {
+                console.log('submit fired');
+                apiService.budget().save({ form: vm.form }).$promise.then(callCreateBudgetSuccess, callError);
+            }
+        }
+
+        function callCreateBudgetSuccess(response) {
+            vm.result = hr.respondSuccess(response);
+            if (vm.result) {
+                msgService.setSuccessMsg('เพิ่มข้อมูลงบประมาณสำเร็จ');
+            }
         }
 
 

@@ -7,19 +7,29 @@
     <div class="row">
         <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3">
             <div class="card">
-                <form class="form-horizontal" name="frmCreate" method="post" novalidate>
+                <form class="form-horizontal" ng-submit="vm.submit(frmCreate)" name="frmCreate" method="post" novalidate>
                     <fieldset>
                         <legend align="center">เพิ่มข้อมูลงบประมาณ</legend>
                         <div class="form-group">
-                            <label for="txtYear" class="col-md-6 control-label">ปีงบประมาณ :</label>
-                            <div class="col-md-5">
-                                <input type="text" class="form-control" id="txtYear" ng-model="vm.form.year" placeholder="พ.ศ." ng-required="true" autofocus/>
+                            <label for="txtYear" class="col-md-4 control-label">ปีงบประมาณ :</label>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="text" name="year" class="form-control" id="txtYear" ng-model="vm.form.year" placeholder="พ.ศ." ng-required="true" autofocus />
+                                    </div>
+                                </div>
+                                <span class="text-danger" ng-show="frmCreate.$submitted && frmCreate.year.$error.required">* ปีงบประมาณ</span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-6 control-label">บัญชี :</label>
-                            <div class="col-md-5">
-                                <input type="text" ng-model="vm.form.accountid" class="form-control" list="accounts" placeholder="5XXXXXXX" ng-change="vm.accountChange()"/>
+                            <label class="col-md-4 control-label">บัญชี :</label>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="text" name="accountid" ng-model="vm.form.accountid" class="form-control" list="accounts" placeholder="5XXXXXXX" ng-change="vm.accountChange()" ng-required="true" ng-minlength="8" ng-maxlength="8" />
+                                    </div>
+                                </div>
+                                <span class="text-danger" ng-show="frmCreate.$submitted && (frmCreate.accountid.$error.required || frmCreate.accountid.$error.minlength || frmCreate.accountid.$error.maxlength)">* กรุณาระบุรหัสบัญชี 8 ตัวอักษร</span>
                                 <datalist id="accounts">
                                     <option ng-repeat="account in vm.accounts" value="{{ account.AccountID }}">
                                 </datalist>
@@ -28,20 +38,48 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-6 control-label">ชื่อบัญชี : </label>
-                            <div class="col-md-5">
-                                <input type="text" class="form-control" ng-model="vm.form.accountname" />
+                            <label class="col-md-4 control-label">ชื่อบัญชี : </label>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <input type="text" name="accountname" class="form-control" ng-model="vm.form.accountname" ng-required="true" ng-readonly="vm.readonly || false"/>
+                                    </div>
+                                </div>
+                                <span class="text-danger" ng-show="frmCreate.$submitted && frmCreate.accountname.$error.required">* ระบุชื่อบัญชี</span>
+
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-6 control-label">จำนวนเงิน :</label>
-                            <div class="col-md-5">
-                                <input type="number" class="form-control" placeholder="0.00" ng-model="vm.form.amount"/>
+                            <label class="col-md-4 control-label">ศูนย์ต้นทุน :</label>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <select class="form-control" name="costcenterid" ng-model="vm.form.costcenterid" ng-required="true" ng-options="c.CostCenterID as c.CostCenterName for c in vm.costcenters">
+                                        </select>
+                                        </div>
+                                </div>
+                                <span class="text-danger" ng-show="frmCreate.$submitted && (frmCreate.costcenterid.$error.required )">* กรุณาเลือกศูนย์ต้นทุน</span>
+                                <datalist id="accounts">
+                                    <option ng-repeat="account in vm.accounts" value="{{ account.AccountID }}">
+                                </datalist>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">จำนวนเงิน :</label>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="number" name="amount" class="form-control" placeholder="0.00" ng-model="vm.form.amount" ng-required="true" ng-min="0" />
+                                    </div>
+                                </div>
+                                <span class="text-danger" ng-show="frmCreate.$submitted && frmCreate.amount.$error.required">* ระบุจำนวนเงิน</span>
+                                <span class="text-danger" ng-show="frmCreate.$submitted && frmCreate.amount.$error.min">* จำนวนเงินต้องไม่เป็นค่าลบ</span>
                             </div>
                         </div>
 
-                        <br />
                         <div class="form-group">
                             <div class="col-md-4 col-lg-offset-2">
                                 <a ui-sref="budget" class="btn btn-default btn-block">ยกเลิก</a>

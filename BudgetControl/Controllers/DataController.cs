@@ -310,9 +310,76 @@ namespace BudgetControl.Controllers
         }
 
         [HttpPost]
-        public ActionResult Budget(Budget budget)
+        public ActionResult Budget(CreateBudgetModel form)
         {
-            return View();
+            try
+            {
+                // 1. Validate account.
+                Account account;
+                using (var accRepo = new AccountRepository())
+                {
+                    account = accRepo.GetById(form.AccountID);
+                    // if not then, Add to database
+                    if(account == null)
+                    {
+                        account = new Account()
+                        {
+                            AccountID = form.AccountID,
+                            AccountName = form.AccountName,
+                            Status = RecordStatus.Active
+                        };
+                        accRepo.Add(account);
+                        accRepo.Save();
+                    }
+                }
+
+                // 2. Check Budget.
+                Budget budget;
+                using (var budgetRepo = new BudgetRepository())
+                {
+                    // 2.1 check budget is already in database
+                    budget = budgetRepo.Get().Where(
+                            b =>
+                                b.Year == form.Year &&
+                                b.AccountID == form.AccountID &&
+                                b.Status == BudgetStatus.Active
+                        ).FirstOrDefault();
+
+                    if(budget != null)
+                    {
+                        throw new Exception("งบประมาณนี้มีอยู่แล้วในระบบ");
+                    }
+                    else // Add new budget
+                    {
+                        budget = new Budget()
+                        {
+                            BudgetID = Guid.NewGuid(),
+                            AccountID = form.AccountID,
+                            CostCenterID = form.CostCenterID,
+                            Sequence = 0,
+                            Year = form.Year,
+                            BudgetAmount = form.Amount,
+                            WithdrawAmount = 0,
+                            RemainAmount = 0,
+                            Status = BudgetStatus.Active
+                        };
+
+                        budgetRepo.Add(budget);
+                        budgetRepo.Save();
+                    }
+                }
+
+                // 3. Set return value
+                returnobj.SetSuccess(budget);
+
+            }
+            catch (Exception ex)
+            {
+
+                returnobj.SetError(ex.Message);
+            }
+
+            return Content(returnobj.ToJson(), "application/json");
         }
 
         [HttpPut]
@@ -569,9 +636,9 @@ namespace BudgetControl.Controllers
                 //Remove data for test
                 //budgetfile = budgetfile.Where(b => b.CostCenterID == AuthManager.GetWorkingCostCenter().CostCenterID).ToList();
 
-                //budgetfile = budgetfile
-                //    .Where(b => b.CostCenterID.StartsWith("H301023") || b.CostCenterID == "H301000000")
-                //    .ToList();
+                budgetfile = budgetfile
+                    .Where(b => b.CostCenterID.StartsWith("H3010") || b.CostCenterID == "H301000000")
+                    .ToList();
 
                 returnobj.SetSuccess(budgetfile);
 
@@ -670,7 +737,7 @@ namespace BudgetControl.Controllers
                                 b.CostCenterID == working.CostCenterID &&
                                 b.Year == year &&
                                 b.Status == BudgetStatus.Active
-                                
+
                         )
                         .ToList();
                 }
@@ -682,8 +749,8 @@ namespace BudgetControl.Controllers
                     using (var tranRepo = new TransactionRepository())
                     {
                         transactions = tranRepo.Get().Where(
-                            t => 
-                                t.Budget.AccountID == budget.AccountID && 
+                            t =>
+                                t.Budget.AccountID == budget.AccountID &&
                                 t.Status == RecordStatus.Active &&
                                 t.Budget.Year == year
                             ).ToList();
@@ -715,14 +782,14 @@ namespace BudgetControl.Controllers
                 List<Budget> budgets;
                 Employee employee;
 
-                if(String.IsNullOrEmpty(year))
+                if (String.IsNullOrEmpty(year))
                 {
-                    year = (DateTime.Today.Year + 543 ).ToString();
+                    year = (DateTime.Today.Year + 543).ToString();
                 }
 
                 using (var empRepo = new EmployeeRepository())
                 {
-            
+
                     employee = empRepo.GetById(id);
                     if (employee == null)
                     {
@@ -816,7 +883,7 @@ namespace BudgetControl.Controllers
                 using (var ccRepo = new CostCenterRepository())
                 {
                     costcenters = ccRepo.Get()
-                        .Where(c => 
+                        .Where(c =>
                             c.CostCenterID.StartsWith(working.CostCenterTrim) &&
                             c.Status == RecordStatus.Active
                         ).OrderBy(c => c.CostCenterID).ToList();

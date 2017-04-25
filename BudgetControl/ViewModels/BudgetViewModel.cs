@@ -182,4 +182,26 @@ namespace BudgetControl.ViewModels
         #endregion
     }
 
+    public class CreateBudgetModel
+    {
+        #region Constructor
+
+        public CreateBudgetModel()
+        {
+
+        }
+
+        #endregion
+
+        #region Fields
+
+        public string Year { get; set; }
+        public string AccountID { get; set; }
+        public string AccountName { get; set; }
+        public string CostCenterID { get; set; }
+        public decimal Amount { get; set; }
+
+        #endregion
+    }
+
 }
