@@ -342,6 +342,7 @@ namespace BudgetControl.Controllers
                             b =>
                                 b.Year == form.Year &&
                                 b.AccountID == form.AccountID &&
+                                b.CostCenterID == form.CostCenterID &&
                                 b.Status == BudgetStatus.Active
                         ).FirstOrDefault();
 
