@@ -216,6 +216,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\budget-background.jpg" />
     <Content Include="js\handle.response.service.js" />
     <Content Include="js\message.service.js" />
     <Content Include="js\report.controller.js" />
