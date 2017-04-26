@@ -188,20 +188,44 @@ namespace BudgetControl.Controllers
         [ActionName("Payment")]
         public ActionResult DeletePayment(string id)
         {
-            try
+            var _db = new BudgetContext();
+            using (var transaction = _db.Database.BeginTransaction())
             {
-                using (PaymentRepository paymentRepo = new PaymentRepository())
+                try
                 {
-                    paymentRepo.Delete(id);
-                    returnobj.SetSuccess(id);
+                    var paymentRepo = new PaymentRepository(_db);
+                    var payment = paymentRepo.GetById(id);
+                    List<BudgetTransaction> budgetTransaction;
+
+                    if (payment == null) {
+                        throw new Exception("ไม่พบข้อมูลการจ่ายเงิน");
+                    }
+                    payment.Status = RecordStatus.Remove;
+                    paymentRepo.Update(payment);
+                    paymentRepo.Save();
+
+                    if(payment.BudgetTransactions != null)
+                    {
+                        var transRepo = new TransactionRepository(_db);
+                        budgetTransaction = payment.BudgetTransactions.ToList();
+                        budgetTransaction.ForEach(t =>
+                        {
+                            t.Status = RecordStatus.Remove;
+                            transRepo.Update(t);
+                        });
+                        transRepo.Save();
+                    }
+                    transaction.Commit();
+                    returnobj.SetSuccess(payment);
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    returnobj.SetError(ex.Message);
                 }
             }
-            catch (Exception ex)
-            {
-                returnobj.SetError(ex.Message);
-            }
 
-            return Content(Utility.ParseToJson(returnobj), "application/json");
+            return Content(returnobj.ToJson(), "application/json");
         }
 
 
@@ -320,7 +344,7 @@ namespace BudgetControl.Controllers
                 {
                     account = accRepo.GetById(form.AccountID);
                     // if not then, Add to database
-                    if(account == null)
+                    if (account == null)
                     {
                         account = new Account()
                         {
@@ -346,7 +370,7 @@ namespace BudgetControl.Controllers
                                 b.Status == BudgetStatus.Active
                         ).FirstOrDefault();
 
-                    if(budget != null)
+                    if (budget != null)
                     {
                         throw new Exception("งบประมาณนี้มีอยู่แล้วในระบบ");
                     }

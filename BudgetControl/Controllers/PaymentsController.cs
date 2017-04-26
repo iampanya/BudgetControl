@@ -38,10 +38,15 @@ namespace BudgetControl.Controllers
             return View();
         }
 
+        public ActionResult ConfirmDelete()
+        {
+            return View();
+        }
+
         #endregion
 
         #region Dispose
-        
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

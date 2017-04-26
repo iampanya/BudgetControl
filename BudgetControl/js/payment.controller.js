@@ -6,15 +6,16 @@
         .module('budgetApp')
         .controller('PaymentCtrl', PaymentCtrl);
 
-    PaymentCtrl.$inject = ['$state', '$filter', 'apiService', 'msgService', 'handleResponse', 'authInfo'];
+    PaymentCtrl.$inject = ['$state', '$filter', '$uibModal', 'apiService', 'msgService', 'handleResponse', 'authInfo'];
 
-    function PaymentCtrl($state, $filter, apiService, msgService, hr, authInfo) {
+    function PaymentCtrl($state, $filter, $uibModal, apiService, msgService, hr, authInfo) {
         var vm = this;
         vm.payments = [];
         vm.costcenters = [];
         vm.costcenter = '';
         vm.years = [];
         vm.year = '';
+        vm.deletePayment = deletePayment;
 
         // 1. Get payment data from server.
         apiService.payment().get().$promise.then(callSuccess, callError);
@@ -45,11 +46,88 @@
             }
             vm.costcenter = authInfo.getWorkingCostCenter().CostCenterID;
         }
+
+        function deletePayment(payment) {
+            openModal('', null, payment);
+        }
+
+        function openModal(size, parentSelector, data) {
+            var parentElem = parentSelector ?
+                angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'payments/ConfirmDelete',
+                controller: 'ConfirmDeletePaymentCtrl',
+                controllerAs: 'vm',
+                size: size,
+                appendTo: parentElem,
+                resolve: {
+                    payment: function () {
+                        return data;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (payment) {
+                if (payment) {
+                    var index = vm.payments.findIndex(function (obj) {
+                        return obj.PaymentID == payment.PaymentID;
+                    });
+                    
+                    vm.payments.splice(index, 1);
+                }
+            });
+        };
+
     }
 
 
 })();
 
+/***********  ConfirmDeletePaymentCtrl **************/
+(function () {
+    angular.module('budgetApp')
+        .controller('ConfirmDeletePaymentCtrl', ConfirmDeletePaymentCtrl);
+
+    ConfirmDeletePaymentCtrl.$inject = ['$state', '$uibModalInstance', 'apiService', 'handleResponse', 'msgService', 'payment'];
+
+    function ConfirmDeletePaymentCtrl($state, $uibModalInstance, apiService, hr, msgService, payment) {
+        var vm = this;
+        vm.payment = payment;
+        vm.closemodal = closemodal;
+        vm.removebudget = removebudget;
+        vm.errorMsg = '';
+
+        function closemodal() {
+            $uibModalInstance.close();
+        }
+
+        function removebudget() {
+            vm.errorMsg = '';
+            apiService.payment().remove({ id: payment.PaymentID }).$promise.then(deleteSuccess, deleteError);
+
+
+
+            function deleteSuccess(response) {
+                if (hr.respondSuccess(response)) {
+                    msgService.setSuccessMsg('ลบรายการสำเร็จ');
+                    $uibModalInstance.close(payment);
+                }
+                else {
+                    deleteError();
+                }
+            }
+
+            function deleteError(e) {
+                vm.errorMsg = '*** ไม่สามารถทำรายการได้ กรุณาลองอีกครั้ง ***';
+                //hr.respondError(e);
+                //$uibModalInstance.close();
+            }
+        }
+    }
+})();
 
 /****** Create Payment Controller *******/
 (function () {

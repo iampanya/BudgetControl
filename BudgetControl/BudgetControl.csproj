@@ -299,6 +299,7 @@
     <Content Include="Views\Budgets\Edit.cshtml" />
     <Content Include="Views\Report\Individual.cshtml" />
     <Content Include="Views\Budgets\ConfirmDelete.cshtml" />
+    <Content Include="Views\Payments\ConfirmDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

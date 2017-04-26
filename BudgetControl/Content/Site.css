@@ -79,18 +79,17 @@ label {
     background-image: url("/Images/budget-background.jpg");
     background-repeat: no-repeat;
     background-position: center;
-    background-size:cover;
+    background-size: cover;
     height: 300px;
 }
 
-    .jumbotron h1 {
-        color: #fff;
-        font-family: 'Kanit', san-serif;
-        font-size: 6em;
-        font-weight: 300;
-        text-shadow: 2px 2px 10px rgba(150, 150, 150, 1);
-
-    }
+.jumbotron h1 {
+    color: #fff;
+    font-family: 'Kanit', san-serif;
+    font-size: 6em;
+    font-weight: 300;
+    text-shadow: 2px 2px 10px rgba(150, 150, 150, 1);
+}
 
 
 
@@ -98,18 +97,18 @@ label {
 .btn-ghost {
     border: 1px solid #673AB7;
     color: #673AB7;
-    transition: background-color 0.2s ease-in-out ;
+    transition: background-color 0.2s ease-in-out;
 }
 
-.btn-ghost:hover {
-    background-color: #673AB7;
-    color: #fff;
-}
+    .btn-ghost:hover {
+        background-color: #673AB7;
+        color: #fff;
+    }
 
-.btn-ghost:active{
-    background-color: #311B92;
-}
+    .btn-ghost:active {
+        background-color: #311B92;
+    }
 
-.lead{
+.lead {
     font-size: 1.2em;
 }

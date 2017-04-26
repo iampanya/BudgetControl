@@ -1,0 +1,50 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title text-center" id="modal-title">ลบข้อมูลการจ่ายเงิน</h3>
+    <hr />
+    <table class="table table-bordered table-condensed table-hover">
+        <tbody>
+            <tr>
+                <th class="col-md-6 text-center">ลำดับการเบิก</th>
+                <td class="text-primary text-center">{{ vm.payment.Sequence }}</td>
+            </tr>
+
+            <tr>
+                <th class="col-md-6 text-center">ประจำปี</th>
+                <td class="text-primary text-center"> {{ vm.payment.Year }}</td>
+            </tr>
+
+            <tr>
+                <th class="col-md-6 text-center">รายละเอียด</th>
+                <td class="text-primary text-center"> {{ vm.payment.Description }}</td>
+            </tr>
+
+            <tr>
+                <th class="col-md-6 text-center">เบิกโดย</th>
+                <td class="text-primary text-center"> {{ vm.payment.Requester.FullName }}</td>
+            </tr>
+            <tr>
+                <th class="col-md-6 text-center">วันที่เบิก</th>
+                <td class="text-primary text-center"> {{ vm.payment.PaymentDate |date:'dd MMM yyyy'}}</td>
+            </tr>
+
+            <tr>
+                <th class="col-md-6 text-center">จำนวนเงิน</th>
+                <td class="text-primary text-center"> {{ vm.payment.TotalAmount | number:2 }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <p class="text-center text-danger"> {{ vm.errorMsg }} </p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 col-md-offset-6">
+            <button class="btn btn-default btn-block" type="button" ng-click="vm.closemodal()">ยกเลิกการลบ</button>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary btn-block" type="button" ng-click="vm.removebudget()">ยืนยันการลบ</button>
+        </div>
+    </div>
+
+    
+</div>

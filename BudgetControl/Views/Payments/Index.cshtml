@@ -62,7 +62,7 @@
                 <a ui-sref="editpayment({id:payment.PaymentID})" title="แก้ไข">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </a>|
-                <a ui-sref="deletepayment({id:payment.PaymentID})" title="ยกเลิกการจ่ายเงิน">
+                <a ng-click="vm.deletePayment(payment)" title="ยกเลิกการจ่ายเงิน">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                 </a>
 
