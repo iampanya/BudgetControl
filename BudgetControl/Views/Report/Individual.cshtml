@@ -41,8 +41,8 @@
                 <th class="text-center col-md-1">ลำดับ</th>
                 <th class="text-center">รหัสบัญชี</th>
                 <th class="text-center">ชื่อบัญชี</th>
-                <th class="text-center col-md-2">งบประมาณที่ได้รับ</th>
                 <th class="text-center col-md-2">จำนวนเงินที่เบิก</th>
+                <th class="text-center col-md-2">งบประมาณที่ได้รับ</th>
                 <th class="text-center col-md-1"></th>
             </tr>
         </thead>
@@ -51,8 +51,8 @@
                 <td class="text-center">{{ $index + 1 }}</td>
                 <td class="text-center">{{ budget.AccountID }}</td>
                 <td class="text-center">{{ budget.Account.AccountName}}</td>
-                <td class="text-center">{{ budget.BudgetAmount | number:2 }}</td>
                 <td class="text-center">{{ budget.WithdrawAmount | number:2 }}</td>
+                <td class="text-center">{{ budget.BudgetAmount | number:2 }}</td>
                 <td class="text-center">
                     <a ng-click="" title="ยกเลิกงบประมาณ">
                         <i class="fa fa-list" aria-hidden="true"></i>
