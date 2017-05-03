@@ -770,14 +770,48 @@ namespace BudgetControl.Controllers
                 // 3. Get budget details
                 foreach (var budget in budgets)
                 {
+                    // Get budget inside costcenter
+                    List<Guid> budgetincharge = new List<Guid>();
+                    using (var budgetRepo = new BudgetRepository())
+                    {
+                        List<Budget> listbudget = budgetRepo.Get()
+                            .Where(b =>
+                                b.AccountID == budget.AccountID &&
+                                b.CostCenterID.StartsWith(working.CostCenterTrim) &&
+                                b.Status == BudgetStatus.Active).ToList();
+
+                        budgetincharge.Clear();
+                        if (listbudget != null)
+                        {
+                            listbudget.ForEach(b =>
+                            {
+                                // Add to budgetincharge list
+                                budgetincharge.Add(b.BudgetID);
+
+                                // Summary budget amount
+                                if(b.CostCenterID != working.CostCenterID)
+                                {
+                                    var index = budgets.FindIndex(a => a.AccountID == b.AccountID);
+                                    if(index >= 0)
+                                    {
+                                        budgets[index].BudgetAmount += b.BudgetAmount;
+                                    }
+                                }
+                            });
+                        }
+                    }
+
+
+                    // Get all transaction inside budget
                     List<BudgetTransaction> transactions;
                     using (var tranRepo = new TransactionRepository())
                     {
                         transactions = tranRepo.Get().Where(
                             t =>
-                                t.Budget.AccountID == budget.AccountID &&
+                                budgetincharge.Contains(t.BudgetID) &&
                                 t.Status == RecordStatus.Active &&
-                                t.Budget.Year == year
+                                t.Budget.Year == year 
+                                
                             ).ToList();
                     }
                     decimal wdAmount = 0;
