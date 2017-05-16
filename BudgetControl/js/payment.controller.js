@@ -16,6 +16,7 @@
         vm.years = [];
         vm.year = '';
         vm.deletePayment = deletePayment;
+        vm.sortBy = sortBy;
 
         // 1. Get payment data from server.
         apiService.payment().get().$promise.then(callSuccess, callError);
@@ -49,6 +50,11 @@
 
         function deletePayment(payment) {
             openModal('', null, payment);
+        }
+
+        function sortBy(propertyName) {
+            vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
+            vm.propertyName = propertyName;
         }
 
         function openModal(size, parentSelector, data) {

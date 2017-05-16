@@ -41,15 +41,35 @@
     <thead>
         <tr>
             <th class="col-md-1 text-center">ลำดับ</th>
-            <th class="text-center">รายการ</th>
-            <th class="col-md-2 text-center">ผู้เบิก</th>
-            <th class="col-md-2 text-center">จำนวน</th>
-            <th class="col-md-2 text-center">วันที่</th>
+            <th class="text-center">
+                <a ng-click="vm.sortBy('Description')">
+                    รายการ
+                    <span ng-show="vm.propertyName === 'Description'" class="sortorder" ng-class="{reverse: vm.reverse}"></span>
+                </a> 
+            </th>
+            <th class="col-md-2 text-center">
+                <a ng-click="vm.sortBy('Requester.FullName')">
+                    ผู้เบิก
+                    <span ng-show="vm.propertyName === 'Requester.FullName'" class="sortorder" ng-class="{reverse: vm.reverse}"></span>
+                </a> 
+            </th>
+            <th class="col-md-2 text-center">
+                <a ng-click="vm.sortBy('TotalAmount')">
+                    จำนวนเงิน
+                    <span ng-show="vm.propertyName === 'TotalAmount'" class="sortorder" ng-class="{reverse: vm.reverse}"></span>
+                </a> 
+            </th>
+            <th class="col-md-2 text-center">
+                <a ng-click="vm.sortBy('PaymentDate')">
+                    วันที่ 
+                    <span ng-show="vm.propertyName === 'PaymentDate'" class="sortorder" ng-class="{reverse: vm.reverse}"></span>
+                </a> 
+            </th>
             <th class="col-md-1 text-center"></th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="payment in vm.payments | filter: vm.year | filter:vm.costcenter">
+        <tr ng-repeat="payment in vm.payments | filter: vm.year | filter:vm.costcenter | orderBy: vm.propertyName: vm.reverse">
             <td class="text-center"> {{ $index + 1 }} </td>
             <td> {{ payment.Description }} </td>
             <td class="text-center"> {{ payment.Requester.FullName }} </td>

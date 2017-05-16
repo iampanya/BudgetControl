@@ -112,3 +112,12 @@ label {
 .lead {
     font-size: 1.2em;
 }
+
+
+.sortorder:after {
+    content: '\25b2';
+}
+
+.sortorder.reverse:after {
+    content: '\25bc';
+}
