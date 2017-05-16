@@ -64,7 +64,7 @@ namespace BudgetControl.Controllers
                             p =>
                                 p.CostCenterID.StartsWith(working.CostCenterTrim)
                         )
-                        .OrderBy(p => p.Sequence)
+                        .OrderBy(p => p.PaymentDate)
                         .ToList();
 
                 }
