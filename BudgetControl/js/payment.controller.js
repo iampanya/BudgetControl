@@ -212,7 +212,7 @@
                     BudgetID: budget.BudgetID,
                     PaymentID: '',
                     Description: '',
-                    Amount: 0.00,
+                    Amount: '',
                     PreviousAmount: 0.00,
                     RemainAmount: 0.00,
                     Budget: budget,
@@ -255,11 +255,14 @@
             }
         }
         function submit() {
-            console.log('submit call');
-            vm.payment.BudgetTransactions = vm.transactions;
-            apiService.payment().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
-
-            //openModal('lg', null, '4FED2241-8896-403B-998F-4069F196D190');
+            vm.addNewTransactionError = "";
+            if (vm.transactions.length > 0) {
+                vm.payment.BudgetTransactions = vm.transactions;
+                apiService.payment().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
+            }
+            else {
+                vm.addNewTransactionError = "* กรุณากดเพิ่มรายการงบประมาณ";
+            }
 
             function callPaymentSuccess(response) {
                 var paymentid = hr.respondSuccess(response);
@@ -500,7 +503,7 @@
                     BudgetID: budget.BudgetID,
                     PaymentID: '',
                     Description: '',
-                    Amount: 0.00,
+                    Amount: '',
                     PreviousAmount: 0.00,
                     RemainAmount: 0.00,
                     Budget: budget,
@@ -539,10 +542,14 @@
             }
         }
         function submit() {
-            vm.payment.BudgetTransactions = vm.transactions;
-            apiService.payment().update(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
-
-            //openModal('lg', null, '4FED2241-8896-403B-998F-4069F196D190');
+            vm.addNewTransactionError = "";
+            if (vm.transactions.length > 0) {
+                vm.payment.BudgetTransactions = vm.transactions;
+                apiService.payment().update(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
+            }
+            else {
+                vm.addNewTransactionError = "* กรุณากดเพิ่มรายการงบประมาณ";
+            }
 
             function callPaymentSuccess(response) {
                 hr.respondSuccess(response);
