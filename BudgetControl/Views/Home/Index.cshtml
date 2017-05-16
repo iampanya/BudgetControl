@@ -81,7 +81,7 @@
 
 <div class="container-fluid">
     <div class="container body-content">
-        <div>
+        <div class="hidden-print">
             <ol class="breadcrumb">
                 <li ng-repeat="item in breadcrumb" class="active">
                     <a ng-if="!$last" ui-sref="{{ item.state }}"> {{ item.text }} </a>
@@ -110,7 +110,7 @@
 
     </div>
 
-    <div class="navbar-fixed-bottom" style="background-color: #f7f7f7;">
+    <div class="navbar-fixed-bottom hidden-print" style="background-color: #f7f7f7;">
         <hr class="footer" />
         <div class="container">
             <footer>

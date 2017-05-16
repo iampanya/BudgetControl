@@ -3,7 +3,7 @@
 }
 
 
-<div>
+<div class="hidden-print">
     <h3>รายละเอียดการเบิกจ่าย</h3>
     <hr />
 
@@ -40,6 +40,55 @@
         </div>
     </div>
     <br/>
+    <div>
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">ลำดับ</th>
+                    <th class="text-center">รหัสบัญชี</th>
+                    <th class="text-center">ชื่อบัญชี</th>
+                    <th class="text-center">ปีงบประมาณ</th>
+                    <th class="text-center">งบที่ได้รับ</th>
+                    <th class="text-center">เบิกจ่ายไปแล้ว</th>
+                    <th class="text-center">เบิกจ่ายงวดนี้</th>
+                    <th class="text-center">คงเหลือ</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="transaction in vm.payment.BudgetTransactions">
+                    <td class="text-center"> {{ $index + 1 }} </td>
+                    <td class="text-center"> {{ transaction.Budget.AccountID }}</td>
+                    <td class="text-center"> {{ transaction.Budget.Account.AccountName }}</td>
+                    <td class="text-center"> {{ transaction.Budget.Year }}</td>
+                    <td class="text-right"> {{ transaction.Budget.BudgetAmount | number: 2}}</td>
+                    <td class="text-right"> {{ transaction.PreviousAmount | number: 2 }}</td>
+                    <td class="text-right"> {{ transaction.Amount | number: 2 }}</td>
+                    <td class="text-right"> {{ transaction.RemainAmount | number: 2}}</td>
+                </tr>
+                <tr>
+                    <th colspan="6" class="text-right">รวมเบิก</th>
+                    <th class="text-right">{{ vm.payment.TotalAmount | number: 2 }}</th>
+                    <th class="text-center">บาท</th>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-md-offset-8">
+            <button class="btn btn-primary btn-block" ng-click="vm.print()"><i class="fa fa-print" aria-hidden="true"></i> พิมพ์</button>
+        </div>
+        <div class="col-md-2">
+            <a ui-sref="payment" class="btn btn-primary btn-block">รายการเบิกจ่าย</a>
+        </div>
+
+    </div>
+</div>
+
+<div class="visible-print-block">
 
     <table class="table table-bordered table-hover table-striped">
         <thead>
@@ -75,13 +124,8 @@
         </tbody>
     </table>
 
-    <div class="row">
-        <div class="col-md-2 col-md-offset-10">
-            <a ui-sref="payment" class="btn btn-primary btn-block">รายการเบิกจ่าย</a>
-        </div>
-
-    </div>
 </div>
+
 
 @*<div class="panel panel-default">
     <div class="panel-heading">

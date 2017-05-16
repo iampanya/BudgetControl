@@ -351,6 +351,7 @@
         vm.paymentid = paymentid;
         vm.next = next;
         vm.update = update;
+        vm.print = print;
 
         apiService.payment().get({ id: vm.paymentid }).$promise.then(callApiSuccess, callApiError);
 
@@ -372,6 +373,10 @@
             $uibModalInstance.close();
             $state.go('editpayment', { id: paymentid });
         }
+
+        function print() {
+            window.print();
+        }
     }
 })();
 
@@ -390,6 +395,7 @@
     function DetailPaymentCtrl($state, $stateParams, apiService, hr ) {
         var vm = this;
         vm.paymentid = $stateParams.id;
+        vm.print = print;
 
         apiService.payment().get({ id: vm.paymentid }).$promise.then(callApiSuccess, callApiError);
 
@@ -400,6 +406,10 @@
 
         function callApiError(e) {
             hr.respondError(e);
+        }
+
+        function print() {
+            window.print();
         }
 
     }
