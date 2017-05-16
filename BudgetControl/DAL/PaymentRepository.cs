@@ -48,7 +48,8 @@ namespace BudgetControl.DAL
         public IEnumerable<Payment> Get()
         {
             //TODO filter from CostCenter
-            return GetAll().Where(p => p.Status == RecordStatus.Active);
+            return GetAll();
+            /*return GetAll().Where(p => p.Status == RecordStatus.Active)*/;
         }
 
         public void Add(Payment entity)

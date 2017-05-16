@@ -63,6 +63,7 @@ namespace BudgetControl.Controllers
                         .Where(
                             p =>
                                 p.CostCenterID.StartsWith(working.CostCenterTrim)
+                                && p.Status == RecordStatus.Active
                         )
                         .OrderBy(p => p.PaymentDate)
                         .ToList();
