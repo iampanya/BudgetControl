@@ -15,6 +15,8 @@
         vm.costcenter = '';
         vm.years = [];
         vm.year = '';
+        vm.filter = '';
+
         vm.deletePayment = deletePayment;
         vm.sortBy = sortBy;
 
