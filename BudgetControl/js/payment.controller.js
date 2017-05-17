@@ -55,6 +55,11 @@
         }
 
         function sortBy(propertyName) {
+            if (propertyName === '') {
+                vm.reverse = false;
+                vm.propertyName = propertyName;
+                return false;
+            }
             vm.reverse = (vm.propertyName === propertyName) ? !vm.reverse : false;
             vm.propertyName = propertyName;
         }

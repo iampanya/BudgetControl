@@ -19,8 +19,7 @@
                     ปีงบประมาณ:
                 </span>
                 <span class="col-md-6">
-                    <select class="form-control input-sm" ng-model="vm.year" ng-options="c.Year as c.Year for c in vm.years | orderBy:'Year'" >
-                    </select>
+                    <select class="form-control input-sm" ng-model="vm.year" ng-options="c.Year as c.Year for c in vm.years | orderBy:'Year'"></select>
                 </span>
             </h3>
         </div>
@@ -38,8 +37,8 @@
     <div class="col-md-3">
         <h3>
             <span class="input-group input-group-sm">
-                    <input type="text" class="form-control" placeholder="ค้นหา" ng-model="vm.filter">
-                    <span class="input-group-addon "><i class="fa fa-search" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" placeholder="ค้นหา" ng-model="vm.filter">
+                <span class="input-group-addon "><i class="fa fa-search" aria-hidden="true"></i></span>
             </span>
         </h3>
     </div>
@@ -48,30 +47,34 @@
 <table class="table table-hover table-striped table-bordered">
     <thead>
         <tr>
-            <th class="col-md-1 text-center">ลำดับ</th>
+            <th class="col-md-1 text-center">
+                <a ng-click="vm.sortBy('')">
+                    ลำดับ
+                </a>
+            </th>
             <th class="text-center">
                 <a ng-click="vm.sortBy('Description')">
                     รายการ
                     <span ng-show="vm.propertyName === 'Description'" class="sortorder" ng-class="{reverse: vm.reverse}"></span>
-                </a> 
+                </a>
             </th>
             <th class="col-md-2 text-center">
                 <a ng-click="vm.sortBy('Requester.FullName')">
                     ผู้เบิก
                     <span ng-show="vm.propertyName === 'Requester.FullName'" class="sortorder" ng-class="{reverse: vm.reverse}"></span>
-                </a> 
+                </a>
             </th>
             <th class="col-md-2 text-center">
                 <a ng-click="vm.sortBy('TotalAmount')">
                     จำนวนเงิน
                     <span ng-show="vm.propertyName === 'TotalAmount'" class="sortorder" ng-class="{reverse: vm.reverse}"></span>
-                </a> 
+                </a>
             </th>
             <th class="col-md-2 text-center">
                 <a ng-click="vm.sortBy('PaymentDate')">
-                    วันที่ 
+                    วันที่
                     <span ng-show="vm.propertyName === 'PaymentDate'" class="sortorder" ng-class="{reverse: vm.reverse}"></span>
-                </a> 
+                </a>
             </th>
             <th class="col-md-1 text-center"></th>
         </tr>
