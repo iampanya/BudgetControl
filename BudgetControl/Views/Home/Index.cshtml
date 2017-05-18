@@ -110,11 +110,24 @@
 
     </div>
 
-    <div class="navbar-fixed-bottom hidden-print" style="background-color: #f7f7f7;">
+    <div ng-controller="FooterCtrl as vm" class="navbar-fixed-bottom hidden-print" style="background-color: #f7f7f7;">
         <hr class="footer" />
         <div class="container">
             <footer>
-                <p>&copy; @DateTime.Now.Year - ระบบควบคุมงบประมาณ</p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>&copy; @DateTime.Now.Year - ระบบควบคุมงบประมาณ</p>
+                    </div>
+                    <div class="col-md-8">
+                        <ul class="list-inline">
+                            <li><a ng-click="vm.aboutus()">เกี่ยวกับเรา</a> | </li>
+                            <li><a>ประกาศ & ข่าวสาร |</a></li>
+                            <li><a>คู่มือการใช้งาน</a> |</li>
+                            <li><a>แจ้งปัญหาการใช้งาน</a> |</li>
+                        </ul>
+                    </div>
+                </div>
+                <br/>
             </footer>
         </div>
     </div>
