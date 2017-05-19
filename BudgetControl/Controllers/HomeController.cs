@@ -28,6 +28,22 @@ namespace BudgetControl.Controllers
             return View();
         }
 
+        public ActionResult Notice()
+        {
+            return View();
+        }
+
+        public ActionResult Document()
+        {
+            return View();
+        }
+
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
+
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
