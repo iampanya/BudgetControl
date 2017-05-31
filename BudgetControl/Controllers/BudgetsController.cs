@@ -1,11 +1,9 @@
-﻿using BudgetControl.DAL;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace BudgetControl.Controllers
 {
     public class BudgetsController : Controller
     {
-        private BudgetContext db = new BudgetContext();
 
         #region Pages
 
@@ -38,20 +36,6 @@ namespace BudgetControl.Controllers
         {
             return View();
         }
-
-        #endregion
-
-        #region Dispose
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
 
         #endregion
 
