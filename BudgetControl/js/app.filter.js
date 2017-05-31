@@ -1,5 +1,10 @@
 ﻿
-
+/**
+ * Filter: Unique
+ * @param {list} collection
+ * @param {String} keyname
+ * @returns {list} unique list data by keyname
+ */
 budgetApp.filter('unique', function () {
     // we will return a function which will take in a collection
     // and a keyname
@@ -28,6 +33,11 @@ budgetApp.filter('unique', function () {
 });
 
 
+
+/**
+ * Filter: Total
+ * calculate total of list
+ */ 
 (function () {
     angular.module('budgetApp')
         .filter('total', total);
@@ -41,20 +51,6 @@ budgetApp.filter('unique', function () {
                 sum = sum + parseInt(value[key]);
             });
             return sum;
-        }
-    }
-
-})();
-
-(function () {
-    angular.module('budgetApp')
-        .filter('negative', negative);
-
-    function negative() {
-        return function (input) {
-            input = input ? input : 0;
-            console.log(input);
-            return input < 0 ? "+" + input : input;
         }
     }
 
