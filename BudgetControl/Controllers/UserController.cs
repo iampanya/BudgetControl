@@ -1,11 +1,8 @@
 ﻿using BudgetControl.DAL;
 using BudgetControl.Sessions;
-using BudgetControl.Util;
 using BudgetControl.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BudgetControl.Controllers
@@ -15,18 +12,13 @@ namespace BudgetControl.Controllers
         private ReturnObject returnobj = new ReturnObject();
         // GET: Account
 
-        #region View
+        #region Pages
 
         public ActionResult Index()
         {
             return View();
         }
 
-        // Deprecated
-        public ActionResult Login()
-        {
-            return View();
-        }
 
         public ActionResult Signin()
         {
@@ -151,7 +143,6 @@ namespace BudgetControl.Controllers
 
         #endregion
 
-
         [ActionName("Current")]
         public ActionResult CurrentUser()
         {
@@ -178,5 +169,7 @@ namespace BudgetControl.Controllers
 
 
         }
+
+
     }
 }
