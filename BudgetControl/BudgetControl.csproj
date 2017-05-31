@@ -141,7 +141,6 @@
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
-    <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="DAL\AccountRepository.cs" />
     <Compile Include="DAL\BudgetContext.cs" />
     <Compile Include="DAL\BudgetRepository.cs" />
@@ -282,7 +281,6 @@
     <Content Include="Views\Payments\Details.cshtml" />
     <Content Include="Views\Payments\Index.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\Template\DialogAfterCreatePayment.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\User\Signin.cshtml" />
     <Content Include="Views\Payments\Create.cshtml" />
@@ -290,7 +288,6 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
     <Content Include="Views\Budgets\Upload.cshtml" />
-    <Content Include="Views\Template\PaymentResult.cshtml" />
     <Content Include="Views\Report\Summary.cshtml" />
     <Content Include="Views\Home\Error401.cshtml" />
     <Content Include="Views\Budgets\Edit.cshtml" />
