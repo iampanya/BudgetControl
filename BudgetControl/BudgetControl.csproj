@@ -279,7 +279,6 @@
     <Content Include="Views\Budgets\Create.cshtml" />
     <Content Include="Views\Budgets\Details.cshtml" />
     <Content Include="Views\Budgets\Index.cshtml" />
-    <Content Include="Views\Payments\Create_backup.cshtml" />
     <Content Include="Views\Payments\Details.cshtml" />
     <Content Include="Views\Payments\Index.cshtml" />
     <Content Include="Views\User\Login.cshtml" />

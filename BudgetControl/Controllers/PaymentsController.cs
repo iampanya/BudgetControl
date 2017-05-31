@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using BudgetControl.DAL;
-using BudgetControl.Models;
-using BudgetControl.ViewModels;
+﻿using System.Web.Mvc;
 
 namespace BudgetControl.Controllers
 {
     public class PaymentsController : Controller
     {
-        private BudgetContext db = new BudgetContext();
 
         #region Pages
 
@@ -43,18 +32,6 @@ namespace BudgetControl.Controllers
             return View();
         }
 
-        #endregion
-
-        #region Dispose
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
         #endregion
     }
 }
