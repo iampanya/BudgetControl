@@ -146,6 +146,7 @@
     <Compile Include="DAL\BudgetRepository.cs" />
     <Compile Include="DAL\CostCenterRepository.cs" />
     <Compile Include="DAL\EmployeeRepository.cs" />
+    <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="DAL\PaymentRepository.cs" />
     <Compile Include="DAL\StatementRepository.cs" />
