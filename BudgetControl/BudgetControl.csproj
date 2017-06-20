@@ -171,6 +171,7 @@
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Base\IRecordTimeStamp.cs" />
     <Compile Include="Models\Base\RecordTimeStamp.cs" />
+    <Compile Include="Models\Base\ValidationResult.cs" />
     <Compile Include="Models\Budget.cs" />
     <Compile Include="Models\BudgetTransaction.cs" />
     <Compile Include="Models\CostCenter.cs" />
