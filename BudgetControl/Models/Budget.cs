@@ -59,7 +59,6 @@ namespace BudgetControl.Models
 
         #endregion
 
-
         #region Field
 
         public Guid BudgetID { get; set; }
@@ -108,6 +107,35 @@ namespace BudgetControl.Models
                     return AccountID;
                 }
             }
+        }
+
+        #endregion
+
+        #region Validate
+
+        public Base.ValidationResult Validate()
+        {
+            if (BudgetID == Guid.Empty)
+            {
+                return new Base.ValidationResult("BudgetID cannot be empty.", "BudgetID");
+            }
+
+            if (String.IsNullOrEmpty(AccountID))
+            {
+                return new Base.ValidationResult("AccountID cannot be empty.", "AccountID");
+            }
+
+            if (String.IsNullOrEmpty(CostCenterID))
+            {
+                return new Base.ValidationResult("CostCenterID cannot be empty.", "CostCenterID");
+            }
+
+            if (String.IsNullOrEmpty(Year))
+            {
+                return new Base.ValidationResult("Year cannot be empty.", "Year");
+            }
+
+            return new Base.ValidationResult(true);
         }
 
         #endregion
