@@ -87,7 +87,38 @@ namespace BudgetControl.Manager
 
         #endregion
 
-        #region 
+        #region Deactivate
+
+        public void Deactivate(string accountid)
+        {
+            this.Deactivate(this.GetByID(accountid));
+        }
+
+        public void Deactivate(Account account)
+        {
+            account.Status = RecordStatus.Inactive;
+            this.Update(account);
+        }
+
+        #endregion
+
+
+        #region Delete
+
+        public void Delete(string accountid)
+        {
+            this.Delete(this.GetByID(accountid));
+        }
+
+        public void Delete(Account account)
+        {
+            // 1. Modify timestamp
+            account.NewModifyTimeStamp();
+
+            // 2. Delete from datatbase
+            _accountRepo.Delete(account);
+            _accountRepo.Save();
+        }
 
         #endregion
     }
