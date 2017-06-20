@@ -167,7 +167,7 @@ namespace BudgetControl.Manager
         public void Delete(BudgetTransaction transaction)
         {
             //var tranRepo = new TransactionRepository(_db);
-            transaction.Status = Models.Base.RecordStatus.Remove;
+            transaction.Status = Models.Base.RecordStatus.Inactive;
             Update(transaction);
         }
         //public void Add(BudgetTransaction transaction)

@@ -48,7 +48,7 @@ namespace BudgetControl.Manager
 
         public IEnumerable<Account> GetRemoveBudget()
         {
-            return GetByStatus(RecordStatus.Remove);
+            return GetByStatus(RecordStatus.Inactive);
         }
 
         public Account GetByID(string accountid)

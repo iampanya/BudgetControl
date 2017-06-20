@@ -11,7 +11,7 @@ namespace BudgetControl.Models.Base
     public enum RecordStatus
     {
         Active = 0x01,
-        Remove = 0x02
+        Inactive = 0x02
     }
 
     public class RecordTimeStamp

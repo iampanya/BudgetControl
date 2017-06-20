@@ -201,7 +201,7 @@ namespace BudgetControl.Controllers
                     if (payment == null) {
                         throw new Exception("ไม่พบข้อมูลการจ่ายเงิน");
                     }
-                    payment.Status = RecordStatus.Remove;
+                    payment.Status = RecordStatus.Inactive;
                     paymentRepo.Update(payment);
                     paymentRepo.Save();
 
@@ -211,7 +211,7 @@ namespace BudgetControl.Controllers
                         budgetTransaction = payment.BudgetTransactions.ToList();
                         budgetTransaction.ForEach(t =>
                         {
-                            t.Status = RecordStatus.Remove;
+                            t.Status = RecordStatus.Inactive;
                             transRepo.Update(t);
                         });
                         transRepo.Save();

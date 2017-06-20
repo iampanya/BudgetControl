@@ -84,7 +84,7 @@ namespace BudgetControl.DAL
 
         public void Delete(Payment entity)
         {
-            entity.Status = RecordStatus.Remove;
+            entity.Status = RecordStatus.Inactive;
             Update(entity);
         }
 
