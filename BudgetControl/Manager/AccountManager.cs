@@ -1,10 +1,8 @@
 ﻿using BudgetControl.DAL;
 using BudgetControl.Models;
 using BudgetControl.Models.Base;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace BudgetControl.Manager
 {
@@ -29,7 +27,21 @@ namespace BudgetControl.Manager
 
         #endregion
 
-        #region GetAccount
+        #region Create
+
+        public void Add(Account account)
+        {
+            // 1. Create TimeStamp 
+            account.NewCreateTimeStamp();
+
+            // 2. Add to database
+            _accountRepo.Add(account);
+            _accountRepo.Save();
+        }
+
+        #endregion
+
+        #region Retrieve
 
         public IEnumerable<Account> GetAll()
         {
@@ -54,21 +66,6 @@ namespace BudgetControl.Manager
         public Account GetByID(string accountid)
         {
             return _accountRepo.GetById(accountid);
-        }
-
-        #endregion
-
-
-        #region Add new Account
-
-        public void Add(Account account)
-        {
-            // 1. Create TimeStamp 
-            account.NewCreateTimeStamp();
-
-            // 2. Add to database
-            _accountRepo.Add(account);
-            _accountRepo.Save();
         }
 
         #endregion
@@ -102,7 +99,6 @@ namespace BudgetControl.Manager
 
         #endregion
 
-
         #region Delete
 
         public void Delete(string accountid)
@@ -121,5 +117,6 @@ namespace BudgetControl.Manager
         }
 
         #endregion
+
     }
 }
