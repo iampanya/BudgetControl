@@ -1,5 +1,7 @@
 ﻿using BudgetControl.DAL;
 using BudgetControl.Models;
+using BudgetControl.Models.Base;
+using BudgetControl.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,7 @@ namespace BudgetControl.Manager
     public class BudgetManager
     {
         private BudgetContext _db;
+
 
         #region Constructor
 
@@ -41,8 +44,6 @@ namespace BudgetControl.Manager
             }
         }
 
-
-
         public void Add(Budget budget)
         {
             // 1. Add Payment
@@ -64,6 +65,98 @@ namespace BudgetControl.Manager
            
         }
 
+        #endregion
+
+
+        #region Refactor
+        private GenericRepository<Budget> budgetRepo = new GenericRepository<Budget>();
+
+        #region Get Budget
+
+        public IEnumerable<Budget> GetAll()
+        {
+            return budgetRepo.Get();
+        }
+
+        private IEnumerable<Budget> GetByStatus(BudgetStatus status)
+        {
+            return GetAll().Where(b => b.Status == status);
+        }
+
+        public IEnumerable<Budget> GetActiveBudget()
+        {
+            return GetByStatus(BudgetStatus.Active);
+        }
+
+        public IEnumerable<Budget> GetClosedBudget()
+        {
+            return GetByStatus(BudgetStatus.Closed);
+        }
+
+        public IEnumerable<Budget> GetCancelledBudget()
+        {
+            return GetByStatus(BudgetStatus.Cancelled);
+        }
+
+        public Budget GetBudget(string year, string accountid, string costcenterid)
+        {
+            return GetActiveBudget()
+                .Where(b =>
+                   b.Year == year &&
+                   b.AccountID == accountid &&
+                   b.CostCenterID == costcenterid
+                  ).FirstOrDefault();
+        }
+
+
+        #endregion
+
+
+        #region Add Budget
+        
+        public void AddBudget(Budget budget)
+        {
+            // Set new timestamp
+            budget.NewCreateTimeStamp();
+
+            // Add budget to database
+            budgetRepo.Add(budget);
+            budgetRepo.Save();
+        }
+
+        public void AddBudgetByForm(CreateBudgetModel form)
+        {
+            // 1. Check AccountID is exist in database?
+            AccountManager accManager = new AccountManager();
+            if (accManager.GetByID(form.AccountID) == null)
+            {
+                accManager.Add(new Account()
+                {
+                    AccountID = form.AccountID,
+                    AccountName = form.AccountName,
+                    Status = RecordStatus.Active
+                });
+            }
+
+            // 2. Check Budget is exist in database?
+            if(GetBudget(form.Year, form.AccountID, form.CostCenterID) == null)
+            {
+                this.AddBudget(new Budget()
+                {
+                    BudgetID = Guid.NewGuid(),
+                    AccountID = form.AccountID,
+                    CostCenterID = form.CostCenterID,
+                    Sequence = 0,
+                    Year = form.Year,
+                    BudgetAmount = form.Amount,
+                    WithdrawAmount = 0,
+                    RemainAmount = 0,
+                    Status = BudgetStatus.Active
+                });
+            }
+        }
+
+        #endregion
 
         #endregion
     }
