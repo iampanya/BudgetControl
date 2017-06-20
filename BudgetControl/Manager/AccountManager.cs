@@ -1,6 +1,7 @@
 ﻿using BudgetControl.DAL;
 using BudgetControl.Models;
 using BudgetControl.Models.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,7 +32,10 @@ namespace BudgetControl.Manager
 
         public void Add(Account account)
         {
-            // 1. Create TimeStamp 
+            // 1. Validate entity
+            this.Validate(account);
+
+            // 2. Create TimeStamp 
             account.NewCreateTimeStamp();
 
             // 2. Add to database
@@ -74,6 +78,9 @@ namespace BudgetControl.Manager
 
         public void Update(Account account)
         {
+            // 1. Validate entity
+            this.Validate(account);
+
             // 1. Modify TimeStame
             account.NewCreateTimeStamp();
 
@@ -93,6 +100,9 @@ namespace BudgetControl.Manager
 
         public void Deactivate(Account account)
         {
+            //1. Validate entity
+            this.Validate(account);
+
             account.Status = RecordStatus.Inactive;
             this.Update(account);
         }
@@ -108,12 +118,35 @@ namespace BudgetControl.Manager
 
         public void Delete(Account account)
         {
-            // 1. Modify timestamp
+            //1. Validate entity
+            this.Validate(account);
+
+            // 2. Modify timestamp
             account.NewModifyTimeStamp();
 
-            // 2. Delete from datatbase
+            // 3. Delete from datatbase
             _accountRepo.Delete(account);
             _accountRepo.Save();
+        }
+
+        #endregion
+
+        #region Methods
+
+        public void Validate(Account account)
+        {
+            // 1. Check entity is null
+            if(account == null)
+            {
+                throw new Exception("Account cannot be null");
+            }
+
+            // 2. Check content inside entity
+            var validateResult = account.Validate();
+            if (!validateResult.IsSuccess)
+            {
+                throw new Exception(validateResult.ErrorMessage);
+            }
         }
 
         #endregion
