@@ -71,6 +71,23 @@ namespace BudgetControl.Manager
             _accountRepo.Save();
         }
 
+        #endregion
+
+        #region Update
+
+        public void Update(Account account)
+        {
+            // 1. Modify TimeStame
+            account.NewCreateTimeStamp();
+
+            // 2. Update to database
+            _accountRepo.Update(account);
+            _accountRepo.Save();
+        }
+
+        #endregion
+
+        #region 
 
         #endregion
     }
