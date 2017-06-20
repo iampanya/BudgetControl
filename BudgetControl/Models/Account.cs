@@ -11,6 +11,7 @@ namespace BudgetControl.Models
     public class Account : RecordTimeStamp
     {
         #region Constructor
+
         public Account()
         {
 
@@ -39,10 +40,28 @@ namespace BudgetControl.Models
 
         #endregion
 
-
         #region Relationship
 
         public virtual ICollection<Budget> Budgets { get; set; }
+
+        #endregion
+
+        #region Validate
+
+        public Base.ValidationResult Validate()
+        {
+            if (String.IsNullOrEmpty(AccountID))
+            {
+                return new Base.ValidationResult("AccountID cannot be empty.", "AccountID");
+            }
+
+            if (String.IsNullOrEmpty(AccountName))
+            {
+                return new Base.ValidationResult("AccountName cannot be empty.", "AccountName");
+            }
+
+            return new Base.ValidationResult(true);
+        }
 
         #endregion
 
