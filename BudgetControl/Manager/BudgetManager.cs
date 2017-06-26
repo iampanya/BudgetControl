@@ -164,6 +164,10 @@ namespace BudgetControl.Manager
             return _budgetRepo.GetById(budgetid);
         }
 
+        public IEnumerable<Budget> GetByCostCenter(CostCenter costcenter)
+        {
+            return GetAll().Where(b => b.CostCenterID.StartsWith(costcenter.CostCenterTrim));
+        }
 
         #endregion
 
