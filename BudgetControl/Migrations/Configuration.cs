@@ -88,6 +88,40 @@ namespace BudgetControl.Migrations
 
             #endregion
 
+            #region PaymentCounter
+
+            List<PaymentCounter> paymentcounters = new List<PaymentCounter>();
+            
+            foreach(var item in costcenters)
+            {
+                string[] costcentersplit = item.ShortName.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+
+                string shortcode;
+                if(costcentersplit[costcentersplit.Length - 1].Length < 3)
+                {
+                    var l = costcentersplit.Length;
+                    shortcode = costcentersplit[l - 2] + "." + costcentersplit[l - 1];
+                }
+                else
+                {
+                    var test = costcentersplit[costcentersplit.Length - 1].Split(' ');
+                    shortcode = test[test.Length - 1];
+                }
+                
+                paymentcounters.Add(new PaymentCounter()
+                {
+                    CostCenterID = item.CostCenterID,
+                    Year = "2560",
+                    ShortCode = shortcode,
+                    Number = 0
+                });
+            }
+
+            paymentcounters.ForEach(p => context.PaymentCounters.AddOrUpdate(a => a.CostCenterID, p));
+            context.SaveChanges();
+
+            #endregion
+
             #region Budget
             //path = Path.Combine(basepath, @"Data\Budget.txt");
 

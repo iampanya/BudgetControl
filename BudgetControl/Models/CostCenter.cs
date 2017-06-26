@@ -30,6 +30,7 @@ namespace BudgetControl.Models
         public virtual ICollection<Budget> Budgets { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
+        public virtual ICollection<PaymentCounter> PaymentCounters { get; set; }
 
         public string CostCenterTrim
         {

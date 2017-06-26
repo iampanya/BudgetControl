@@ -28,6 +28,7 @@ namespace BudgetControl.DAL
         public DbSet<User> Users { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Statement> Statements { get; set; }
+        public DbSet<PaymentCounter> PaymentCounters { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
