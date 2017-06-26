@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using BudgetControl.DAL;
 using System.Data.Entity;
+using System.Linq.Expressions;
 
 namespace BudgetControl.DAL
 {
@@ -58,6 +59,27 @@ namespace BudgetControl.DAL
         public IEnumerable<TEntity> Get()
         {
             return _table;
+        }
+
+        protected virtual IQueryable<T> GetQueryable<T>(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null, int? skip = null, int? take = null) where T : class
+        {
+            includeProperties = includeProperties ?? string.Empty;
+            IQueryable<T> query = _db.Set<T>();
+            
+            if(filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach(var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+            
+
+
+
+            return query;
         }
 
         public IEnumerable<TEntity> GetAll()
