@@ -2,6 +2,7 @@
 using BudgetControl.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -48,6 +49,31 @@ namespace BudgetControl.Manager
                     // 2. Add payment to context
                     var paymentRepo = new PaymentRepository(_db);
                     payment.Sequence = paymentRepo.Get().Where(p => p.CostCenterID == payment.CostCenterID).ToList().Count + 1;
+
+                    // Get payment counter info
+                    PaymentCounter pcounter = _db.PaymentCounters.Where(c => c.CostCenterID == payment.CostCenterID && c.Year == payment.Year).FirstOrDefault();
+                    if(pcounter == null)
+                    {
+                        //if not exist, then add new one.
+                        pcounter = new PaymentCounter()
+                        {
+                            CostCenterID = payment.CostCenterID,
+                            Year = payment.Year,
+                            ShortCode = "TEST",
+                            Number = 1
+                        };
+
+                        _db.PaymentCounters.Add(pcounter);
+                        _db.SaveChanges();
+                    }
+                    else
+                    {
+                        pcounter.Number += 1;
+                        pcounter.NewModifyTimeStamp();
+                        _db.Entry(pcounter).State = EntityState.Modified;
+                        _db.SaveChanges();
+                    }
+                    payment.PaymentNo = pcounter.ShortCode + "-" + pcounter.Number.ToString().PadLeft(4, '0');
                     paymentRepo.Add(payment);
                     paymentRepo.Save();
 
