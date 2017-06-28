@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using BudgetControl.DAL;
 using System.Data.Entity;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace BudgetControl.DAL
 {
-    public class GenericRepository<TEntity> : IRepository<TEntity>, IDisposable where TEntity : class
+    public class GenericRepository<TEntity> : IGRepository<TEntity>, IDisposable where TEntity : class
     {
         private BudgetContext _db;
         private DbSet<TEntity> _table;
@@ -56,12 +54,26 @@ namespace BudgetControl.DAL
             _table.Remove(entity);
         }     
 
-        public IEnumerable<TEntity> Get()
+        public IEnumerable<TEntity> Get(
+            Expression<Func<TEntity, bool>> filter = null, 
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
+            string includeProperties = null, 
+            int? skip = null, 
+            int? take = null)
         {
-            return _table;
+            return GetQueryable<TEntity>(filter, orderBy, includeProperties, skip, take);
         }
 
-        protected virtual IQueryable<T> GetQueryable<T>(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null, int? skip = null, int? take = null) where T : class
+        public IEnumerable<TEntity> GetAll(
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
+            string includeProperties = null, 
+            int? skip = null, 
+            int? take = null)
+        {
+            return GetQueryable<TEntity>(null, orderBy, includeProperties, skip, take);
+        }
+
+        public virtual IQueryable<T> GetQueryable<T>(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null, int? skip = null, int? take = null) where T : class
         {
             includeProperties = includeProperties ?? string.Empty;
             IQueryable<T> query = _db.Set<T>();
@@ -76,16 +88,25 @@ namespace BudgetControl.DAL
                 query = query.Include(includeProperty);
             }
             
+            if(orderBy != null)
+            {
+                query = orderBy(query);
+            }
 
+            if (skip.HasValue)
+            {
+                query = query.Skip(skip.Value);
+            }
 
+            if (take.HasValue)
+            {
+                query = query.Take(take.Value);
+            }
 
             return query;
         }
 
-        public IEnumerable<TEntity> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public TEntity GetById(object id)
         {

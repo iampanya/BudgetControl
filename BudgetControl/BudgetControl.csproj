@@ -148,6 +148,7 @@
     <Compile Include="DAL\CostCenterRepository.cs" />
     <Compile Include="DAL\EmployeeRepository.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
+    <Compile Include="DAL\IGRepository.cs" />
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="DAL\PaymentRepository.cs" />
     <Compile Include="DAL\StatementRepository.cs" />
@@ -309,9 +310,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Test\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\Data\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
