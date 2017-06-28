@@ -24,6 +24,7 @@ namespace BudgetControl.Models
             this.CostCenterID = payment.CostCenterID;
             this.Year = payment.Year;
             this.Sequence = payment.Sequence;
+            this.PaymentNo = payment.PaymentNo;
             this.Description = payment.Description;
             this.RequestBy = payment.RequestBy;
             this.PaymentDate = payment.PaymentDate;
@@ -39,6 +40,7 @@ namespace BudgetControl.Models
             this.CostCenterID = paymentviewmodel.CostCenterID;
             this.Year = paymentviewmodel.Year;
             this.Sequence = paymentviewmodel.Sequence;
+            this.PaymentNo = paymentviewmodel.PaymentNo;
             this.Description = paymentviewmodel.Description;
             this.RequestBy = paymentviewmodel.RequestBy;
             this.PaymentDate = paymentviewmodel.PaymentDate;
@@ -64,6 +66,9 @@ namespace BudgetControl.Models
         [StringLength(4)]
         public string Year { get; set; }
         
+        [StringLength(35)]
+        public string PaymentNo { get; set; }
+
         public int Sequence { get; set; }
         
         [StringLength(255)]

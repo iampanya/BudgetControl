@@ -47,9 +47,15 @@
 <table class="table table-hover table-striped table-bordered">
     <thead>
         <tr>
-            <th class="col-md-1 text-center">
+            <th class="text-center">
                 <a ng-click="vm.sortBy('')">
                     ลำดับ
+                </a>
+            </th>
+            <th class="text-center">
+                <a ng-click="vm.sortBy('PaymentNo')">
+                    เลขที่การเบิกจ่าย
+                    <span ng-show="vm.propertyName === 'PaymentNo'" class="sortorder" ng-class="{reverse: vm.reverse}"></span>
                 </a>
             </th>
             <th class="text-center">
@@ -82,6 +88,7 @@
     <tbody>
         <tr ng-repeat="payment in vm.payments | filter: vm.year | filter:vm.costcenter | filter: vm.filter | orderBy: vm.propertyName: vm.reverse">
             <td class="text-center"> {{ $index + 1 }} </td>
+            <td class="text-center"> {{ payment.PaymentNo }}</td>
             <td> {{ payment.Description }} </td>
             <td class="text-center"> {{ payment.Requester.FullName }} </td>
             <td class="text-center"> {{ payment.TotalAmount | number:2 }} </td>

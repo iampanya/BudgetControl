@@ -168,6 +168,10 @@
     <Compile Include="Migrations\201703041905455_Add field status to Transaction.Designer.cs">
       <DependentUpon>201703041905455_Add field status to Transaction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706260406176_AddPaymentNo.cs" />
+    <Compile Include="Migrations\201706260406176_AddPaymentNo.Designer.cs">
+      <DependentUpon>201706260406176_AddPaymentNo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Base\IRecordTimeStamp.cs" />
@@ -178,6 +182,7 @@
     <Compile Include="Models\CostCenter.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\PaymentCounter.cs" />
     <Compile Include="Models\Statement.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -304,7 +309,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+<<<<<<< HEAD
     <Folder Include="Views\Test\" />
+=======
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Views\Data\" />
+>>>>>>> master
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -319,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703041905455_Add field status to Transaction.resx">
       <DependentUpon>201703041905455_Add field status to Transaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706260406176_AddPaymentNo.resx">
+      <DependentUpon>201706260406176_AddPaymentNo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
