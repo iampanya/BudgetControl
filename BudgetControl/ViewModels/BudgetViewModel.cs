@@ -10,36 +10,147 @@ using System.Web;
 namespace BudgetControl.ViewModels
 {
 
-    #region BudgetIndexViewModel
+    //#region BudgetIndexViewModel
 
-    public class BudgetViewModel
+    //public class BudgetViewModel
+    //{
+    //    #region Constructor
+
+
+    //    public BudgetViewModel()
+    //    {
+
+    //    }
+    //    public BudgetViewModel(Budget budget)
+    //    {
+    //        BudgetID = budget.BudgetID;
+    //        AccountID = budget.AccountID;
+    //        CostCenterID = budget.CostCenterID;
+    //        Year = budget.Year;
+    //        BudgetAmount = budget.BudgetAmount;
+    //        Status = budget.Status;
+    //        AccountName = budget.Account.AccountName;
+    //        CostCenterName = budget.CostCenter.CostCenterName;
+
+    //        //Calculate 
+    //        WithdrawAmount = 0;
+    //        using (StatementRepository statementRepo = new StatementRepository())
+    //        {
+    //            var statements = statementRepo.GetByBudget(budget.BudgetID).ToList();
+    //            statements.ForEach(s => WithdrawAmount = WithdrawAmount + s.WithdrawAmount);
+    //            RemainAmount = BudgetAmount - WithdrawAmount;
+    //        }
+    //    }
+
+    //    #endregion
+
+    //    #region Fields
+
+    //    public Guid BudgetID { get; set; }
+    //    public string AccountID { get; set; }
+    //    public string CostCenterID { get; set; }
+    //    public string Year { get; set; }
+    //    public decimal BudgetAmount { get; set; }
+    //    public decimal WithdrawAmount { get; set; }
+    //    public decimal RemainAmount { get; set; }
+    //    public BudgetStatus Status { get; set; }
+    //    public string AccountName { get; set; }
+    //    public string CostCenterName { get; set; }
+    //    public List<StatementViewModel> Statements { get; set; }
+
+    //    #endregion
+
+    //    #region Get Properties
+
+    //    public string Description 
+    //    {
+    //        get
+    //        {
+    //            return "[" + this.CostCenterID + "] " + this.AccountID + " - " + this.AccountName;
+    //        }
+    //    }
+
+    //    #endregion
+
+    //    #region Additional Method
+    //    public void GetDetails()
+    //    {
+    //        this.Statements = new List<StatementViewModel>();
+    //        using (StatementRepository statementRep = new StatementRepository())
+    //        {
+    //            decimal previousamount = 0;
+    //            statementRep
+    //                .GetByBudget(this.BudgetID)
+    //                .ToList()
+    //                .ForEach(s => {
+    //                    this.Statements.Add(new StatementViewModel(s, previousamount));
+    //                    previousamount += s.WithdrawAmount;
+    //                });
+    //        }
+    //    }
+
+    //    #endregion
+
+    //}
+
+    //#endregion
+
+    #region Refactor
+ 
+    /**
+     * Budget viewmodel for budget index page.
+    **/
+    public class BudgetIndexViewModel
     {
+
         #region Constructor
-
-
-        public BudgetViewModel()
+        public BudgetIndexViewModel()
         {
-
+            InitInstance();
         }
-        public BudgetViewModel(Budget budget)
+
+        public BudgetIndexViewModel(Budget budget)
         {
+            // 1. Initial instance
+            InitInstance();
+
+            // 2. Check parameters
+            if(budget == null)
+            {
+                throw new ArgumentNullException();
+            }
+            
+            // 3. Fill data
+            //// 3.1 Budget data
             BudgetID = budget.BudgetID;
-            AccountID = budget.AccountID;
-            CostCenterID = budget.CostCenterID;
             Year = budget.Year;
             BudgetAmount = budget.BudgetAmount;
-            Status = budget.Status;
-            AccountName = budget.Account.AccountName;
-            CostCenterName = budget.CostCenter.CostCenterName;
+            Status = budget.Status.ToString();
 
-            //Calculate 
-            WithdrawAmount = 0;
-            using (StatementRepository statementRepo = new StatementRepository())
+            //// Calculate withdraw and remain amount
+            WithdrawAmount = CalculateWithdrawAmount(budget.BudgetTransactions.ToList());
+            RemainAmount = BudgetAmount - WithdrawAmount;
+
+            //// 3.2 Account data
+            AccountID = budget.AccountID;
+            if(budget.Account != null)
             {
-                var statements = statementRepo.GetByBudget(budget.BudgetID).ToList();
-                statements.ForEach(s => WithdrawAmount = WithdrawAmount + s.WithdrawAmount);
-                RemainAmount = BudgetAmount - WithdrawAmount;
+                AccountName = budget.Account.AccountName;
             }
+            
+            //// 3.3 CostCenter data
+            CostCenterID = budget.CostCenterID;
+            if(budget.CostCenter != null)
+            {
+                CostCenterName = budget.CostCenter.CostCenterName;
+            }
+
+
+            //// 3.5 Timestamp
+            Timestamp.CreatedAt = budget.CreatedAt;
+            Timestamp.CreatedBy = budget.CreatedBy;
+            Timestamp.ModifiedAt = budget.ModifiedAt;
+            Timestamp.ModifiedBy = budget.ModifiedBy;
         }
 
         #endregion
@@ -47,54 +158,65 @@ namespace BudgetControl.ViewModels
         #region Fields
 
         public Guid BudgetID { get; set; }
-        public string AccountID { get; set; }
-        public string CostCenterID { get; set; }
+
         public string Year { get; set; }
         public decimal BudgetAmount { get; set; }
         public decimal WithdrawAmount { get; set; }
         public decimal RemainAmount { get; set; }
-        public BudgetStatus Status { get; set; }
+        public string Status { get; set; }
+
+        // Account 
+        public string AccountID { get; set; }
         public string AccountName { get; set; }
+
+        // CostCenter 
+        public string CostCenterID { get; set; }
         public string CostCenterName { get; set; }
-        public List<StatementViewModel> Statements { get; set; }
+
+        public RecordTimeStamp Timestamp { get; set; }
 
         #endregion
 
-        #region Get Properties
+        #region Methods
 
-        public string Description 
+        public void InitInstance()
         {
-            get
-            {
-                return "[" + this.CostCenterID + "] " + this.AccountID + " - " + this.AccountName;
-            }
+            Timestamp = new RecordTimeStamp();
         }
 
-        #endregion
-
-        #region Additional Method
-        public void GetDetails()
+        public decimal CalculateWithdrawAmount(List<BudgetTransaction> transactions)
         {
-            this.Statements = new List<StatementViewModel>();
-            using (StatementRepository statementRep = new StatementRepository())
-            {
-                decimal previousamount = 0;
-                statementRep
-                    .GetByBudget(this.BudgetID)
-                    .ToList()
-                    .ForEach(s => {
-                        this.Statements.Add(new StatementViewModel(s, previousamount));
-                        previousamount += s.WithdrawAmount;
-                    });
-            }
+            decimal withdrawAmount;
+            var query_result = transactions
+                .Where(t => t.Status == RecordStatus.Active)
+                .GroupBy(t => t.BudgetID)
+                .Select(s => new
+                {
+                    Value = s.Sum(x => x.Amount)
+                }).FirstOrDefault();
+
+            withdrawAmount = query_result == null ? 0 : query_result.Value;
+
+            return withdrawAmount;
         }
 
         #endregion
 
     }
 
-    #endregion
 
+    /**
+     * Detail of budget for budget detail page.
+    **/
+    public class BudgetDetailViewModel
+    {
+        public BudgetIndexViewModel Budget { get; set; }
+
+        public List<BudgetTransaction> Transactions { get; set; }
+
+    }
+
+    #endregion
 
     public class UploadBudgetModel
     {

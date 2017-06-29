@@ -124,14 +124,39 @@ namespace BudgetControl.Manager
 
         #region Read
 
+        public IEnumerable<BudgetIndexViewModel> GetSummaryBudget(string costcenterid)
+        {
+            
+            // 1. Get budget data with related by costcenterid
+            List<Budget> budgets =  _budgetRepo.Get( 
+                    b => 
+                        b.CostCenterID == costcenterid &&
+                        b.Status == BudgetStatus.Active
+                    , o => o.OrderBy(x => x.AccountID)
+                    , "Account,BudgetTransactions,CostCenter", null, null)
+                .ToList();
+
+
+            // 2. Convert original budget to viewmodel template
+            List<BudgetIndexViewModel> vmBudgets = new List<BudgetIndexViewModel>();
+            foreach(var budget in budgets)
+            {
+                vmBudgets.Add(new BudgetIndexViewModel(budget));
+            }
+
+            return vmBudgets;
+        }
+        
+
         public IEnumerable<Budget> GetAll()
         {
-            return _budgetRepo.Get();
+            return _budgetRepo.GetAll();
         }
 
         private IEnumerable<Budget> GetByStatus(BudgetStatus status)
         {
-            return GetAll().Where(b => b.Status == status);
+            return _budgetRepo.Get(b => b.Status == status);
+            //return GetAll().Where(b => b.Status == status);
         }
 
         public IEnumerable<Budget> GetActiveBudget()
