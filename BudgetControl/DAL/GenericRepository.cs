@@ -103,7 +103,7 @@ namespace BudgetControl.DAL
                 query = query.Take(take.Value);
             }
 
-            return query;
+            return query.AsNoTracking();
         }
 
         
