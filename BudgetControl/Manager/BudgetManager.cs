@@ -19,11 +19,12 @@ namespace BudgetControl.Manager
         public BudgetManager()
         {
             _db = new BudgetContext();
+            _budgetRepo = new GenericRepository<Budget>(_db);
         }
 
-        public BudgetManager(BudgetContext context)
+        public BudgetManager(BudgetContext db)
         {
-            _db = context;
+            _db = db;
             _budgetRepo = new GenericRepository<Budget>(_db);
         }
 
