@@ -1,4 +1,6 @@
-﻿using BudgetControl.Models.Base;
+﻿using BudgetControl.DAL;
+using BudgetControl.Manager;
+using BudgetControl.Models.Base;
 using BudgetControl.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -42,7 +44,7 @@ namespace BudgetControl.Models
             this.Status = budget.Status;
             this.Account = null;
             this.BudgetTransactions = null;
-            
+
         }
 
         public Budget(BudgetFileModel budgetfile)
@@ -95,14 +97,16 @@ namespace BudgetControl.Models
         #endregion
 
         #region Additional field
-        public string BudgetName {
+
+        public string BudgetName
+        {
             get
             {
                 try
                 {
                     return AccountID + " - " + Account.AccountName;
                 }
-                catch(Exception ex)
+                catch (Exception)
                 {
                     return AccountID;
                 }
@@ -136,6 +140,44 @@ namespace BudgetControl.Models
             }
 
             return new Base.ValidationResult(true);
+        }
+
+        #endregion
+
+        #region Methods
+
+        public void IncludeAccount()
+        {
+            if (String.IsNullOrEmpty(this.AccountID))
+            {
+                return;
+            }
+            using (var db = new BudgetContext())
+            {
+                AccountManager am = new AccountManager(db);
+                this.Account = am.GetByID(this.AccountID);
+            }
+        }
+
+        public void IncludeCostCenter()
+        {
+            if (String.IsNullOrEmpty(this.CostCenterID))
+            {
+                return;
+            }
+            using (var db = new BudgetContext())
+            {
+                this.CostCenter = db.CostCenters.Find(this.CostCenterID);
+            }
+        }
+
+        public void IncludeTransactions()
+        {
+            using (var db = new BudgetContext())
+            {
+                TransactionManager tm = new TransactionManager(db);
+                this.BudgetTransactions = tm.GetByBudget(this.BudgetID).ToList();
+            }
         }
 
         #endregion
