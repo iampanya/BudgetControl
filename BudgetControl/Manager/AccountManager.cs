@@ -57,12 +57,12 @@ namespace BudgetControl.Manager
             return GetAll().Where(a => a.Status == status);
         }
 
-        public IEnumerable<Account> GetActiveBudget()
+        public IEnumerable<Account> GetActiveAccount()
         {
             return GetByStatus(RecordStatus.Active);
         }
 
-        public IEnumerable<Account> GetRemoveBudget()
+        public IEnumerable<Account> GetRemoveAccount()
         {
             return GetByStatus(RecordStatus.Inactive);
         }
