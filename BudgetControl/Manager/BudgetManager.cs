@@ -5,14 +5,14 @@ using BudgetControl.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace BudgetControl.Manager
 {
     public class BudgetManager
     {
-        private BudgetContext _db;
 
+        private BudgetContext _db;
+        private GenericRepository<Budget> _budgetRepo;
 
         #region Constructor
 
@@ -23,7 +23,8 @@ namespace BudgetControl.Manager
 
         public BudgetManager(BudgetContext context)
         {
-            this._db = context;
+            _db = context;
+            _budgetRepo = new GenericRepository<Budget>(_db);
         }
 
         #endregion
@@ -66,11 +67,6 @@ namespace BudgetControl.Manager
         //}
 
         #endregion
-
-
-        #region Refactor
-
-        private GenericRepository<Budget> _budgetRepo = new GenericRepository<Budget>();
 
         #region Create
 
@@ -124,6 +120,9 @@ namespace BudgetControl.Manager
 
         #region Read
 
+        /**
+         * Get summary budget in costcenter data
+        **/
         public IEnumerable<BudgetIndexViewModel> GetSummaryBudget(string costcenterid)
         {
             
@@ -141,12 +140,43 @@ namespace BudgetControl.Manager
             List<BudgetIndexViewModel> vmBudgets = new List<BudgetIndexViewModel>();
             foreach(var budget in budgets)
             {
+                // Calculate withdraw amount
+                budget.WithdrawAmount = GetBudgetWithdrawAmount(budget.BudgetTransactions.ToList());
+                budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
+
+                // Convert into viewmodel
                 vmBudgets.Add(new BudgetIndexViewModel(budget));
             }
 
+            // 3. Return viewmodel
             return vmBudgets;
         }
-        
+
+        /**
+         * Get budget and detail by budgetid
+        **/
+        public BudgetDetailViewModel GetBudgetDetail(Guid budgetid)
+        {
+            Budget budget;
+
+            // 1. Get budget data
+            budget = _budgetRepo.GetById(budgetid);
+
+            // 2. Get Transaction data
+            TransactionManager tm = new TransactionManager();
+            budget.BudgetTransactions = tm.GetByBudget(budget).ToList();
+
+            // 3. Get budget withdraw amount
+            budget.WithdrawAmount = GetBudgetWithdrawAmount(budget.BudgetTransactions.ToList());
+            budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
+
+            // 4. Convert into viewmodel
+            BudgetDetailViewModel vm = new BudgetDetailViewModel(budget);
+
+            // 5. Return viewmodel
+            return vm;
+        }
+
 
         public IEnumerable<Budget> GetAll()
         {
@@ -156,7 +186,6 @@ namespace BudgetControl.Manager
         private IEnumerable<Budget> GetByStatus(BudgetStatus status)
         {
             return _budgetRepo.Get(b => b.Status == status);
-            //return GetAll().Where(b => b.Status == status);
         }
 
         public IEnumerable<Budget> GetActiveBudget()
@@ -274,6 +303,44 @@ namespace BudgetControl.Manager
         }
         #endregion
 
+
+        #region Methods
+
+        /**
+          * Calculate withdraw amount by budgetid
+        **/
+        private decimal GetBudgetWithdrawAmount(Guid budgetid)
+        {
+            //1. Get budget transaction by budgetid
+            BudgetContext db = new BudgetContext();
+            var transactions = db.BudgetTransactions.Where(t => t.BudgetID == budgetid && t.Status == RecordStatus.Active).ToList();
+
+            //send budget transaction to calculate method
+            return GetBudgetWithdrawAmount(transactions);
+        }
+
+        /**
+         * Calculate withdraw amount by list of transaction
+        **/
+        private decimal GetBudgetWithdrawAmount(List<BudgetTransaction> transactions)
+        {
+            decimal withdrawAmount;
+
+            // select sum(amount) where status = 'active' group by budgetid
+            var query_result = transactions
+                .Where(t => t.Status == RecordStatus.Active)
+                .GroupBy(t => t.BudgetID)
+                .Select(s => new
+                {
+                    Value = s.Sum(x => x.Amount)
+                }).FirstOrDefault();
+
+            withdrawAmount = query_result == null ? 0 : query_result.Value;
+
+            return withdrawAmount;
+        }
+
         #endregion
+        
     }
 }
