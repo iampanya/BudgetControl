@@ -27,19 +27,44 @@ namespace BudgetControl.Controllers
 
         #region Budget
 
-        public ActionResult Budgets()
+        public ActionResult Budgets(string id, string costcenterid)
         {
+            // if id is not empty then, get by budgetid
+            if (!String.IsNullOrEmpty(id))
+            {
+                return Budget(id);
+            }
+
+            // else get budget by costcenter 
             try
             {
-                CostCenter working = AuthManager.GetWorkingCostCenter();
-                jsonResult.SetSuccess(_bgManager.GetByCostCenter(working));
+                //CostCenter working = AuthManager.GetWorkingCostCenter();
+                if (String.IsNullOrEmpty(costcenterid))
+                {
+                    costcenterid = "H301023010";
+                }
 
+                BudgetManager bm = new BudgetManager();
+                var result = bm.GetSummaryBudget(costcenterid);
+                jsonResult.SetSuccess(result);
 
-                BudgetContext db = new BudgetContext();
-                
+            }
+            catch (Exception ex)
+            {
+                jsonResult.SetError(ex.Message);
+            }
 
+            return Content(jsonResult.ToJson(), "application/json");
+        }
 
+        private ActionResult Budget(string id)
+        {
 
+            try
+            {
+                BudgetManager bm = new BudgetManager();
+                var result = bm.GetBudgetDetail(new Guid(id));
+                jsonResult.SetSuccess(result);
             }
             catch (Exception ex)
             {
@@ -53,5 +78,14 @@ namespace BudgetControl.Controllers
 
         #endregion
 
+
+        #region View
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        #endregion
     }
 }
