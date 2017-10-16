@@ -18,7 +18,7 @@ namespace BudgetControl.Attributes
             //}
             var isAuthorized = base.AuthorizeCore(httpContext);
 
-            return isAuthorized;
+            return true;
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)

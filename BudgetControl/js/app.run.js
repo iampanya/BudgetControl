@@ -66,3 +66,42 @@
 
 
 })();
+
+//for test login
+(function () {
+    'use strict';
+    angular
+        .module('budgetApp')
+        .run(run)
+        .config(config)
+        .controller('TestCtrl', TestCtrl);
+
+    function run($http) {
+        $http.defaults.headers.common.Authorization = 'Basic YmVlcDpib29w';
+    }
+
+    function config($stateProvider, $urlRouterProvider) {
+        $stateProvider
+            .state('test', {
+                url: '/test',
+                templateUrl: 'Test/index',
+                controller: 'TestCtrl',
+                controllerAs: 'vm'
+            });
+    }
+
+    function TestCtrl($http) {
+        var vm = this;
+        vm.test = 'test control';
+        $http.get('test/budgets').then(successCallback, errorCallback);
+
+        function successCallback(data) {
+            console.log(data);
+        }
+
+        function errorCallback(e) {
+            console.log(e);
+        }
+    }
+
+})();

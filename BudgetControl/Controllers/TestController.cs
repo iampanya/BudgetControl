@@ -1,4 +1,5 @@
-﻿using BudgetControl.DAL;
+﻿using BudgetControl.Attributes;
+using BudgetControl.DAL;
 using BudgetControl.Manager;
 using BudgetControl.Models;
 using BudgetControl.Sessions;
@@ -26,7 +27,7 @@ namespace BudgetControl.Controllers
         #endregion
 
         #region Budget
-
+        [ZAuthorize]
         public ActionResult Budgets(string id, string costcenterid)
         {
             // if id is not empty then, get by budgetid
