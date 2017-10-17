@@ -90,35 +90,35 @@ namespace BudgetControl.Migrations
 
             #region PaymentCounter
 
-            List<PaymentCounter> paymentcounters = new List<PaymentCounter>();
+            //List<PaymentCounter> paymentcounters = new List<PaymentCounter>();
             
-            foreach(var item in costcenters)
-            {
-                string[] costcentersplit = item.ShortName.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+            //foreach(var item in costcenters)
+            //{
+            //    string[] costcentersplit = item.ShortName.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
 
-                string shortcode;
-                if(costcentersplit[costcentersplit.Length - 1].Length < 3)
-                {
-                    var l = costcentersplit.Length;
-                    shortcode = costcentersplit[l - 2] + "." + costcentersplit[l - 1];
-                }
-                else
-                {
-                    var test = costcentersplit[costcentersplit.Length - 1].Split(' ');
-                    shortcode = test[test.Length - 1];
-                }
+            //    string shortcode;
+            //    if(costcentersplit[costcentersplit.Length - 1].Length < 3)
+            //    {
+            //        var l = costcentersplit.Length;
+            //        shortcode = costcentersplit[l - 2] + "." + costcentersplit[l - 1];
+            //    }
+            //    else
+            //    {
+            //        var test = costcentersplit[costcentersplit.Length - 1].Split(' ');
+            //        shortcode = test[test.Length - 1];
+            //    }
                 
-                paymentcounters.Add(new PaymentCounter()
-                {
-                    CostCenterID = item.CostCenterID,
-                    Year = "2560",
-                    ShortCode = shortcode,
-                    Number = 0
-                });
-            }
+            //    paymentcounters.Add(new PaymentCounter()
+            //    {
+            //        CostCenterID = item.CostCenterID,
+            //        Year = "2560",
+            //        ShortCode = shortcode,
+            //        Number = 0
+            //    });
+            //}
 
-            paymentcounters.ForEach(p => context.PaymentCounters.AddOrUpdate(a => a.CostCenterID, p));
-            context.SaveChanges();
+            //paymentcounters.ForEach(p => context.PaymentCounters.AddOrUpdate(a => a.CostCenterID, p));
+            //context.SaveChanges();
 
             #endregion
 
@@ -171,7 +171,7 @@ namespace BudgetControl.Migrations
             #endregion
 
             #region Employee
-            path = Path.Combine(basepath, @"Data\Employee.txt");
+            path = Path.Combine(basepath, @"Data\Employee_20171015.txt");
 
             //List<Employee> employees = new List<Employee>();
             using (StreamReader reader = new StreamReader(path))
@@ -204,20 +204,20 @@ namespace BudgetControl.Migrations
 
             #region User
 
-            employees.ForEach(e =>
-            {
-                users.Add(new User
-                {
-                    EmployeeID = e.EmployeeID,
-                    UserName = e.EmployeeID,
-                    Password = e.Password,
-                    Role = UserRole.Normal,
-                    Status = RecordStatus.Active
-                });
-            });
+            //employees.ForEach(e =>
+            //{
+            //    users.Add(new User
+            //    {
+            //        EmployeeID = e.EmployeeID,
+            //        UserName = e.EmployeeID,
+            //        Password = e.Password,
+            //        Role = UserRole.Normal,
+            //        Status = RecordStatus.Active
+            //    });
+            //});
             
-            users.ForEach(u => context.Users.AddOrUpdate(c => c.UserID, u));
-            context.SaveChanges();
+            //users.ForEach(u => context.Users.AddOrUpdate(c => c.UserName, u));
+            //context.SaveChanges();
 
             #endregion
 
