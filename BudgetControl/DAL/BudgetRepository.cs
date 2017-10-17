@@ -70,14 +70,24 @@ namespace BudgetControl.DAL
 
         public void AddOrUpdate(Budget entity)
         {
-            if (GetById(entity.BudgetID) == null)
+            var budget = Get().FirstOrDefault(a => a.AccountID == entity.AccountID && a.Year == entity.Year && a.CostCenterID == entity.CostCenterID);
+            if (budget == null)
             {
                 Add(entity);
             }
             else
             {
+                entity.BudgetID = budget.BudgetID;
                 Update(entity);
             }
+            //if (GetById(entity.BudgetID) == null)
+            //{
+            //    Add(entity);
+            //}
+            //else
+            //{
+            //    Update(entity);
+            //}
         }
 
         public void Delete(object id)
