@@ -663,7 +663,7 @@ namespace BudgetControl.Controllers
                 //budgetfile = budgetfile.Where(b => b.CostCenterID == AuthManager.GetWorkingCostCenter().CostCenterID).ToList();
 
                 budgetfile = budgetfile
-                    .Where(b => b.CostCenterID.StartsWith("H3010") || b.CostCenterID == "H301000000")
+                    //.Where(b => b.CostCenterID.StartsWith("H3010") || b.CostCenterID == "H301000000")
                     .ToList();
 
                 returnobj.SetSuccess(budgetfile);
