@@ -17,6 +17,10 @@
         vm.year = '';
         vm.filter = '';
 
+        // Default sort by PaymentNO Desc
+        vm.reverse = true;
+        vm.propertyName = 'PaymentNo';
+
         vm.deletePayment = deletePayment;
         vm.sortBy = sortBy;
 
