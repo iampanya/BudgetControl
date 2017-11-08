@@ -55,11 +55,15 @@ namespace BudgetControl.Manager
                     if(pcounter == null)
                     {
                         //if not exist, then add new one.
+                        var shortName = _db.CostCenters.Where(c => c.CostCenterID == payment.CostCenterID).Select(s => s.ShortName).FirstOrDefault();
+                        var split = shortName.Split(new char[] { ' ' });
+                        var shortCode = split[split.Length - 1].Trim(new char[] { ' ', '.' });
+
                         pcounter = new PaymentCounter()
                         {
                             CostCenterID = payment.CostCenterID,
                             Year = payment.Year,
-                            ShortCode = "TEST",
+                            ShortCode = shortCode,
                             Number = 1
                         };
 
