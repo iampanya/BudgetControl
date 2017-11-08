@@ -121,7 +121,7 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
                 // Populate year list from 2559 to current + 1 and set default to current year
                 vm.years = [];
                 var currentYear = new Date().getFullYear();
-                for (i = 2016; i <= currentYear + 1; i++) {
+                for (var i = 2016; i <= currentYear + 1; i++) {
                     vm.years.push(i + 543 + '');
                 } 
                 vm.year = currentYear + 543 + '';
