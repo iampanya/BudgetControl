@@ -22,9 +22,10 @@
                         ปีงบประมาณ:
                     </span>
                     <span class="col-md-6">
-                        <select class="form-control input-sm" ng-model="vm.year">
-                            <option value="2559">2559</option>
+                        <select class="form-control input-sm" ng-model="vm.year" ng-options="y as y for y in vm.years">
+                            @*<option value="2559">2559</option>
                             <option value="2560">2560</option>
+                            <option value="2561">2561</option>*@
                         </select>
                     </span>
                 </h3>

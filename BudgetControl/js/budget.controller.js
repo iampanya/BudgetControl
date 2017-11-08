@@ -115,8 +115,17 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
                 vm.costcenter = vm.costcenters[0].CostCenterID
 
                 // Get unique budget year and initial it.
-                vm.years = $filter('unique')(vm.budgets, 'Year');
-                vm.year = '2560';//vm.years[0].Year;
+                //vm.years = $filter('unique')(vm.budgets, 'Year');
+                //vm.year = '2560';
+
+                // Populate year list from 2559 to current + 1 and set default to current year
+                vm.years = [];
+                var currentYear = new Date().getFullYear();
+                for (i = 2016; i <= currentYear + 1; i++) {
+                    vm.years.push(i + 543 + '');
+                } 
+                vm.year = currentYear + 543 + '';
+
             }
 
             //// 1.2 Call to server fail.
