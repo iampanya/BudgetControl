@@ -662,9 +662,17 @@ namespace BudgetControl.Controllers
                 //Remove data for test
                 //budgetfile = budgetfile.Where(b => b.CostCenterID == AuthManager.GetWorkingCostCenter().CostCenterID).ToList();
 
-                budgetfile = budgetfile
-                    //.Where(b => b.CostCenterID.StartsWith("H3010") || b.CostCenterID == "H301000000")
-                    .ToList();
+                //budgetfile = budgetfile
+                //    .Where(b => b.CostCenterID.StartsWith("H3010") || b.CostCenterID == "H301000000")
+                //    .ToList();
+
+                if (!String.IsNullOrEmpty(formdata.CostCenterBegin))
+                {
+                    if (String.IsNullOrEmpty(formdata.CostCenterEnd)) { formdata.CostCenterEnd = formdata.CostCenterBegin; }
+                    budgetfile = budgetfile
+                        .Where(b => b.CostCenterID.CompareTo(formdata.CostCenterBegin) >= 0 && b.CostCenterID.CompareTo(formdata.CostCenterEnd) <= 0)
+                        .ToList();
+                }
 
                 returnobj.SetSuccess(budgetfile);
 

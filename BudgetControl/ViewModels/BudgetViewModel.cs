@@ -110,6 +110,8 @@ namespace BudgetControl.ViewModels
         #region Fields
 
         public string Year { get; set; }
+        public string CostCenterBegin { get; set; }
+        public string CostCenterEnd { get; set; }
         public string FileData { get; set; }
 
         #endregion
