@@ -1,2 +1,134 @@
-﻿<h2>Create Z</h2>
-<h3>{{ vm.test }}</h3>
+﻿@{
+    Layout = null;
+}
+
+
+<div class="hidden-print">
+
+    <form @*ng-submit="vm.submit()"*@ method="post" name="frmPayment">
+        <!-- Payment Details -->
+        <div class="card">
+            <fieldset>
+                <legend>เบิกจ่ายงบประมาณ ศูนย์ต้นทุนอื่นๆ</legend>
+                <div class="row">
+                    <div class="form-horizontal col-md-6">
+                        <div class="form-group">
+                            <label for="txtYear" class="col-md-4 control-label">ปีงบประมาณ<span class="text-danger">*</span></label>
+                            <div class="col-md-4">
+                                <select class="form-control" ng-model="vm.payment.Year" ng-options="y.Year as y.Year for y in vm.years"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">
+                                ผู้เบิก<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-6">
+                                <select class="form-control" name="requestby" ng-model="vm.payment.RequestBy" ng-options="emp.EmployeeID as emp.Description for emp in vm.employees" ng-required="true">
+                                    <option value=""> ======= กรุณาเลือก ======= </option>
+                                </select>
+                                <span class="text-danger" ng-show="frmPayment.requestby.$error.required"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">
+                                ศูนย์ต้นทุน<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="รหัสศูนย์ต้นทุนที่ขึ้นต้นด้วย Z" ng-required="true"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="control-label" for="txtDescription">
+                                รายละเอียด<span class="text-danger">*</span>:
+                            </label>
+                            <textarea ng-model="vm.payment.Description" ng-required="true" class="form-control" rows="3" id="txtDescription" placeholder="รายละเอียด"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </fieldset>
+            <br/>
+            <div class="row">
+                <div class="form-horizontal col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">เพิ่มรหัสบัญชี<span class="text-danger">*</span></label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="รหัสบัญชี" ng-model="vm.selectAccount" />
+                        </div>
+                        <button class="btn btn-primary" type="button" ng-click="vm.addNewTransaction()">ตกลง</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <span class="text-danger"> {{ vm.addNewTransactionError }}</span>
+                </div>
+            </div>
+
+                <!-- ตารางรายการเบิก -->
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th class="col-md-1 text-center"> ลำดับ </th>
+                            <th class="text-center"> ชื่อบัญชี </th>
+                            <th class="col-md-2 text-center"> งบที่ได้รับ</th>
+                            <th class="col-md-2 text-center"> เบิก</th>
+                            <th class="col-md-1 text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="transaction in vm.transactions">
+
+                            <td class="text-center">
+                                {{ $index + 1 }}
+                            </td>
+                            <td>
+                                {{ transaction.Budget.AccountID }}
+                            </td>
+                            <td class="text-center">
+                                -
+                            </td>
+                            <td class="text-center">
+                                <input type="number" ng-model="transaction.Amount" ng-required="true" class="form-control input-sm text-right" ng-change="vm.updateTotalAmount()" />
+                                <span ng-show="frmPayment.transaction.Amount.$error.min">
+                                    Please fill form.
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <a ng-click="vm.removeTransaction( transaction.Budget.AccountID )">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr ng-show="vm.transactions.length > 0">
+                            <th></th>
+                            <th></th>
+                            <th class="text-right">รวมเบิก</th>
+                            <th class="text-right">{{ vm.payment.TotalAmount | number: 2 }}</th>
+                            <th></th>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 col-xs-6 col-md-offset-8 col-sm-offset-6">
+                        <a ui-sref="payment" class="btn btn-lg btn-default btn-block">
+                            กลับหน้าจอ
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <button type="button" ng-click="vm.submit()" class="btn btn-primary btn-lg btn-block" ng-disabled="frmPayment.$invalid">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                            บันทึก
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+    </form>
+
+
+
+
+</div>
