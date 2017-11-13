@@ -28,6 +28,11 @@ namespace BudgetControl.Controllers
             return View();
         }
 
+        public ActionResult CreateZ()
+        {
+            return View();
+        }
+
         public ActionResult Details()
         {
             return View();

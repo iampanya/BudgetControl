@@ -58,7 +58,12 @@
                 controller: 'CreatePaymentCtrl',
                 controllerAs: 'vm'
             })
-
+            .state('newpaymentz', {
+                url: '/payment/createz',
+                templateUrl: 'Payments/CreateZ',
+                controller: 'CreateZPaymentCtrl',
+                controllerAs: 'vm'
+            })
             .state('editpayment', {
                 url: '/payment/edit/:id',
                 templateUrl: 'Payments/Create',
