@@ -171,6 +171,10 @@
     <Compile Include="Migrations\201706260406176_AddPaymentNo.Designer.cs">
       <DependentUpon>201706260406176_AddPaymentNo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711130812557_Add payment type and owner cca.cs" />
+    <Compile Include="Migrations\201711130812557_Add payment type and owner cca.Designer.cs">
+      <DependentUpon>201711130812557_Add payment type and owner cca.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Base\IRecordTimeStamp.cs" />
@@ -341,6 +345,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706260406176_AddPaymentNo.resx">
       <DependentUpon>201706260406176_AddPaymentNo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711130812557_Add payment type and owner cca.resx">
+      <DependentUpon>201711130812557_Add payment type and owner cca.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -9,13 +9,20 @@ using System.Web;
 
 namespace BudgetControl.Models
 {
+    public enum PaymentType
+    {
+        Normal = 1,
+        ZCCA = 2,
+        Allowance = 3
+    }
+
     public class Payment : RecordTimeStamp
     {
 
         #region Constructor
         public Payment()
         {
-            
+
         }
 
         public Payment(Payment payment)
@@ -62,27 +69,32 @@ namespace BudgetControl.Models
 
         public Guid PaymentID { get; set; }
         public string CostCenterID { get; set; }
-        
+
         [StringLength(4)]
         public string Year { get; set; }
-        
+
         [StringLength(35)]
         public string PaymentNo { get; set; }
 
         public int Sequence { get; set; }
-        
+
         [StringLength(255)]
         public string Description { get; set; }
-        
+
         public string RequestBy { get; set; }
-        
+
         public DateTime PaymentDate { get; set; }
-        
+
         public decimal TotalAmount { get; set; }
-        
+
         public string ControlBy { get; set; }
 
         public RecordStatus Status { get; set; }
+
+
+        public string OwnerCostCenterID { get; set; }
+
+        public PaymentType Type { get; set; }
 
         #endregion
 
