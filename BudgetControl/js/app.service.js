@@ -31,6 +31,11 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
         });
     }
 
+    api.paymentz = function () {
+        return $resource('data/paymentz/:id', null, {
+            'save': {method: 'POST'}
+        })
+    }
 
     api.summaryreport = function () {
         return $resource('data/SummaryReport/:year');

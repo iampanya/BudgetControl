@@ -791,7 +791,7 @@
             if (vm.transactions.length > 0) {
                 vm.payment.BudgetTransactions = vm.transactions;
                 console.log(vm.payment);
-                //apiService.payment().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
+                apiService.paymentz().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
             }
             else {
                 vm.addNewTransactionError = "* กรุณากดเพิ่มรายการงบประมาณ";
