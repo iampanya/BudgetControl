@@ -58,6 +58,7 @@
             if (vm.costcenters.length < 1) {
                 vm.costcenters.push({ CostCenterID: authInfo.getWorkingCostCenter().CostCenterID, CostCenter: authInfo.getWorkingCostCenter() });
             }
+            vm.costcenters.push({ CostCenterID: 'Z*', CostCenterName: 'ศูนย์ต้นทุนอื่นๆ (Z999999999)' });
             vm.costcenter = authInfo.getWorkingCostCenter().CostCenterID;
         }
 
