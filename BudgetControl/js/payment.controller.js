@@ -667,6 +667,7 @@
 
 })();
 
+/****** Create Custom CCA Payment Controller *******/
 (function () {
     'use strict';
     angular
@@ -713,13 +714,13 @@
 
                 // 3. if found, then set CostCenter value
                 if (requester.length > 0) {
-                    //vm.payment.CostCenterID = requester[0].CostCenterID;
+                    vm.payment.OwnerCostCenterID = requester[0].CostCenterID;
                     //vm.payment.CostCenter = requester[0].CostCenter;
                 }
 
                 // 4. if not found, then set CostCenter to nothing.
                 else {
-                    //vm.payment.CostCenterID = '-';
+                    vm.payment.OwnerCostCenterID = '-';
                 }
             }
         }
