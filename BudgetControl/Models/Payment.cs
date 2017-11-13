@@ -39,6 +39,8 @@ namespace BudgetControl.Models
             this.ControlBy = payment.ControlBy;
             this.Status = payment.Status;
 
+            this.OwnerCostCenterID = payment.OwnerCostCenterID;
+            this.Type = payment.Type;
         }
 
         public Payment(PaymentViewModel paymentviewmodel)
