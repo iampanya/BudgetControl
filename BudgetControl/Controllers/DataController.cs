@@ -155,6 +155,8 @@ namespace BudgetControl.Controllers
             try
             {
                 PaymentManager paymentManager = new PaymentManager();
+                payment.Type = PaymentType.Normal;
+                payment.OwnerCostCenterID = payment.CostCenterID;
                 var result = paymentManager.Add(payment);
                 returnobj.SetSuccess(result.PaymentID);
             }
@@ -238,6 +240,8 @@ namespace BudgetControl.Controllers
                     
 
                 PaymentManager paymentManager = new PaymentManager();
+                payment.Type = PaymentType.ZCCA;
+                
                 var result = paymentManager.Add(payment);
                 returnobj.SetSuccess(result.PaymentID);
             }
