@@ -167,6 +167,90 @@ namespace BudgetControl.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult PaymentZ(Payment payment)
+        {
+            try
+            {
+                //1. Get budgetid from Z Costcenter and AccountID 
+                string costcenterid = payment.CostCenterID;
+                using (var db = new BudgetContext())
+                {
+                    var costcenter = db.CostCenters.Find(costcenterid);
+                    if(costcenter == null)
+                    {
+                        // create costcenter
+                        costcenter = new CostCenter();
+                        costcenter.CostCenterID = costcenterid.Trim().ToUpper();
+                        costcenter.CostCenterName = costcenter.CostCenterID;
+                        costcenter.ShortName = costcenter.CostCenterID;
+                        costcenter.Status = RecordStatus.Active;
+                        costcenter.NewCreateTimeStamp();
+                        db.CostCenters.Add(costcenter);
+                        db.SaveChanges();
+                    }
+                    foreach (var transaction in payment.BudgetTransactions)
+                    {
+                        var account = db.Accounts.FirstOrDefault(a => a.AccountID == transaction.Budget.AccountID && a.Status == RecordStatus.Active);
+
+                        if(account == null)
+                        {
+                            // Create new Account
+                            account = new Account();
+                            account.AccountID = transaction.Budget.AccountID;
+                            account.AccountName = account.AccountID;
+                            account.Status = RecordStatus.Active;
+                            account.NewCreateTimeStamp();
+                            db.Accounts.Add(account);
+                            db.SaveChanges();
+                        }
+
+                        var budget = db.Budgets
+                            .FirstOrDefault(
+                                b => 
+                                    b.Year == payment.Year && 
+                                    b.AccountID == account.AccountID && 
+                                    b.CostCenterID == costcenterid &&
+                                    b.Status == BudgetStatus.Active
+                            );
+
+                        if(budget == null)
+                        {
+                            // Create new budget
+                            budget = new Budget();
+                            budget.BudgetID = Guid.NewGuid();
+                            budget.AccountID = account.AccountID;
+                            budget.CostCenterID = costcenter.CostCenterID;
+                            budget.Sequence = 0;
+                            budget.Year = payment.Year;
+                            budget.BudgetAmount = 0;
+                            budget.WithdrawAmount = 0;
+                            budget.RemainAmount = 0;
+                            budget.Status = BudgetStatus.Active;
+                            budget.NewCreateTimeStamp();
+
+                            db.Budgets.Add(budget);
+                            db.SaveChanges();
+                        }
+                        transaction.BudgetID = budget.BudgetID;
+                    }
+                }
+                    
+
+                PaymentManager paymentManager = new PaymentManager();
+                var result = paymentManager.Add(payment);
+                returnobj.SetSuccess(result.PaymentID);
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
+
+
         [HttpPut]
         [ActionName("Payment")]
         public ActionResult UpdatePayment(Payment payment)
