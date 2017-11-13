@@ -62,7 +62,7 @@ namespace BudgetControl.Controllers
                     payments = paymentRepo.Get()
                         .Where(
                             p =>
-                                p.CostCenterID.StartsWith(working.CostCenterTrim)
+                                p.OwnerCostCenterID.StartsWith(working.CostCenterTrim)
                                 && p.Status == RecordStatus.Active
                         )
                         .OrderBy(p => p.PaymentDate)

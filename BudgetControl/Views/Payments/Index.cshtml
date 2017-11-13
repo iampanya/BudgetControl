@@ -86,7 +86,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="payment in vm.payments | filter: vm.year | filter:vm.costcenter | filter: vm.filter | orderBy: vm.propertyName: vm.reverse">
+        <tr ng-repeat="payment in vm.payments | filter: vm.year | filter: { FilterCostCenterID : vm.costcenter} | filter: vm.filter | orderBy: vm.propertyName: vm.reverse">
             <td class="text-center"> {{ $index + 1 }} </td>
             <td class="text-center"> {{ payment.PaymentNo }}</td>
             <td> {{ payment.Description }} </td>

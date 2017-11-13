@@ -116,6 +116,26 @@ namespace BudgetControl.Models
 
         #endregion
 
+
+        #region More fields
+
+        public string FilterCostCenterID
+        {
+            get
+            {
+                if(CostCenterID.Trim().ToLower()[0] == 'z')
+                {
+                    return "Z*";
+                }
+                else
+                {
+                    return OwnerCostCenterID;
+                }
+            }
+        }
+
+        #endregion
+
         #region Validate
 
         public void Validate()
@@ -137,6 +157,7 @@ namespace BudgetControl.Models
 
 
         #endregion
+
 
     }
 }

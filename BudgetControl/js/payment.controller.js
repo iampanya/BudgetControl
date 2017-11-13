@@ -33,7 +33,7 @@
         //// 1.1 Call to server success.
         function callSuccess(response) {
             vm.payments = hr.respondSuccess(response);
-            
+            console.log(vm.payments);
             //vm.years = $filter('unique')(vm.payments, 'Year') || [{ Year: '2560' }];
             //if (vm.years.length < 1) {
             //    vm.years.push({ Year: new Date().getFullYear() + 543 + '' });
