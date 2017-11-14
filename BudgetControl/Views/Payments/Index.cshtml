@@ -4,10 +4,26 @@
 
 
 <div class="row">
-    <div class="col-md-2 col-md-offset-10">
+    @*<div class="col-md-2 col-md-offset-10">
         <a ui-sref="newpayment" class="btn btn-primary btn-block">
             เบิกจ่ายงบประมาณ
         </a>
+    </div>*@
+
+    <div class="col-md-2 col-md-offset-10">
+
+        <div class="btn-group btn-block">
+            <a ui-sref="newpayment" class="btn btn-primary">
+                เบิกจ่ายงบประมาณ
+            </a>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" style="right:0; left:auto;">
+                <li><a ui-sref="newpaymentz">เบิกจ่ายจากศูนย์ต้นทุนอื่น (Z*)</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 
