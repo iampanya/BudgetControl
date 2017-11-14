@@ -70,6 +70,12 @@
                 controller: 'EditPaymentCtrl',
                 controllerAs: 'vm'
             })
+            .state('editpaymentz', {
+                url: 'payment/editz/:id',
+                templateUrl: 'Payments/CreateZ',
+                controller: 'EditZPaymentCtrl',
+                controllerAs: 'vm'
+            })
 
             .state('viewpayment', {
                 url: '/payment/:id',
