@@ -183,7 +183,7 @@ namespace BudgetControl.Migrations
                     while (!parser.EndOfData)
                     {
                         string[] fields = parser.ReadFields();
-                        employees.Add(new Employee
+                        var e = new Employee()
                         {
                             EmployeeID = fields[0],
                             TitleName = fields[1],
@@ -194,7 +194,9 @@ namespace BudgetControl.Migrations
                             CostCenterID = fields[6],
                             Password = fields[7],
                             Status = RecordStatus.Active
-                        });
+                        };
+                        e.NewCreateTimeStamp();
+                        employees.Add(e);
                     }
                 }
             }
