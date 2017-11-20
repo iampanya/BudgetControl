@@ -370,7 +370,6 @@
     }
 })();
 
-
 /****** Result Payment Controller *******/
 (function () {
     'use strict';
@@ -414,8 +413,6 @@
     }
 })();
 
-
-
 /****** Details Payment Controller *******/
 (function () {
     'use strict';
@@ -449,7 +446,6 @@
     }
 
 })();
-
 
 /****** Edit Payment Controller *******/
 (function () {
@@ -611,7 +607,7 @@
             function callEmpSuccess(response) {
                 vm.employees = hr.respondSuccess(response);
                 // Set default RequestBy to current user
-                //vm.payment.RequestBy = authInfo.getUser().EmployeeID;
+                // vm.payment.RequestBy = authInfo.getUser().EmployeeID;
             }
 
             function callBudgetSuccess(response) {
@@ -844,6 +840,236 @@
                 }
 
                 vm.payment.Year = currentYear + 543 + '';
+            }
+
+            function callError(e) {
+                hr.respondError(e);
+            }
+
+        }
+
+
+        // Modal result 
+
+        function openModal(size, parentSelector, data) {
+            var parentElem = parentSelector ?
+                angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'payments/result',
+                controller: 'ResultPaymentCtrl',
+                controllerAs: 'vm',
+                size: size,
+                backdrop: 'static',
+                keyboard: false,
+                appendTo: parentElem,
+                resolve: {
+                    paymentid: function () {
+                        return data;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                console.log('Modal dismissed at: ' + new Date());
+            }, function () {
+                console.log('Modal dismissed at: ' + new Date());
+            });
+        };
+
+    }
+})();
+
+/****** Edit Custom CCA Payment Controller *******/
+(function () {
+    'use strict';
+    angular
+        .module('budgetApp')
+        .controller('EditZPaymentCtrl', EditZPaymentCtrl);
+
+    EditZPaymentCtrl.$inject = ['$scope', '$state', '$stateParams', '$filter', '$uibModal', 'apiService', 'handleResponse', 'authInfo'];
+
+    function EditZPaymentCtrl($scope, $state, $stateParams, $filter, $uibModal, apiService, hr, authInfo) {
+        // variable
+        var paymentid = $stateParams.id;
+        var vm = this;
+        vm.budgets = [];            // budget list in dropdown
+        vm.employees = [];          // employee list in dropdown
+        vm.years = [];              // budget year list in dropdown
+        vm.payment = {};            // payment form data 
+        vm.transactions = [];       // transaction inside payment
+
+
+        // function 
+        vm.addNewTransaction = addNewTransaction;
+        vm.removeTransaction = removeTransaction;
+        vm.updateTotalAmount = updateTotalAmount;
+        vm.submit = submit;
+
+        // initial form data
+        prepareData();
+
+        // Watching 
+        //// - Watch RequestBy to changing CostCenter
+        $scope.$watch(watchingRequestBy, onRequestByChange);
+
+        function watchingRequestBy(scope) {
+            return vm.payment.RequestBy;
+        }
+
+        function onRequestByChange() {
+            // 1. Check data are loaded.
+            if (vm.payment !== {} && vm.employees !== []) {
+
+                // 2. Get requester data from employee list
+                var requester = $filter('filter')(vm.employees, function (d) {
+                    return d.EmployeeID === vm.payment.RequestBy
+                })
+
+                // 3. if found, then set CostCenter value
+                if (requester.length > 0) {
+                    vm.payment.OwnerCostCenterID = requester[0].CostCenterID;
+                    //vm.payment.CostCenter = requester[0].CostCenter;
+                }
+
+                // 4. if not found, then set CostCenter to nothing.
+                else {
+                    vm.payment.OwnerCostCenterID = '-';
+                }
+            }
+        }
+
+        function addNewTransaction() {
+
+            // 1. Looking for budget is already added?
+            var index = vm.transactions.findIndex(function (obj) {
+                return obj.Budget.AccountID == vm.selectAccount;
+            });
+
+            // 2. If exist, then set status to active
+            if (index > -1) {
+                vm.addNewTransactionError = "*บัญชีนี้มีอยู่แล้วในรายการ";
+            }
+
+            // 3. If not exist, then add to list
+            else {
+                let budget = {
+                    AccountID: vm.selectAccount
+                }
+                vm.transactions.push({
+                    BudgetTransactionID: '',
+                    BudgetID: '',
+                    PaymentID: '',
+                    Description: '',
+                    Amount: '',
+                    PreviousAmount: 0.00,
+                    RemainAmount: 0.00,
+                    Budget: budget,
+                    Status: '0',
+                });
+            }
+
+            // 4. Set selectbudget to empty
+            vm.selectAccount = ''
+
+            // 5. Update total amount
+            updateTotalAmount();
+        }
+
+        function removeTransaction(accountid) {
+            // 1. Find index of budgetid in transactions
+            var index = vm.transactions.findIndex(function (obj) {
+                return obj.Budget.AccountID == accountid;
+            });
+
+            // 2. Set status to "Remove"
+            vm.transactions.splice(index, 1);
+
+            // 3. Update total amount on payment
+            updateTotalAmount();
+        }
+
+        function updateTotalAmount() {
+            // Initial total amount value to zero
+            vm.payment.TotalAmount = 0;
+
+            // for loop on each transaction and add to total amount.
+            for (var i = 0; i < vm.transactions.length; i++) {
+                vm.payment.TotalAmount += vm.transactions[i].Amount;
+
+                //if (vm.transactions[i].Status === '0') {
+                //    vm.payment.TotalAmount += vm.transactions[i].Amount;
+                //}
+            }
+        }
+
+
+        function submit() {
+            vm.addNewTransactionError = "";
+            if (vm.transactions.length > 0) {
+                vm.payment.BudgetTransactions = vm.transactions;
+                console.log(vm.payment);
+                apiService.paymentz().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
+            }
+            else {
+                vm.addNewTransactionError = "* กรุณากดเพิ่มรายการงบประมาณ";
+            }
+
+            function callPaymentSuccess(response) {
+                var paymentid = hr.respondSuccess(response);
+                //TODO modal result.
+                if (response.isSuccess) {
+                    openModal('lg', null, paymentid);
+                }
+            }
+
+            function callPaymentError(e) {
+                hr.repondError(e);
+            }
+        }
+
+
+        // prepare form data function
+        function prepareData() {
+            // 1. Get list of employees
+            apiService.employee().get().$promise.then(callEmpSuccess, callError);
+
+            // 2. Get list of budgets
+            //apiService.budget().get().$promise.then(callBudgetSuccess, callError);
+
+            var currentYear = new Date().getFullYear();
+            for (var i = 2016; i <= currentYear + 1; i++) {
+                vm.years.push({ Year: i + 543 + '' });
+            }
+            vm.payment.Year = currentYear + 543 + '';
+
+            // 3. Get payment info
+            apiService.payment().get({ id: paymentid }).$promise.then(callPaymentSuccess, callError);
+
+            // function section // 
+            function callEmpSuccess(response) {
+                vm.employees = hr.respondSuccess(response);
+                // Set default RequestBy to current user
+                vm.payment.RequestBy = authInfo.getUser().EmployeeID;
+            }
+
+            function callBudgetSuccess(response) {
+                vm.budgets = hr.respondSuccess(response);
+
+                //vm.years = $filter('unique')(vm.budgets, 'Year');
+                var currentYear = new Date().getFullYear();
+                for (var i = 2016; i <= currentYear + 1; i++) {
+                    vm.years.push({ Year: i + 543 + '' });
+                }
+
+                vm.payment.Year = currentYear + 543 + '';
+            }
+
+            function callPaymentSuccess(response) {
+                vm.payment = hr.respondSuccess(response);
+                vm.transactions = vm.payment.BudgetTransactions;
             }
 
             function callError(e) {

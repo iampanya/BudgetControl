@@ -33,7 +33,8 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
 
     api.paymentz = function () {
         return $resource('data/paymentz/:id', null, {
-            'save': {method: 'POST'}
+            'save': { method: 'POST' },
+            'update': { method: 'PUT'}
         })
     }
 

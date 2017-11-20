@@ -71,7 +71,7 @@
                 controllerAs: 'vm'
             })
             .state('editpaymentz', {
-                url: 'payment/editz/:id',
+                url: '/payment/editz/:id',
                 templateUrl: 'Payments/CreateZ',
                 controller: 'EditZPaymentCtrl',
                 controllerAs: 'vm'
