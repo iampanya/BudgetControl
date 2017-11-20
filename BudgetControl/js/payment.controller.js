@@ -727,6 +727,13 @@
         }
 
         function addNewTransaction() {
+            vm.addNewTransactionError = "";
+
+            // 0. Validate Account ID
+            if (vm.selectAccount.length !== 8) {
+                vm.addNewTransactionError = "*รูปแบบรหัสบัญชีไม่ถูกต้อง";
+                return;
+            }
 
             // 1. Looking for budget is already added?
             var index = vm.transactions.findIndex(function (obj) {
@@ -947,6 +954,13 @@
         }
 
         function addNewTransaction() {
+            vm.addNewTransactionError = "";
+
+            // 0. Validate Account ID
+            if (vm.selectAccount.length !== 8) {
+                vm.addNewTransactionError = "*รูปแบบรหัสบัญชีไม่ถูกต้อง";
+                return;
+            }
 
             // 1. Looking for budget is already added?
             var index = vm.transactions.findIndex(function (obj) {

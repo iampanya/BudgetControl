@@ -34,7 +34,16 @@
                                 ศูนย์ต้นทุน<span class="text-danger">*</span>
                             </label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" placeholder="รหัสศูนย์ต้นทุนที่ขึ้นต้นด้วย Z" ng-required="true" ng-model="vm.payment.CostCenterID"/>
+                                <input type="text" class="form-control" name="costcenterid"
+                                       placeholder="รหัสศูนย์ต้นทุนที่ขึ้นต้นด้วย Z" 
+                                       maxlength="10"
+                                       ng-required="true" 
+                                       ng-model="vm.payment.CostCenterID"
+                                       ng-minlength="10"
+                                />
+                                <span class="text-danger" ng-if="(frmPayment.costcenterid.$error.minlength || frmPayment.costcenterid.$error.required) && frmPayment.costcenterid.$touched">
+                                    *รูปแบบรหัสศูนย์ต้นทุนไม่ถูกต้อง
+                                </span>
                             </div>
                         </div>
                     </div>
