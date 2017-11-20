@@ -131,9 +131,17 @@
                     addPayment();
                     addItem('newpayment', 'ตัดงบ')
                     break;
+                case 'newpaymentz':
+                    addPayment();
+                    addItem('newpayment', 'ตัดงบศูนย์ต้นทุนอื่นๆ (Z*)')
+                    break;
                 case 'editpayment':
                     addPayment();
                     addItem('editpayment', 'แก้ไขการเบิก')
+                    break;
+                case 'editpaymentz':
+                    addPayment();
+                    addItem('editpayment', 'แก้ไขการเบิกศูนย์ต้นทุนอื่นๆ (Z*)')
                     break;
                 case 'viewpayment':
                     addPayment();
