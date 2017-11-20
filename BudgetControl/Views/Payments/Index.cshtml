@@ -113,7 +113,10 @@
                 <a ui-sref="viewpayment({id:payment.PaymentID})" title="รายละเอียด">
                     <i class="fa fa-list" aria-hidden="true"></i>
                 </a>|
-                <a ui-sref="editpayment({id:payment.PaymentID})" title="แก้ไข">
+                <a ui-sref="editpayment({id:payment.PaymentID})" title="แก้ไข" ng-if="payment.Type == 1">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </a>
+                <a ui-sref="editpaymentz({id:payment.PaymentID})" title="แก้ไข" ng-if="payment.Type == 2">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </a>|
                 <a ng-click="vm.deletePayment(payment)" title="ยกเลิกการจ่ายเงิน">
