@@ -819,8 +819,13 @@
             apiService.employee().get().$promise.then(callEmpSuccess, callError);
 
             // 2. Get list of budgets
-            apiService.budget().get().$promise.then(callBudgetSuccess, callError);
+            //apiService.budget().get().$promise.then(callBudgetSuccess, callError);
 
+            var currentYear = new Date().getFullYear();
+            for (var i = 2016; i <= currentYear + 1; i++) {
+                vm.years.push({ Year: i + 543 + '' });
+            }
+            vm.payment.Year = currentYear + 543 + '';
 
             // function section // 
             function callEmpSuccess(response) {
