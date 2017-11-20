@@ -612,8 +612,13 @@
 
             function callBudgetSuccess(response) {
                 vm.budgets = hr.respondSuccess(response);
-                vm.years = $filter('unique')(vm.budgets, 'Year');
-                //vm.payment.Year = vm.years[0].Year;
+                //vm.years = $filter('unique')(vm.budgets, 'Year');
+
+                var currentYear = new Date().getFullYear();
+                for (var i = 2016; i <= currentYear + 1; i++) {
+                    vm.years.push({ Year: i + 543 + '' });
+                }
+                //vm.payment.Year = currentYear + 543 + '';
             }
 
             function callPaymentSuccess(response) {
