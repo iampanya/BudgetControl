@@ -32,6 +32,8 @@ namespace BudgetControl
 
             bundles.Add(new ScriptBundle("~/bundles/angular")
                 .Include(
+                    "~/Scripts/alasql.min.js",
+                    "~/Scripts/xlsx.min.js",
                     "~/Scripts/underscore-min.js",
                     "~/Scripts/angular.js",
                     "~/Scripts/angular-ui-router.min.js",
