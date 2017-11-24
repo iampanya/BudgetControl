@@ -421,11 +421,14 @@ namespace BudgetControl.Controllers
             ds.Tables.Add(dt2);
 
             var excelXml = ExcelHelper.ToExcel(ds);
+            var paymentManager = new PaymentManager();
+            var result = paymentManager.Export();
 
             Response.Clear();
-            Response.AppendHeader("Content-Type", "application/vnd.ms-excel");
-            Response.AppendHeader("Content-disposition", "attachment; filename=" + "test.xls");
-            Response.Write(excelXml);
+            Response.AppendHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            Response.AppendHeader("Content-disposition", "attachment; filename=" + "testexport.xlsx");
+            //Response.Write(excelXml);
+            Response.BinaryWrite(result);
             Response.Flush();
             Response.End();
 
