@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using BudgetControl.Util;
 using BudgetControl.Models.Base;
 using BudgetControl.Manager;
+using System.Data;
 
 namespace BudgetControl.Controllers
 {
@@ -402,6 +403,34 @@ namespace BudgetControl.Controllers
         }
 
 
+        [HttpGet]
+        [ActionName("ExportPayment")]
+        public ActionResult ExportPayment()
+        {
+            var ds = new DataSet();
+            var dt = new DataTable("TableName For Sheet1");
+            dt.Columns.Add("col1");
+            dt.Columns.Add("col2");
+            dt.Rows.Add("Value1", "Value2");
+
+            var dt2 = new DataTable("TableName For Sheet2");
+            dt2.Columns.Add("col1");
+            dt2.Columns.Add("col2");
+            dt2.Rows.Add("Value1", "Value2");
+            ds.Tables.Add(dt);
+            ds.Tables.Add(dt2);
+
+            var excelXml = ExcelHelper.ToExcel(ds);
+
+            Response.Clear();
+            Response.AppendHeader("Content-Type", "application/vnd.ms-excel");
+            Response.AppendHeader("Content-disposition", "attachment; filename=" + "test.xls");
+            Response.Write(excelXml);
+            Response.Flush();
+            Response.End();
+
+            return View("MyView");
+        }
 
         #endregion
 
