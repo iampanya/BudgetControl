@@ -890,6 +890,24 @@ namespace BudgetControl.Controllers
             return Content(returnobj.ToJson(), "application/json");
         }
 
+        [HttpGet]
+        [ActionName("ExportBudget")]
+        public ActionResult ExportBudget(string costcenterid, string year)
+        {
+            var budgetManager = new BudgetManager();
+
+            var result = budgetManager.Export(costcenterid, year);
+
+            Response.Clear();
+            Response.AppendHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            Response.AppendHeader("Content-disposition", "attachment; filename=" + year + "-" + costcenterid + ".xlsx");
+            Response.BinaryWrite(result);
+            Response.Flush();
+            Response.End();
+
+            return View("MyView");
+        }
+
         #endregion
 
         #region Employee

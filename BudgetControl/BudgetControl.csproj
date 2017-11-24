@@ -194,6 +194,7 @@
     <Compile Include="Sessions\AuthManger.cs" />
     <Compile Include="Util\ExcelHelper.cs" />
     <Compile Include="Util\Utility.cs" />
+    <Compile Include="ViewModels\BudgetExportViewModel.cs" />
     <Compile Include="ViewModels\StatementViewModel.cs" />
     <Compile Include="ViewModels\UserViewModels.cs" />
     <Compile Include="ViewModels\BudgetViewModel.cs" />
