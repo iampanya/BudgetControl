@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Reflection;
@@ -44,10 +45,14 @@ namespace BudgetControl.Util
 
         }
 
-
         public static DataTable ToDataTable<T>(List<T> items)
         {
-            DataTable dataTable = new DataTable(typeof(T).Name);
+            return ToDataTable(items, typeof(T).Name);
+        }
+
+        public static DataTable ToDataTable<T>(List<T> items, string tablename)
+        {
+            DataTable dataTable = new DataTable(tablename);
 
             //Get all the properties
             PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
@@ -56,7 +61,16 @@ namespace BudgetControl.Util
                 //Defining type of data column gives proper data table 
                 var type = (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>) ? Nullable.GetUnderlyingType(prop.PropertyType) : prop.PropertyType);
                 //Setting column names as Property names
-                dataTable.Columns.Add(prop.Name, type);
+                string name = string.Empty;
+                try
+                {
+                    name = prop.GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().Single().Name;
+                }
+                catch (Exception)
+                {
+                    name = prop.Name;
+                }
+                dataTable.Columns.Add(name, type);
             }
             foreach (T item in items)
             {
