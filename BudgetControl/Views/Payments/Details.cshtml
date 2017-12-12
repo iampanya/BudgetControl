@@ -89,7 +89,8 @@
 </div>
 
 <div class="visible-print-block">
-
+    <h4>ศูนย์ต้นทุน: {{ vm.payment.CostCenterID }}</h4>
+    <h4>เลขที่ใบสำคัญจ่าย: {{vm.payment.PaymentNo }}</h4>
     <table class="table table-bordered table-hover table-striped">
         <thead>
             <tr>
@@ -97,7 +98,7 @@
                 <th class="text-center">รหัสบัญชี</th>
                 <th class="text-center">ชื่อบัญชี</th>
                 <th class="text-center">ปีงบประมาณ</th>
-                <th class="text-center">งบที่ได้รับ</th>
+                <th class="text-center">วงเงินที่ได้รับ</th>
                 <th class="text-center">เบิกจ่ายไปแล้ว</th>
                 <th class="text-center">เบิกจ่ายงวดนี้</th>
                 <th class="text-center">คงเหลือ</th>
@@ -120,9 +121,9 @@
                 <th class="text-right">{{ vm.payment.TotalAmount | number: 2 }}</th>
                 <th class="text-center">บาท</th>
             </tr>
-
         </tbody>
     </table>
+    <h4 class="text-center">ควบคุมงบโดย : {{ vm.payment.CreatedBy }}</h4>
 
 </div>
 
