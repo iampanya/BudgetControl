@@ -19,6 +19,7 @@ namespace BudgetControl.Controllers
     public class DataController : Controller
     {
         private ReturnObject returnobj = new ReturnObject();
+        private ReportManager _reportManger = new ReportManager();
 
         //// GET: Data
 
@@ -761,76 +762,8 @@ namespace BudgetControl.Controllers
                 // 1. Get working costcenter.
                 working = AuthManager.GetWorkingCostCenter();
 
-                // 2. Get budget data.
-                using (BudgetRepository budgetRep = new BudgetRepository())
-                {
-                    budgets = budgetRep.Get().ToList();
-                    budgets = budgetRep.Get()
-                        .Where(
-                            b =>
-                                b.CostCenterID == working.CostCenterID &&
-                                b.Year == year &&
-                                b.Status == BudgetStatus.Active
-
-                        )
-                        .ToList();
-                }
-
-                // 3. Get budget details
-                foreach (var budget in budgets)
-                {
-                    // Get budget inside costcenter
-                    List<Guid> budgetincharge = new List<Guid>();
-                    using (var budgetRepo = new BudgetRepository())
-                    {
-                        List<Budget> listbudget = budgetRepo.Get()
-                            .Where(b =>
-                                b.AccountID == budget.AccountID &&
-                                b.CostCenterID.StartsWith(working.CostCenterTrim) &&
-                                b.Status == BudgetStatus.Active).ToList();
-
-                        budgetincharge.Clear();
-                        if (listbudget != null)
-                        {
-                            listbudget.ForEach(b =>
-                            {
-                                // Add to budgetincharge list
-                                budgetincharge.Add(b.BudgetID);
-
-                                // Summary budget amount
-                                if(b.CostCenterID != working.CostCenterID)
-                                {
-                                    var index = budgets.FindIndex(a => a.AccountID == b.AccountID);
-                                    if(index >= 0)
-                                    {
-                                        budgets[index].BudgetAmount += b.BudgetAmount;
-                                    }
-                                }
-                            });
-                        }
-                    }
-
-
-                    // Get all transaction inside budget
-                    List<BudgetTransaction> transactions;
-                    using (var tranRepo = new TransactionRepository())
-                    {
-                        transactions = tranRepo.Get().Where(
-                            t =>
-                                budgetincharge.Contains(t.BudgetID) &&
-                                t.Status == RecordStatus.Active &&
-                                t.Budget.Year == year 
-                                
-                            ).ToList();
-                    }
-                    decimal wdAmount = 0;
-                    transactions.ForEach(t => wdAmount += t.Amount);
-
-                    budget.WithdrawAmount = wdAmount;
-                    budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
-                }
-
-                // 3. Set return object.
+                // 2. Get budget by query
+                budgets = _reportManger.SummaryReport(working, year).ToList();
                 returnobj.SetSuccess(budgets);
 
             }

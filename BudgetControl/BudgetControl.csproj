@@ -159,6 +159,7 @@
     <Compile Include="Manager\BudgetManager.cs" />
     <Compile Include="Manager\BudgetTransactionManager.cs" />
     <Compile Include="Manager\PaymentManager.cs" />
+    <Compile Include="Manager\ReportManager.cs" />
     <Compile Include="Migrations\201610310919051_InitialCreate.cs" />
     <Compile Include="Migrations\201610310919051_InitialCreate.Designer.cs">
       <DependentUpon>201610310919051_InitialCreate.cs</DependentUpon>
