@@ -798,42 +798,7 @@ namespace BudgetControl.Controllers
                     }
                 }
 
-                using (BudgetRepository budgetRep = new BudgetRepository())
-                {
-                    budgets = budgetRep.Get().ToList();
-                    budgets = budgetRep.Get()
-                        .Where(
-                            b =>
-                                b.CostCenterID == employee.CostCenterID &&
-                                b.Year == year
-                        )
-                        .ToList();
-                }
-
-                foreach (var budget in budgets)
-                {
-                    using (PaymentRepository paymentRepo = new PaymentRepository())
-                    {
-                        //budget.BudgetTransactions = budget.BudgetTransactions.ToList().ForEach(t => t.Payment = paymentRepo.GetById(t.PaymentID));
-
-                        foreach (var item in budget.BudgetTransactions)
-                        {
-                            item.Payment = paymentRepo.GetById(item.PaymentID);
-                        }
-                    }
-                    List<BudgetTransaction> transactions = budget.BudgetTransactions
-                        .Where(
-                            t =>
-                                t.Status == RecordStatus.Active &&
-                                t.Payment.RequestBy == employee.EmployeeID)
-                        .ToList();
-
-                    decimal wdAmount = 0;
-                    transactions.ForEach(t => wdAmount += t.Amount);
-
-                    budget.WithdrawAmount = wdAmount;
-                    budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
-                }
+                budgets = _reportManger.Individual(employee, year).ToList();
 
                 returnobj.SetSuccess(budgets);
 

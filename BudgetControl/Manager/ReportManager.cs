@@ -47,6 +47,25 @@ namespace BudgetControl.Manager
             ORDER BY b.AccountID
         ";
 
+        string cmd_individual_report = @"
+            SELECT b.BudgetID, b.AccountID, a.AccountName, b.CostCenterID, b.BudgetAmount, ISNULL(total_payment.TotalWithdrawAmount, 0) AS TotalWithDrawAmount
+            FROM Budget b
+		            LEFT OUTER JOIN (
+			            SELECT t.BudgetID, Sum(t.Amount) AS TotalWithdrawAmount
+			            FROM BudgetTransaction t
+					            INNER JOIN Payment p ON (t.PaymentID = p.PaymentID)
+			            WHERE	p.RequestBy = @EmployeeID
+					            AND p.Status = 1 
+					            AND t.Status = 1
+			            GROUP BY t.BudgetID
+		            ) AS total_payment ON (b.BudgetID = total_payment.BudgetID)
+		            LEFT OUTER JOIN Account a ON (b.AccountID = a.AccountID)
+            WHERE	b.CostCenterID = @CostCenterID
+		            AND b.Year = @Year
+		            AND b.Status = 1
+            ORDER BY b.AccountID
+        ";
+
         #region Constructor
 
         public ReportManager()
@@ -86,7 +105,7 @@ namespace BudgetControl.Manager
                     budget.RemainAmount = decimal.Parse(reader["RemainAmount"].ToString());
                     budgets.Add(budget);
                 }
-                
+
             }
 
             return budgets;
@@ -96,7 +115,7 @@ namespace BudgetControl.Manager
         public IEnumerable<Budget> SummaryReport_EF(CostCenter costcenter, string year)
         {
             List<Budget> budgets;
-             
+
             // 1. Get budget data.
             using (BudgetRepository budgetRep = new BudgetRepository())
             {
@@ -167,6 +186,94 @@ namespace BudgetControl.Manager
             }
 
             // 3. Set return object.
+            return budgets;
+        }
+
+        #endregion
+
+
+        #region Individual Report
+
+        public IEnumerable<Budget> Individual(Employee employee, string year)
+        {
+            List<Budget> budgets = new List<Budget>();
+            if (String.IsNullOrEmpty(year))
+            {
+                year = (DateTime.Today.Year + 543).ToString();
+            }
+
+            using (SqlConnection conn = new SqlConnection(conn_string))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(cmd_individual_report, conn))
+                {
+                    cmd.Parameters.AddWithValue("EmployeeID", employee.EmployeeID);
+                    cmd.Parameters.AddWithValue("CostCenterID", employee.CostCenterID);
+                    cmd.Parameters.AddWithValue("Year", year);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Budget budget = new Budget();
+                            budget.BudgetID = Guid.Parse(reader["BudgetID"].ToString());
+                            budget.AccountID = reader["AccountID"].ToString();
+                            budget.Account = new Account();
+                            budget.Account.AccountName = reader["AccountName"].ToString();
+                            budget.BudgetAmount = decimal.Parse(reader["BudgetAmount"].ToString());
+                            budget.CostCenterID = reader["CostCenterID"].ToString();
+                            budget.WithdrawAmount = decimal.Parse(reader["TotalWithdrawAmount"].ToString());
+                            budgets.Add(budget);
+                        }
+                    }
+                }
+            }
+
+            return budgets;
+        }
+
+        public IEnumerable<Budget> Individual_EF(Employee employee, string year)
+        {
+            List<Budget> budgets;
+
+            using (BudgetRepository budgetRep = new BudgetRepository())
+            {
+                budgets = budgetRep.Get().ToList();
+                budgets = budgetRep.Get()
+                    .Where(
+                        b =>
+                            b.CostCenterID == employee.CostCenterID &&
+                            b.Year == year
+                    )
+                    .ToList();
+            }
+
+            foreach (var budget in budgets)
+            {
+                using (PaymentRepository paymentRepo = new PaymentRepository())
+                {
+                    //budget.BudgetTransactions = budget.BudgetTransactions.ToList().ForEach(t => t.Payment = paymentRepo.GetById(t.PaymentID));
+
+                    foreach (var item in budget.BudgetTransactions)
+                    {
+                        item.Payment = paymentRepo.GetById(item.PaymentID);
+                    }
+                }
+                List<BudgetTransaction> transactions = budget.BudgetTransactions
+                    .Where(
+                        t =>
+                            t.Status == RecordStatus.Active &&
+                            t.Payment.RequestBy == employee.EmployeeID)
+                    .ToList();
+
+                decimal wdAmount = 0;
+                transactions.ForEach(t => wdAmount += t.Amount);
+
+                budget.WithdrawAmount = wdAmount;
+                budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
+            }
+
             return budgets;
         }
 
