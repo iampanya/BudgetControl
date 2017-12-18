@@ -9,7 +9,7 @@
 		//Initial Progressbar
 		$rootScope.progressbar = ngProgressFactory.createInstance();
 		$rootScope.progressbar.setColor('#FBC02D'); //FBC02D  //FF8A65
-		$rootScope.progressbar.setHeight('3px');
+		$rootScope.progressbar.setHeight('5px');
 
 		$rootScope.$on('$stateChangeStart', function (event, toState) {
 		    if (toState.name !== 'login' && !authInfo.isLoggedIn()) {
@@ -25,12 +25,12 @@
 		})
 
 
-		$rootScope.$on('loading:progress', function () {
-			$rootScope.progressbar.start();
+        $rootScope.$on('loading:progress', function () {
+            $rootScope.progressbar.start();
 		});
 
 		$rootScope.$on('loading:finish', function () {
-			$rootScope.progressbar.complete();
+            $rootScope.progressbar.complete();
 		});
 	}
 })();
