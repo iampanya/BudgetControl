@@ -13,6 +13,8 @@ using Newtonsoft.Json;
 using BudgetControl.Util;
 using BudgetControl.Models.Base;
 using BudgetControl.Manager;
+using System.IO;
+using System.Text;
 
 namespace BudgetControl.Controllers
 {
@@ -590,7 +592,16 @@ namespace BudgetControl.Controllers
                     }
                 }
 
-                // 3. Save to database
+                StringBuilder csvFile = new StringBuilder();
+                foreach(var budget in budgets)
+                {
+                    csvFile.Append(budget.AccountID + "," + budget.CostCenterID + "," + budget.BudgetAmount);
+                    csvFile.Append(Environment.NewLine);
+                }
+
+                System.IO.File.WriteAllText(@"C:/budget.txt", csvFile.ToString());
+
+                //3.Save to database
                 using (var context = new BudgetContext())
                 {
                     using (var db_transaction = context.Database.BeginTransaction())
