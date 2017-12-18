@@ -9,37 +9,97 @@
         <!-- Payment Details -->
         <div class="card">
             <fieldset>
-                <legend>เบิกจ่ายงบประมาณ ศูนย์ต้นทุน: <span class="text-primary"> {{ vm.payment.CostCenterID }} </span></legend>
+                <legend>
+                    เบิกจ่ายงบประมาณ ศูนย์ต้นทุน: 
+                    <span class="text-primary"> {{ vm.payment.CostCenterID }} </span>
+                </legend>
 
                 <div class="row">
-                    <div class="form-horizontal col-md-6">
+                    <div class="form-horizontal col-md-12">
                         <div class="form-group">
-                            <label for="txtYear" class="col-md-4 control-label">ปีงบประมาณ<span class="text-danger">*</span></label>
-                            <div class="col-md-4">
+                            <label for="txtYear" class="col-md-2 control-label">ปีงบประมาณ<span class="text-danger">*</span></label>
+                            <div class="col-md-2">
                                 <select class="form-control" ng-model="vm.payment.Year" ng-options="y.Year as y.Year for y in vm.years"></select>
+                            </div>
+                            <label for="txtYear" class="col-md-2 control-label">ศูนย์ต้นทุน<span class="text-danger">*</span></label>
+                            <div class="col-md-3">
+                                <select class="form-control" ng-model="vm.payment.CostCenterID" ng-options="c.CostCenterID as c.CostCenterName for c in vm.costcenters"></select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-4 control-label">
+                            <label class="col-md-2 control-label">
                                 ผู้เบิก<span class="text-danger">*</span>
                             </label>
-                            <div class="col-md-6">
-                                <select class="form-control" name="requestby" ng-model="vm.payment.RequestBy" ng-options="emp.EmployeeID as emp.Description for emp in vm.employees" ng-required="true">
+                            <div class="col-md-10">
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="requestByType" ng-model="vm.requestby.type" value="normal">
+                                        พนักงานในศูนย์ต้นทุน
+                                    </label>
+                                </div>
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="requestByType" ng-model="vm.requestby.type" value="pea">
+                                        พนักงานนอกศูนย์ต้นทุน
+                                    </label>
+                                </div>
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="requestByType" ng-model="vm.requestby.type" value="others">
+                                        บุคคลภายนอก
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-md-offset-2" ng-if="vm.requestby.type === 'normal'">
+                                <select class="form-control" name="requestby" ng-model="vm.payment.RequestBy" ng-options="emp.EmployeeID as emp.Description for emp in vm.displayEmployees" ng-required="true">
                                     <option value=""> ======= กรุณาเลือก ======= </option>
                                 </select>
                                 <span class="text-danger" ng-show="frmPayment.requestby.$error.required"></span>
                             </div>
-                        </div>
 
-                    </div>
-                    <div class="col-md-5">
+                            <div ng-if="vm.requestby.type === 'pea'">
+                                <div class="col-md-2 col-md-offset-2">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="รหัสพนักงาน">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button">
+                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div ng-if="vm.requestby.type === 'others'">
+                                <div class="col-md-4 col-md-offset-2">
+                                    <input type="text" class="form-control" placeholder="ชื่อ - นามสกุล บุคคลภายนอก" />
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="form-group">
-                            <label class="control-label" for="txtDescription">
+                            <label class="control-label col-md-2" for="txtDescription">
                                 รายละเอียด<span class="text-danger">*</span>:
                             </label>
-                            <textarea ng-model="vm.payment.Description" ng-required="true" class="form-control" rows="3" id="txtDescription" placeholder="รายละเอียด"></textarea>
+                            <div class="col-md-6">
+                                <textarea ng-model="vm.payment.Description" ng-required="true" class="form-control" rows="3" id="txtDescription" placeholder="รายละเอียด"></textarea>
+                            </div>
                         </div>
                     </div>
+
+
+                    @*<div class="col-md-5">
+                            <div class="form-group">
+                                <label class="control-label" for="txtDescription">
+                                    รายละเอียด<span class="text-danger">*</span>:
+                                </label>
+                                <textarea ng-model="vm.payment.Description" ng-required="true" class="form-control" rows="3" id="txtDescription" placeholder="รายละเอียด"></textarea>
+                            </div>
+                        </div>*@
 
                 </div>
             </fieldset>
@@ -85,6 +145,8 @@
                 <thead>
                     <tr>
                         <th class="col-md-1 text-center"> ลำดับ </th>
+                        <th class="col-md-1 text-center">ปีงบประมาณ</th>
+                        <th class="col-md-1 text-center">ศูนย์ต้นทุน</th>
                         <th class="text-center"> ชื่อบัญชี </th>
                         <th class="col-md-2 text-center"> งบที่ได้รับ</th>
                         <th class="col-md-2 text-center"> เบิก</th>
@@ -97,6 +159,12 @@
                         <td class="text-center">
                             {{ $index + 1 }}
                         </td>
+                        <td class="text-center">
+                            {{ transaction.Budget.Year }}
+                        </td>
+                        <td class="text-center">
+                            {{ transaction.Budget.CostCenterID }}
+                        </td>
                         <td>
                             {{ transaction.Budget.Account.AccountID }} - {{ transaction.Budget.Account.AccountName }}
                         </td>
@@ -104,7 +172,7 @@
                             {{ transaction.Budget.BudgetAmount | number:2 }}
                         </td>
                         <td class="text-center">
-                            <input type="number" ng-model="transaction.Amount" ng-required="true" class="form-control input-sm text-right" ng-change="vm.updateTotalAmount()"  />
+                            <input type="number" ng-model="transaction.Amount" ng-required="true" class="form-control input-sm text-right" ng-change="vm.updateTotalAmount()" />
                             <span ng-show="frmPayment.transaction.Amount.$error.min">
                                 Please fill form.
                             </span>
@@ -117,8 +185,7 @@
                     </tr>
 
                     <tr ng-show="vm.transactions.length > 0">
-                        <th></th>
-                        <th></th>
+                        <th colspan="4"></th>
                         <th class="text-right">รวมเบิก</th>
                         <th class="text-right">{{ vm.payment.TotalAmount | number: 2 }}</th>
                         <th></th>

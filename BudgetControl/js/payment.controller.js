@@ -166,11 +166,17 @@
         // variable
         var vm = this;
         vm.budgets = [];            // budget list in dropdown
-        vm.employees = [];          // employee list in dropdown
+        vm.employees = [];          // all employee in costcenters
+        vm.displayEmployees = [];   // employee list in dropdown
         vm.years = [];              // budget year list in dropdown
         vm.payment = {};            // payment form data 
         vm.transactions = [];       // transaction inside payment
-
+        vm.costcenters = [];
+        vm.requestby = {
+            type: 'normal',
+            employeecode: '',
+            name: ''
+        }
 
         // function 
         vm.addNewTransaction = addNewTransaction;
@@ -182,33 +188,28 @@
         prepareData();
 
         // Watching 
-        //// - Watch RequestBy to changing CostCenter
-        $scope.$watch(watchingRequestBy, onRequestByChange);
+        //// - Watch CostCenterID to changing Display Employee list
+        $scope.$watch(watchingCostCenterID, onCostCenterIDChange);
+        $scope.$watch(watchingYear, onYearChange);
 
-        function watchingRequestBy(scope) {
-            return vm.payment.RequestBy;
+
+        function watchingCostCenterID(scope) {
+            return vm.payment.CostCenterID;
         }
 
-        function onRequestByChange() {
-            // 1. Check data are loaded.
-            if (vm.payment !== {} && vm.employees !== []) {
+        function onCostCenterIDChange() {
+            vm.displayEmployees = vm.employees.filter(function (data) {
+                return data.CostCenterID === vm.payment.CostCenterID;
+            });
+            clearAllTransaction();
+        }
 
-                // 2. Get requester data from employee list
-                var requester = $filter('filter')(vm.employees, function (d) {
-                    return d.EmployeeID === vm.payment.RequestBy
-                })
+        function watchingYear(scope) {
+            return vm.payment.Year;
+        }
 
-                // 3. if found, then set CostCenter value
-                if (requester.length > 0) {
-                    vm.payment.CostCenterID = requester[0].CostCenterID;
-                    //vm.payment.CostCenter = requester[0].CostCenter;
-                }
-
-                // 4. if not found, then set CostCenter to nothing.
-                else {
-                    vm.payment.CostCenterID = '-';
-                }
-            }
+        function onYearChange() {
+            clearAllTransaction();
         }
 
         function addNewTransaction() {
@@ -219,8 +220,7 @@
             var index = vm.transactions.findIndex(function (obj) {
                 return obj.BudgetID == vm.selectbudget;
             })
-
-            console.log(index);
+            
             // 2. If exist, then set status to active
             if (index > -1) {
                 vm.addNewTransactionError = "*บัญชีนี้มีอยู่แล้วในรายการ";
@@ -265,6 +265,10 @@
             updateTotalAmount();
         }
 
+        function clearAllTransaction() {
+            vm.transactions = [];
+        }
+
         function updateTotalAmount() {
             // Initial total amount value to zero
             vm.payment.TotalAmount = 0;
@@ -278,6 +282,7 @@
                 //}
             }
         }
+
         function submit() {
             vm.addNewTransactionError = "";
             if (vm.transactions.length > 0) {
@@ -304,16 +309,31 @@
 
         // prepare form data function
         function prepareData() {
-            // 1. Get list of employees
+            // 1. Get list of costcenters
+            apiService.costcenter().get().$promise.then(callCostCenterSuccess, callError);
+
+            // 2. Get list of employees
             apiService.employee().get().$promise.then(callEmpSuccess, callError);
 
-            // 2. Get list of budgets
+            // 3. Get list of budgets
             apiService.budget().get().$promise.then(callBudgetSuccess, callError);
 
 
             // function section // 
+            function callCostCenterSuccess(response) {
+                vm.costcenters = hr.respondSuccess(response);
+                if (!vm.payment.CostCenterID) {
+                    vm.payment.CostCenterID = vm.costcenters[0].CostCenterID || '';
+                }
+            }
+
             function callEmpSuccess(response) {
                 vm.employees = hr.respondSuccess(response);
+                if (vm.payment.CostCenterID) {
+                    vm.displayEmployees = vm.employees.filter(function (data) {
+                        return data.CostCenterID === vm.payment.CostCenterID;
+                    });
+                }
                 // Set default RequestBy to current user
                 vm.payment.RequestBy = authInfo.getUser().EmployeeID;
             }
