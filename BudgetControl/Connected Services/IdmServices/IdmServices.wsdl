@@ -1,0 +1,1398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://idm.pea.co.th/" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://idm.pea.co.th/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://idm.pea.co.th/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="RecoveryPassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfRecoveryPasswordCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfRecoveryPasswordCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:RecoveryPasswordCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ServiceRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RecoveryPasswordCriteria">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EmployeeId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StaffDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="RecoveryPasswordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RecoveryPasswordResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceResponseOfBoolean">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ResultObject" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ServiceResponse">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RefId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseMsg" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="RecoveryPassword_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EmployeeId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="StaffDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RecoveryPassword_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RecoveryPassword_SIResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateUserAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfCreateUserAccountCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfCreateUserAccountCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:CreateUserAccountCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CreateUserAccountCriteria">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CreatedBy" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName4" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ChangePasswordFlag" nillable="true" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ChangePasswordNextLogonFlag" nillable="true" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreateUserAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateUserAccountResult" type="tns:ServiceResponseOfCreateUserAccountResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceResponseOfCreateUserAccountResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ResultObject" type="tns:CreateUserAccountResult" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CreateUserAccountResult">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" nillable="true" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreateUserAccount_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="CreatedBy" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TitleName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TitleFullName1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TitleFullName2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TitleFullName3" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TitleFullName4" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ChangePasswordFlag" nillable="true" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="ChangePasswordNextLogonFlag" nillable="true" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateUserAccount_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateUserAccount_SIResult" type="tns:ServiceResponseOfCreateUserAccountResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateUserAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfUpdateUserAccountCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfUpdateUserAccountCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:UpdateUserAccountCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="UpdateUserAccountCriteria">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="OldUsername" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName4" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ChangePassword_Flag" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ChangePassword_NextLogon_Flag" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UpdateUserAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateUserAccountResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateUserAccount_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="OldUsername" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TitleName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TitleFullName1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TitleFullName2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TitleFullName3" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TitleFullName4" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ChangePassword_Flag" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="ChangePassword_NextLogon_Flag" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateUserAccount_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateUserAccount_SIResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteUserAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfDeleteUserAccountCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfDeleteUserAccountCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:DeleteUserAccountCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DeleteUserAccountCriteria">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DeleteUserAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteUserAccountResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteUserAccount_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteUserAccount_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteUserAccount_SIResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsValidUsernameAndPassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfLoginCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfLoginCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:LoginCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="LoginCriteria">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Applicationid" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="IsValidUsernameAndPasswordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IsValidUsernameAndPasswordResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsValidUsernameAndPassword_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsValidUsernameAndPassword_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IsValidUsernameAndPassword_SIResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfLoginCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginResult" type="tns:ServiceResponseOfLoginResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceResponseOfLoginResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ResultObject" type="tns:LoginResult" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="LoginResult">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="SessionId" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Login_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Login_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Login_SIResult" type="tns:ServiceResponseOfLoginResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogOut">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfLogOutCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfLogOutCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:LogOutCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="LogOutCriteria">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="LogOutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LogOutResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogOut_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogOut_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LogOut_SIResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VerifySession">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfSessionCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfSessionCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:SessionCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="SessionCriteria">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="SessionId" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="VerifySessionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VerifySessionResult" type="tns:ServiceResponseOfTokenVerifyResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceResponseOfTokenVerifyResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ResultObject" type="tns:TokenVerifyResult" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="TokenVerifyResult">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="VerifySession_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SessionId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VerifySession_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VerifySession_SIResult" type="tns:ServiceResponseOfTokenVerifyResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfUserInfoCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfUserInfoCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:UserInfoCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="UserInfoCriteria">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetUserAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserAccountResult" type="tns:ServiceResponseOfUserInfoResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceResponseOfUserInfoResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ResultObject" type="tns:UserInfoResult" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="UserInfoResult">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EmployeeId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CardType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserLockStatus" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ActivateFlag" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName4" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetUserAccount_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserAccount_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserAccount_SIResult" type="tns:ServiceResponseOfUserInfoResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangePassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfChangePasswordCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfChangePasswordCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:ChangePasswordCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ChangePasswordCriteria">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="OldPassword" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NewPassword" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ChangePasswordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ChangePasswordResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangePassword_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OldPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="NewPassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangePassword_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ChangePassword_SIResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginByExistingSession">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfWebLoginCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfWebLoginCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:WebLoginCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="WebLoginCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:LoginCriteria">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="SessionId" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="LoginByExistingSessionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginByExistingSessionResult" type="tns:ServiceResponseOfLoginResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginByExistingSession_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SessionId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginByExistingSession_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginByExistingSession_SIResult" type="tns:ServiceResponseOfLoginResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsUserLoggedIn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfLoggedInCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfLoggedInCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:LoggedInCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="LoggedInCriteria">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="SessionId" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="IsUserLoggedInResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IsUserLoggedInResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsUserLoggedIn_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SessionId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsUserLoggedIn_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IsUserLoggedIn_SIResult" type="tns:ServiceResponseOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RecoveryPasswordSoapIn">
+    <wsdl:part name="parameters" element="tns:RecoveryPassword" />
+  </wsdl:message>
+  <wsdl:message name="RecoveryPasswordSoapOut">
+    <wsdl:part name="parameters" element="tns:RecoveryPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="RecoveryPassword_SISoapIn">
+    <wsdl:part name="parameters" element="tns:RecoveryPassword_SI" />
+  </wsdl:message>
+  <wsdl:message name="RecoveryPassword_SISoapOut">
+    <wsdl:part name="parameters" element="tns:RecoveryPassword_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateUserAccount" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateUserAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserAccount_SISoapIn">
+    <wsdl:part name="parameters" element="tns:CreateUserAccount_SI" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserAccount_SISoapOut">
+    <wsdl:part name="parameters" element="tns:CreateUserAccount_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateUserAccount" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateUserAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserAccount_SISoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateUserAccount_SI" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserAccount_SISoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateUserAccount_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteUserAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteUserAccount" />
+  </wsdl:message>
+  <wsdl:message name="DeleteUserAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteUserAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteUserAccount_SISoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteUserAccount_SI" />
+  </wsdl:message>
+  <wsdl:message name="DeleteUserAccount_SISoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteUserAccount_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsValidUsernameAndPasswordSoapIn">
+    <wsdl:part name="parameters" element="tns:IsValidUsernameAndPassword" />
+  </wsdl:message>
+  <wsdl:message name="IsValidUsernameAndPasswordSoapOut">
+    <wsdl:part name="parameters" element="tns:IsValidUsernameAndPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsValidUsernameAndPassword_SISoapIn">
+    <wsdl:part name="parameters" element="tns:IsValidUsernameAndPassword_SI" />
+  </wsdl:message>
+  <wsdl:message name="IsValidUsernameAndPassword_SISoapOut">
+    <wsdl:part name="parameters" element="tns:IsValidUsernameAndPassword_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="Login_SISoapIn">
+    <wsdl:part name="parameters" element="tns:Login_SI" />
+  </wsdl:message>
+  <wsdl:message name="Login_SISoapOut">
+    <wsdl:part name="parameters" element="tns:Login_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogOutSoapIn">
+    <wsdl:part name="parameters" element="tns:LogOut" />
+  </wsdl:message>
+  <wsdl:message name="LogOutSoapOut">
+    <wsdl:part name="parameters" element="tns:LogOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogOut_SISoapIn">
+    <wsdl:part name="parameters" element="tns:LogOut_SI" />
+  </wsdl:message>
+  <wsdl:message name="LogOut_SISoapOut">
+    <wsdl:part name="parameters" element="tns:LogOut_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="VerifySessionSoapIn">
+    <wsdl:part name="parameters" element="tns:VerifySession" />
+  </wsdl:message>
+  <wsdl:message name="VerifySessionSoapOut">
+    <wsdl:part name="parameters" element="tns:VerifySessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="VerifySession_SISoapIn">
+    <wsdl:part name="parameters" element="tns:VerifySession_SI" />
+  </wsdl:message>
+  <wsdl:message name="VerifySession_SISoapOut">
+    <wsdl:part name="parameters" element="tns:VerifySession_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserAccount" />
+  </wsdl:message>
+  <wsdl:message name="GetUserAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserAccount_SISoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserAccount_SI" />
+  </wsdl:message>
+  <wsdl:message name="GetUserAccount_SISoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserAccount_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangePasswordSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangePassword" />
+  </wsdl:message>
+  <wsdl:message name="ChangePasswordSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangePasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangePassword_SISoapIn">
+    <wsdl:part name="parameters" element="tns:ChangePassword_SI" />
+  </wsdl:message>
+  <wsdl:message name="ChangePassword_SISoapOut">
+    <wsdl:part name="parameters" element="tns:ChangePassword_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginByExistingSessionSoapIn">
+    <wsdl:part name="parameters" element="tns:LoginByExistingSession" />
+  </wsdl:message>
+  <wsdl:message name="LoginByExistingSessionSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginByExistingSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginByExistingSession_SISoapIn">
+    <wsdl:part name="parameters" element="tns:LoginByExistingSession_SI" />
+  </wsdl:message>
+  <wsdl:message name="LoginByExistingSession_SISoapOut">
+    <wsdl:part name="parameters" element="tns:LoginByExistingSession_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsUserLoggedInSoapIn">
+    <wsdl:part name="parameters" element="tns:IsUserLoggedIn" />
+  </wsdl:message>
+  <wsdl:message name="IsUserLoggedInSoapOut">
+    <wsdl:part name="parameters" element="tns:IsUserLoggedInResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsUserLoggedIn_SISoapIn">
+    <wsdl:part name="parameters" element="tns:IsUserLoggedIn_SI" />
+  </wsdl:message>
+  <wsdl:message name="IsUserLoggedIn_SISoapOut">
+    <wsdl:part name="parameters" element="tns:IsUserLoggedIn_SIResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IdmServicesSoap">
+    <wsdl:operation name="RecoveryPassword">
+      <wsdl:input message="tns:RecoveryPasswordSoapIn" />
+      <wsdl:output message="tns:RecoveryPasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RecoveryPassword_SI">
+      <wsdl:input message="tns:RecoveryPassword_SISoapIn" />
+      <wsdl:output message="tns:RecoveryPassword_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateUserAccount">
+      <wsdl:input message="tns:CreateUserAccountSoapIn" />
+      <wsdl:output message="tns:CreateUserAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateUserAccount_SI">
+      <wsdl:input message="tns:CreateUserAccount_SISoapIn" />
+      <wsdl:output message="tns:CreateUserAccount_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserAccount">
+      <wsdl:input message="tns:UpdateUserAccountSoapIn" />
+      <wsdl:output message="tns:UpdateUserAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserAccount_SI">
+      <wsdl:input message="tns:UpdateUserAccount_SISoapIn" />
+      <wsdl:output message="tns:UpdateUserAccount_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserAccount">
+      <wsdl:input message="tns:DeleteUserAccountSoapIn" />
+      <wsdl:output message="tns:DeleteUserAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserAccount_SI">
+      <wsdl:input message="tns:DeleteUserAccount_SISoapIn" />
+      <wsdl:output message="tns:DeleteUserAccount_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsValidUsernameAndPassword">
+      <wsdl:input message="tns:IsValidUsernameAndPasswordSoapIn" />
+      <wsdl:output message="tns:IsValidUsernameAndPasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsValidUsernameAndPassword_SI">
+      <wsdl:input message="tns:IsValidUsernameAndPassword_SISoapIn" />
+      <wsdl:output message="tns:IsValidUsernameAndPassword_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Login_SI">
+      <wsdl:input message="tns:Login_SISoapIn" />
+      <wsdl:output message="tns:Login_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LogOut">
+      <wsdl:input message="tns:LogOutSoapIn" />
+      <wsdl:output message="tns:LogOutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LogOut_SI">
+      <wsdl:input message="tns:LogOut_SISoapIn" />
+      <wsdl:output message="tns:LogOut_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifySession">
+      <wsdl:input message="tns:VerifySessionSoapIn" />
+      <wsdl:output message="tns:VerifySessionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifySession_SI">
+      <wsdl:input message="tns:VerifySession_SISoapIn" />
+      <wsdl:output message="tns:VerifySession_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAccount">
+      <wsdl:input message="tns:GetUserAccountSoapIn" />
+      <wsdl:output message="tns:GetUserAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAccount_SI">
+      <wsdl:input message="tns:GetUserAccount_SISoapIn" />
+      <wsdl:output message="tns:GetUserAccount_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <wsdl:input message="tns:ChangePasswordSoapIn" />
+      <wsdl:output message="tns:ChangePasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword_SI">
+      <wsdl:input message="tns:ChangePassword_SISoapIn" />
+      <wsdl:output message="tns:ChangePassword_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LoginByExistingSession">
+      <wsdl:input message="tns:LoginByExistingSessionSoapIn" />
+      <wsdl:output message="tns:LoginByExistingSessionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LoginByExistingSession_SI">
+      <wsdl:input message="tns:LoginByExistingSession_SISoapIn" />
+      <wsdl:output message="tns:LoginByExistingSession_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsUserLoggedIn">
+      <wsdl:input message="tns:IsUserLoggedInSoapIn" />
+      <wsdl:output message="tns:IsUserLoggedInSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsUserLoggedIn_SI">
+      <wsdl:input message="tns:IsUserLoggedIn_SISoapIn" />
+      <wsdl:output message="tns:IsUserLoggedIn_SISoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IdmServicesSoap" type="tns:IdmServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RecoveryPassword">
+      <soap:operation soapAction="http://idm.pea.co.th/RecoveryPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecoveryPassword_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/RecoveryPassword_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUserAccount">
+      <soap:operation soapAction="http://idm.pea.co.th/CreateUserAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUserAccount_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/CreateUserAccount_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserAccount">
+      <soap:operation soapAction="http://idm.pea.co.th/UpdateUserAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserAccount_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/UpdateUserAccount_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserAccount">
+      <soap:operation soapAction="http://idm.pea.co.th/DeleteUserAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserAccount_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/DeleteUserAccount_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsValidUsernameAndPassword">
+      <soap:operation soapAction="http://idm.pea.co.th/IsValidUsernameAndPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsValidUsernameAndPassword_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/IsValidUsernameAndPassword_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://idm.pea.co.th/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/Login_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogOut">
+      <soap:operation soapAction="http://idm.pea.co.th/LogOut" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogOut_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/LogOut_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifySession">
+      <soap:operation soapAction="http://idm.pea.co.th/VerifySession" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifySession_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/VerifySession_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAccount">
+      <soap:operation soapAction="http://idm.pea.co.th/GetUserAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAccount_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/GetUserAccount_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <soap:operation soapAction="http://idm.pea.co.th/ChangePassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/ChangePassword_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginByExistingSession">
+      <soap:operation soapAction="http://idm.pea.co.th/LoginByExistingSession" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginByExistingSession_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/LoginByExistingSession_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserLoggedIn">
+      <soap:operation soapAction="http://idm.pea.co.th/IsUserLoggedIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserLoggedIn_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/IsUserLoggedIn_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="IdmServicesSoap12" type="tns:IdmServicesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RecoveryPassword">
+      <soap12:operation soapAction="http://idm.pea.co.th/RecoveryPassword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecoveryPassword_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/RecoveryPassword_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUserAccount">
+      <soap12:operation soapAction="http://idm.pea.co.th/CreateUserAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUserAccount_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/CreateUserAccount_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserAccount">
+      <soap12:operation soapAction="http://idm.pea.co.th/UpdateUserAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserAccount_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/UpdateUserAccount_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserAccount">
+      <soap12:operation soapAction="http://idm.pea.co.th/DeleteUserAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserAccount_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/DeleteUserAccount_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsValidUsernameAndPassword">
+      <soap12:operation soapAction="http://idm.pea.co.th/IsValidUsernameAndPassword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsValidUsernameAndPassword_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/IsValidUsernameAndPassword_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://idm.pea.co.th/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/Login_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogOut">
+      <soap12:operation soapAction="http://idm.pea.co.th/LogOut" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogOut_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/LogOut_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifySession">
+      <soap12:operation soapAction="http://idm.pea.co.th/VerifySession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifySession_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/VerifySession_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAccount">
+      <soap12:operation soapAction="http://idm.pea.co.th/GetUserAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAccount_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/GetUserAccount_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <soap12:operation soapAction="http://idm.pea.co.th/ChangePassword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/ChangePassword_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginByExistingSession">
+      <soap12:operation soapAction="http://idm.pea.co.th/LoginByExistingSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginByExistingSession_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/LoginByExistingSession_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserLoggedIn">
+      <soap12:operation soapAction="http://idm.pea.co.th/IsUserLoggedIn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserLoggedIn_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/IsUserLoggedIn_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IdmServices">
+    <wsdl:port name="IdmServicesSoap" binding="tns:IdmServicesSoap">
+      <soap:address location="https://idm.pea.co.th/webservices/IdmServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="IdmServicesSoap12" binding="tns:IdmServicesSoap12">
+      <soap12:address location="https://idm.pea.co.th/webservices/IdmServices.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

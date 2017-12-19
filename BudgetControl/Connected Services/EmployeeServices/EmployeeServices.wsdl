@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://idm.pea.co.th/" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://idm.pea.co.th/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://idm.pea.co.th/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="GetEmployeeInfoByEmployeeId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfEmployeeInfoByEmployeeIdCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfEmployeeInfoByEmployeeIdCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:EmployeeInfoByEmployeeIdCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ServiceRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EmployeeInfoByEmployeeIdCriteria">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="EmployeeId" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetEmployeeInfoByEmployeeIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEmployeeInfoByEmployeeIdResult" type="tns:ServiceResponseOfEmployeeProfile" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceResponseOfEmployeeProfile">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ResultObject" type="tns:EmployeeProfile" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ServiceResponse">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RefId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseMsg" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EmployeeProfile">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EmployeeId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TitleFullName4" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="GenderCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Gender" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StaffDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EntryDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RetiredDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CitizenId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepartmentSap" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepartmentShort" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Department" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepartmentShortName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepartmentFullName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PositionCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PositionDescShort" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Position" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LevelCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LevelDesc" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RegionCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Region" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubRegionCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubRegion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RaceId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RaceName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NationalityId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NationalityName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="GroupId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Group" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BloodGroup" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FixOrganizationalCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NewOrganizationalCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BaCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BaName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CostCenterCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CostCenterName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Peacode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Peaname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Peaname1" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetEmployeeInfoByEmployeeId_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EmployeeId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmployeeInfoByEmployeeId_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEmployeeInfoByEmployeeId_SIResult" type="tns:ServiceResponseOfEmployeeProfile" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmployeeInfoByUsername">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfEmployeeInfoByUsernameCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfEmployeeInfoByUsernameCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:EmployeeInfoByUsernameCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EmployeeInfoByUsernameCriteria">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetEmployeeInfoByUsernameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEmployeeInfoByUsernameResult" type="tns:ServiceResponseOfEmployeeProfile" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmployeeInfoByUsername_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmployeeInfoByUsername_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEmployeeInfoByUsername_SIResult" type="tns:ServiceResponseOfEmployeeProfile" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmployeeInfoByUserId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfEmployeeInfoByUserIdCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfEmployeeInfoByUserIdCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:EmployeeInfoByUserIdCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EmployeeInfoByUserIdCriteria">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetEmployeeInfoByUserIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEmployeeInfoByUserIdResult" type="tns:ServiceResponseOfEmployeeProfile" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmployeeInfoByUserId_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmployeeInfoByUserId_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEmployeeInfoByUserId_SIResult" type="tns:ServiceResponseOfEmployeeProfile" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepartmentInfoByCriteria">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:ServiceRequestOfDepartmentInfoByCriteria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceRequestOfDepartmentInfoByCriteria">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InputObject" type="tns:DepartmentInfoByCriteria" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DepartmentInfoByCriteria">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="DeptSap" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetDepartmentInfoByCriteriaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDepartmentInfoByCriteriaResult" type="tns:ServiceResponseOfDepartmentInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceResponseOfDepartmentInfo">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ResultObject" type="tns:DepartmentInfo" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DepartmentInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="DeptStableCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptChangeCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptOldCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptShort1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptShort2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptShort3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptShort4" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptShort5" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptShort6" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptShort7" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptShort" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFull1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFull2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFull3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFull4" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFull5" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFull6" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFull7" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFull" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFullEng1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFullEng2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFullEng3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFullEng4" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFullEng5" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFullEng6" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptFullEng7" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptStatus" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptClass" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptArea" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptTel" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DeptEffectDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptOrderNo" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DeptEffectOff" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptOrderOff" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptAt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptMoiCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptUpdName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DeptUddDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptSap" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptUpper" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CostCenterCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CostCenterName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptOrder" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeptLower" type="tns:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetDepartmentInfoByCriteria_SI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WSAuthenKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DeptSap" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepartmentInfoByCriteria_SIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDepartmentInfoByCriteria_SIResult" type="tns:ServiceResponseOfDepartmentInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetEmployeeInfoByEmployeeIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfoByEmployeeId" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeInfoByEmployeeIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfoByEmployeeIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeInfoByEmployeeId_SISoapIn">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfoByEmployeeId_SI" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeInfoByEmployeeId_SISoapOut">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfoByEmployeeId_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeInfoByUsernameSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfoByUsername" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeInfoByUsernameSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfoByUsernameResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeInfoByUsername_SISoapIn">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfoByUsername_SI" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeInfoByUsername_SISoapOut">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfoByUsername_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeInfoByUserIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfoByUserId" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeInfoByUserIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfoByUserIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeInfoByUserId_SISoapIn">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfoByUserId_SI" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeInfoByUserId_SISoapOut">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfoByUserId_SIResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartmentInfoByCriteriaSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDepartmentInfoByCriteria" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartmentInfoByCriteriaSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDepartmentInfoByCriteriaResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartmentInfoByCriteria_SISoapIn">
+    <wsdl:part name="parameters" element="tns:GetDepartmentInfoByCriteria_SI" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartmentInfoByCriteria_SISoapOut">
+    <wsdl:part name="parameters" element="tns:GetDepartmentInfoByCriteria_SIResponse" />
+  </wsdl:message>
+  <wsdl:portType name="EmployeeServicesSoap">
+    <wsdl:operation name="GetEmployeeInfoByEmployeeId">
+      <wsdl:input message="tns:GetEmployeeInfoByEmployeeIdSoapIn" />
+      <wsdl:output message="tns:GetEmployeeInfoByEmployeeIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByEmployeeId_SI">
+      <wsdl:input message="tns:GetEmployeeInfoByEmployeeId_SISoapIn" />
+      <wsdl:output message="tns:GetEmployeeInfoByEmployeeId_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByUsername">
+      <wsdl:input message="tns:GetEmployeeInfoByUsernameSoapIn" />
+      <wsdl:output message="tns:GetEmployeeInfoByUsernameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByUsername_SI">
+      <wsdl:input message="tns:GetEmployeeInfoByUsername_SISoapIn" />
+      <wsdl:output message="tns:GetEmployeeInfoByUsername_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByUserId">
+      <wsdl:input message="tns:GetEmployeeInfoByUserIdSoapIn" />
+      <wsdl:output message="tns:GetEmployeeInfoByUserIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByUserId_SI">
+      <wsdl:input message="tns:GetEmployeeInfoByUserId_SISoapIn" />
+      <wsdl:output message="tns:GetEmployeeInfoByUserId_SISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartmentInfoByCriteria">
+      <wsdl:input message="tns:GetDepartmentInfoByCriteriaSoapIn" />
+      <wsdl:output message="tns:GetDepartmentInfoByCriteriaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartmentInfoByCriteria_SI">
+      <wsdl:input message="tns:GetDepartmentInfoByCriteria_SISoapIn" />
+      <wsdl:output message="tns:GetDepartmentInfoByCriteria_SISoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EmployeeServicesSoap" type="tns:EmployeeServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetEmployeeInfoByEmployeeId">
+      <soap:operation soapAction="http://idm.pea.co.th/GetEmployeeInfoByEmployeeId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByEmployeeId_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/GetEmployeeInfoByEmployeeId_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByUsername">
+      <soap:operation soapAction="http://idm.pea.co.th/GetEmployeeInfoByUsername" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByUsername_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/GetEmployeeInfoByUsername_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByUserId">
+      <soap:operation soapAction="http://idm.pea.co.th/GetEmployeeInfoByUserId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByUserId_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/GetEmployeeInfoByUserId_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartmentInfoByCriteria">
+      <soap:operation soapAction="http://idm.pea.co.th/GetDepartmentInfoByCriteria" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartmentInfoByCriteria_SI">
+      <soap:operation soapAction="http://idm.pea.co.th/GetDepartmentInfoByCriteria_SI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="EmployeeServicesSoap12" type="tns:EmployeeServicesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetEmployeeInfoByEmployeeId">
+      <soap12:operation soapAction="http://idm.pea.co.th/GetEmployeeInfoByEmployeeId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByEmployeeId_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/GetEmployeeInfoByEmployeeId_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByUsername">
+      <soap12:operation soapAction="http://idm.pea.co.th/GetEmployeeInfoByUsername" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByUsername_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/GetEmployeeInfoByUsername_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByUserId">
+      <soap12:operation soapAction="http://idm.pea.co.th/GetEmployeeInfoByUserId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfoByUserId_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/GetEmployeeInfoByUserId_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartmentInfoByCriteria">
+      <soap12:operation soapAction="http://idm.pea.co.th/GetDepartmentInfoByCriteria" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartmentInfoByCriteria_SI">
+      <soap12:operation soapAction="http://idm.pea.co.th/GetDepartmentInfoByCriteria_SI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EmployeeServices">
+    <wsdl:port name="EmployeeServicesSoap" binding="tns:EmployeeServicesSoap">
+      <soap:address location="https://idm.pea.co.th/webservices/EmployeeServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="EmployeeServicesSoap12" binding="tns:EmployeeServicesSoap12">
+      <soap12:address location="https://idm.pea.co.th/webservices/EmployeeServices.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
