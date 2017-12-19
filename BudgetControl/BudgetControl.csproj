@@ -59,6 +59,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -136,6 +138,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Connected Services\EmployeeServices\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\IdmServices\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\BudgetsController.cs" />
@@ -198,6 +210,135 @@
     <Compile Include="ViewModels\ReturnObject.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Connected Services\EmployeeServices\BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\EmployeeServices\BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\EmployeeServices\BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\EmployeeServices\BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\EmployeeServices\BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\EmployeeServices\BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\EmployeeServices\BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\EmployeeServices\BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\EmployeeServices\BudgetControl.EmployeeServices.ServiceResponseOfDepartmentInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\EmployeeServices\BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\EmployeeServices\configuration91.svcinfo" />
+    <None Include="Connected Services\EmployeeServices\configuration.svcinfo" />
+    <None Include="Connected Services\EmployeeServices\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.ChangePasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.ChangePassword_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.CreateUserAccountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.CreateUserAccount_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.DeleteUserAccountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.DeleteUserAccount_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.GetUserAccountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.GetUserAccount_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.IsUserLoggedInResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.IsUserLoggedIn_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.IsValidUsernameAndPasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.IsValidUsernameAndPassword_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.LoginByExistingSessionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.LoginByExistingSession_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.LoginResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.Login_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.LogOutResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.LogOut_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.RecoveryPasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.RecoveryPassword_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.ServiceResponseOfBoolean.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.ServiceResponseOfCreateUserAccountResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.ServiceResponseOfLoginResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.ServiceResponseOfTokenVerifyResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.ServiceResponseOfUserInfoResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.UpdateUserAccountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.UpdateUserAccount_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.VerifySessionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\IdmServices\BudgetControl.IdmServices.VerifySession_SIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\IdmServices\configuration91.svcinfo" />
+    <None Include="Connected Services\IdmServices\configuration.svcinfo" />
+    <None Include="Connected Services\IdmServices\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\angular-material.min.css" />
     <Content Include="Content\bootstrap-cerulean.css" />
     <Content Include="Content\bootstrap-paper.css" />
@@ -259,6 +400,8 @@
     <Content Include="Manual\UserManual.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Connected Services\EmployeeServices\EmployeeServices.wsdl" />
+    <None Include="Connected Services\IdmServices\IdmServices.wsdl" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -342,6 +485,13 @@
     <EmbeddedResource Include="Migrations\201706260406176_AddPaymentNo.resx">
       <DependentUpon>201706260406176_AddPaymentNo.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\EmployeeServices\" />
+    <WCFMetadataStorage Include="Connected Services\IdmServices\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
