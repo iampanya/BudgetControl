@@ -122,3 +122,8 @@ label {
 .sortorder.reverse:after {
     content: '\25bc';
 }
+
+.select-center{
+    text-align: center;
+    text-align-last: center;
+}
