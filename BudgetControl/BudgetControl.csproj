@@ -171,6 +171,7 @@
     </Compile>
     <Compile Include="Manager\BudgetManager.cs" />
     <Compile Include="Manager\BudgetTransactionManager.cs" />
+    <Compile Include="Manager\ContractorManager.cs" />
     <Compile Include="Manager\IdmManager.cs" />
     <Compile Include="Manager\PaymentManager.cs" />
     <Compile Include="Manager\ReportManager.cs" />
