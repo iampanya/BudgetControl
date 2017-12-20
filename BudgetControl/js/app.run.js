@@ -4,12 +4,14 @@
         .module('budgetApp')
         .run(run);
 
-	run.$inject = ['$rootScope', '$state', 'ngProgressFactory', 'authInfo', '$log', 'bcBuilder', 'msgService']
-	function run($rootScope, $state, ngProgressFactory, authInfo, $log, bcBuilder, msgService) {
+	run.$inject = ['$rootScope', '$state', 'ngProgressFactory', 'authInfo', '$log', '$timeout', 'bcBuilder', 'msgService']
+	function run($rootScope, $state, ngProgressFactory, authInfo, $log, $timeout, bcBuilder, msgService) {
 		//Initial Progressbar
 		$rootScope.progressbar = ngProgressFactory.createInstance();
 		$rootScope.progressbar.setColor('#FBC02D'); //FBC02D  //FF8A65
 		$rootScope.progressbar.setHeight('5px');
+
+        $rootScope.isProgressbarRun = false;
 
 		$rootScope.$on('$stateChangeStart', function (event, toState) {
 		    if (toState.name !== 'login' && !authInfo.isLoggedIn()) {
@@ -27,10 +29,18 @@
 
         $rootScope.$on('loading:progress', function () {
             $rootScope.progressbar.start();
+            $rootScope.isProgressbarRun = true;
+            console.log('progress bar start');
 		});
 
-		$rootScope.$on('loading:finish', function () {
-            $rootScope.progressbar.complete();
+        $rootScope.$on('loading:finish', function () {
+            if ($rootScope.isProgressbarRun) {
+                $timeout(function () {
+                    $rootScope.progressbar.complete();
+                    $rootScope.isProgressbarRun = false;
+                    console.log('progress bar stop');
+                }, 1000)
+            }
 		});
 	}
 })();
