@@ -1,4 +1,5 @@
-﻿using BudgetControl.Models;
+﻿using BudgetControl.EmployeeServices;
+using BudgetControl.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,17 @@ namespace BudgetControl.ViewModels
         public EmployeeViewModel()
         {
 
+        }
+
+        public EmployeeViewModel(EmployeeProfile emp)
+        {
+            EmployeeID = emp.EmployeeId.TrimStart(new char[] { '0' });
+            TitleName = emp.TitleFullName;
+            FirstName = emp.FirstName;
+            LastName = emp.LastName;
+            JobTitle = emp.PositionDescShort + emp.LevelCode.Trim(new char[] { '0' });
+            CostCenterID = emp.CostCenterCode;
+            CostCenterName = emp.CostCenterName;
         }
 
         public EmployeeViewModel(Employee employee)
