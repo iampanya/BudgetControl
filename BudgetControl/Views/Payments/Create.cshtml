@@ -61,16 +61,34 @@
                             <div ng-if="vm.requestby.type === 'pea'">
                                 <div class="col-md-2 col-md-offset-2">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="รหัสพนักงาน">
+                                        <input type="text" class="form-control" placeholder="รหัสพนักงาน"
+                                               ng-model="vm.requestbypea.employeecode"
+                                               ng-keypress="$event.keyCode === 13 && vm.getEmployeeProfile()"
+                                               ng-blur="vm.getEmployeeProfile()">
                                         <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button">
+                                            <button class="btn btn-default" type="button" ng-click="vm.getEmployeeProfile();">
                                                 <i class="fa fa-search" aria-hidden="true"></i>
                                             </button>
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" />
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control text-center" placeholder="ชื่อ - นามสกุล"
+                                           ng-model="vm.requestbypea.name"
+                                           ng-disabled="true"
+                                           />
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control text-center" placeholder="ตำแหน่ง"
+                                           ng-model="vm.requestbypea.position" 
+                                           ng-disabled="true"
+                                           />
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control text-center" placeholder="รหัสศูนย์ต้นทุน"
+                                           ng-model="vm.requestbypea.costcenterid" 
+                                           ng-disabled="true"
+                                           />
                                 </div>
                             </div>
 

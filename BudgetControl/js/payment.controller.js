@@ -160,9 +160,9 @@
         .module('budgetApp')
         .controller('CreatePaymentCtrl', CreatePaymentCtrl);
 
-    CreatePaymentCtrl.$inject = ['$scope', '$state', '$filter', '$uibModal', 'apiService', 'handleResponse', 'authInfo'];
+    CreatePaymentCtrl.$inject = ['$scope', '$state', '$filter', '$uibModal', 'apiService', 'apiIdmService', 'handleResponse', 'authInfo', 'msgService'];
 
-    function CreatePaymentCtrl($scope, $state, $filter, $uibModal, apiService, hr, authInfo) {
+    function CreatePaymentCtrl($scope, $state, $filter, $uibModal, apiService, apiIdmService, hr, authInfo, msgService) {
         // variable
         var vm = this;
         vm.budgets = [];            // budget list in dropdown
@@ -174,7 +174,19 @@
         vm.requestby = {
             type: 'normal',
             employeecode: '',
-            name: ''
+            name: '',
+            position: '',
+        }
+
+        vm.requestbypea = {
+            employeecode: '',
+            name: '',
+            position: '',
+            costcenterid: ''
+        }
+
+        vm.requestbyother = {
+
         }
 
         // function 
@@ -182,6 +194,7 @@
         vm.removeTransaction = removeTransaction;
         vm.updateTotalAmount = updateTotalAmount;
         vm.submit = submit;
+        vm.getEmployeeProfile = getEmployeeProfile;
 
         // initial form data
         prepareData();
@@ -298,6 +311,18 @@
             }
         }
 
+        function getEmployeeProfile() {
+            msgService.clearMsg();
+            apiIdmService.employee().get({ empno: vm.requestbypea.employeecode })
+                .$promise.then(getEmployeeProfileSuccess, callError);
+
+            function getEmployeeProfileSuccess(response) {
+                var empProfile = hr.respondSuccess(response);
+                vm.requestbypea.name = empProfile.Description;
+                vm.requestbypea.position = empProfile.JobTitle;
+                vm.requestbypea.costcenterid = empProfile.CostCenterID;
+            }
+        }
 
         // prepare form data function
         function prepareData() {
@@ -334,12 +359,11 @@
                 vm.payment.Year = currentYear + 543 + '';
             }
 
-            function callError(e) {
-                hr.respondError(e);
-            }
-
         }
 
+        function callError(e) {
+            hr.respondError(e);
+        }
 
         // Modal result 
 
