@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="GetEmployeeInfoByUsername_SIResponse" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIResponse, Connected Services.EmployeeServices.Reference.cs.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIResponse, Connected Services.IdmEmployeeServices.Reference.cs.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

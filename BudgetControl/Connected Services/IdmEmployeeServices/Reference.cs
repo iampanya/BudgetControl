@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BudgetControl.EmployeeServices {
+namespace BudgetControl.IdmEmployeeServices {
     using System.Runtime.Serialization;
     using System;
     
@@ -17,10 +17,10 @@ namespace BudgetControl.EmployeeServices {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceRequest", Namespace="http://idm.pea.co.th/")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByUsernameCriteria))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByUserIdCriteria))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(BudgetControl.EmployeeServices.ServiceRequestOfDepartmentInfoByCriteria))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByEmployeeIdCriteria))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByUsernameCriteria))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByUserIdCriteria))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(BudgetControl.IdmEmployeeServices.ServiceRequestOfDepartmentInfoByCriteria))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByEmployeeIdCriteria))]
     public partial class ServiceRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -66,13 +66,13 @@ namespace BudgetControl.EmployeeServices {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceRequestOfEmployeeInfoByUsernameCriteria", Namespace="http://idm.pea.co.th/")]
     [System.SerializableAttribute()]
-    public partial class ServiceRequestOfEmployeeInfoByUsernameCriteria : BudgetControl.EmployeeServices.ServiceRequest {
+    public partial class ServiceRequestOfEmployeeInfoByUsernameCriteria : BudgetControl.IdmEmployeeServices.ServiceRequest {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private BudgetControl.EmployeeServices.EmployeeInfoByUsernameCriteria InputObjectField;
+        private BudgetControl.IdmEmployeeServices.EmployeeInfoByUsernameCriteria InputObjectField;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public BudgetControl.EmployeeServices.EmployeeInfoByUsernameCriteria InputObject {
+        public BudgetControl.IdmEmployeeServices.EmployeeInfoByUsernameCriteria InputObject {
             get {
                 return this.InputObjectField;
             }
@@ -89,13 +89,13 @@ namespace BudgetControl.EmployeeServices {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceRequestOfEmployeeInfoByUserIdCriteria", Namespace="http://idm.pea.co.th/")]
     [System.SerializableAttribute()]
-    public partial class ServiceRequestOfEmployeeInfoByUserIdCriteria : BudgetControl.EmployeeServices.ServiceRequest {
+    public partial class ServiceRequestOfEmployeeInfoByUserIdCriteria : BudgetControl.IdmEmployeeServices.ServiceRequest {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private BudgetControl.EmployeeServices.EmployeeInfoByUserIdCriteria InputObjectField;
+        private BudgetControl.IdmEmployeeServices.EmployeeInfoByUserIdCriteria InputObjectField;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public BudgetControl.EmployeeServices.EmployeeInfoByUserIdCriteria InputObject {
+        public BudgetControl.IdmEmployeeServices.EmployeeInfoByUserIdCriteria InputObject {
             get {
                 return this.InputObjectField;
             }
@@ -112,13 +112,13 @@ namespace BudgetControl.EmployeeServices {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceRequestOfDepartmentInfoByCriteria", Namespace="http://idm.pea.co.th/")]
     [System.SerializableAttribute()]
-    public partial class ServiceRequestOfDepartmentInfoByCriteria : BudgetControl.EmployeeServices.ServiceRequest {
+    public partial class ServiceRequestOfDepartmentInfoByCriteria : BudgetControl.IdmEmployeeServices.ServiceRequest {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private BudgetControl.EmployeeServices.DepartmentInfoByCriteria InputObjectField;
+        private BudgetControl.IdmEmployeeServices.DepartmentInfoByCriteria InputObjectField;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public BudgetControl.EmployeeServices.DepartmentInfoByCriteria InputObject {
+        public BudgetControl.IdmEmployeeServices.DepartmentInfoByCriteria InputObject {
             get {
                 return this.InputObjectField;
             }
@@ -135,13 +135,13 @@ namespace BudgetControl.EmployeeServices {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceRequestOfEmployeeInfoByEmployeeIdCriteria", Namespace="http://idm.pea.co.th/")]
     [System.SerializableAttribute()]
-    public partial class ServiceRequestOfEmployeeInfoByEmployeeIdCriteria : BudgetControl.EmployeeServices.ServiceRequest {
+    public partial class ServiceRequestOfEmployeeInfoByEmployeeIdCriteria : BudgetControl.IdmEmployeeServices.ServiceRequest {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private BudgetControl.EmployeeServices.EmployeeInfoByEmployeeIdCriteria InputObjectField;
+        private BudgetControl.IdmEmployeeServices.EmployeeInfoByEmployeeIdCriteria InputObjectField;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public BudgetControl.EmployeeServices.EmployeeInfoByEmployeeIdCriteria InputObject {
+        public BudgetControl.IdmEmployeeServices.EmployeeInfoByEmployeeIdCriteria InputObject {
             get {
                 return this.InputObjectField;
             }
@@ -337,8 +337,8 @@ namespace BudgetControl.EmployeeServices {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceResponse", Namespace="http://idm.pea.co.th/")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(BudgetControl.EmployeeServices.ServiceResponseOfDepartmentInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(BudgetControl.IdmEmployeeServices.ServiceResponseOfDepartmentInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile))]
     public partial class ServiceResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -415,13 +415,13 @@ namespace BudgetControl.EmployeeServices {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceResponseOfDepartmentInfo", Namespace="http://idm.pea.co.th/")]
     [System.SerializableAttribute()]
-    public partial class ServiceResponseOfDepartmentInfo : BudgetControl.EmployeeServices.ServiceResponse {
+    public partial class ServiceResponseOfDepartmentInfo : BudgetControl.IdmEmployeeServices.ServiceResponse {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private BudgetControl.EmployeeServices.DepartmentInfo ResultObjectField;
+        private BudgetControl.IdmEmployeeServices.DepartmentInfo ResultObjectField;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public BudgetControl.EmployeeServices.DepartmentInfo ResultObject {
+        public BudgetControl.IdmEmployeeServices.DepartmentInfo ResultObject {
             get {
                 return this.ResultObjectField;
             }
@@ -438,13 +438,13 @@ namespace BudgetControl.EmployeeServices {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceResponseOfEmployeeProfile", Namespace="http://idm.pea.co.th/")]
     [System.SerializableAttribute()]
-    public partial class ServiceResponseOfEmployeeProfile : BudgetControl.EmployeeServices.ServiceResponse {
+    public partial class ServiceResponseOfEmployeeProfile : BudgetControl.IdmEmployeeServices.ServiceResponse {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private BudgetControl.EmployeeServices.EmployeeProfile ResultObjectField;
+        private BudgetControl.IdmEmployeeServices.EmployeeProfile ResultObjectField;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public BudgetControl.EmployeeServices.EmployeeProfile ResultObject {
+        public BudgetControl.IdmEmployeeServices.EmployeeProfile ResultObject {
             get {
                 return this.ResultObjectField;
             }
@@ -1421,7 +1421,7 @@ namespace BudgetControl.EmployeeServices {
         private string DeptOrderField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private BudgetControl.EmployeeServices.ArrayOfString DeptLowerField;
+        private BudgetControl.IdmEmployeeServices.ArrayOfString DeptLowerField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -1993,7 +1993,7 @@ namespace BudgetControl.EmployeeServices {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=43)]
-        public BudgetControl.EmployeeServices.ArrayOfString DeptLower {
+        public BudgetControl.IdmEmployeeServices.ArrayOfString DeptLower {
             get {
                 return this.DeptLowerField;
             }
@@ -2023,64 +2023,64 @@ namespace BudgetControl.EmployeeServices {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://idm.pea.co.th/", ConfigurationName="EmployeeServices.EmployeeServicesSoap")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://idm.pea.co.th/", ConfigurationName="IdmEmployeeServices.EmployeeServicesSoap")]
     public interface EmployeeServicesSoap {
         
         // CODEGEN: Generating message contract since element name request from namespace http://idm.pea.co.th/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetEmployeeInfoByEmployeeId", ReplyAction="*")]
-        BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdResponse GetEmployeeInfoByEmployeeId(BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdRequest request);
+        BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdResponse GetEmployeeInfoByEmployeeId(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetEmployeeInfoByEmployeeId", ReplyAction="*")]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdResponse> GetEmployeeInfoByEmployeeIdAsync(BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdRequest request);
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdResponse> GetEmployeeInfoByEmployeeIdAsync(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdRequest request);
         
         // CODEGEN: Generating message contract since element name WSAuthenKey from namespace http://idm.pea.co.th/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetEmployeeInfoByEmployeeId_SI", ReplyAction="*")]
-        BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIResponse GetEmployeeInfoByEmployeeId_SI(BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest request);
+        BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIResponse GetEmployeeInfoByEmployeeId_SI(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetEmployeeInfoByEmployeeId_SI", ReplyAction="*")]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIResponse> GetEmployeeInfoByEmployeeId_SIAsync(BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest request);
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIResponse> GetEmployeeInfoByEmployeeId_SIAsync(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest request);
         
         // CODEGEN: Generating message contract since element name request from namespace http://idm.pea.co.th/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetEmployeeInfoByUsername", ReplyAction="*")]
-        BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameResponse GetEmployeeInfoByUsername(BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameRequest request);
+        BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameResponse GetEmployeeInfoByUsername(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetEmployeeInfoByUsername", ReplyAction="*")]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameResponse> GetEmployeeInfoByUsernameAsync(BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameRequest request);
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameResponse> GetEmployeeInfoByUsernameAsync(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameRequest request);
         
         // CODEGEN: Generating message contract since element name WSAuthenKey from namespace http://idm.pea.co.th/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetEmployeeInfoByUsername_SI", ReplyAction="*")]
-        BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIResponse GetEmployeeInfoByUsername_SI(BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIRequest request);
+        BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIResponse GetEmployeeInfoByUsername_SI(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetEmployeeInfoByUsername_SI", ReplyAction="*")]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIResponse> GetEmployeeInfoByUsername_SIAsync(BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIRequest request);
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIResponse> GetEmployeeInfoByUsername_SIAsync(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIRequest request);
         
         // CODEGEN: Generating message contract since element name request from namespace http://idm.pea.co.th/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetEmployeeInfoByUserId", ReplyAction="*")]
-        BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdResponse GetEmployeeInfoByUserId(BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdRequest request);
+        BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdResponse GetEmployeeInfoByUserId(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetEmployeeInfoByUserId", ReplyAction="*")]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdResponse> GetEmployeeInfoByUserIdAsync(BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdRequest request);
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdResponse> GetEmployeeInfoByUserIdAsync(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdRequest request);
         
         // CODEGEN: Generating message contract since element name WSAuthenKey from namespace http://idm.pea.co.th/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetEmployeeInfoByUserId_SI", ReplyAction="*")]
-        BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIResponse GetEmployeeInfoByUserId_SI(BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIRequest request);
+        BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIResponse GetEmployeeInfoByUserId_SI(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetEmployeeInfoByUserId_SI", ReplyAction="*")]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIResponse> GetEmployeeInfoByUserId_SIAsync(BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIRequest request);
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIResponse> GetEmployeeInfoByUserId_SIAsync(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIRequest request);
         
         // CODEGEN: Generating message contract since element name request from namespace http://idm.pea.co.th/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetDepartmentInfoByCriteria", ReplyAction="*")]
-        BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaResponse GetDepartmentInfoByCriteria(BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaRequest request);
+        BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaResponse GetDepartmentInfoByCriteria(BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetDepartmentInfoByCriteria", ReplyAction="*")]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaResponse> GetDepartmentInfoByCriteriaAsync(BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaRequest request);
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaResponse> GetDepartmentInfoByCriteriaAsync(BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaRequest request);
         
         // CODEGEN: Generating message contract since element name WSAuthenKey from namespace http://idm.pea.co.th/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetDepartmentInfoByCriteria_SI", ReplyAction="*")]
-        BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIResponse GetDepartmentInfoByCriteria_SI(BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIRequest request);
+        BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIResponse GetDepartmentInfoByCriteria_SI(BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://idm.pea.co.th/GetDepartmentInfoByCriteria_SI", ReplyAction="*")]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIResponse> GetDepartmentInfoByCriteria_SIAsync(BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIRequest request);
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIResponse> GetDepartmentInfoByCriteria_SIAsync(BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -2090,12 +2090,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByEmployeeIdRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetEmployeeInfoByEmployeeId", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdRequestBody Body;
+        public BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdRequestBody Body;
         
         public GetEmployeeInfoByEmployeeIdRequest() {
         }
         
-        public GetEmployeeInfoByEmployeeIdRequest(BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdRequestBody Body) {
+        public GetEmployeeInfoByEmployeeIdRequest(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -2107,12 +2107,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByEmployeeIdRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByEmployeeIdCriteria request;
+        public BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByEmployeeIdCriteria request;
         
         public GetEmployeeInfoByEmployeeIdRequestBody() {
         }
         
-        public GetEmployeeInfoByEmployeeIdRequestBody(BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByEmployeeIdCriteria request) {
+        public GetEmployeeInfoByEmployeeIdRequestBody(BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByEmployeeIdCriteria request) {
             this.request = request;
         }
     }
@@ -2124,12 +2124,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByEmployeeIdResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetEmployeeInfoByEmployeeIdResponse", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdResponseBody Body;
+        public BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdResponseBody Body;
         
         public GetEmployeeInfoByEmployeeIdResponse() {
         }
         
-        public GetEmployeeInfoByEmployeeIdResponse(BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdResponseBody Body) {
+        public GetEmployeeInfoByEmployeeIdResponse(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -2141,12 +2141,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByEmployeeIdResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByEmployeeIdResult;
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByEmployeeIdResult;
         
         public GetEmployeeInfoByEmployeeIdResponseBody() {
         }
         
-        public GetEmployeeInfoByEmployeeIdResponseBody(BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByEmployeeIdResult) {
+        public GetEmployeeInfoByEmployeeIdResponseBody(BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByEmployeeIdResult) {
             this.GetEmployeeInfoByEmployeeIdResult = GetEmployeeInfoByEmployeeIdResult;
         }
     }
@@ -2158,12 +2158,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByEmployeeId_SIRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetEmployeeInfoByEmployeeId_SI", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIRequestBody Body;
+        public BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIRequestBody Body;
         
         public GetEmployeeInfoByEmployeeId_SIRequest() {
         }
         
-        public GetEmployeeInfoByEmployeeId_SIRequest(BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIRequestBody Body) {
+        public GetEmployeeInfoByEmployeeId_SIRequest(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -2196,12 +2196,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByEmployeeId_SIResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetEmployeeInfoByEmployeeId_SIResponse", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIResponseBody Body;
+        public BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIResponseBody Body;
         
         public GetEmployeeInfoByEmployeeId_SIResponse() {
         }
         
-        public GetEmployeeInfoByEmployeeId_SIResponse(BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIResponseBody Body) {
+        public GetEmployeeInfoByEmployeeId_SIResponse(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -2213,12 +2213,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByEmployeeId_SIResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByEmployeeId_SIResult;
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByEmployeeId_SIResult;
         
         public GetEmployeeInfoByEmployeeId_SIResponseBody() {
         }
         
-        public GetEmployeeInfoByEmployeeId_SIResponseBody(BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByEmployeeId_SIResult) {
+        public GetEmployeeInfoByEmployeeId_SIResponseBody(BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByEmployeeId_SIResult) {
             this.GetEmployeeInfoByEmployeeId_SIResult = GetEmployeeInfoByEmployeeId_SIResult;
         }
     }
@@ -2230,12 +2230,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUsernameRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetEmployeeInfoByUsername", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameRequestBody Body;
+        public BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameRequestBody Body;
         
         public GetEmployeeInfoByUsernameRequest() {
         }
         
-        public GetEmployeeInfoByUsernameRequest(BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameRequestBody Body) {
+        public GetEmployeeInfoByUsernameRequest(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -2247,12 +2247,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUsernameRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByUsernameCriteria request;
+        public BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByUsernameCriteria request;
         
         public GetEmployeeInfoByUsernameRequestBody() {
         }
         
-        public GetEmployeeInfoByUsernameRequestBody(BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByUsernameCriteria request) {
+        public GetEmployeeInfoByUsernameRequestBody(BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByUsernameCriteria request) {
             this.request = request;
         }
     }
@@ -2264,12 +2264,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUsernameResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetEmployeeInfoByUsernameResponse", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameResponseBody Body;
+        public BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameResponseBody Body;
         
         public GetEmployeeInfoByUsernameResponse() {
         }
         
-        public GetEmployeeInfoByUsernameResponse(BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameResponseBody Body) {
+        public GetEmployeeInfoByUsernameResponse(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -2281,12 +2281,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUsernameResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUsernameResult;
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUsernameResult;
         
         public GetEmployeeInfoByUsernameResponseBody() {
         }
         
-        public GetEmployeeInfoByUsernameResponseBody(BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUsernameResult) {
+        public GetEmployeeInfoByUsernameResponseBody(BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUsernameResult) {
             this.GetEmployeeInfoByUsernameResult = GetEmployeeInfoByUsernameResult;
         }
     }
@@ -2298,12 +2298,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUsername_SIRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetEmployeeInfoByUsername_SI", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIRequestBody Body;
+        public BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIRequestBody Body;
         
         public GetEmployeeInfoByUsername_SIRequest() {
         }
         
-        public GetEmployeeInfoByUsername_SIRequest(BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIRequestBody Body) {
+        public GetEmployeeInfoByUsername_SIRequest(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -2336,12 +2336,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUsername_SIResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetEmployeeInfoByUsername_SIResponse", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIResponseBody Body;
+        public BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIResponseBody Body;
         
         public GetEmployeeInfoByUsername_SIResponse() {
         }
         
-        public GetEmployeeInfoByUsername_SIResponse(BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIResponseBody Body) {
+        public GetEmployeeInfoByUsername_SIResponse(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -2353,12 +2353,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUsername_SIResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUsername_SIResult;
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUsername_SIResult;
         
         public GetEmployeeInfoByUsername_SIResponseBody() {
         }
         
-        public GetEmployeeInfoByUsername_SIResponseBody(BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUsername_SIResult) {
+        public GetEmployeeInfoByUsername_SIResponseBody(BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUsername_SIResult) {
             this.GetEmployeeInfoByUsername_SIResult = GetEmployeeInfoByUsername_SIResult;
         }
     }
@@ -2370,12 +2370,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUserIdRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetEmployeeInfoByUserId", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdRequestBody Body;
+        public BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdRequestBody Body;
         
         public GetEmployeeInfoByUserIdRequest() {
         }
         
-        public GetEmployeeInfoByUserIdRequest(BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdRequestBody Body) {
+        public GetEmployeeInfoByUserIdRequest(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -2387,12 +2387,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUserIdRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByUserIdCriteria request;
+        public BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByUserIdCriteria request;
         
         public GetEmployeeInfoByUserIdRequestBody() {
         }
         
-        public GetEmployeeInfoByUserIdRequestBody(BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByUserIdCriteria request) {
+        public GetEmployeeInfoByUserIdRequestBody(BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByUserIdCriteria request) {
             this.request = request;
         }
     }
@@ -2404,12 +2404,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUserIdResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetEmployeeInfoByUserIdResponse", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdResponseBody Body;
+        public BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdResponseBody Body;
         
         public GetEmployeeInfoByUserIdResponse() {
         }
         
-        public GetEmployeeInfoByUserIdResponse(BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdResponseBody Body) {
+        public GetEmployeeInfoByUserIdResponse(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -2421,12 +2421,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUserIdResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUserIdResult;
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUserIdResult;
         
         public GetEmployeeInfoByUserIdResponseBody() {
         }
         
-        public GetEmployeeInfoByUserIdResponseBody(BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUserIdResult) {
+        public GetEmployeeInfoByUserIdResponseBody(BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUserIdResult) {
             this.GetEmployeeInfoByUserIdResult = GetEmployeeInfoByUserIdResult;
         }
     }
@@ -2438,12 +2438,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUserId_SIRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetEmployeeInfoByUserId_SI", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIRequestBody Body;
+        public BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIRequestBody Body;
         
         public GetEmployeeInfoByUserId_SIRequest() {
         }
         
-        public GetEmployeeInfoByUserId_SIRequest(BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIRequestBody Body) {
+        public GetEmployeeInfoByUserId_SIRequest(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -2476,12 +2476,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUserId_SIResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetEmployeeInfoByUserId_SIResponse", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIResponseBody Body;
+        public BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIResponseBody Body;
         
         public GetEmployeeInfoByUserId_SIResponse() {
         }
         
-        public GetEmployeeInfoByUserId_SIResponse(BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIResponseBody Body) {
+        public GetEmployeeInfoByUserId_SIResponse(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -2493,12 +2493,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetEmployeeInfoByUserId_SIResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUserId_SIResult;
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUserId_SIResult;
         
         public GetEmployeeInfoByUserId_SIResponseBody() {
         }
         
-        public GetEmployeeInfoByUserId_SIResponseBody(BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUserId_SIResult) {
+        public GetEmployeeInfoByUserId_SIResponseBody(BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUserId_SIResult) {
             this.GetEmployeeInfoByUserId_SIResult = GetEmployeeInfoByUserId_SIResult;
         }
     }
@@ -2510,12 +2510,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetDepartmentInfoByCriteriaRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetDepartmentInfoByCriteria", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaRequestBody Body;
+        public BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaRequestBody Body;
         
         public GetDepartmentInfoByCriteriaRequest() {
         }
         
-        public GetDepartmentInfoByCriteriaRequest(BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaRequestBody Body) {
+        public GetDepartmentInfoByCriteriaRequest(BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -2527,12 +2527,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetDepartmentInfoByCriteriaRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public BudgetControl.EmployeeServices.ServiceRequestOfDepartmentInfoByCriteria request;
+        public BudgetControl.IdmEmployeeServices.ServiceRequestOfDepartmentInfoByCriteria request;
         
         public GetDepartmentInfoByCriteriaRequestBody() {
         }
         
-        public GetDepartmentInfoByCriteriaRequestBody(BudgetControl.EmployeeServices.ServiceRequestOfDepartmentInfoByCriteria request) {
+        public GetDepartmentInfoByCriteriaRequestBody(BudgetControl.IdmEmployeeServices.ServiceRequestOfDepartmentInfoByCriteria request) {
             this.request = request;
         }
     }
@@ -2544,12 +2544,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetDepartmentInfoByCriteriaResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetDepartmentInfoByCriteriaResponse", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaResponseBody Body;
+        public BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaResponseBody Body;
         
         public GetDepartmentInfoByCriteriaResponse() {
         }
         
-        public GetDepartmentInfoByCriteriaResponse(BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaResponseBody Body) {
+        public GetDepartmentInfoByCriteriaResponse(BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -2561,12 +2561,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetDepartmentInfoByCriteriaResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public BudgetControl.EmployeeServices.ServiceResponseOfDepartmentInfo GetDepartmentInfoByCriteriaResult;
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfDepartmentInfo GetDepartmentInfoByCriteriaResult;
         
         public GetDepartmentInfoByCriteriaResponseBody() {
         }
         
-        public GetDepartmentInfoByCriteriaResponseBody(BudgetControl.EmployeeServices.ServiceResponseOfDepartmentInfo GetDepartmentInfoByCriteriaResult) {
+        public GetDepartmentInfoByCriteriaResponseBody(BudgetControl.IdmEmployeeServices.ServiceResponseOfDepartmentInfo GetDepartmentInfoByCriteriaResult) {
             this.GetDepartmentInfoByCriteriaResult = GetDepartmentInfoByCriteriaResult;
         }
     }
@@ -2578,12 +2578,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetDepartmentInfoByCriteria_SIRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetDepartmentInfoByCriteria_SI", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIRequestBody Body;
+        public BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIRequestBody Body;
         
         public GetDepartmentInfoByCriteria_SIRequest() {
         }
         
-        public GetDepartmentInfoByCriteria_SIRequest(BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIRequestBody Body) {
+        public GetDepartmentInfoByCriteria_SIRequest(BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -2616,12 +2616,12 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetDepartmentInfoByCriteria_SIResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="GetDepartmentInfoByCriteria_SIResponse", Namespace="http://idm.pea.co.th/", Order=0)]
-        public BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIResponseBody Body;
+        public BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIResponseBody Body;
         
         public GetDepartmentInfoByCriteria_SIResponse() {
         }
         
-        public GetDepartmentInfoByCriteria_SIResponse(BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIResponseBody Body) {
+        public GetDepartmentInfoByCriteria_SIResponse(BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -2633,23 +2633,23 @@ namespace BudgetControl.EmployeeServices {
     public partial class GetDepartmentInfoByCriteria_SIResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public BudgetControl.EmployeeServices.ServiceResponseOfDepartmentInfo GetDepartmentInfoByCriteria_SIResult;
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfDepartmentInfo GetDepartmentInfoByCriteria_SIResult;
         
         public GetDepartmentInfoByCriteria_SIResponseBody() {
         }
         
-        public GetDepartmentInfoByCriteria_SIResponseBody(BudgetControl.EmployeeServices.ServiceResponseOfDepartmentInfo GetDepartmentInfoByCriteria_SIResult) {
+        public GetDepartmentInfoByCriteria_SIResponseBody(BudgetControl.IdmEmployeeServices.ServiceResponseOfDepartmentInfo GetDepartmentInfoByCriteria_SIResult) {
             this.GetDepartmentInfoByCriteria_SIResult = GetDepartmentInfoByCriteria_SIResult;
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface EmployeeServicesSoapChannel : BudgetControl.EmployeeServices.EmployeeServicesSoap, System.ServiceModel.IClientChannel {
+    public interface EmployeeServicesSoapChannel : BudgetControl.IdmEmployeeServices.EmployeeServicesSoap, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class EmployeeServicesSoapClient : System.ServiceModel.ClientBase<BudgetControl.EmployeeServices.EmployeeServicesSoap>, BudgetControl.EmployeeServices.EmployeeServicesSoap {
+    public partial class EmployeeServicesSoapClient : System.ServiceModel.ClientBase<BudgetControl.IdmEmployeeServices.EmployeeServicesSoap>, BudgetControl.IdmEmployeeServices.EmployeeServicesSoap {
         
         public EmployeeServicesSoapClient() {
         }
@@ -2671,211 +2671,211 @@ namespace BudgetControl.EmployeeServices {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdResponse BudgetControl.EmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByEmployeeId(BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdRequest request) {
+        BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdResponse BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByEmployeeId(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdRequest request) {
             return base.Channel.GetEmployeeInfoByEmployeeId(request);
         }
         
-        public BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByEmployeeId(BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByEmployeeIdCriteria request) {
-            BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdRequest inValue = new BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdRequestBody();
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByEmployeeId(BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByEmployeeIdCriteria request) {
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdRequest inValue = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdRequestBody();
             inValue.Body.request = request;
-            BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdResponse retVal = ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByEmployeeId(inValue);
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdResponse retVal = ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByEmployeeId(inValue);
             return retVal.Body.GetEmployeeInfoByEmployeeIdResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdResponse> BudgetControl.EmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByEmployeeIdAsync(BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdRequest request) {
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdResponse> BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByEmployeeIdAsync(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdRequest request) {
             return base.Channel.GetEmployeeInfoByEmployeeIdAsync(request);
         }
         
-        public System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdResponse> GetEmployeeInfoByEmployeeIdAsync(BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByEmployeeIdCriteria request) {
-            BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdRequest inValue = new BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeIdRequestBody();
+        public System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdResponse> GetEmployeeInfoByEmployeeIdAsync(BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByEmployeeIdCriteria request) {
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdRequest inValue = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeIdRequestBody();
             inValue.Body.request = request;
-            return ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByEmployeeIdAsync(inValue);
+            return ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByEmployeeIdAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIResponse BudgetControl.EmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByEmployeeId_SI(BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest request) {
+        BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIResponse BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByEmployeeId_SI(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest request) {
             return base.Channel.GetEmployeeInfoByEmployeeId_SI(request);
         }
         
-        public BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByEmployeeId_SI(string WSAuthenKey, string EmployeeId) {
-            BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest inValue = new BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIRequestBody();
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByEmployeeId_SI(string WSAuthenKey, string EmployeeId) {
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest inValue = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIRequestBody();
             inValue.Body.WSAuthenKey = WSAuthenKey;
             inValue.Body.EmployeeId = EmployeeId;
-            BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIResponse retVal = ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByEmployeeId_SI(inValue);
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIResponse retVal = ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByEmployeeId_SI(inValue);
             return retVal.Body.GetEmployeeInfoByEmployeeId_SIResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIResponse> BudgetControl.EmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByEmployeeId_SIAsync(BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest request) {
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIResponse> BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByEmployeeId_SIAsync(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest request) {
             return base.Channel.GetEmployeeInfoByEmployeeId_SIAsync(request);
         }
         
-        public System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIResponse> GetEmployeeInfoByEmployeeId_SIAsync(string WSAuthenKey, string EmployeeId) {
-            BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest inValue = new BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetEmployeeInfoByEmployeeId_SIRequestBody();
+        public System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIResponse> GetEmployeeInfoByEmployeeId_SIAsync(string WSAuthenKey, string EmployeeId) {
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest inValue = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByEmployeeId_SIRequestBody();
             inValue.Body.WSAuthenKey = WSAuthenKey;
             inValue.Body.EmployeeId = EmployeeId;
-            return ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByEmployeeId_SIAsync(inValue);
+            return ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByEmployeeId_SIAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameResponse BudgetControl.EmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUsername(BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameRequest request) {
+        BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameResponse BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUsername(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameRequest request) {
             return base.Channel.GetEmployeeInfoByUsername(request);
         }
         
-        public BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUsername(BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByUsernameCriteria request) {
-            BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameRequest inValue = new BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameRequestBody();
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUsername(BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByUsernameCriteria request) {
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameRequest inValue = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameRequestBody();
             inValue.Body.request = request;
-            BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameResponse retVal = ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUsername(inValue);
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameResponse retVal = ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUsername(inValue);
             return retVal.Body.GetEmployeeInfoByUsernameResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameResponse> BudgetControl.EmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUsernameAsync(BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameRequest request) {
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameResponse> BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUsernameAsync(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameRequest request) {
             return base.Channel.GetEmployeeInfoByUsernameAsync(request);
         }
         
-        public System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameResponse> GetEmployeeInfoByUsernameAsync(BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByUsernameCriteria request) {
-            BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameRequest inValue = new BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetEmployeeInfoByUsernameRequestBody();
+        public System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameResponse> GetEmployeeInfoByUsernameAsync(BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByUsernameCriteria request) {
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameRequest inValue = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsernameRequestBody();
             inValue.Body.request = request;
-            return ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUsernameAsync(inValue);
+            return ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUsernameAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIResponse BudgetControl.EmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUsername_SI(BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIRequest request) {
+        BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIResponse BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUsername_SI(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIRequest request) {
             return base.Channel.GetEmployeeInfoByUsername_SI(request);
         }
         
-        public BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUsername_SI(string WSAuthenKey, string Username) {
-            BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIRequest inValue = new BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIRequestBody();
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUsername_SI(string WSAuthenKey, string Username) {
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIRequest inValue = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIRequestBody();
             inValue.Body.WSAuthenKey = WSAuthenKey;
             inValue.Body.Username = Username;
-            BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIResponse retVal = ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUsername_SI(inValue);
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIResponse retVal = ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUsername_SI(inValue);
             return retVal.Body.GetEmployeeInfoByUsername_SIResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIResponse> BudgetControl.EmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUsername_SIAsync(BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIRequest request) {
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIResponse> BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUsername_SIAsync(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIRequest request) {
             return base.Channel.GetEmployeeInfoByUsername_SIAsync(request);
         }
         
-        public System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIResponse> GetEmployeeInfoByUsername_SIAsync(string WSAuthenKey, string Username) {
-            BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIRequest inValue = new BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetEmployeeInfoByUsername_SIRequestBody();
+        public System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIResponse> GetEmployeeInfoByUsername_SIAsync(string WSAuthenKey, string Username) {
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIRequest inValue = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUsername_SIRequestBody();
             inValue.Body.WSAuthenKey = WSAuthenKey;
             inValue.Body.Username = Username;
-            return ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUsername_SIAsync(inValue);
+            return ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUsername_SIAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdResponse BudgetControl.EmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUserId(BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdRequest request) {
+        BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdResponse BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUserId(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdRequest request) {
             return base.Channel.GetEmployeeInfoByUserId(request);
         }
         
-        public BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUserId(BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByUserIdCriteria request) {
-            BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdRequest inValue = new BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdRequestBody();
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUserId(BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByUserIdCriteria request) {
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdRequest inValue = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdRequestBody();
             inValue.Body.request = request;
-            BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdResponse retVal = ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUserId(inValue);
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdResponse retVal = ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUserId(inValue);
             return retVal.Body.GetEmployeeInfoByUserIdResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdResponse> BudgetControl.EmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUserIdAsync(BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdRequest request) {
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdResponse> BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUserIdAsync(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdRequest request) {
             return base.Channel.GetEmployeeInfoByUserIdAsync(request);
         }
         
-        public System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdResponse> GetEmployeeInfoByUserIdAsync(BudgetControl.EmployeeServices.ServiceRequestOfEmployeeInfoByUserIdCriteria request) {
-            BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdRequest inValue = new BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetEmployeeInfoByUserIdRequestBody();
+        public System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdResponse> GetEmployeeInfoByUserIdAsync(BudgetControl.IdmEmployeeServices.ServiceRequestOfEmployeeInfoByUserIdCriteria request) {
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdRequest inValue = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserIdRequestBody();
             inValue.Body.request = request;
-            return ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUserIdAsync(inValue);
+            return ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUserIdAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIResponse BudgetControl.EmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUserId_SI(BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIRequest request) {
+        BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIResponse BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUserId_SI(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIRequest request) {
             return base.Channel.GetEmployeeInfoByUserId_SI(request);
         }
         
-        public BudgetControl.EmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUserId_SI(string WSAuthenKey, System.Guid UserId) {
-            BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIRequest inValue = new BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIRequestBody();
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfEmployeeProfile GetEmployeeInfoByUserId_SI(string WSAuthenKey, System.Guid UserId) {
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIRequest inValue = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIRequestBody();
             inValue.Body.WSAuthenKey = WSAuthenKey;
             inValue.Body.UserId = UserId;
-            BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIResponse retVal = ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUserId_SI(inValue);
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIResponse retVal = ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUserId_SI(inValue);
             return retVal.Body.GetEmployeeInfoByUserId_SIResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIResponse> BudgetControl.EmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUserId_SIAsync(BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIRequest request) {
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIResponse> BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetEmployeeInfoByUserId_SIAsync(BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIRequest request) {
             return base.Channel.GetEmployeeInfoByUserId_SIAsync(request);
         }
         
-        public System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIResponse> GetEmployeeInfoByUserId_SIAsync(string WSAuthenKey, System.Guid UserId) {
-            BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIRequest inValue = new BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetEmployeeInfoByUserId_SIRequestBody();
+        public System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIResponse> GetEmployeeInfoByUserId_SIAsync(string WSAuthenKey, System.Guid UserId) {
+            BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIRequest inValue = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetEmployeeInfoByUserId_SIRequestBody();
             inValue.Body.WSAuthenKey = WSAuthenKey;
             inValue.Body.UserId = UserId;
-            return ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUserId_SIAsync(inValue);
+            return ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetEmployeeInfoByUserId_SIAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaResponse BudgetControl.EmployeeServices.EmployeeServicesSoap.GetDepartmentInfoByCriteria(BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaRequest request) {
+        BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaResponse BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetDepartmentInfoByCriteria(BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaRequest request) {
             return base.Channel.GetDepartmentInfoByCriteria(request);
         }
         
-        public BudgetControl.EmployeeServices.ServiceResponseOfDepartmentInfo GetDepartmentInfoByCriteria(BudgetControl.EmployeeServices.ServiceRequestOfDepartmentInfoByCriteria request) {
-            BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaRequest inValue = new BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaRequestBody();
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfDepartmentInfo GetDepartmentInfoByCriteria(BudgetControl.IdmEmployeeServices.ServiceRequestOfDepartmentInfoByCriteria request) {
+            BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaRequest inValue = new BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaRequestBody();
             inValue.Body.request = request;
-            BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaResponse retVal = ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetDepartmentInfoByCriteria(inValue);
+            BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaResponse retVal = ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetDepartmentInfoByCriteria(inValue);
             return retVal.Body.GetDepartmentInfoByCriteriaResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaResponse> BudgetControl.EmployeeServices.EmployeeServicesSoap.GetDepartmentInfoByCriteriaAsync(BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaRequest request) {
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaResponse> BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetDepartmentInfoByCriteriaAsync(BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaRequest request) {
             return base.Channel.GetDepartmentInfoByCriteriaAsync(request);
         }
         
-        public System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaResponse> GetDepartmentInfoByCriteriaAsync(BudgetControl.EmployeeServices.ServiceRequestOfDepartmentInfoByCriteria request) {
-            BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaRequest inValue = new BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetDepartmentInfoByCriteriaRequestBody();
+        public System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaResponse> GetDepartmentInfoByCriteriaAsync(BudgetControl.IdmEmployeeServices.ServiceRequestOfDepartmentInfoByCriteria request) {
+            BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaRequest inValue = new BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteriaRequestBody();
             inValue.Body.request = request;
-            return ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetDepartmentInfoByCriteriaAsync(inValue);
+            return ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetDepartmentInfoByCriteriaAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIResponse BudgetControl.EmployeeServices.EmployeeServicesSoap.GetDepartmentInfoByCriteria_SI(BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIRequest request) {
+        BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIResponse BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetDepartmentInfoByCriteria_SI(BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIRequest request) {
             return base.Channel.GetDepartmentInfoByCriteria_SI(request);
         }
         
-        public BudgetControl.EmployeeServices.ServiceResponseOfDepartmentInfo GetDepartmentInfoByCriteria_SI(string WSAuthenKey, string DeptSap) {
-            BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIRequest inValue = new BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIRequestBody();
+        public BudgetControl.IdmEmployeeServices.ServiceResponseOfDepartmentInfo GetDepartmentInfoByCriteria_SI(string WSAuthenKey, string DeptSap) {
+            BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIRequest inValue = new BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIRequestBody();
             inValue.Body.WSAuthenKey = WSAuthenKey;
             inValue.Body.DeptSap = DeptSap;
-            BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIResponse retVal = ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetDepartmentInfoByCriteria_SI(inValue);
+            BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIResponse retVal = ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetDepartmentInfoByCriteria_SI(inValue);
             return retVal.Body.GetDepartmentInfoByCriteria_SIResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIResponse> BudgetControl.EmployeeServices.EmployeeServicesSoap.GetDepartmentInfoByCriteria_SIAsync(BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIRequest request) {
+        System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIResponse> BudgetControl.IdmEmployeeServices.EmployeeServicesSoap.GetDepartmentInfoByCriteria_SIAsync(BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIRequest request) {
             return base.Channel.GetDepartmentInfoByCriteria_SIAsync(request);
         }
         
-        public System.Threading.Tasks.Task<BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIResponse> GetDepartmentInfoByCriteria_SIAsync(string WSAuthenKey, string DeptSap) {
-            BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIRequest inValue = new BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIRequest();
-            inValue.Body = new BudgetControl.EmployeeServices.GetDepartmentInfoByCriteria_SIRequestBody();
+        public System.Threading.Tasks.Task<BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIResponse> GetDepartmentInfoByCriteria_SIAsync(string WSAuthenKey, string DeptSap) {
+            BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIRequest inValue = new BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIRequest();
+            inValue.Body = new BudgetControl.IdmEmployeeServices.GetDepartmentInfoByCriteria_SIRequestBody();
             inValue.Body.WSAuthenKey = WSAuthenKey;
             inValue.Body.DeptSap = DeptSap;
-            return ((BudgetControl.EmployeeServices.EmployeeServicesSoap)(this)).GetDepartmentInfoByCriteria_SIAsync(inValue);
+            return ((BudgetControl.IdmEmployeeServices.EmployeeServicesSoap)(this)).GetDepartmentInfoByCriteria_SIAsync(inValue);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace BudgetControl.Controllers
         {
             IdmManager idm = new IdmManager();
             var empProfile = idm.GetEmployeeProfile(empno);
-            if(empProfile == null)
+            if (empProfile == null)
             {
                 returnobj.SetError("ไม่พบข้อมูลพนักงาน");
             }

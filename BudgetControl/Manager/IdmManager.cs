@@ -1,15 +1,16 @@
-﻿using BudgetControl.EmployeeServices;
-using BudgetControl.IdmServices;
+﻿
+using BudgetControl.IdmEmployeeServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+
 namespace BudgetControl.Manager
 {
     public class IdmManager
     {
-        private IdmServicesSoapClient _idmService;
+        //private IdmServicesSoapClient _idmService;
         private EmployeeServicesSoapClient _empService;
 
         // PEA Web API Key
@@ -53,7 +54,7 @@ namespace BudgetControl.Manager
             }
             finally
             {
-                if(_empService != null)
+                if (_empService != null)
                 {
                     _empService.Close();
                 }
