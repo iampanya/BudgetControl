@@ -53,7 +53,10 @@ namespace BudgetControl.Manager
             }
             finally
             {
-                _empService.Close();
+                if(_empService != null)
+                {
+                    _empService.Close();
+                }
             }
         }
 
