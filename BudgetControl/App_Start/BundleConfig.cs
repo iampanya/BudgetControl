@@ -51,6 +51,7 @@ namespace BudgetControl
                     "~/js/app.filter.js",
                     "~/js/handle.response.service.js",
                     "~/js/app.service.js",
+                    "~/js/app.idm.service.js",
                     "~/js/user.service.js",
                     "~/js/message.service.js",
                     "~/js/budget.controller.js",
