@@ -186,12 +186,17 @@
     <Compile Include="Migrations\201706260406176_AddPaymentNo.Designer.cs">
       <DependentUpon>201706260406176_AddPaymentNo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712200827392_AddRequestByContractor.cs" />
+    <Compile Include="Migrations\201712200827392_AddRequestByContractor.Designer.cs">
+      <DependentUpon>201712200827392_AddRequestByContractor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Base\IRecordTimeStamp.cs" />
     <Compile Include="Models\Base\RecordTimeStamp.cs" />
     <Compile Include="Models\Budget.cs" />
     <Compile Include="Models\BudgetTransaction.cs" />
+    <Compile Include="Models\Contractor.cs" />
     <Compile Include="Models\CostCenter.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Payment.cs" />
@@ -488,6 +493,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706260406176_AddPaymentNo.resx">
       <DependentUpon>201706260406176_AddPaymentNo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712200827392_AddRequestByContractor.resx">
+      <DependentUpon>201712200827392_AddRequestByContractor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

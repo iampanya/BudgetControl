@@ -9,6 +9,12 @@ using System.Web;
 
 namespace BudgetControl.Models
 {
+    public enum PaymentType
+    {
+        Internal = 1, 
+        PEA = 2,
+        Contractor = 3
+    }
     public class Payment : RecordTimeStamp
     {
 
@@ -84,12 +90,19 @@ namespace BudgetControl.Models
 
         public RecordStatus Status { get; set; }
 
+        public PaymentType Type { get; set; }
+
+        public Guid? ContractorID { get; set; }
+
         #endregion
 
         #region Relation
 
         [ForeignKey("RequestBy")]
         public virtual Employee Requester { get; set; }
+
+        [ForeignKey("ContractorID")]
+        public virtual Contractor Contractor { get; set; }
 
         [ForeignKey("ControlBy")]
         public virtual Employee Controller { get; set; }
