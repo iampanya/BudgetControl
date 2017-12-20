@@ -171,7 +171,6 @@
         vm.years = [];              // budget year list in dropdown
         vm.payment = {};            // payment form data 
         vm.transactions = [];       // transaction inside payment
-        vm.costcenters = [];
         vm.requestby = {
             type: 'normal',
             employeecode: '',
@@ -188,8 +187,7 @@
         prepareData();
 
         // Watching 
-        //// - Watch CostCenterID to changing Display Employee list
-        $scope.$watch(watchingCostCenterID, onCostCenterIDChange);
+        //// - Watch year change to clear budget 
         $scope.$watch(watchingYear, onYearChange);
 
 
@@ -197,13 +195,7 @@
             return vm.payment.CostCenterID;
         }
 
-        function onCostCenterIDChange() {
-            vm.displayEmployees = vm.employees.filter(function (data) {
-                return data.CostCenterID === vm.payment.CostCenterID;
-            });
-            clearAllTransaction();
-        }
-
+ 
         function watchingYear(scope) {
             return vm.payment.Year;
         }
@@ -309,23 +301,15 @@
 
         // prepare form data function
         function prepareData() {
-            // 1. Get list of costcenters
-            apiService.costcenter().get().$promise.then(callCostCenterSuccess, callError);
-
+            // 1. Get working costcenter id
+            vm.payment.CostCenterID = authInfo.getWorkingCostCenter().CostCenterID;
+            
             // 2. Get list of employees
             apiService.employee().get().$promise.then(callEmpSuccess, callError);
 
             // 3. Get list of budgets
             apiService.budget().get().$promise.then(callBudgetSuccess, callError);
 
-
-            // function section // 
-            function callCostCenterSuccess(response) {
-                vm.costcenters = hr.respondSuccess(response);
-                if (!vm.payment.CostCenterID) {
-                    vm.payment.CostCenterID = vm.costcenters[0].CostCenterID || '';
-                }
-            }
 
             function callEmpSuccess(response) {
                 vm.employees = hr.respondSuccess(response);
