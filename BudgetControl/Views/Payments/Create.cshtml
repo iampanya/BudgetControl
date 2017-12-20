@@ -10,7 +10,7 @@
         <div class="card">
             <fieldset>
                 <legend>
-                    เบิกจ่ายงบประมาณ ศูนย์ต้นทุน: 
+                    เบิกจ่ายงบประมาณ ศูนย์ต้นทุน:
                     <span class="text-primary"> {{ vm.payment.CostCenterID }} </span>
                 </legend>
 
@@ -19,12 +19,12 @@
                         <div class="form-group">
                             <label for="txtYear" class="col-md-2 control-label">ปีงบประมาณ<span class="text-danger">*</span></label>
                             <div class="col-md-2">
-                                <select class="form-control" ng-model="vm.payment.Year" ng-options="y.Year as y.Year for y in vm.years"></select>
+                                <select class="form-control select-center" ng-model="vm.payment.Year" ng-options="y.Year as y.Year for y in vm.years"></select>
                             </div>
                             @*<label for="txtYear" class="col-md-2 control-label">ศูนย์ต้นทุน<span class="text-danger">*</span></label>
-                            <div class="col-md-3">
-                                <select class="form-control" ng-model="vm.payment.CostCenterID" ng-options="c.CostCenterID as c.CostCenterName for c in vm.costcenters"></select>
-                            </div>*@
+                                <div class="col-md-3">
+                                    <select class="form-control" ng-model="vm.payment.CostCenterID" ng-options="c.CostCenterID as c.CostCenterName for c in vm.costcenters"></select>
+                                </div>*@
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">
@@ -75,26 +75,31 @@
                                 <div class="col-md-3">
                                     <input type="text" class="form-control text-center" placeholder="ชื่อ - นามสกุล"
                                            ng-model="vm.requestbypea.name"
-                                           ng-disabled="true"
-                                           />
+                                           ng-disabled="true" />
                                 </div>
                                 <div class="col-md-2">
                                     <input type="text" class="form-control text-center" placeholder="ตำแหน่ง"
-                                           ng-model="vm.requestbypea.position" 
-                                           ng-disabled="true"
-                                           />
+                                           ng-model="vm.requestbypea.position"
+                                           ng-disabled="true" />
                                 </div>
                                 <div class="col-md-2">
                                     <input type="text" class="form-control text-center" placeholder="รหัสศูนย์ต้นทุน"
-                                           ng-model="vm.requestbypea.costcenterid" 
-                                           ng-disabled="true"
-                                           />
+                                           ng-model="vm.requestbypea.costcenterid"
+                                           ng-disabled="true" />
                                 </div>
                             </div>
 
                             <div ng-if="vm.requestby.type === 'others'">
                                 <div class="col-md-4 col-md-offset-2">
-                                    <input type="text" class="form-control" placeholder="ชื่อ - นามสกุล บุคคลภายนอก" />
+                                    <input type="text" name="others" class="form-control" list="contractors" placeholder="ชื่อ - นามสกุล บุคคลภายนอก"
+                                           ng-model=""
+                                           ng-change="vm.accountChange()" ng-required="true" ng-minlength="8" ng-maxlength="8" />
+                                    <datalist id="contractors">
+                                        <option>นายปัญญา ภิกษาวงศ์1</option>
+                                        <option>นายปัญญา ภิกษาวงศ์2</option>
+                                        <option>นายปัญญา ภิกษาวงศ์3</option>
+                                        @*<option ng-repeat="account in vm.accounts" value="{{ account.AccountID }}">*@
+                                    </datalist>
                                 </div>
                             </div>
 
