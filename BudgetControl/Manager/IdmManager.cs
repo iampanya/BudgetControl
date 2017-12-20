@@ -1,5 +1,4 @@
-﻿
-using BudgetControl.IdmEmployeeServices;
+﻿using BudgetControl.IdmEmployeeServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
