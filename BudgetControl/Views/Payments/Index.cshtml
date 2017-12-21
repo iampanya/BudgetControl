@@ -90,7 +90,7 @@
             <td class="text-center"> {{ $index + 1 }} </td>
             <td class="text-center"> {{ payment.PaymentNo }}</td>
             <td> {{ payment.Description }} </td>
-            <td class="text-center"> {{ payment.Requester.FullName }} </td>
+            <td class="text-center"> {{ payment.RequestByName }} </td>
             <td class="text-center"> {{ payment.TotalAmount | number:2 }} </td>
             <td class="text-center"> {{ payment.PaymentDate | date:'dd MMM yyyy' }} </td>
             <td class="text-center">
