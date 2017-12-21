@@ -138,5 +138,28 @@ namespace BudgetControl.Models
 
         #endregion
 
+
+        #region Additional Fields
+
+        public string RequestByName
+        {
+            get
+            {
+                string name = string.Empty;
+                switch (this.Type)
+                {
+                    case PaymentType.Internal:
+                        return this.Requester != null ? this.Requester.FullName : "-";
+                    case PaymentType.PEA:
+                        return this.Requester != null ? this.Requester.FullName : "-";
+                    case PaymentType.Contractor:
+                        return this.Contractor != null ? this.Contractor.Name: "-";
+                    default:
+                        return "";
+                }
+            }
+        }
+
+        #endregion
     }
 }

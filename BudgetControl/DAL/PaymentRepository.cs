@@ -42,7 +42,8 @@ namespace BudgetControl.DAL
                 .Include(p => p.Requester)
                 .Include(p => p.Statements)
                 .Include(p => p.BudgetTransactions)
-                .Include(p => p.CostCenter);
+                .Include(p => p.CostCenter)
+                .Include(p => p.Contractor);
         }
 
         public IEnumerable<Payment> Get()
