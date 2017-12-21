@@ -43,8 +43,19 @@ namespace BudgetControl.Manager
                 try
                 {
                     // 1. Inital Payment data
+                    var contractor = payment.Contractor;
                     payment = new Payment(payment);
                     payment.PrepareToSave();
+                    if(payment.Type == PaymentType.Contractor)
+                    {
+                        var ctManager = new ContractorManager(_db);
+                        if(contractor.ID == Guid.Empty)
+                        {
+                            contractor = ctManager.Add(payment.CostCenterID, contractor.Name);
+                        }
+                        payment.ContractorID = contractor.ID;
+                    }
+
 
                     // 2. Add payment to context
                     var paymentRepo = new PaymentRepository(_db);
