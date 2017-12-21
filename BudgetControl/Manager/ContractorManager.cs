@@ -33,7 +33,8 @@ namespace BudgetControl.Manager
         {
             Contractor contractor = new Contractor();
             contractor.ID = Guid.NewGuid();
-            contractor.Name = name;
+            contractor.CostCenterID = costcenterid.Trim().ToUpper();
+            contractor.Name = name.Trim();
             contractor.Status = RecordStatus.Active;
             contractor.NewCreateTimeStamp();
             _db.Entry(contractor).State = EntityState.Added;
