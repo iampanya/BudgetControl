@@ -203,22 +203,23 @@
         vm.submit = submit;
         vm.getEmployeeProfile = getEmployeeProfile;
         vm.onRequestByOtherBlur = onRequestByOtherBlur;
+        vm.onYearChange = onYearChange;
 
         // initial form data
         prepareData();
 
         // Watching 
-        //// - Watch year change to clear budget 
-        $scope.$watch(watchingYear, onYearChange);
+        ////// - Watch year change to clear budget 
+        //$scope.$watch(watchingYear, onYearChange);
 
 
-        function watchingCostCenterID(scope) {
-            return vm.payment.CostCenterID;
-        }
+        //function watchingCostCenterID(scope) {
+        //    return vm.payment.CostCenterID;
+        //}
  
-        function watchingYear(scope) {
-            return vm.payment.Year;
-        }
+        //function watchingYear(scope) {
+        //    return vm.payment.Year;
+        //}
 
         function onYearChange() {
             clearAllTransaction();
@@ -540,56 +541,66 @@
         .module('budgetApp')
         .controller('EditPaymentCtrl', EditPaymentCtrl);
 
-    EditPaymentCtrl.$inject = ['$scope', '$state', '$stateParams', '$filter', '$uibModal', 'apiService', 'handleResponse', 'authInfo'];
+    EditPaymentCtrl.$inject = ['$scope', '$state', '$stateParams', '$filter', '$uibModal', 'apiService', 'apiIdmService', 'handleResponse', 'authInfo', 'msgService'];
 
-    function EditPaymentCtrl($scope, $state, $stateParams, $filter, $uibModal, apiService, hr, authInfo) {
+    function EditPaymentCtrl($scope, $state, $stateParams, $filter, $uibModal, apiService, apiIdmService, hr, authInfo, msgService) {
         // variable
         var paymentid = $stateParams.id;
         var vm = this;
 
         vm.budgets = [];            // budget list in dropdown
-        vm.employees = [];          // employee list in dropdown
+        vm.employees = [];          // all employee in costcenters
+        vm.displayEmployees = [];   // employee list in dropdown
         vm.years = [];              // budget year list in dropdown
         vm.payment = {};            // payment form data 
         vm.transactions = [];       // transaction inside payment
+        vm.contractors = [];        // Contractor List
+
+        // Payment Type
+        vm.paymentType = {
+            internal: 1,
+            pea: 2,
+            contractor: 3
+        }
+
+        vm.requestbynormal = {
+            employeecode: ''
+        }
+
+        vm.requestbypea = {
+            employeecode: '',
+            name: '',
+            position: '',
+            costcenterid: ''
+        }
+
+        vm.requestbyother = {
+            id: '',
+            name: ''
+        }
 
         // function 
         vm.addNewTransaction = addNewTransaction;
         vm.removeTransaction = removeTransaction;
         vm.updateTotalAmount = updateTotalAmount;
         vm.submit = submit;
+        vm.getEmployeeProfile = getEmployeeProfile;
+        vm.onRequestByOtherBlur = onRequestByOtherBlur;
+        vm.onYearChange = onYearChange;
 
         // initial form data
         prepareData();
 
         // Watching 
-        //// - Watch RequestBy to changing CostCenter
-        $scope.$watch(watchingRequestBy, onRequestByChange);
+        //// - Watch year change to clear budget 
+        //$scope.$watch(watchingYear, onYearChange);
 
-        function watchingRequestBy(scope) {
-            return vm.payment.RequestBy;
-        }
+        //function watchingYear(scope) {
+        //    return vm.payment.Year;
+        //}
 
-        function onRequestByChange() {
-            // 1. Check data are loaded.
-            if (vm.payment !== {} && vm.employees !== []) {
-
-                // 2. Get requester data from employee list
-                var requester = $filter('filter')(vm.employees, function (d) {
-                    return d.EmployeeID === vm.payment.RequestBy
-                })
-
-                // 3. if found, then set CostCenter value
-                if (requester.length > 0) {
-                    vm.payment.CostCenterID = requester[0].CostCenterID;
-                    //vm.payment.CostCenter = requester[0].CostCenter;
-                }
-
-                // 4. if not found, then set CostCenter to nothing.
-                else {
-                    vm.payment.CostCenterID = '-';
-                }
-            }
+        function onYearChange() {
+            clearAllTransaction();
         }
 
         function addNewTransaction() {
@@ -645,6 +656,10 @@
             updateTotalAmount();
         }
 
+        function clearAllTransaction() {
+            vm.transactions = [];
+        }
+
         function updateTotalAmount() {
             // Initial total amount value to zero
             vm.payment.TotalAmount = 0;
@@ -654,10 +669,11 @@
                 vm.payment.TotalAmount += vm.transactions[i].Amount;
             }
         }
+
         function submit() {
             vm.addNewTransactionError = "";
             if (vm.transactions.length > 0) {
-                vm.payment.BudgetTransactions = vm.transactions;
+                preparePaymentToSave();
                 apiService.payment().update(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
             }
             else {
@@ -677,43 +693,125 @@
             }
         }
 
+        function preparePaymentToSave() {
+            vm.payment.BudgetTransactions = vm.transactions;
+            console.log(vm.payment.Type);
+            if (vm.payment.Type == vm.paymentType.internal) {
+                vm.payment.RequestBy = vm.requestbynormal.employeecode;
+                vm.payment.Contractor = {};
+            }
+            else if (vm.payment.Type == vm.paymentType.pea) {
+                vm.payment.RequestBy = vm.requestbypea.employeecode;
+                vm.payment.Contractor = {};
+            }
+            else if (vm.payment.Type == vm.paymentType.contractor) {
+                vm.payment.RequestBy = '';
+                vm.payment.Contractor = {
+                    ID: vm.requestbyother.id,
+                    Name: vm.requestbyother.name
+                };
+            }
+        }
+
+        function onRequestByOtherBlur() {
+            //TODO : get contractor id if exist
+            var contractor = vm.contractors.find(function (contractor) {
+                return contractor.Name.trim() === vm.requestbyother.name.trim();
+            })
+            if (contractor) {
+                vm.requestbyother.id = contractor.ID;
+            }
+            else {
+                vm.requestbyother.id = '';
+            }
+            console.log(vm.requestbyother);
+        }
+
+        function getEmployeeProfile() {
+            msgService.clearMsg();
+            if (vm.requestbypea.employeecode) {
+                apiIdmService.employee()
+                    .get({ empno: vm.requestbypea.employeecode })
+                    .$promise.then(getEmployeeProfileSuccess, callError);
+            }
+            else {
+                vm.requestbypea = {};
+            }
+
+            function getEmployeeProfileSuccess(response) {
+                var empProfile = hr.respondSuccess(response);
+                vm.requestbypea.name = empProfile.Description;
+                vm.requestbypea.position = empProfile.JobTitle;
+                vm.requestbypea.costcenterid = empProfile.CostCenterID;
+            }
+        }
 
         // prepare form data function
         function prepareData() {
+
             // 1. Get list of employees
             apiService.employee().get().$promise.then(callEmpSuccess, callError);
 
             // 2. Get list of budgets
             apiService.budget().get().$promise.then(callBudgetSuccess, callError);
 
-            // 3. Get payment info
+            // 3. Get list of contractors
+            apiService.contractor().get().$promise.then(callContractorSuccess, callError);
+
+            // 4. Get payment info
             apiService.payment().get({ id: paymentid }).$promise.then(callPaymentSuccess, callError);
+
 
             // function section // 
             function callEmpSuccess(response) {
                 vm.employees = hr.respondSuccess(response);
-                // Set default RequestBy to current user
-                //vm.payment.RequestBy = authInfo.getUser().EmployeeID;
             }
 
             function callBudgetSuccess(response) {
                 vm.budgets = hr.respondSuccess(response);
-                vm.years = $filter('unique')(vm.budgets, 'Year');
-                //vm.payment.Year = vm.years[0].Year;
+               
+            }
+
+            function callContractorSuccess(response) {
+                vm.contractors = hr.respondSuccess(response);
             }
 
             function callPaymentSuccess(response) {
                 vm.payment = hr.respondSuccess(response);
+                
+                // Year list
+                var currentYear = new Date().getFullYear();
+                for (var i = 2016; i <= currentYear + 1; i++) {
+                    vm.years.push({ Year: i + 543 + '' });
+                }
+
+                // Transaction List
                 vm.transactions = vm.payment.BudgetTransactions;
+
+                // Request by
+                if (vm.payment.CostCenterID) {
+                    vm.displayEmployees = vm.employees.filter(function (data) {
+                        return data.CostCenterID === vm.payment.CostCenterID;
+                    });
+                }
+
+                if (vm.payment.Type == vm.paymentType.internal) {
+                    vm.requestbynormal.employeecode = vm.payment.RequestBy;
+                }
+                else if (vm.paymentType == vm.paymentType.pea) {
+                    vm.requestbypea.employeecode = vm.employeecode;
+                }
+                else if (vm.payment.Type == vm.paymentType.contractor) {
+                    vm.requestbyother.id = vm.payment.ContractorID;
+                    vm.requestbyother.name = vm.payment.Contractor.Name;
+                }
             }
-
-
-            function callError(e) {
-                hr.respondError(e);
-            }
-
+            
         }
 
+        function callError(e) {
+            hr.respondError(e);
+        }
 
         // Modal result 
 
