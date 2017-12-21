@@ -46,12 +46,17 @@ namespace BudgetControl.Manager
 
         public IQueryable<Contractor> Get()
         {
-            return null;
+            return _db.Contractor.Include(c => c.CostCenter).AsNoTracking().AsQueryable();
+        }
+
+        public Contractor GetByID(Guid id)
+        {
+            return Get().Where(c => c.ID == id).FirstOrDefault();
         }
         
-        public IQueryable<Contractor> GetByCostCenterID()
+        public IEnumerable<Contractor> GetByCostCenterID(string costcenterid)
         {
-            return null;
+            return Get().Where(c => c.CostCenterID == costcenterid);
         }
 
         #endregion
