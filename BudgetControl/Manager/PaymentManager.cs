@@ -126,7 +126,18 @@ namespace BudgetControl.Manager
                 try
                 {
 
+                    var contractor = payment.Contractor;
                     payment = new Payment(payment);
+
+                    if (payment.Type == PaymentType.Contractor)
+                    {
+                        var ctManager = new ContractorManager(_db);
+                        if (contractor.ID == Guid.Empty)
+                        {
+                            contractor = ctManager.Add(payment.CostCenterID, contractor.Name);
+                        }
+                        payment.ContractorID = contractor.ID;
+                    }
 
                     // Add payment to context
                     var paymentRepo = new PaymentRepository(_db);
