@@ -52,6 +52,18 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
         return $resource('data/account/:id')
     }
 
+    api.contrator = function () {
+        return $resource(
+            'data/contractor/:id',
+            null,
+            {
+                'save': { method: 'POST' },
+                'update': { method: 'PUT' },
+                'remove': { method: 'DELETE'}
+            }
+        );
+    }
+
     return api
 }])
 
