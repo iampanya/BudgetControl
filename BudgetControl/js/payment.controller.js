@@ -173,11 +173,15 @@
         vm.transactions = [];       // transaction inside payment
         vm.contractors = [];        // Contractor List
 
-        vm.requestby = {
-            type: 'normal',
-            employeecode: '',
-            name: '',
-            position: '',
+        // Payment Type
+        vm.paymentType = {
+            internal: 1,
+            pea: 2,
+            contractor: 3
+        }
+
+        vm.requestbynormal = {
+            employeecode: ''
         }
 
         vm.requestbypea = {
@@ -293,8 +297,9 @@
 
         function submit() {
             vm.addNewTransactionError = "";
+            console.log(vm.payment);
             if (vm.transactions.length > 0) {
-                vm.payment.BudgetTransactions = vm.transactions;
+                preparePaymentToSave();                
                 apiService.payment().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
             }
             else {
@@ -311,6 +316,26 @@
 
             function callPaymentError(e) {
                 hr.repondError(e);
+            }
+        }
+
+        function preparePaymentToSave() {
+            vm.payment.BudgetTransactions = vm.transactions;
+            console.log(vm.payment.Type);
+            if (vm.payment.Type == vm.paymentType.internal) {
+                vm.payment.RequestBy = vm.requestbynormal.employeecode;
+                vm.payment.Contractor = {};
+            }
+            else if (vm.payment.Type == vm.paymentType.pea) {
+                vm.payment.RequestBy = vm.requestbypea.employeecode;
+                vm.payment.Contractor = {};
+            }
+            else if (vm.payment.Type == vm.paymentType.contractor) {
+                vm.payment.RequestBy = '';
+                vm.payment.Contractor = {
+                    ID: vm.requestbyother.id,
+                    Name: vm.requestbyother.name
+                };
             }
         }
 
@@ -349,6 +374,9 @@
 
         // prepare form data function
         function prepareData() {
+            // Set default to normal
+            vm.payment.Type = vm.paymentType.internal;
+
             // 1. Get working costcenter id
             vm.payment.CostCenterID = authInfo.getWorkingCostCenter().CostCenterID;
             
@@ -394,7 +422,6 @@
         }
 
         // Modal result 
-
         function openModal(size, parentSelector, data) {
             var parentElem = parentSelector ?
                 angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;

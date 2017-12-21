@@ -33,38 +33,39 @@
                             <div class="col-md-10">
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="requestByType" ng-model="vm.requestby.type" value="normal">
+                                        <input type="radio" name="requestByType" ng-model="vm.payment.Type" value="{{vm.paymentType.internal}}">
                                         พนักงานในศูนย์ต้นทุน
                                     </label>
                                 </div>
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="requestByType" ng-model="vm.requestby.type" value="pea">
+                                        <input type="radio" name="requestByType" ng-model="vm.payment.Type" value="{{vm.paymentType.pea}}">
                                         พนักงานนอกศูนย์ต้นทุน
                                     </label>
                                 </div>
                                 <div class="radio-inline">
                                     <label>
-                                        <input type="radio" name="requestByType" ng-model="vm.requestby.type" value="others">
+                                        <input type="radio" name="requestByType" ng-model="vm.payment.Type" value="{{vm.paymentType.contractor}}">
                                         บุคคลภายนอก
                                     </label>
                                 </div>
                             </div>
-
-                            <div class="col-md-4 col-md-offset-2" ng-if="vm.requestby.type === 'normal'">
-                                <select class="form-control" name="requestby" ng-model="vm.payment.RequestBy" ng-options="emp.EmployeeID as emp.Description for emp in vm.displayEmployees" ng-required="true">
+                            <div class="col-md-4 col-md-offset-2" ng-if="vm.payment.Type == vm.paymentType.internal">
+                                <select class="form-control" name="requestby" ng-model="vm.requestbynormal.employeecode" ng-options="emp.EmployeeID as emp.Description for emp in vm.displayEmployees" ng-required="true">
                                     <option value=""> ======= กรุณาเลือก ======= </option>
                                 </select>
                                 <span class="text-danger" ng-show="frmPayment.requestby.$error.required"></span>
                             </div>
 
-                            <div ng-if="vm.requestby.type === 'pea'">
+                            <div ng-if="vm.payment.Type == vm.paymentType.pea">
                                 <div class="col-md-2 col-md-offset-2">
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="รหัสพนักงาน"
                                                ng-model="vm.requestbypea.employeecode"
                                                ng-keypress="$event.keyCode === 13 && vm.getEmployeeProfile()"
-                                               ng-blur="vm.getEmployeeProfile()">
+                                               ng-blur="vm.getEmployeeProfile()"
+                                               ng-required="true"
+                                               >
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" type="button" ng-click="vm.getEmployeeProfile();">
                                                 <i class="fa fa-search" aria-hidden="true"></i>
@@ -75,6 +76,7 @@
                                 <div class="col-md-3">
                                     <input type="text" class="form-control text-center" placeholder="ชื่อ - นามสกุล"
                                            ng-model="vm.requestbypea.name"
+                                           ng-required="true"
                                            ng-disabled="true" />
                                 </div>
                                 <div class="col-md-2">
@@ -89,7 +91,7 @@
                                 </div>
                             </div>
 
-                            <div ng-if="vm.requestby.type === 'others'">
+                            <div ng-if="vm.payment.Type == vm.paymentType.contractor">
                                 <div class="col-md-4 col-md-offset-2">
                                     <input type="text" name="others" class="form-control" list="contractors" placeholder="ชื่อ - นามสกุล บุคคลภายนอก"
                                            ng-model="vm.requestbyother.name"
