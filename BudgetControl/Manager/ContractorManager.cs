@@ -47,7 +47,11 @@ namespace BudgetControl.Manager
 
         public IQueryable<Contractor> Get()
         {
-            return _db.Contractor.Include(c => c.CostCenter).AsNoTracking().AsQueryable();
+            return _db.Contractor
+                .Include(c => c.CostCenter)
+                .Where(c => c.Status == RecordStatus.Active)
+                .AsNoTracking()
+                .AsQueryable();
         }
 
         public Contractor GetByID(Guid id)
