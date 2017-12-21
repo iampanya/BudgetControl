@@ -201,14 +201,15 @@ namespace BudgetControl.Controllers
                     var payment = paymentRepo.GetById(id);
                     List<BudgetTransaction> budgetTransaction;
 
-                    if (payment == null) {
+                    if (payment == null)
+                    {
                         throw new Exception("ไม่พบข้อมูลการจ่ายเงิน");
                     }
                     payment.Status = RecordStatus.Remove;
                     paymentRepo.Update(payment);
                     paymentRepo.Save();
 
-                    if(payment.BudgetTransactions != null)
+                    if (payment.BudgetTransactions != null)
                     {
                         var transRepo = new TransactionRepository(_db);
                         budgetTransaction = payment.BudgetTransactions.ToList();
@@ -593,7 +594,7 @@ namespace BudgetControl.Controllers
                 }
 
                 StringBuilder csvFile = new StringBuilder();
-                foreach(var budget in budgets)
+                foreach (var budget in budgets)
                 {
                     csvFile.Append(budget.AccountID + "," + budget.CostCenterID + "," + budget.BudgetAmount);
                     csvFile.Append(Environment.NewLine);
@@ -988,6 +989,63 @@ namespace BudgetControl.Controllers
         }
         #endregion
 
+        #region Contractor
+
+        [HttpGet]
+        public ActionResult Contractor()
+        {
+            try
+            {
+                CostCenter working;
+
+                // 1. Get working costcenter.
+                working = AuthManager.GetWorkingCostCenter();
+
+                // 2. Get Contractor list by costcenterid
+                ContractorManager ctManager = new ContractorManager();
+                var contractors = ctManager.GetByCostCenterID(working.CostCenterID);
+
+                // 3. Set return object.
+                returnobj.SetSuccess(contractors);
+
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
+
+        [HttpPost]
+        public ActionResult Contractor(string costcenterid, string name)
+        {
+            try
+            {
+                //CostCenter working;
+                // 1. Get working costcenter.
+                //working = AuthManager.GetWorkingCostCenter();
+                //TODO : check costcenterid with workingcostcenter
+
+                // 2. Get Contractor list by costcenterid
+                ContractorManager ctManager = new ContractorManager();
+                var contractors = ctManager.Add(costcenterid, name);
+                ctManager.Save();
+
+                // 3. Set return object.
+                returnobj.SetSuccess(contractors);
+
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
+        #endregion
 
 
 
