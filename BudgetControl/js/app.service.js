@@ -52,7 +52,7 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
         return $resource('data/account/:id')
     }
 
-    api.contrator = function () {
+    api.contractor = function () {
         return $resource(
             'data/contractor/:id',
             null,
