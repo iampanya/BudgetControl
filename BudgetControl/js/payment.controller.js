@@ -171,6 +171,8 @@
         vm.years = [];              // budget year list in dropdown
         vm.payment = {};            // payment form data 
         vm.transactions = [];       // transaction inside payment
+        vm.contractors = [];        // Contractor List
+
         vm.requestby = {
             type: 'normal',
             employeecode: '',
@@ -186,7 +188,8 @@
         }
 
         vm.requestbyother = {
-
+            id: '',
+            name: ''
         }
 
         // function 
@@ -195,6 +198,7 @@
         vm.updateTotalAmount = updateTotalAmount;
         vm.submit = submit;
         vm.getEmployeeProfile = getEmployeeProfile;
+        vm.onRequestByOtherBlur = onRequestByOtherBlur;
 
         // initial form data
         prepareData();
@@ -207,7 +211,6 @@
         function watchingCostCenterID(scope) {
             return vm.payment.CostCenterID;
         }
-
  
         function watchingYear(scope) {
             return vm.payment.Year;
@@ -311,10 +314,30 @@
             }
         }
 
+        function onRequestByOtherBlur() {
+            //TODO : get contractor id if exist
+            var contractor = vm.contractors.find(function (contractor) {
+                return contractor.Name.trim() === vm.requestbyother.name.trim();
+            })
+            if (contractor) {
+                vm.requestbyother.id = contractor.ID;
+            }
+            else {
+                vm.requestbyother.id = '';
+            }
+            console.log(vm.requestbyother);
+        }
+
         function getEmployeeProfile() {
             msgService.clearMsg();
-            apiIdmService.employee().get({ empno: vm.requestbypea.employeecode })
-                .$promise.then(getEmployeeProfileSuccess, callError);
+            if (vm.requestbypea.employeecode) {
+                apiIdmService.employee()
+                    .get({ empno: vm.requestbypea.employeecode })
+                    .$promise.then(getEmployeeProfileSuccess, callError);
+            }
+            else {
+                vm.requestbypea = {};
+            }
 
             function getEmployeeProfileSuccess(response) {
                 var empProfile = hr.respondSuccess(response);
@@ -335,6 +358,8 @@
             // 3. Get list of budgets
             apiService.budget().get().$promise.then(callBudgetSuccess, callError);
 
+            // 4. Get list of contractors
+            apiService.contractor().get().$promise.then(callContractorSuccess, callError);
 
             function callEmpSuccess(response) {
                 vm.employees = hr.respondSuccess(response);
@@ -359,6 +384,9 @@
                 vm.payment.Year = currentYear + 543 + '';
             }
 
+            function callContractorSuccess(response) {
+                vm.contractors = hr.respondSuccess(response);
+            }
         }
 
         function callError(e) {

@@ -19,7 +19,7 @@
                         <div class="form-group">
                             <label for="txtYear" class="col-md-2 control-label">ปีงบประมาณ<span class="text-danger">*</span></label>
                             <div class="col-md-2">
-                                <select class="form-control select-center" ng-model="vm.payment.Year" ng-options="y.Year as y.Year for y in vm.years"></select>
+                                <select class="form-control" ng-model="vm.payment.Year" ng-options="y.Year as y.Year for y in vm.years"></select>
                             </div>
                             @*<label for="txtYear" class="col-md-2 control-label">ศูนย์ต้นทุน<span class="text-danger">*</span></label>
                                 <div class="col-md-3">
@@ -92,13 +92,11 @@
                             <div ng-if="vm.requestby.type === 'others'">
                                 <div class="col-md-4 col-md-offset-2">
                                     <input type="text" name="others" class="form-control" list="contractors" placeholder="ชื่อ - นามสกุล บุคคลภายนอก"
-                                           ng-model=""
-                                           ng-change="vm.accountChange()" ng-required="true" ng-minlength="8" ng-maxlength="8" />
+                                           ng-model="vm.requestbyother.name"
+                                           ng-blur="vm.onRequestByOtherBlur()" 
+                                           ng-required="true" />
                                     <datalist id="contractors">
-                                        <option>นายปัญญา ภิกษาวงศ์1</option>
-                                        <option>นายปัญญา ภิกษาวงศ์2</option>
-                                        <option>นายปัญญา ภิกษาวงศ์3</option>
-                                        @*<option ng-repeat="account in vm.accounts" value="{{ account.AccountID }}">*@
+                                        <option ng-repeat="contractor in vm.contractors" value="{{ contractor.Name }}">
                                     </datalist>
                                 </div>
                             </div>
