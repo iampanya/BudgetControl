@@ -1,4 +1,5 @@
-﻿using BudgetControl.Models.Base;
+﻿using BudgetControl.IdmEmployeeServices;
+using BudgetControl.Models.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +11,23 @@ namespace BudgetControl.Models
 {
     public class Employee : RecordTimeStamp
     {
+        #region Constructor
+
+        public Employee(EmployeeProfile profile)
+        {
+            EmployeeID = profile.EmployeeId.TrimStart(new char[] { '0' });
+            TitleName = profile.TitleFullName;
+            FirstName = profile.FirstName;
+            LastName = profile.LastName;
+            JobTitle = profile.PositionDescShort + profile.LevelCode;
+            JobLevel = byte.Parse(profile.LevelCode);
+            CostCenterID = profile.CostCenterCode;
+            Status = RecordStatus.Active;
+        }
+
+        #endregion
+
+
         [Display(Name = "รหัสพนักงาน")]
         [StringLength(10)]
         public string EmployeeID { get; set; }
@@ -59,5 +77,24 @@ namespace BudgetControl.Models
                 return FirstName + ' ' + LastName;
             }
         }
+
+        #region Methods
+
+        public bool HasChange(Employee newEmp)
+        {
+            if (EmployeeID.TrimStart(new char[] { '0' }) != newEmp.EmployeeID.TrimStart(new char[] { '0' }))
+                return true;
+            if (TitleName != newEmp.TitleName) return true;
+            if (FirstName != newEmp.FirstName) return true;
+            if (LastName != newEmp.LastName) return true;
+            if (JobTitle != newEmp.JobTitle) return true;
+            if (JobLevel != newEmp.JobLevel) return true;
+            if (CostCenterID != newEmp.CostCenterID) return true;
+            if (Status != newEmp.Status) return true;
+
+            return false;
+        }
+
+        #endregion
     }
 }
