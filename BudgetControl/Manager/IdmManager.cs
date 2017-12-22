@@ -80,6 +80,9 @@ namespace BudgetControl.Manager
                 };
                 emp = _empService.GetEmployeeInfoByEmployeeId(empInfoCriteria).ResultObject;
 
+                EmployeeManager em = new EmployeeManager();
+                em.UpdateFromIDM(emp);
+
                 return emp;
 
             }
