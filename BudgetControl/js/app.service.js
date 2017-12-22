@@ -64,6 +64,10 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
         );
     }
 
+    api.budgetinfo = function () {
+        return $resource('api/budget?costcenterid=:costcenterid');
+    }
+
     return api
 }])
 
