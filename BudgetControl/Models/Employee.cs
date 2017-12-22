@@ -13,6 +13,11 @@ namespace BudgetControl.Models
     {
         #region Constructor
 
+        public Employee()
+        {
+
+        }
+
         public Employee(EmployeeProfile profile)
         {
             EmployeeID = profile.EmployeeId.TrimStart(new char[] { '0' });
