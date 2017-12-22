@@ -369,6 +369,7 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
             accountid: '',
             accountname: '',
             costcenterid: '',
+            amount: 0
         }
         vm.btnSubmit = {
             text: 'บันทึก',
