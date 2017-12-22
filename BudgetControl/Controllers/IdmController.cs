@@ -21,22 +21,29 @@ namespace BudgetControl.Controllers
 
         public ActionResult GetEmployeeProfile(string empno, string mode = "")
         {
-            IdmManager idm = new IdmManager();
-            var empProfile = idm.GetEmployeeProfile(empno);
-            if (empProfile == null)
+            try
             {
-                returnobj.SetError("ไม่พบข้อมูลพนักงาน");
-            }
-            else
-            {
-                if(mode.ToLower() == "original")
+                IdmManager idm = new IdmManager();
+                var empProfile = idm.GetEmployeeProfile(empno);
+                if (empProfile == null)
                 {
-                    returnobj.SetSuccess(empProfile);
+                    returnobj.SetError("ไม่พบข้อมูลพนักงาน");
                 }
                 else
-                { 
-                    returnobj.SetSuccess(new EmployeeViewModel(empProfile));
+                {
+                    if (mode.ToLower() == "original")
+                    {
+                        returnobj.SetSuccess(empProfile);
+                    }
+                    else
+                    {
+                        returnobj.SetSuccess(new EmployeeViewModel(empProfile));
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                returnobj.SetError(ex.Message);
             }
 
             return Content(returnobj.ToJson(), "application/json");
