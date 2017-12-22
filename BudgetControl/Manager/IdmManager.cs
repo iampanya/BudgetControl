@@ -1,4 +1,5 @@
 ﻿using BudgetControl.IdmEmployeeServices;
+using BudgetControl.IdmServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BudgetControl.Manager
 {
     public class IdmManager
     {
-        //private IdmServicesSoapClient _idmService;
+        private IdmServicesSoapClient _idmService;
         private EmployeeServicesSoapClient _empService;
 
         // PEA Web API Key
@@ -19,6 +20,41 @@ namespace BudgetControl.Manager
 
         public IdmManager()
         {
+
+        }
+
+        #endregion
+
+        #region Login
+
+        public LoginResult GetLoginResult(string username, string password)
+        {
+            try
+            {
+                _idmService = new IdmServicesSoapClient();
+                LoginResult loginResult;
+                ServiceRequestOfLoginCriteria loginCriteria = new ServiceRequestOfLoginCriteria()
+                {
+                    InputObject = new LoginCriteria()
+                    {
+                        Username = username,
+                        Password = password
+                    },
+                    WSAuthenKey = _idmWsAuthenKey
+                };
+
+                loginResult = _idmService.Login(loginCriteria).ResultObject;
+
+                return loginResult;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _idmService.Close();
+            }
 
         }
 
