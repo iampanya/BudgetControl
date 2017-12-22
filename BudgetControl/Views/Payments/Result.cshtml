@@ -53,6 +53,8 @@
 </div>
 
 <div class="visible-print-block">
+    <h4>ศูนย์ต้นทุน: {{ vm.payment.CostCenterID }}</h4>
+    <h4>เลขที่ใบสำคัญจ่าย: {{vm.payment.PaymentNo }}</h4>
     <div class="">
         <table class="table table-bordered table-hover table-striped">
             <thead>
@@ -85,5 +87,6 @@
                 </tr>
             </tbody>
         </table>
+        <h4 class="text-center">ควบคุมงบโดย : {{ vm.payment.CreatedBy }}</h4>
     </div>
 </div>
