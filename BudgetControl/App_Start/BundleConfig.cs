@@ -28,7 +28,9 @@ namespace BudgetControl
                       "~/Content/bootstrap-cerulean.css",
                       "~/Content/ngProgress.css",
                       "~/Content/Site.css",
-                      "~/Content/Loader.css"));
+                      "~/Content/Loader.css",
+                      "~/Content/font-awesome.min.css"
+                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular")
                 .Include(

@@ -355,6 +355,7 @@
     <Content Include="Content\bootstrap-yeti.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Loader.css" />
     <Content Include="Content\ngProgress.css" />
     <Content Include="Data\Account.txt">
@@ -373,6 +374,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -412,6 +414,11 @@
     </Content>
     <None Include="Connected Services\IdmEmployeeServices\EmployeeServices.wsdl" />
     <None Include="Connected Services\IdmServices\IdmServices.wsdl" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
