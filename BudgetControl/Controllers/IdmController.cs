@@ -19,7 +19,7 @@ namespace BudgetControl.Controllers
             return View();
         }
 
-        public ActionResult GetEmployeeProfile(string empno)
+        public ActionResult GetEmployeeProfile(string empno, string mode = "")
         {
             IdmManager idm = new IdmManager();
             var empProfile = idm.GetEmployeeProfile(empno);
@@ -29,7 +29,14 @@ namespace BudgetControl.Controllers
             }
             else
             {
-                returnobj.SetSuccess(new EmployeeViewModel(empProfile));
+                if(mode.ToLower() == "original")
+                {
+                    returnobj.SetSuccess(empProfile);
+                }
+                else
+                { 
+                    returnobj.SetSuccess(new EmployeeViewModel(empProfile));
+                }
             }
 
             return Content(returnobj.ToJson(), "application/json");
