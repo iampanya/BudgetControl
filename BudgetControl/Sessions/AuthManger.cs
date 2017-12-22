@@ -1,4 +1,6 @@
 ﻿using BudgetControl.DAL;
+using BudgetControl.IdmEmployeeServices;
+using BudgetControl.Manager;
 using BudgetControl.Models;
 using BudgetControl.ViewModels;
 using System;
@@ -18,42 +20,88 @@ namespace BudgetControl.Sessions
 
             try
             {
-                // 1. Query user data.
+                EmployeeProfile employeeProfile;
+                IdmManager idmManger = new IdmManager();
+
+                // 1. Get user data
+                //// 1.1 Check with idm
+                var loginResult = idmManger.GetLoginResult(logindata.Username, logindata.Password);
+
+                //// 1.2 Query user data.
                 using (var userRepo = new UserRepository())
                 {
                     user = userRepo.Get()
                         .Where(
-                            u => 
-                                u.UserName == logindata.Username.Trim() 
+                            u =>
+                                u.UserName == logindata.Username.Trim()
                             )
                         .FirstOrDefault();
                 }
 
-                // 2. Throw exception if user is invalid.
-                if (user == null)
+                // 2. Login result complete
+                if (loginResult.Result)
                 {
-                    throw new Exception("ไม่พบรหัสพนักงานนี้ กรุณาติดต่อผู้ดูแลระบบ");
+                    employeeProfile = idmManger.GetEmployeeProfile(logindata.Username);
+                    if(user == null)
+                    {
+                        user = new User();
+                        user.EmployeeID = employeeProfile.EmployeeId.TrimStart(new char[] { '0' });
+                        user.UserName = user.EmployeeID;
+                        user.Password = user.EmployeeID;
+                        user.Token = Guid.NewGuid();
+                        user.ExpireDate = DateTime.Today.AddMonths(1);
+                        user.Role = UserRole.Normal;
+                        user.Status = Models.Base.RecordStatus.Active;
+                        user.NewCreateTimeStamp();
+                        using (var userRepo = new UserRepository())
+                        {
+                            userRepo.Add(user);
+                            userRepo.Save();
+                        }
+                    }
+                    else
+                    {
+                        // 3. Generate Token
+                        user.Token = Guid.NewGuid();
+                        user.ExpireDate = DateTime.Today.AddMonths(1);
+                        user.NewModifyTimeStamp();
+                        using (var userRepo = new UserRepository())
+                        {
+                            userRepo.Update(user);
+                            userRepo.Save();
+                        }
+                    }
                 }
 
-                if (user.Password != logindata.Password)
+                // 3. If fault, then throw error
+                else
                 {
-                    throw new Exception("รหัสผ่านไม่ถูกต้อง");
+                    // 3.1 Throw exception if user is invalid.
+                    if (user == null)
+                    {
+                        throw new Exception("ไม่พบรหัสพนักงานนี้ กรุณาติดต่อผู้ดูแลระบบ");
+                    }
+
+                    if (user.Password != logindata.Password)
+                    {
+                        throw new Exception("รหัสผ่านไม่ถูกต้อง");
+                    }
+
                 }
                 
-                // 3. Generate Token
-                user.Token = Guid.NewGuid();
-                user.ExpireDate = DateTime.Today.AddMonths(1);
-
-                // 4. Update to database
-                using (var userRepo = new UserRepository())
-                {
-                    userRepo.Update(user);
-                }
-
                 // 5. Register Cookies
                 RegisterCookies(user);
 
                 // 6. Login Complete
+                using (var userRepo = new UserRepository())
+                {
+                    user = userRepo.Get()
+                        .Where(
+                            u =>
+                                u.UserName == logindata.Username.Trim()
+                            )
+                        .FirstOrDefault();
+                }
                 AfterLoginComplete(user);
 
             }
