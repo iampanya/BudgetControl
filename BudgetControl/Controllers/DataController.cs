@@ -115,7 +115,6 @@ namespace BudgetControl.Controllers
 
                 payment.BudgetTransactions = payment.BudgetTransactions.Where(t => t.Status == RecordStatus.Active).ToList();
 
-
                 //Get budget data
                 using (BudgetRepository budgetRepo = new BudgetRepository())
                 {
@@ -135,6 +134,16 @@ namespace BudgetControl.Controllers
                     listTransInBudget.ForEach(t => item.PreviousAmount += t.Amount);
 
                     item.RemainAmount = item.Budget.BudgetAmount - item.PreviousAmount - item.Amount;
+                }
+
+                // Get Controller name for printing
+                using (EmployeeRepository empRepo = new EmployeeRepository())
+                {
+                    var controllerby = empRepo.GetById(payment.CreatedBy);
+                    if(controllerby != null)
+                    {
+                        payment.CreatedBy = payment.CreatedBy + " - " + controllerby.FullName;
+                    }
                 }
             }
             catch (Exception ex)
