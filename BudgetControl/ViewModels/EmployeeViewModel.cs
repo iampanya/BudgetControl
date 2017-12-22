@@ -22,7 +22,14 @@ namespace BudgetControl.ViewModels
             TitleName = emp.TitleFullName;
             FirstName = emp.FirstName;
             LastName = emp.LastName;
-            JobTitle = emp.PositionDescShort + emp.LevelCode.Trim(new char[] { '0' });
+            if(emp.PositionDescShort == emp.LevelDesc)
+            {
+                JobTitle = emp.PositionDescShort;
+            }
+            else
+            {
+                JobTitle = emp.PositionDescShort + emp.LevelDesc;
+            }
             CostCenterID = emp.CostCenterCode;
             CostCenterName = emp.CostCenterName;
         }
