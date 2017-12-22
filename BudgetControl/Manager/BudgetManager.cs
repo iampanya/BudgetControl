@@ -40,6 +40,7 @@ namespace BudgetControl.Manager
             return _db.Budgets
                     .Include(b => b.Account)
                     .Include(b => b.CostCenter)
+                    .OrderBy(b => b.AccountID)
                     .AsNoTracking();
         }
 
