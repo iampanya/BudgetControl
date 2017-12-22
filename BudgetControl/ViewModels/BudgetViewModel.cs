@@ -61,6 +61,20 @@ namespace BudgetControl.ViewModels
         #endregion
 
         #region Get Properties
+        public string BudgetName
+        {
+            get
+            {
+                try
+                {
+                    return AccountID + " - " + AccountName;
+                }
+                catch (Exception ex)
+                {
+                    return AccountID;
+                }
+            }
+        }
 
         public string Description 
         {
