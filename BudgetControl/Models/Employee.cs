@@ -24,8 +24,8 @@ namespace BudgetControl.Models
             TitleName = profile.TitleFullName;
             FirstName = profile.FirstName;
             LastName = profile.LastName;
-            JobTitle = profile.PositionDescShort + profile.LevelCode;
-            JobLevel = byte.Parse(profile.LevelCode);
+            JobTitle = profile.PositionDescShort; // + profile.LevelCode.TrimStart(new char[] { '0' });
+            JobLevel = 9;
             CostCenterID = profile.CostCenterCode;
             Status = RecordStatus.Active;
         }
