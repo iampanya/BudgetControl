@@ -29,17 +29,17 @@ namespace BudgetControl.ViewModels
             Year = budget.Year;
             BudgetAmount = budget.BudgetAmount;
             Status = budget.Status;
-            AccountName = budget.Account.AccountName;
-            CostCenterName = budget.CostCenter.CostCenterName;
+            AccountName = budget.Account != null? budget.Account.AccountName: "-";
+            CostCenterName = budget.CostCenter != null ? budget.CostCenter.CostCenterName: "-";
 
-            //Calculate 
-            WithdrawAmount = 0;
-            using (StatementRepository statementRepo = new StatementRepository())
-            {
-                var statements = statementRepo.GetByBudget(budget.BudgetID).ToList();
-                statements.ForEach(s => WithdrawAmount = WithdrawAmount + s.WithdrawAmount);
-                RemainAmount = BudgetAmount - WithdrawAmount;
-            }
+            ////Calculate 
+            //WithdrawAmount = 0;
+            //using (StatementRepository statementRepo = new StatementRepository())
+            //{
+            //    var statements = statementRepo.GetByBudget(budget.BudgetID).ToList();
+            //    statements.ForEach(s => WithdrawAmount = WithdrawAmount + s.WithdrawAmount);
+            //    RemainAmount = BudgetAmount - WithdrawAmount;
+            //}
         }
 
         #endregion
