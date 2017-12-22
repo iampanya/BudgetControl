@@ -23,9 +23,6 @@
                     </span>
                     <span class="col-md-6">
                         <select class="form-control input-sm" ng-model="vm.year" ng-options="y as y for y in vm.years">
-                            @*<option value="2559">2559</option>
-                            <option value="2560">2560</option>
-                            <option value="2561">2561</option>*@
                         </select>
                     </span>
                 </h3>
@@ -76,13 +73,19 @@
                         <td class="text-center">
                             <a ui-sref="viewbudget({ id: budget.BudgetID })" title="รายละเอียด">
                                 <i class="fa fa-list" aria-hidden="true"></i>
-                            </a>|
-                            <a ui-sref="editbudget({ id: budget.BudgetID })" title="แก้ไข">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </a>|
-                            <a ng-click="vm.deleteBudget(budget)" title="ยกเลิกงบประมาณ">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
                             </a>
+                            <span ng-if="budget.isAdmin">
+                                |
+                                <a ui-sref="editbudget({ id: budget.BudgetID })" title="แก้ไข">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </a>
+                            </span>
+                            <span ng-if="budget.isOwner">
+                                |
+                                <a ng-click="vm.deleteBudget(budget)" title="ยกเลิกงบประมาณ">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            </span>
                         </td>
                     </tr>
                     <tr>

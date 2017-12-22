@@ -1,4 +1,5 @@
 ﻿using BudgetControl.Models.Base;
+using BudgetControl.Sessions;
 using BudgetControl.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -107,6 +108,14 @@ namespace BudgetControl.Models
                 {
                     return AccountID;
                 }
+            }
+        }
+
+        public bool isOwner
+        {
+            get
+            {
+                return AuthManager.GetCurrentUser().UserName.Trim() == this.CreatedBy.Trim()? true : false;
             }
         }
 
