@@ -298,7 +298,6 @@
 
         function submit() {
             vm.addNewTransactionError = "";
-            console.log(vm.payment);
             if (vm.transactions.length > 0) {
                 preparePaymentToSave();                
                 apiService.payment().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
@@ -322,7 +321,6 @@
 
         function preparePaymentToSave() {
             vm.payment.BudgetTransactions = vm.transactions;
-            console.log(vm.payment.Type);
             if (vm.payment.Type == vm.paymentType.internal) {
                 vm.payment.RequestBy = vm.requestbynormal.employeecode;
                 vm.payment.Contractor = {};
@@ -351,7 +349,6 @@
             else {
                 vm.requestbyother.id = '';
             }
-            console.log(vm.requestbyother);
         }
 
         function getEmployeeProfile() {
@@ -385,7 +382,9 @@
             apiService.employee().get().$promise.then(callEmpSuccess, callError);
 
             // 3. Get list of budgets
-            apiService.budget().get().$promise.then(callBudgetSuccess, callError);
+            apiService.budgetinfo()
+                .get({ costcenterid: vm.payment.CostCenterID })
+                .$promise.then(callBudgetSuccess, callError);
 
             // 4. Get list of contractors
             apiService.contractor().get().$promise.then(callContractorSuccess, callError);
@@ -749,11 +748,13 @@
         // prepare form data function
         function prepareData() {
 
+            var costcenterid = authInfo.getWorkingCostCenter().CostCenterID;
+
             // 1. Get list of employees
             apiService.employee().get().$promise.then(callEmpSuccess, callError);
 
             // 2. Get list of budgets
-            apiService.budget().get().$promise.then(callBudgetSuccess, callError);
+            apiService.budgetinfo().get({costcenterid: costcenterid}).$promise.then(callBudgetSuccess, callError);
 
             // 3. Get list of contractors
             apiService.contractor().get().$promise.then(callContractorSuccess, callError);
@@ -837,9 +838,9 @@
             });
 
             modalInstance.result.then(function (selectedItem) {
-                console.log('Modal dismissed at: ' + new Date());
+
             }, function () {
-                console.log('Modal dismissed at: ' + new Date());
+
             });
         };
 

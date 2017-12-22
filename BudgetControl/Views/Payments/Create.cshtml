@@ -160,7 +160,7 @@
                     <div class="form-inline col-md-offset-1">
                         <div class="form-group">
                             <label class="control-label">เลือกบัญชี<span class="text-danger">*</span></label>
-                            <select class="form-control" ng-model="vm.selectbudget" ng-options="budget.BudgetID as budget.BudgetName for budget in vm.budgets | filter:{ CostCenterID: vm.payment.CostCenterID } | filter: { Year: vm.payment.Year }">
+                            <select class="form-control" ng-model="vm.selectbudget" ng-options="budget.BudgetID as budget.Description for budget in vm.budgets | filter:{ CostCenterID: vm.payment.CostCenterID } | filter: { Year: vm.payment.Year }">
                                 <option value=""> =========== กรุณาเลือก =========== </option>
                             </select>
                             <button class="btn btn-primary" type="button" ng-click="vm.addNewTransaction()">ตกลง</button>
@@ -197,7 +197,7 @@
                             {{ transaction.Budget.CostCenterID }}
                         </td>
                         <td>
-                            {{ transaction.Budget.Account.AccountID }} - {{ transaction.Budget.Account.AccountName }}
+                            {{ transaction.Budget.BudgetName }}
                         </td>
                         <td class="text-center">
                             {{ transaction.Budget.BudgetAmount | number:2 }}
