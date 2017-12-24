@@ -98,11 +98,11 @@
                         <th class="text-center"></th>
                         <th></th>
                         <th class="text-center">รวม</th>
-                        <th class="text-right"> {{ vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'BudgetAmount' | number:2 }} </th>
-                        <th class="text-right"> {{ vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'WithdrawAmount' | number:2 }} </th>
-                        <th class="text-right"> {{ vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'RemainAmount' | number:2 }} </th>
-                        <th class="text-center" ng-class="{'text-success': (vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'RemainAmount') >=0, 'text-danger': (vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'RemainAmount') < 0  }">
-                            {{ ((vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'RemainAmount') / (vm.budgets | filter: vm.year | filter:vm.costcenter | total: 'BudgetAmount' ) * 100 | number: 2)}} %
+                        <th class="text-right"> {{ vm.budgets | total: 'BudgetAmount' | number:2 }} </th>
+                        <th class="text-right"> {{ vm.budgets | total: 'WithdrawAmount' | number:2 }} </th>
+                        <th class="text-right"> {{ vm.budgets | total: 'RemainAmount' | number:2 }} </th>
+                        <th class="text-center" ng-class="{'text-success': (vm.budgets | total: 'RemainAmount') >=0, 'text-danger': (vm.budgets | total: 'RemainAmount') < 0  }">
+                            {{ ((vm.budgets | total: 'RemainAmount') / (vm.budgets | total: 'BudgetAmount' ) * 100 | number: 2)}} %
                         </th>
                         <th class="text-center"></th>
                     </tr>
