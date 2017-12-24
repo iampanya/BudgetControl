@@ -34,12 +34,6 @@
         function callSuccess(response) {
             vm.payments = hr.respondSuccess(response);
             
-            //vm.years = $filter('unique')(vm.payments, 'Year') || [{ Year: '2560' }];
-            //if (vm.years.length < 1) {
-            //    vm.years.push({ Year: new Date().getFullYear() + 543 + '' });
-            //}
-            //vm.year = vm.years[0].Year;
-
             vm.years = [];
             var currentYear = new Date().getFullYear();
             for (var i = 2016; i <= currentYear + 1; i++) {
