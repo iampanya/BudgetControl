@@ -22,7 +22,10 @@
                         ปีงบประมาณ:
                     </span>
                     <span class="col-md-6">
-                        <select class="form-control input-sm" ng-model="vm.year" ng-options="y as y for y in vm.years">
+                        <select class="form-control input-sm" 
+                                ng-model="vm.year" 
+                                ng-options="y as y for y in vm.years"
+                                ng-change="vm.getBudgetData();">
                         </select>
                     </span>
                 </h3>
@@ -34,7 +37,10 @@
                     ศูนย์ต้นทุน:
                 </span>
                 <span class="col-md-8">
-                    <select class="form-control input-sm" ng-model="vm.costcenter" ng-options="c.CostCenterID as c.CostCenter.CostCenterName for c in vm.costcenters">
+                    <select class="form-control input-sm" 
+                            ng-model="vm.costcenter" 
+                            ng-options="c.CostCenterID as c.CostCenterName for c in vm.costcenters"
+                            ng-change="vm.getBudgetData();">
                         
                     </select>
                 </span>
@@ -62,7 +68,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="budget in vm.budgets | filter: vm.year | filter:vm.costcenter">
+                    <tr ng-repeat="budget in vm.budgets">
                         <td class="text-center"> {{ $index + 1 }}</td>
                         <td> {{ budget.AccountID + ' - ' + budget.Account.AccountName}}</td>
                         <td class="text-center"> {{ budget.CostCenterID }}</td>

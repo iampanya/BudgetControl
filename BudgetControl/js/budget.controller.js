@@ -90,55 +90,73 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
     angular.module('budgetApp')
         .controller('BudgetCtrl', BudgetCtrl);
 
-    BudgetCtrl.$inject = ['$state', '$filter', '$uibModal', 'apiService', 'msgService', 'handleResponse'];
+    BudgetCtrl.$inject = ['$state', '$filter', '$uibModal', 'authInfo', 'apiService', 'msgService', 'handleResponse'];
 
-    function BudgetCtrl($state, $filter, $uibModal, apiService, msgService, hr) {
+    function BudgetCtrl($state, $filter, $uibModal, authInfo, apiService, msgService, hr) {
         var vm = this;
         vm.budgets = [];
         vm.budgetyear = [];
         vm.costcenters = [];
         vm.deleteBudget = deleteBudget;
+        vm.getBudgetData = getBudgetData;
 
         initialData();
 
         function initialData() {
+            // Get CostCenter
+            vm.costcenter = authInfo.getWorkingCostCenter().CostCenterID;
+
+            populateYearList();
+
+            populateCostCenterList();
+       
+            getBudgetData();
+            
+        }
+
+        function getBudgetData() {
             // 1. Get budget data from server.
-            apiService.budget().get().$promise.then(callSuccess, callError);
+            apiService.budget().get({ year: vm.year, costcenterid: vm.costcenter }).$promise.then(callSuccess, callError);
 
             //// 1.1 Call to server success.
             function callSuccess(response) {
                 // Move data to budget list
                 vm.budgets = hr.respondSuccess(response);
+            }
+        }
 
-                // Get unique Costcenter and initial it.
-                vm.costcenters = $filter('unique')(vm.budgets, 'CostCenterID');
-                vm.costcenter = vm.costcenters[0].CostCenterID
-
-                // Get unique budget year and initial it.
-                //vm.years = $filter('unique')(vm.budgets, 'Year');
-                //vm.year = '2560';
-
-                // Populate year list from 2559 to current + 1 and set default to current year
-                vm.years = [];
-                var currentYear = new Date().getFullYear();
-                for (var i = 2016; i <= currentYear + 1; i++) {
-                    vm.years.push(i + 543 + '');
-                } 
-                vm.year = currentYear + 543 + '';
-
+        function populateYearList() {
+            // Populate year list from 2559 to current + 1 and set default to current year
+            vm.years = [];
+            var currentYear = new Date().getFullYear();
+            for (var i = 2016; i <= currentYear + 1; i++) {
+                vm.years.push(i + 543 + '');
             }
 
-            //// 1.2 Call to server fail.
-            function callError(e) {
-                hr.respondError(e);
+            vm.year = currentYear + 543 + '';
+        }
+
+        function populateCostCenterList() {
+            // 1. Get Costcenter from server
+            apiService.costcenter().get().$promise.then(callCostCenterSuccess, callError);
+
+            // Call CostCenter success
+            function callCostCenterSuccess(response) {
+                vm.costcenters = hr.respondSuccess(response);
+                if (vm.costcenters.length < 1) {
+                    vm.costcenters.push({ CostCenterID: authInfo.getWorkingCostCenter().CostCenterID, CostCenter: authInfo.getWorkingCostCenter() });
+                }
             }
+        }
+
+        function callError(e) {
+            hr.respondError(e);
         }
 
         function deleteBudget(budget) {
             openModal('', null, budget)
         }
-
-
+        
         function openModal(size, parentSelector, data) {
             var parentElem = parentSelector ?
                 angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;

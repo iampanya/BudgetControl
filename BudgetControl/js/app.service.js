@@ -12,7 +12,7 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
     }
 
     api.budget = function () {
-        return $resource('data/budget/:id', null, {
+        return $resource('data/budget/:id?year=:year&costcenterid=:costcenterid', null, {
             'save': { method: 'POST' },
             'update': { method: 'PUT' },
             'remove': { method: 'DELETE' }
