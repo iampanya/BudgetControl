@@ -49,7 +49,8 @@ namespace BudgetControl.Manager
             }
             catch (Exception ex)
             {
-                throw ex;
+                return new LoginResult() { Result = false };
+                //throw ex;
             }
             finally
             {
