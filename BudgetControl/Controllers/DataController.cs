@@ -249,7 +249,7 @@ namespace BudgetControl.Controllers
         #region Budget
 
         [HttpGet]
-        public ActionResult Budgets()
+        public ActionResult Budgets(string year, string costcenterid)
         {
             try
             {
@@ -259,29 +259,33 @@ namespace BudgetControl.Controllers
                 // 1. Get working costcenter.
                 working = AuthManager.GetWorkingCostCenter();
 
+                // 2. Get by raw query
+                var bm = new BudgetManager();
+                budgets = bm.GetWithSummary(year, costcenterid).ToList();
+
                 // 2. Get budget data.
-                using (BudgetRepository budgetRep = new BudgetRepository())
-                {
-                    budgets = budgetRep.Get().ToList();
-                    budgets = budgetRep.Get()
-                        .Where(
-                            b =>
-                                b.CostCenterID.StartsWith(working.CostCenterTrim)
-                        )
-                        .ToList();
-                }
+                //using (BudgetRepository budgetRep = new BudgetRepository())
+                //{
+                //    budgets = budgetRep.Get().ToList();
+                //    budgets = budgetRep.Get()
+                //        .Where(
+                //            b =>
+                //                b.CostCenterID.StartsWith(working.CostCenterTrim)
+                //        )
+                //        .ToList();
+                //}
 
-                // 3. Get budget details
-                foreach (var budget in budgets)
-                {
-                    List<BudgetTransaction> transactions = budget.BudgetTransactions.Where(t => t.Status == RecordStatus.Active).ToList();
+                //// 3. Get budget details
+                //foreach (var budget in budgets)
+                //{
+                //    List<BudgetTransaction> transactions = budget.BudgetTransactions.Where(t => t.Status == RecordStatus.Active).ToList();
 
-                    decimal wdAmount = 0;
-                    transactions.ForEach(t => wdAmount += t.Amount);
+                //    decimal wdAmount = 0;
+                //    transactions.ForEach(t => wdAmount += t.Amount);
 
-                    budget.WithdrawAmount = wdAmount;
-                    budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
-                }
+                //    budget.WithdrawAmount = wdAmount;
+                //    budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
+                //}
 
                 // 3. Set return object.
                 returnobj.SetSuccess(budgets);
@@ -297,11 +301,11 @@ namespace BudgetControl.Controllers
         }
 
         [HttpGet]
-        public ActionResult Budget(string id)
+        public ActionResult Budget(string id, string year, string costcenterid)
         {
             if (id == null)
             {
-                return Budgets();
+                return Budgets(year, costcenterid);
             }
 
 
