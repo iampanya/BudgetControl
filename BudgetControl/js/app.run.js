@@ -7,11 +7,11 @@
 	run.$inject = ['$rootScope', '$state', 'ngProgressFactory', 'authInfo', '$log', '$timeout', 'bcBuilder', 'msgService']
 	function run($rootScope, $state, ngProgressFactory, authInfo, $log, $timeout, bcBuilder, msgService) {
 		//Initial Progressbar
-        var color = ['#DD2C00', '#FBC02D', '#F06292', '#4CAF50', '#FF9800', '#18FFFF', '#EA80FC'];
+        var color = ['#DD2C00', '#FFFF00', '#F06292', '#76FF03', '#FF6D00', '#18FFFF', '#EA80FC'];
         var day = new Date().getDay();
 		$rootScope.progressbar = ngProgressFactory.createInstance();
 		$rootScope.progressbar.setColor(color[day || 2]); //FBC02D  //FF8A65
-		$rootScope.progressbar.setHeight('6px');
+		$rootScope.progressbar.setHeight('8px');
 
         $rootScope.isProgressbarRun = false;
 
