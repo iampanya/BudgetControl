@@ -27,6 +27,9 @@ namespace BudgetControl.Sessions
                 //// 1.1 Check with idm
                 var loginResult = idmManger.GetLoginResult(logindata.Username, logindata.Password);
 
+                //// FOR TEST ONLY : Bypass IDM Login
+                //loginResult.Result = true;
+
                 //// 1.2 Query user data.
                 using (var userRepo = new UserRepository())
                 {
