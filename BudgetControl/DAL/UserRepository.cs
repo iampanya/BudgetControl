@@ -77,7 +77,8 @@ namespace BudgetControl.DAL
 
         public void Add(User entity)
         {
-            throw new NotImplementedException();
+            context.Users.Add(entity);
+            Save();
         }
 
         public void Delete(object id)
