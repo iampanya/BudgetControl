@@ -261,7 +261,7 @@ namespace BudgetControl.Controllers
 
                 // 2. Get by raw query
                 var bm = new BudgetManager();
-                budgets = bm.GetWithSummary(year, costcenterid).ToList();
+                budgets = bm.GetOverall(year, costcenterid).ToList();
 
                 // 2. Get budget data.
                 //using (BudgetRepository budgetRep = new BudgetRepository())

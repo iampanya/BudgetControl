@@ -58,6 +58,8 @@ namespace BudgetControl.Manager
 
         #region Methods
 
+        #region Common Get
+
         public IQueryable<Budget> GetAll()
         {
             return _db.Budgets
@@ -78,7 +80,7 @@ namespace BudgetControl.Manager
             return GetActive().Where(b => b.CostCenterID == costcenterid);
         }
 
-        public Budget Get(Guid budgetid)
+        public Budget GetByID(Guid budgetid)
         {
             using (var budgetRepo = new BudgetRepository())
             {
@@ -86,7 +88,20 @@ namespace BudgetControl.Manager
             }
         }
 
-        public IEnumerable<Budget> GetWithSummary(string year, string costcenterid)
+        #endregion
+
+        #region Get budget with transaction
+
+        public void GetWithTransaction(string id)
+        {
+
+        }
+
+        #endregion
+
+        #region Get Overall Budget by CostCenter and Year
+
+        public IEnumerable<Budget> GetOverall(string year, string costcenterid)
         {
             List<Budget> budgets = new List<Budget>();
 
@@ -121,6 +136,10 @@ namespace BudgetControl.Manager
             return budgets;
         }
 
+        #endregion
+
+        #region Create
+
         public void Add(Budget budget)
         {
             // 1. Add Payment
@@ -128,6 +147,8 @@ namespace BudgetControl.Manager
 
             // 2. Add all transaction to payment
         }
+
+        #endregion
 
         public void Update(Budget budget)
         {
