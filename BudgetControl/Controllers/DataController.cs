@@ -321,24 +321,27 @@ namespace BudgetControl.Controllers
                     }
                 }
 
-                budget.BudgetTransactions = budget.BudgetTransactions.Where(t => t.Status == RecordStatus.Active).OrderBy(t => t.CreatedAt).ToList();
+                //budget.BudgetTransactions = budget.BudgetTransactions.Where(t => t.Status == RecordStatus.Active).OrderBy(t => t.CreatedAt).ToList();
 
-                decimal previousAmount = 0;
-                decimal total = 0;
-                foreach (var item in budget.BudgetTransactions)
-                {
-                    using (var paymentRepo = new PaymentRepository())
-                    {
-                        item.Payment = paymentRepo.GetById(item.PaymentID);
-                    }
-                    total += item.Amount;
-                    item.PreviousAmount = previousAmount;
-                    item.RemainAmount = budget.BudgetAmount - item.PreviousAmount - item.Amount;
+                //decimal previousAmount = 0;
+                //decimal total = 0;
+                //foreach (var item in budget.BudgetTransactions)
+                //{
+                //    using (var paymentRepo = new PaymentRepository())
+                //    {
+                //        item.Payment = paymentRepo.GetById(item.PaymentID);
+                //    }
+                //    total += item.Amount;
+                //    item.PreviousAmount = previousAmount;
+                //    item.RemainAmount = budget.BudgetAmount - item.PreviousAmount - item.Amount;
 
-                    previousAmount = item.Amount + item.PreviousAmount;
-                }
-                budget.WithdrawAmount = total;
-                budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
+                //    previousAmount = item.Amount + item.PreviousAmount;
+                //}
+                //budget.WithdrawAmount = total;
+                //budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
+
+                var bm = new BudgetManager();
+                budget = bm.GetWithTransaction(id);
 
                 returnobj.SetSuccess(budget);
             }
