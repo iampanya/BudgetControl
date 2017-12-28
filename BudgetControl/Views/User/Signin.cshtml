@@ -15,7 +15,7 @@
                         <input type="text" ng-model="vm.account.username" class="form-control text-center" placeholder="รหัสพนักงาน"  ng-required="true" autofocus/>
                     </div>
                     <div class="form-group">
-                        <input type="password" ng-model="vm.account.password" class="form-control text-center" placeholder="รหัสผ่าน"  ng-required="true"/>
+                        <input type="password" ng-model="vm.account.password" class="form-control text-center" placeholder="รหัสผ่าน PEA"  ng-required="true"/>
                     </div>
 
                     @*<div class="form-group text-center">
@@ -39,5 +39,21 @@
         <div class="alert alert-danger text-center">
             <p> {{ vm.errorMsg }} </p>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-md-offset-0">
+        <ul class="sticky-note">
+            <li>
+                <a href="#">
+                    <h2>รหัสผ่านสำหรับเข้าใช้งานระบบ</h2>
+                    <p>
+                        เพื่อให้การใช้งานมีความปลอดภัยมากยิ่งขึ้น 
+                        จึงขอเปลี่ยนแปลง รหัสผ่านสำหรับการเข้าใช้งานระบบให้เป็นแบบเดียวกับ <code>รหัสผ่านสำหรับเข้าใช้งานคอมพิวเตอร์ </code>
+                    </p>
+                </a>
+            </li>
+        </ul>
     </div>
 </div>
