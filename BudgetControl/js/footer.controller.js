@@ -3,13 +3,22 @@
     angular.module('budgetApp')
         .controller('FooterCtrl', FooterCtrl);
 
-    FooterCtrl.$inject = ['$uibModal']
-    function FooterCtrl($uibModal) {
+    FooterCtrl.$inject = ['$uibModal', '$window']
+    function FooterCtrl($uibModal, $window) {
         var vm = this;
         vm.aboutus = aboutus;
         vm.notice = notice;
         vm.document = document;
         vm.contactus = contactus;
+
+        openNoticeFirst();
+
+        function openNoticeFirst() {
+            var notDisplayAgain = $window.localStorage["notDisplayAgain"];
+            if (notDisplayAgain == "false") {
+                vm.notice();
+            }
+        }
 
         function aboutus() {
             console.log('aboutus');
@@ -43,14 +52,15 @@
                 appendTo: parentElem
             });
 
-            modalInstance.result.then(function (payment) {
-                if (payment) {
-                    var index = vm.payments.findIndex(function (obj) {
-                        return obj.PaymentID == payment.PaymentID;
-                    });
-                    vm.payments.splice(index, 1);
-                }
-            });
+            return modalInstance;
+            //modalInstance.result.then(function (payment) {
+            //    if (payment) {
+            //        var index = vm.payments.findIndex(function (obj) {
+            //            return obj.PaymentID == payment.PaymentID;
+            //        });
+            //        vm.payments.splice(index, 1);
+            //    }
+            //});
         };
     }
 
@@ -81,12 +91,13 @@
     angular.module('budgetApp')
         .controller('NoticeCtrl', NoticeCtrl);
 
-    NoticeCtrl.$inject = ['$uibModalInstance']
-    function NoticeCtrl($uibModalInstance) {
+    NoticeCtrl.$inject = ['$uibModalInstance', '$window']
+    function NoticeCtrl($uibModalInstance, $window) {
         var vm = this;
+        vm.notDisplayAgain =  true;
         vm.close = close;
-
         function close() {
+            $window.localStorage["notDisplayAgain"] = vm.notDisplayAgain;
             $uibModalInstance.close();
         }
 

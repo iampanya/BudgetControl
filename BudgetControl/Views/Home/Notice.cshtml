@@ -29,7 +29,14 @@
 </div>
 
 <div class="modal-footer">
-    <div class="col-md-2 col-md-offset-10">
+    <div class="col-md-10">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked="checked" ng-model="vm.notDisplayAgain"> ไม่ต้องแสดงหน้าต่างนี้อีก
+            </label>
+        </div>
+    </div>
+    <div class="col-md-2">
         <button class="btn btn-default btn-block" type="button" ng-click="vm.close()">ปิด</button>
     </div>
 </div>
