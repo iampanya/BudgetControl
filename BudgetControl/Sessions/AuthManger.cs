@@ -79,16 +79,17 @@ namespace BudgetControl.Sessions
                 // 3. If fault, then throw error
                 else
                 {
-                    // 3.1 Throw exception if user is invalid.
-                    if (user == null)
-                    {
-                        throw new Exception("ไม่พบรหัสพนักงานนี้ กรุณาติดต่อผู้ดูแลระบบ");
-                    }
+                    throw new Exception("รหัสผ่านไม่ถูกต้อง");
+                    //// 3.1 Throw exception if user is invalid.
+                    //if (user == null)
+                    //{
+                    //    throw new Exception("ไม่พบรหัสพนักงานนี้ กรุณาติดต่อผู้ดูแลระบบ");
+                    //}
 
-                    if (user.Password != logindata.Password)
-                    {
-                        throw new Exception("รหัสผ่านไม่ถูกต้อง");
-                    }
+                    //if (user.Password != logindata.Password)
+                    //{
+                    //    throw new Exception("รหัสผ่านไม่ถูกต้อง");
+                    //}
 
                 }
                 
