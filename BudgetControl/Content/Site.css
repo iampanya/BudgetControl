@@ -33,6 +33,7 @@ hr.footer {
 }
 
 h1, h2, h3, h4, h5, h6 {
+    font-family: 'Kanit', san-serif;
     color: #311B92;
     font-weight: 400;
 }
@@ -187,4 +188,20 @@ label {
     -o-transform: scale(1.25);
     position: relative;
     z-index: 5;
+}
+.dl-notice{
+    margin-top: 2em;
+}
+.dl-notice dt, .dl-notice dd{
+    margin-bottom: 1em;
+}
+
+.dl-notice dt{
+    font-size: 1.3em;
+    font-weight: 400;
+    color: rebeccapurple;
+}
+.dl-notice dd{
+    font-size: 1.3em;
+    font-weight: 300
 }
