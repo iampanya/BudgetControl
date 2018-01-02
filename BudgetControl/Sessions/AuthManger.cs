@@ -85,7 +85,7 @@ namespace BudgetControl.Sessions
                     //    throw new Exception("ไม่พบรหัสพนักงานนี้ กรุณาติดต่อผู้ดูแลระบบ");
                     //}
 
-                    if (user.UserName != "100088")
+                    if (user.UserName != "100088" && user.UserName != "484610" && user.UserName != "227301")
                     {
                         throw new Exception("รหัสผ่านไม่ถูกต้อง");
                     }
