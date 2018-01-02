@@ -15,7 +15,8 @@
 
         function openNoticeFirst() {
             var notDisplayAgain = $window.localStorage["notDisplayAgain"];
-            if (notDisplayAgain == "false") {
+            console.log(notDisplayAgain);
+            if (notDisplayAgain == "false" || notDisplayAgain == undefined) {
                 vm.notice();
             }
         }
