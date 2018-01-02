@@ -8,7 +8,9 @@
         var vm = this;
         vm.working = authInfo.getWorkingCostCenter();
         vm.budgets = [];
-        vm.year = '2560';
+        vm.getReportData = getReportData;
+
+        populateYearList();
         getReportData();
 
         function getReportData() {
@@ -22,6 +24,17 @@
 
         function callApiError(e) {
             hr.respondError(e);
+        }
+
+        function populateYearList() {
+            // Populate year list from 2559 to current + 1 and set default to current year
+            vm.years = [];
+            var currentYear = new Date().getFullYear();
+            for (var i = 2016; i <= currentYear + 1; i++) {
+                vm.years.push(i + 543 + '');
+            }
+
+            vm.year = currentYear + 543 + '';
         }
     }
 })();

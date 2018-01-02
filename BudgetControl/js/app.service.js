@@ -33,7 +33,7 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
 
 
     api.summaryreport = function () {
-        return $resource('data/SummaryReport/:year');
+        return $resource('data/SummaryReport?year=:year');
     }
 
     api.individualreport = function () {
