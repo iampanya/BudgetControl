@@ -28,7 +28,7 @@ namespace BudgetControl.Models
         public int DeptSap { get; set; }
         
         [Index()]
-        public int DeptUpper { get; set; }
+        public int? DeptUpper { get; set; }
 
         [StringLength(6)]
         public string DeptStableCode { get; set; }
