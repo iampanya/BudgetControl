@@ -9,6 +9,15 @@ using System.Web;
 
 namespace BudgetControl.Models
 {
+    public enum EmployeeGroup
+    {
+        None = 0,
+        Normal = 1, 
+        Temporary = 2,
+        Terminate = 3,
+        Probation = 4
+    }
+
     public class Employee : RecordTimeStamp
     {
         #region Constructor
@@ -28,6 +37,27 @@ namespace BudgetControl.Models
             JobLevel = 9;
             CostCenterID = profile.CostCenterCode;
             Status = RecordStatus.Active;
+
+            PositionCode = profile.PositionCode;
+            LevelCode = profile.LevelCode;
+            Email = profile.Email;
+
+            int num;
+            DepartmentSap = Int32.TryParse(profile.Department, out num) ? num : (int ?)null;
+
+            StaffDate = profile.StaffDate;
+            EntryDate = profile.EntryDate;
+            RetiredDate = profile.RetiredDate;
+
+            BaCode = profile.BaCode;
+            PeaCode = profile.Peacode;
+
+            StatusCode = profile.StatusCode;
+            StatusName = profile.Status;
+
+            EmployeeGroup empgroup;
+            Group = Enum.TryParse<EmployeeGroup>(profile.GroupId, out empgroup) ? empgroup : EmployeeGroup.None;
+            
         }
 
         #endregion
@@ -36,6 +66,8 @@ namespace BudgetControl.Models
         [Display(Name = "รหัสพนักงาน")]
         [StringLength(10)]
         public string EmployeeID { get; set; }
+
+        #region Name
 
         [Display(Name = "คำนำหน้า")]
         [StringLength(64)]
@@ -49,19 +81,62 @@ namespace BudgetControl.Models
         [StringLength(128)]
         public string LastName { get; set; }
 
+        #endregion
+
         [Display(Name = "ตำแหน่ง")]
         [StringLength(128)]
         public string JobTitle { get; set; }
 
         [Display(Name = "ระดับ")]
         public Byte JobLevel { get; set; }
-        
+
+        [StringLength(4)]
+        public string PositionCode { get; set; }
+
+        [StringLength(2)]
+        public string LevelCode { get; set; }
+
+        [StringLength(200)]
+        public string Email { get; set; }
+
         public string CostCenterID { get; set; }
+        
+        public int? DepartmentSap { get; set; }
 
+        #region Date Info
 
-        [Display(Name = "รหัสผ่าน")]
-        [StringLength(32)]
-        public string Password { get; set; }
+        [StringLength(10)]
+        public string StaffDate { get; set; }
+
+        [StringLength(10)]
+        public string EntryDate { get; set; }
+
+        [StringLength(10)]
+        public string RetiredDate { get; set; }
+
+        #endregion
+
+        #region BA - PEA Code
+
+        [StringLength(4)]
+        public string BaCode { get; set; }
+
+        [StringLength(6)]
+        public string PeaCode { get; set; }
+
+        #endregion
+
+        #region Status & Group
+
+        [StringLength(1)]
+        public string StatusCode { get; set; }
+        [StringLength(100)]
+        public string StatusName { get; set; }
+
+        public EmployeeGroup Group { get; set; }
+
+        #endregion
+
 
         [Display(Name = "สิทธิ์การใช้งาน")]
         [StringLength(32)]
@@ -72,9 +147,11 @@ namespace BudgetControl.Models
         #region Relation
 
         public virtual CostCenter CostCenter { get; set; }
-        
+
         #endregion
 
+        #region Additional Field
+        
         public string FullName
         {
             get
@@ -82,6 +159,8 @@ namespace BudgetControl.Models
                 return FirstName + ' ' + LastName;
             }
         }
+
+        #endregion
 
         #region Methods
 
