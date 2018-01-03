@@ -195,18 +195,26 @@
     <Compile Include="Migrations\201712200827392_AddRequestByContractor.Designer.cs">
       <DependentUpon>201712200827392_AddRequestByContractor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801030800470_MoreEmployeeInfo.cs" />
+    <Compile Include="Migrations\201801030800470_MoreEmployeeInfo.Designer.cs">
+      <DependentUpon>201801030800470_MoreEmployeeInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Base\IRecordTimeStamp.cs" />
     <Compile Include="Models\Base\RecordTimeStamp.cs" />
     <Compile Include="Models\Budget.cs" />
     <Compile Include="Models\BudgetTransaction.cs" />
+    <Compile Include="Models\BusinessAreaInfo.cs" />
     <Compile Include="Models\Contractor.cs" />
     <Compile Include="Models\CostCenter.cs" />
     <Compile Include="Models\DepartmentInfo.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\LevelInfo.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentCounter.cs" />
+    <Compile Include="Models\PeaInfo.cs" />
+    <Compile Include="Models\PositionInfo.cs" />
     <Compile Include="Models\Statement.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -511,6 +519,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712200827392_AddRequestByContractor.resx">
       <DependentUpon>201712200827392_AddRequestByContractor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801030800470_MoreEmployeeInfo.resx">
+      <DependentUpon>201801030800470_MoreEmployeeInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
