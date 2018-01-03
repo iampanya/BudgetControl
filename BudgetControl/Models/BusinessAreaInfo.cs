@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BudgetControl.Models.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +8,7 @@ using System.Web;
 
 namespace BudgetControl.Models
 {
-    public class BusinessAreaInfo
+    public class BusinessAreaInfo : RecordTimeStamp
     {
         #region Constructor
 
