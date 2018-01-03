@@ -8,6 +8,21 @@ namespace BudgetControl.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.BusinessAreaInfo",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        BaCode = c.String(maxLength: 4),
+                        BaName = c.String(maxLength: 200),
+                        CreatedBy = c.String(maxLength: 128),
+                        CreatedAt = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 128),
+                        ModifiedAt = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.BaCode, unique: true);
+            
+            CreateTable(
                 "dbo.DepartmentInfo",
                 c => new
                     {
@@ -59,6 +74,53 @@ namespace BudgetControl.Migrations
                 .Index(t => t.DeptUpper)
                 .Index(t => t.CostCenterCode);
             
+            CreateTable(
+                "dbo.LevelInfo",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        LevelCode = c.String(maxLength: 2),
+                        LevelDesc = c.String(maxLength: 100),
+                        CreatedBy = c.String(maxLength: 128),
+                        CreatedAt = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 128),
+                        ModifiedAt = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.LevelCode, unique: true);
+            
+            CreateTable(
+                "dbo.PeaInfo",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        PeaCode = c.String(maxLength: 6),
+                        PeaShortName = c.String(maxLength: 100),
+                        PeaName = c.String(maxLength: 200),
+                        CreatedBy = c.String(maxLength: 128),
+                        CreatedAt = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 128),
+                        ModifiedAt = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.PeaCode, unique: true);
+            
+            CreateTable(
+                "dbo.PositionInfo",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        PositionCode = c.String(maxLength: 4),
+                        PositionDescShort = c.String(maxLength: 100),
+                        PostionDesc = c.String(maxLength: 200),
+                        CreatedBy = c.String(maxLength: 128),
+                        CreatedAt = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 128),
+                        ModifiedAt = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.PositionCode, unique: true);
+            
             AddColumn("dbo.Employee", "PositionCode", c => c.String(maxLength: 4));
             AddColumn("dbo.Employee", "LevelCode", c => c.String(maxLength: 2));
             AddColumn("dbo.Employee", "Email", c => c.String(maxLength: 200));
@@ -78,9 +140,13 @@ namespace BudgetControl.Migrations
         public override void Down()
         {
             AddColumn("dbo.Employee", "Password", c => c.String(maxLength: 32));
+            DropIndex("dbo.PositionInfo", new[] { "PositionCode" });
+            DropIndex("dbo.PeaInfo", new[] { "PeaCode" });
+            DropIndex("dbo.LevelInfo", new[] { "LevelCode" });
             DropIndex("dbo.DepartmentInfo", new[] { "CostCenterCode" });
             DropIndex("dbo.DepartmentInfo", new[] { "DeptUpper" });
             DropIndex("dbo.DepartmentInfo", new[] { "DeptSap" });
+            DropIndex("dbo.BusinessAreaInfo", new[] { "BaCode" });
             DropColumn("dbo.User", "PasswordHash");
             DropColumn("dbo.Employee", "Group");
             DropColumn("dbo.Employee", "StatusName");
@@ -94,7 +160,11 @@ namespace BudgetControl.Migrations
             DropColumn("dbo.Employee", "Email");
             DropColumn("dbo.Employee", "LevelCode");
             DropColumn("dbo.Employee", "PositionCode");
+            DropTable("dbo.PositionInfo");
+            DropTable("dbo.PeaInfo");
+            DropTable("dbo.LevelInfo");
             DropTable("dbo.DepartmentInfo");
+            DropTable("dbo.BusinessAreaInfo");
         }
     }
 }
