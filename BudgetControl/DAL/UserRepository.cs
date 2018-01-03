@@ -22,21 +22,6 @@ namespace BudgetControl.DAL
 
 
         #region Methods
-        public Employee Login(LoginViewModel logindata)
-        {
-            var employee = context.Employees
-                .Include(e => e.CostCenter)
-                .FirstOrDefault(e => e.EmployeeID == logindata.Username && e.Password == logindata.Password);
-
-            if (employee == null)
-            {
-                throw new Exception("Username or Password are invalid.");
-            }
-            else
-            {
-                return employee;
-            }
-        }
 
 
         #endregion

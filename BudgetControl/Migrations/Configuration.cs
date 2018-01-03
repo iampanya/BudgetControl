@@ -192,7 +192,6 @@ namespace BudgetControl.Migrations
                             JobTitle = fields[4],
                             JobLevel = Byte.Parse(fields[5]),
                             CostCenterID = fields[6],
-                            Password = fields[7],
                             Status = RecordStatus.Active
                         });
                     }
