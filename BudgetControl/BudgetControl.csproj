@@ -203,6 +203,7 @@
     <Compile Include="Models\BudgetTransaction.cs" />
     <Compile Include="Models\Contractor.cs" />
     <Compile Include="Models\CostCenter.cs" />
+    <Compile Include="Models\DepartmentInfo.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentCounter.cs" />
