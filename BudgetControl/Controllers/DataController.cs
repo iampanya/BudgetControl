@@ -263,30 +263,6 @@ namespace BudgetControl.Controllers
                 var bm = new BudgetManager();
                 budgets = bm.GetOverall(year, costcenterid).ToList();
 
-                // 2. Get budget data.
-                //using (BudgetRepository budgetRep = new BudgetRepository())
-                //{
-                //    budgets = budgetRep.Get().ToList();
-                //    budgets = budgetRep.Get()
-                //        .Where(
-                //            b =>
-                //                b.CostCenterID.StartsWith(working.CostCenterTrim)
-                //        )
-                //        .ToList();
-                //}
-
-                //// 3. Get budget details
-                //foreach (var budget in budgets)
-                //{
-                //    List<BudgetTransaction> transactions = budget.BudgetTransactions.Where(t => t.Status == RecordStatus.Active).ToList();
-
-                //    decimal wdAmount = 0;
-                //    transactions.ForEach(t => wdAmount += t.Amount);
-
-                //    budget.WithdrawAmount = wdAmount;
-                //    budget.RemainAmount = budget.BudgetAmount - budget.WithdrawAmount;
-                //}
-
                 // 3. Set return object.
                 returnobj.SetSuccess(budgets);
 
