@@ -17,14 +17,22 @@ namespace BudgetControl.Models
     public class User : RecordTimeStamp
     {
         public int UserID { get; set; }
+
         public string EmployeeID { get; set; }
 
         [StringLength(10)]
         public string UserName { get; set; }
+
         [StringLength(32)]
         public string Password { get; set; }
+
+        [StringLength(500)]
+        public string PasswordHash { get; set; }
+
         public Guid? Token { get; set; }
+
         public DateTime? ExpireDate { get; set; }
+
         public UserRole Role { get; set; }
         public RecordStatus Status { get; set; }
         public DateTime? LastLogin { get; set; }
