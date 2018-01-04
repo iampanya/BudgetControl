@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -51,6 +52,7 @@ namespace BudgetControl.Models.Base
         [StringLength(128)]
         public string DeletedBy { get; set; }
 
+        [Index()]
         [ScaffoldColumn(false)]
         [Display(Name = "ลบเมื่อ")]
         [DataType(DataType.Date)]
