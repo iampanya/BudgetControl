@@ -16,21 +16,13 @@ namespace BudgetControl.Models.Base
 
     public class RecordTimeStamp
     {
-        public RecordTimeStamp() {
-            ////Prevent exception when nuget: update-database 
-            //try
-            //{
-            //    CreatedBy = SessionManager.GetSessionUserName();
-            //}
-            //catch (Exception ex)
-            //{
-            //    CreatedBy = "Anonymous";
-            //}
+        #region Constructor
 
-            //CreatedAt = DateTime.Now;
-            //ModifiedBy = CreatedBy;
-            //ModifiedAt = CreatedAt;
-        }
+        public RecordTimeStamp() { }
+
+        #endregion
+
+        #region Fields
 
         [ScaffoldColumn(false)]
         [Display(Name = "สร้างโดย")]
@@ -54,61 +46,83 @@ namespace BudgetControl.Models.Base
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? ModifiedAt { get; set; }
 
+        [ScaffoldColumn(false)]
+        [Display(Name = "ลบโดย")]
+        [StringLength(128)]
+        public string DeletedBy { get; set; }
+
+        [ScaffoldColumn(false)]
+        [Display(Name = "ลบเมื่อ")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? DeletedAt { get; set; }
+
+        #endregion
+        
+        #region Methods
+
         public void NewCreateTimeStamp()
         {
             //Prevent exception when nuget: update-database 
             try
             {
-                this.CreatedBy = AuthManager.GetCurrentUser().EmployeeID;
+                CreatedBy = AuthManager.GetCurrentUser().EmployeeID;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                this.CreatedBy = "Anonymous";
+                CreatedBy = "Anonymous";
             }
 
-            this.CreatedAt = DateTime.Now;
-            this.ModifiedBy = this.CreatedBy;
-            this.ModifiedAt = this.CreatedAt;
+            CreatedAt = DateTime.Now;
+            ModifiedBy = CreatedBy;
+            ModifiedAt = CreatedAt;
         }
 
         public void NewModifyTimeStamp()
         {
             try
             {
-                this.ModifiedBy = AuthManager.GetCurrentUser().EmployeeID;
+                ModifiedBy = AuthManager.GetCurrentUser().EmployeeID;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                this.ModifiedBy = "Anonymous";
+                ModifiedBy = "Anonymous";
             }
 
-            this.ModifiedAt = DateTime.Now;
+            ModifiedAt = DateTime.Now;
+            DeletedAt = null;
+            DeletedBy = null;
+
+        }
+
+        public void NewDeleteTimestamp()
+        {
+            try
+            {
+                DeletedBy = AuthManager.GetCurrentUser().EmployeeID;
+            }
+            catch (Exception)
+            {
+                DeletedBy = "Anonymous";
+            }
+
+            DeletedAt = DateTime.Now;
         }
 
         public void SetCreateTimeStamp(RecordTimeStamp timestamp)
         {
-            this.CreatedBy = timestamp.CreatedBy;
-            this.CreatedAt = timestamp.CreatedAt;
+            CreatedBy = timestamp.CreatedBy;
+            CreatedAt = timestamp.CreatedAt;
             SetModifiedTimeStamp(timestamp);
         }
 
         public void SetModifiedTimeStamp(RecordTimeStamp timestamp)
         {
-            this.ModifiedBy = timestamp.ModifiedBy;
-            this.ModifiedAt = timestamp.ModifiedAt;
+            ModifiedBy = timestamp.ModifiedBy;
+            ModifiedAt = timestamp.ModifiedAt;
         }
 
-        //public void SetCreatedTimeStamp(string createdBy, DateTime? createdAt)
-        //{
-        //    this.CreatedBy = SessionManager.GetSessionUserName();
-        //    this.CreatedAt = DateTime.Now;
-        //    this.SetModifiedTimeStamp(this.CreatedBy, this.CreatedAt);
-        //}
+        #endregion
 
-        //public void SetModifiedTimeStamp(string modifiedBy, DateTime? modifiedAt)
-        //{
-        //    this.ModifiedBy = modifiedBy;
-        //    this.ModifiedAt = modifiedAt;
-        //}
     }
 }
