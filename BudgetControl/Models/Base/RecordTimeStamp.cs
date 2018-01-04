@@ -63,7 +63,7 @@ namespace BudgetControl.Models.Base
         
         #region Methods
 
-        public void NewCreateTimeStamp()
+        public void NewCreateTimeStamp(string createdby="")
         {
             //Prevent exception when nuget: update-database 
             try
@@ -72,7 +72,7 @@ namespace BudgetControl.Models.Base
             }
             catch (Exception)
             {
-                CreatedBy = "Anonymous";
+                CreatedBy = String.IsNullOrEmpty(createdby) ? "Anonymous" : createdby;
             }
 
             CreatedAt = DateTime.Now;
@@ -80,7 +80,7 @@ namespace BudgetControl.Models.Base
             ModifiedAt = CreatedAt;
         }
 
-        public void NewModifyTimeStamp()
+        public void NewModifyTimeStamp(string modifiedby="")
         {
             try
             {
@@ -88,7 +88,7 @@ namespace BudgetControl.Models.Base
             }
             catch (Exception)
             {
-                ModifiedBy = "Anonymous";
+                ModifiedBy = String.IsNullOrEmpty(modifiedby) ? "Anonymous" : modifiedby;
             }
 
             ModifiedAt = DateTime.Now;
@@ -97,7 +97,7 @@ namespace BudgetControl.Models.Base
 
         }
 
-        public void NewDeleteTimestamp()
+        public void NewDeleteTimestamp(string deletedby="")
         {
             try
             {
@@ -105,7 +105,7 @@ namespace BudgetControl.Models.Base
             }
             catch (Exception)
             {
-                DeletedBy = "Anonymous";
+                DeletedBy = String.IsNullOrEmpty(deletedby) ? "Anonymous" : deletedby;
             }
 
             DeletedAt = DateTime.Now;
