@@ -152,24 +152,6 @@ namespace BudgetControl.Migrations
             //context.SaveChanges();
             #endregion
 
-            #region BudgetTransaction
-            //budgets.ForEach(b => transactions.Add(new BudgetTransaction { 
-            //    BudgetTransactionID = Guid.NewGuid(),
-            //    BudgetID = b.BudgetID,
-            //    PaymentID = null,
-            //    Description = "Define Budget",
-            //    Amount = b.BudgetAmount,
-            //    PreviousAmount = 0,
-            //    RemainAmount = b.BudgetAmount,
-            //    RefID = null,
-            //    Type = TransactionType.Definition
-            //}));
-
-            //transactions.ForEach(t => context.BudgetTransactions.AddOrUpdate(c => c.BudgetID, t));
-            //context.SaveChanges();
-
-            #endregion
-
             #region Employee
             path = Path.Combine(basepath, @"Data\Employee_20171015.txt");
 
@@ -219,77 +201,9 @@ namespace BudgetControl.Migrations
             //context.SaveChanges();
 
             #endregion
-
-            #region Payment
-            //employees.ForEach(e =>
-            //{
-            //    payments.Add(GeneratePayment(e));
-            //    payments.Add(GeneratePayment(e));
-            //});
-
-            //payments.ForEach(p => context.Payments.AddOrUpdate(a => a.Sequence, p));
-            //context.SaveChanges();
-
-            #endregion
-
-
-            #region Statement
-            //List<Statement> statements = new List<Statement>();
-            //payments.ForEach(p => statements.AddRange(GenerateStatement(p)));
-
-            //statements.ForEach(s => context.Statements.AddOrUpdate(a => a.StatementID, s));
-            //context.SaveChanges();
-
-
-            #endregion
-        }
-
-        private Payment GeneratePayment(Employee employee)
-        {
-            var payment = new Payment();
-
-            //var requester = employees.FirstOrDefault(e => e.CostCenterID == costcenter);
-            var sequence = payments.Where(p => p.CostCenterID == employee.CostCenterID).Count()+1;
-
-            payment.PaymentID = Guid.NewGuid();
-            payment.Year = "2559";
-            payment.CostCenterID = employee.CostCenterID;
-            payment.TotalAmount = 0;
-            payment.RequestBy = employee.EmployeeID;
-            payment.ControlBy = employee.EmployeeID;
-            payment.Sequence = sequence;
-            payment.PaymentDate = DateTime.Today;
-            payment.Description = "เบี้ยเลี้ยง " + employee.FirstName;
-            payment.Status = RecordStatus.Active;
-            RecordTimeStamp rt = new RecordTimeStamp();
-            rt.NewCreateTimeStamp();
-            payment.SetCreateTimeStamp(rt);
-            return payment;
-        }
-        private List<Statement> GenerateStatement(Payment payment)
-        {
-            List<Statement> result = new List<Statement>();
-            var random = new Random();
-            var budgetbycostcenter = budgets.Where(b => b.CostCenterID == payment.CostCenterID).ToList();
             
-            budgetbycostcenter.ForEach(b => {
-                var value = random.Next(100, 701);
-                result.Add(new Statement
-                {
-                    StatementID = Guid.NewGuid(),
-                    PaymentID = payment.PaymentID,
-                    BudgetID = b.BudgetID,
-                    WithdrawAmount = value,
-                    Status = RecordStatus.Active,
-                    CreatedAt = payment.CreatedAt,
-                    CreatedBy = payment.CreatedBy,
-                    ModifiedAt = payment.ModifiedAt,
-                    ModifiedBy = payment.ModifiedBy
-                });
-            });
-
-            return result;
         }
+        
 
     }
 }
