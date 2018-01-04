@@ -24,6 +24,7 @@ namespace BudgetControl.Migrations
         protected override void Seed(BudgetContext context)
         {
 
+            #region Migraiton: Init
 
             #region Account
 
@@ -66,7 +67,28 @@ namespace BudgetControl.Migrations
             //context.SaveChanges();
 
             #endregion
-            
+
+            #endregion
+
+            #region Migration : MoreEmployeeInfo
+            var baInfos = ReadTextBA();
+            baInfos.ForEach(b => context.BussinessAreaInfos.AddOrUpdate(c => c.BaCode, b));
+            context.SaveChanges();
+
+            var peaInfos = ReadTextPeaInfo();
+            peaInfos.ForEach(p => context.PeaInfos.AddOrUpdate(c => c.PeaCode, p));
+            context.SaveChanges();
+
+            var positionInfos = ReadTextPositionInfo();
+            positionInfos.ForEach(p => context.PositionInfos.AddOrUpdate(c => c.PositionCode, p));
+            context.SaveChanges();
+
+            var levelInfos = ReadTextLevelInfo();
+            levelInfos.ForEach(l => context.LevelInfos.AddOrUpdate(c => c.LevelCode, l));
+            context.SaveChanges();
+
+            #endregion
+
         }
 
         #region Get Data from txt file
@@ -238,7 +260,7 @@ namespace BudgetControl.Migrations
 
         #endregion
 
-        #region For migration : MoreEmployeeInfo
+        #region  Method for migration : MoreEmployeeInfo
 
         private List<BusinessAreaInfo> ReadTextBA()
         {
@@ -254,16 +276,100 @@ namespace BudgetControl.Migrations
                     while (!parser.EndOfData)
                     {
                         string[] fields = parser.ReadFields();
-                        baInfos.Add(new BusinessAreaInfo
-                        {
-                            Id = Guid.NewGuid(),
-                            BaCode = fields[0],
-                            BaName = fields[1]
-                        });
+                        var baInfo = new BusinessAreaInfo();
+                        baInfo.Id = Guid.NewGuid();
+                        baInfo.BaCode = fields[0].Trim();
+                        baInfo.BaName = fields[1].Trim();
+                        baInfo.NewCreateTimeStamp("Seed");
+                        baInfos.Add(baInfo);
                     }
                 }
             }
             return baInfos;
+        }
+
+        private List<PeaInfo> ReadTextPeaInfo()
+        {
+            List<PeaInfo> peainfos = new List<PeaInfo>();
+            path = Path.Combine(basepath, @"Data\PeaCodeInfo.txt");
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                using (TextFieldParser parser = new TextFieldParser(reader))
+                {
+                    parser.TextFieldType = FieldType.Delimited;
+                    parser.SetDelimiters("\t");
+                    while (!parser.EndOfData)
+                    {
+                        string[] fields = parser.ReadFields();
+                        var peaInfo = new PeaInfo();
+                        peaInfo.Id = Guid.NewGuid();
+                        peaInfo.PeaCode = fields[0].Trim().ToUpper();
+                        peaInfo.PeaShortName = fields[1].Trim();
+                        peaInfo.PeaName = fields[2].Trim();
+                        peaInfo.NewCreateTimeStamp("Seed");
+                        peainfos.Add(peaInfo);
+                    }
+                }
+            }
+
+
+            return peainfos;
+        }
+
+        private List<LevelInfo> ReadTextLevelInfo()
+        {
+            List<LevelInfo> levelInfos = new List<LevelInfo>();
+            path = Path.Combine(basepath, @"Data\LevelCode.txt");
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                using (TextFieldParser parser = new TextFieldParser(reader))
+                {
+                    parser.TextFieldType = FieldType.Delimited;
+                    parser.SetDelimiters("\t");
+                    while (!parser.EndOfData)
+                    {
+                        string[] fields = parser.ReadFields();
+                        var levelInfo = new LevelInfo();
+                        levelInfo.Id = Guid.NewGuid();
+                        levelInfo.LevelCode = fields[0].Trim();
+                        levelInfo.LevelDesc = fields[1].Trim();
+                        levelInfo.NewCreateTimeStamp("Seed");
+                        levelInfos.Add(levelInfo);
+                    }
+                }
+            }
+
+            return levelInfos;
+        }
+
+        private List<PositionInfo> ReadTextPositionInfo()
+        {
+            List<PositionInfo> positions = new List<PositionInfo>();
+            path = Path.Combine(basepath, @"Data\Position.txt");
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                using (TextFieldParser parser = new TextFieldParser(reader))
+                {
+                    parser.TextFieldType = FieldType.Delimited;
+                    parser.SetDelimiters("\t");
+                    while (!parser.EndOfData)
+                    {
+                        string[] fields = parser.ReadFields();
+                        var position = new PositionInfo();
+                        position.Id = Guid.NewGuid();
+                        position.PositionCode = fields[0].Trim();
+                        position.PositionDescShort = fields[1].Trim();
+                        position.PostionDesc = fields[2].Trim();
+                        position.NewCreateTimeStamp("Seed");
+                        positions.Add(position);
+                    }
+                }
+            }
+
+            return positions;
         }
 
         #endregion
