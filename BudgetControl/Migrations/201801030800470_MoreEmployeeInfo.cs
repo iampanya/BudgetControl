@@ -18,9 +18,12 @@ namespace BudgetControl.Migrations
                         CreatedAt = c.DateTime(),
                         ModifiedBy = c.String(maxLength: 128),
                         ModifiedAt = c.DateTime(),
+                        DeletedBy = c.String(maxLength: 128),
+                        DeletedAt = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
-                .Index(t => t.BaCode, unique: true);
+                .Index(t => t.BaCode, unique: true)
+                .Index(t => t.DeletedAt);
             
             CreateTable(
                 "dbo.DepartmentInfo",
@@ -85,9 +88,12 @@ namespace BudgetControl.Migrations
                         CreatedAt = c.DateTime(),
                         ModifiedBy = c.String(maxLength: 128),
                         ModifiedAt = c.DateTime(),
+                        DeletedBy = c.String(maxLength: 128),
+                        DeletedAt = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
-                .Index(t => t.LevelCode, unique: true);
+                .Index(t => t.LevelCode, unique: true)
+                .Index(t => t.DeletedAt);
             
             CreateTable(
                 "dbo.PeaInfo",
@@ -101,9 +107,12 @@ namespace BudgetControl.Migrations
                         CreatedAt = c.DateTime(),
                         ModifiedBy = c.String(maxLength: 128),
                         ModifiedAt = c.DateTime(),
+                        DeletedBy = c.String(maxLength: 128),
+                        DeletedAt = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
-                .Index(t => t.PeaCode, unique: true);
+                .Index(t => t.PeaCode, unique: true)
+                .Index(t => t.DeletedAt);
             
             CreateTable(
                 "dbo.PositionInfo",
@@ -117,10 +126,25 @@ namespace BudgetControl.Migrations
                         CreatedAt = c.DateTime(),
                         ModifiedBy = c.String(maxLength: 128),
                         ModifiedAt = c.DateTime(),
+                        DeletedBy = c.String(maxLength: 128),
+                        DeletedAt = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
-                .Index(t => t.PositionCode, unique: true);
+                .Index(t => t.PositionCode, unique: true)
+                .Index(t => t.DeletedAt);
             
+            AddColumn("dbo.Account", "DeletedBy", c => c.String(maxLength: 128));
+            AddColumn("dbo.Account", "DeletedAt", c => c.DateTime());
+            AddColumn("dbo.Budget", "DeletedBy", c => c.String(maxLength: 128));
+            AddColumn("dbo.Budget", "DeletedAt", c => c.DateTime());
+            AddColumn("dbo.BudgetTransaction", "DeletedBy", c => c.String(maxLength: 128));
+            AddColumn("dbo.BudgetTransaction", "DeletedAt", c => c.DateTime());
+            AddColumn("dbo.Payment", "DeletedBy", c => c.String(maxLength: 128));
+            AddColumn("dbo.Payment", "DeletedAt", c => c.DateTime());
+            AddColumn("dbo.Contractor", "DeletedBy", c => c.String(maxLength: 128));
+            AddColumn("dbo.Contractor", "DeletedAt", c => c.DateTime());
+            AddColumn("dbo.CostCenter", "DeletedBy", c => c.String(maxLength: 128));
+            AddColumn("dbo.CostCenter", "DeletedAt", c => c.DateTime());
             AddColumn("dbo.Employee", "PositionCode", c => c.String(maxLength: 4));
             AddColumn("dbo.Employee", "LevelCode", c => c.String(maxLength: 2));
             AddColumn("dbo.Employee", "Email", c => c.String(maxLength: 200));
@@ -133,21 +157,61 @@ namespace BudgetControl.Migrations
             AddColumn("dbo.Employee", "StatusCode", c => c.String(maxLength: 1));
             AddColumn("dbo.Employee", "StatusName", c => c.String(maxLength: 100));
             AddColumn("dbo.Employee", "Group", c => c.Int(nullable: false));
+            AddColumn("dbo.Employee", "DeletedBy", c => c.String(maxLength: 128));
+            AddColumn("dbo.Employee", "DeletedAt", c => c.DateTime());
+            AddColumn("dbo.PaymentCounter", "DeletedBy", c => c.String(maxLength: 128));
+            AddColumn("dbo.PaymentCounter", "DeletedAt", c => c.DateTime());
+            AddColumn("dbo.Statement", "DeletedBy", c => c.String(maxLength: 128));
+            AddColumn("dbo.Statement", "DeletedAt", c => c.DateTime());
             AddColumn("dbo.User", "PasswordHash", c => c.String(maxLength: 500));
+            AddColumn("dbo.User", "DeletedBy", c => c.String(maxLength: 128));
+            AddColumn("dbo.User", "DeletedAt", c => c.DateTime());
+            CreateIndex("dbo.Account", "DeletedAt");
+            CreateIndex("dbo.Budget", "DeletedAt");
+            CreateIndex("dbo.BudgetTransaction", "DeletedAt");
+            CreateIndex("dbo.Payment", "DeletedAt");
+            CreateIndex("dbo.Contractor", "DeletedAt");
+            CreateIndex("dbo.CostCenter", "DeletedAt");
+            CreateIndex("dbo.Employee", "DeletedAt");
+            CreateIndex("dbo.PaymentCounter", "DeletedAt");
+            CreateIndex("dbo.Statement", "DeletedAt");
+            CreateIndex("dbo.User", "DeletedAt");
             DropColumn("dbo.Employee", "Password");
         }
         
         public override void Down()
         {
             AddColumn("dbo.Employee", "Password", c => c.String(maxLength: 32));
+            DropIndex("dbo.User", new[] { "DeletedAt" });
+            DropIndex("dbo.PositionInfo", new[] { "DeletedAt" });
             DropIndex("dbo.PositionInfo", new[] { "PositionCode" });
+            DropIndex("dbo.PeaInfo", new[] { "DeletedAt" });
             DropIndex("dbo.PeaInfo", new[] { "PeaCode" });
+            DropIndex("dbo.LevelInfo", new[] { "DeletedAt" });
             DropIndex("dbo.LevelInfo", new[] { "LevelCode" });
             DropIndex("dbo.DepartmentInfo", new[] { "CostCenterCode" });
             DropIndex("dbo.DepartmentInfo", new[] { "DeptUpper" });
             DropIndex("dbo.DepartmentInfo", new[] { "DeptSap" });
+            DropIndex("dbo.BusinessAreaInfo", new[] { "DeletedAt" });
             DropIndex("dbo.BusinessAreaInfo", new[] { "BaCode" });
+            DropIndex("dbo.Statement", new[] { "DeletedAt" });
+            DropIndex("dbo.PaymentCounter", new[] { "DeletedAt" });
+            DropIndex("dbo.Employee", new[] { "DeletedAt" });
+            DropIndex("dbo.CostCenter", new[] { "DeletedAt" });
+            DropIndex("dbo.Contractor", new[] { "DeletedAt" });
+            DropIndex("dbo.Payment", new[] { "DeletedAt" });
+            DropIndex("dbo.BudgetTransaction", new[] { "DeletedAt" });
+            DropIndex("dbo.Budget", new[] { "DeletedAt" });
+            DropIndex("dbo.Account", new[] { "DeletedAt" });
+            DropColumn("dbo.User", "DeletedAt");
+            DropColumn("dbo.User", "DeletedBy");
             DropColumn("dbo.User", "PasswordHash");
+            DropColumn("dbo.Statement", "DeletedAt");
+            DropColumn("dbo.Statement", "DeletedBy");
+            DropColumn("dbo.PaymentCounter", "DeletedAt");
+            DropColumn("dbo.PaymentCounter", "DeletedBy");
+            DropColumn("dbo.Employee", "DeletedAt");
+            DropColumn("dbo.Employee", "DeletedBy");
             DropColumn("dbo.Employee", "Group");
             DropColumn("dbo.Employee", "StatusName");
             DropColumn("dbo.Employee", "StatusCode");
@@ -160,6 +224,18 @@ namespace BudgetControl.Migrations
             DropColumn("dbo.Employee", "Email");
             DropColumn("dbo.Employee", "LevelCode");
             DropColumn("dbo.Employee", "PositionCode");
+            DropColumn("dbo.CostCenter", "DeletedAt");
+            DropColumn("dbo.CostCenter", "DeletedBy");
+            DropColumn("dbo.Contractor", "DeletedAt");
+            DropColumn("dbo.Contractor", "DeletedBy");
+            DropColumn("dbo.Payment", "DeletedAt");
+            DropColumn("dbo.Payment", "DeletedBy");
+            DropColumn("dbo.BudgetTransaction", "DeletedAt");
+            DropColumn("dbo.BudgetTransaction", "DeletedBy");
+            DropColumn("dbo.Budget", "DeletedAt");
+            DropColumn("dbo.Budget", "DeletedBy");
+            DropColumn("dbo.Account", "DeletedAt");
+            DropColumn("dbo.Account", "DeletedBy");
             DropTable("dbo.PositionInfo");
             DropTable("dbo.PeaInfo");
             DropTable("dbo.LevelInfo");
