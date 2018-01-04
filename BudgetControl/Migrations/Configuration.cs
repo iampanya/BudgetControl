@@ -1,5 +1,6 @@
 namespace BudgetControl.Migrations
 {
+    using BudgetControl.DAL;
     using BudgetControl.Models;
     using BudgetControl.Models.Base;
     using Microsoft.VisualBasic.FileIO;
@@ -12,10 +13,6 @@ namespace BudgetControl.Migrations
 
     internal sealed class Configuration : DbMigrationsConfiguration<BudgetControl.DAL.BudgetContext>
     {
-        List<User> users = new List<User>();
-        List<BudgetTransaction> transactions = new List<BudgetTransaction>();
-        List<Payment> payments = new List<Payment>();
-
         private string basepath = AppDomain.CurrentDomain.BaseDirectory;
         private string path;
 
@@ -24,7 +21,7 @@ namespace BudgetControl.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(BudgetControl.DAL.BudgetContext context)
+        protected override void Seed(BudgetContext context)
         {
 
 
@@ -138,7 +135,7 @@ namespace BudgetControl.Migrations
 
         #region PaymentCounter
 
-        public List<PaymentCounter> GeneratePaymentCounter()
+        private List<PaymentCounter> GeneratePaymentCounter()
         {
             List<PaymentCounter> paymentcounters = new List<PaymentCounter>();
             var costcenters = ReadTextCostCenter();
@@ -243,7 +240,31 @@ namespace BudgetControl.Migrations
 
         #region For migration : MoreEmployeeInfo
 
+        private List<BusinessAreaInfo> ReadTextBA()
+        {
+            List<BusinessAreaInfo> baInfos = new List<BusinessAreaInfo>();
+            path = Path.Combine(basepath, @"Data\BAInfo.txt");
 
+            using (StreamReader reader = new StreamReader(path))
+            {
+                using (TextFieldParser parser = new TextFieldParser(reader))
+                {
+                    parser.TextFieldType = FieldType.Delimited;
+                    parser.SetDelimiters("\t");
+                    while (!parser.EndOfData)
+                    {
+                        string[] fields = parser.ReadFields();
+                        baInfos.Add(new BusinessAreaInfo
+                        {
+                            Id = Guid.NewGuid(),
+                            BaCode = fields[0],
+                            BaName = fields[1]
+                        });
+                    }
+                }
+            }
+            return baInfos;
+        }
 
         #endregion
 
