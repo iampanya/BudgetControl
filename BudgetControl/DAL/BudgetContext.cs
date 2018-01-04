@@ -35,7 +35,6 @@ namespace BudgetControl.DAL
         public DbSet<BusinessAreaInfo> BussinessAreaInfos { get; set; }
         public DbSet<LevelInfo> LevelInfos { get; set; }
         public DbSet<PeaInfo> PeaInfos { get; set; }
-        public DbSet<PositionInfo> PositionInfos { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

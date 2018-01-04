@@ -71,6 +71,7 @@ namespace BudgetControl.Migrations
             #endregion
 
             #region Migration : MoreEmployeeInfo
+
             var baInfos = ReadTextBA();
             baInfos.ForEach(b => context.BussinessAreaInfos.AddOrUpdate(c => c.BaCode, b));
             context.SaveChanges();
@@ -78,11 +79,6 @@ namespace BudgetControl.Migrations
             var peaInfos = ReadTextPeaInfo();
             peaInfos.ForEach(p => context.PeaInfos.AddOrUpdate(c => c.PeaCode, p));
             context.SaveChanges();
-
-            var positionInfos = ReadTextPositionInfo();
-            positionInfos.ForEach(p => context.PositionInfos.AddOrUpdate(c => c.PositionCode, p));
-            context.SaveChanges();
-
             var levelInfos = ReadTextLevelInfo();
             levelInfos.ForEach(l => context.LevelInfos.AddOrUpdate(c => c.LevelCode, l));
             context.SaveChanges();
@@ -344,33 +340,33 @@ namespace BudgetControl.Migrations
             return levelInfos;
         }
 
-        private List<PositionInfo> ReadTextPositionInfo()
-        {
-            List<PositionInfo> positions = new List<PositionInfo>();
-            path = Path.Combine(basepath, @"Data\Position.txt");
+        //private List<PositionInfo> ReadTextPositionInfo()
+        //{
+        //    List<PositionInfo> positions = new List<PositionInfo>();
+        //    path = Path.Combine(basepath, @"Data\Position.txt");
 
-            using (StreamReader reader = new StreamReader(path))
-            {
-                using (TextFieldParser parser = new TextFieldParser(reader))
-                {
-                    parser.TextFieldType = FieldType.Delimited;
-                    parser.SetDelimiters("\t");
-                    while (!parser.EndOfData)
-                    {
-                        string[] fields = parser.ReadFields();
-                        var position = new PositionInfo();
-                        position.Id = Guid.NewGuid();
-                        position.PositionCode = fields[0].Trim();
-                        position.PositionDescShort = fields[1].Trim();
-                        position.PostionDesc = fields[2].Trim();
-                        position.NewCreateTimeStamp("Seed");
-                        positions.Add(position);
-                    }
-                }
-            }
+        //    using (StreamReader reader = new StreamReader(path))
+        //    {
+        //        using (TextFieldParser parser = new TextFieldParser(reader))
+        //        {
+        //            parser.TextFieldType = FieldType.Delimited;
+        //            parser.SetDelimiters("\t");
+        //            while (!parser.EndOfData)
+        //            {
+        //                string[] fields = parser.ReadFields();
+        //                var position = new PositionInfo();
+        //                position.Id = Guid.NewGuid();
+        //                position.PositionCode = fields[0].Trim();
+        //                position.PositionDescShort = fields[1].Trim();
+        //                position.PostionDesc = fields[2].Trim();
+        //                position.NewCreateTimeStamp("Seed");
+        //                positions.Add(position);
+        //            }
+        //        }
+        //    }
 
-            return positions;
-        }
+        //    return positions;
+        //}
 
         #endregion
 

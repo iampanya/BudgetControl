@@ -90,11 +90,21 @@ namespace BudgetControl.Models
         [Display(Name = "ระดับ")]
         public Byte JobLevel { get; set; }
 
+        #region Position and level
+
         [StringLength(4)]
         public string PositionCode { get; set; }
 
+        [StringLength(100)]
+        public string PositionDescShort { get; set; }
+
+        [StringLength(200)]
+        public string PostionDesc { get; set; }
+
         [StringLength(2)]
         public string LevelCode { get; set; }
+
+        #endregion
 
         [StringLength(200)]
         public string Email { get; set; }

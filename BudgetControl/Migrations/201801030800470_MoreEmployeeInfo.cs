@@ -114,25 +114,6 @@ namespace BudgetControl.Migrations
                 .Index(t => t.PeaCode, unique: true)
                 .Index(t => t.DeletedAt);
             
-            CreateTable(
-                "dbo.PositionInfo",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        PositionCode = c.String(maxLength: 4),
-                        PositionDescShort = c.String(maxLength: 100),
-                        PostionDesc = c.String(maxLength: 200),
-                        CreatedBy = c.String(maxLength: 128),
-                        CreatedAt = c.DateTime(),
-                        ModifiedBy = c.String(maxLength: 128),
-                        ModifiedAt = c.DateTime(),
-                        DeletedBy = c.String(maxLength: 128),
-                        DeletedAt = c.DateTime(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.PositionCode, unique: true)
-                .Index(t => t.DeletedAt);
-            
             AddColumn("dbo.Account", "DeletedBy", c => c.String(maxLength: 128));
             AddColumn("dbo.Account", "DeletedAt", c => c.DateTime());
             AddColumn("dbo.Budget", "DeletedBy", c => c.String(maxLength: 128));
@@ -146,6 +127,8 @@ namespace BudgetControl.Migrations
             AddColumn("dbo.CostCenter", "DeletedBy", c => c.String(maxLength: 128));
             AddColumn("dbo.CostCenter", "DeletedAt", c => c.DateTime());
             AddColumn("dbo.Employee", "PositionCode", c => c.String(maxLength: 4));
+            AddColumn("dbo.Employee", "PositionDescShort", c => c.String(maxLength: 100));
+            AddColumn("dbo.Employee", "PostionDesc", c => c.String(maxLength: 200));
             AddColumn("dbo.Employee", "LevelCode", c => c.String(maxLength: 2));
             AddColumn("dbo.Employee", "Email", c => c.String(maxLength: 200));
             AddColumn("dbo.Employee", "DepartmentSap", c => c.Int());
@@ -183,8 +166,6 @@ namespace BudgetControl.Migrations
         {
             AddColumn("dbo.Employee", "Password", c => c.String(maxLength: 32));
             DropIndex("dbo.User", new[] { "DeletedAt" });
-            DropIndex("dbo.PositionInfo", new[] { "DeletedAt" });
-            DropIndex("dbo.PositionInfo", new[] { "PositionCode" });
             DropIndex("dbo.PeaInfo", new[] { "DeletedAt" });
             DropIndex("dbo.PeaInfo", new[] { "PeaCode" });
             DropIndex("dbo.LevelInfo", new[] { "DeletedAt" });
@@ -223,6 +204,8 @@ namespace BudgetControl.Migrations
             DropColumn("dbo.Employee", "DepartmentSap");
             DropColumn("dbo.Employee", "Email");
             DropColumn("dbo.Employee", "LevelCode");
+            DropColumn("dbo.Employee", "PostionDesc");
+            DropColumn("dbo.Employee", "PositionDescShort");
             DropColumn("dbo.Employee", "PositionCode");
             DropColumn("dbo.CostCenter", "DeletedAt");
             DropColumn("dbo.CostCenter", "DeletedBy");
@@ -236,7 +219,6 @@ namespace BudgetControl.Migrations
             DropColumn("dbo.Budget", "DeletedBy");
             DropColumn("dbo.Account", "DeletedAt");
             DropColumn("dbo.Account", "DeletedBy");
-            DropTable("dbo.PositionInfo");
             DropTable("dbo.PeaInfo");
             DropTable("dbo.LevelInfo");
             DropTable("dbo.DepartmentInfo");

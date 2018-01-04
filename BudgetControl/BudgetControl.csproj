@@ -214,7 +214,6 @@
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentCounter.cs" />
     <Compile Include="Models\PeaInfo.cs" />
-    <Compile Include="Models\PositionInfo.cs" />
     <Compile Include="Models\Statement.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
