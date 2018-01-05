@@ -381,6 +381,9 @@
     <Content Include="Data\CostCenter.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\Department.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Employee.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

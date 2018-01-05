@@ -8,6 +8,7 @@ namespace BudgetControl.Migrations
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
 
@@ -79,8 +80,13 @@ namespace BudgetControl.Migrations
             var peaInfos = ReadTextPeaInfo();
             peaInfos.ForEach(p => context.PeaInfos.AddOrUpdate(c => c.PeaCode, p));
             context.SaveChanges();
+
             var levelInfos = ReadTextLevelInfo();
             levelInfos.ForEach(l => context.LevelInfos.AddOrUpdate(c => c.LevelCode, l));
+            context.SaveChanges();
+
+            var departments = ReadTextDepartment();
+            departments.ForEach(d => context.DepartmentInfos.AddOrUpdate(c => c.DeptSap, d));
             context.SaveChanges();
 
             #endregion
@@ -338,6 +344,77 @@ namespace BudgetControl.Migrations
             }
 
             return levelInfos;
+        }
+
+        private List<DepartmentInfo> ReadTextDepartment()
+        {
+            List<DepartmentInfo> departments = new List<DepartmentInfo>();
+            path = Path.Combine(basepath, @"Data\Department.txt");
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                using (TextFieldParser parser = new TextFieldParser(reader))
+                {
+                    parser.TextFieldType = FieldType.Delimited;
+                    parser.SetDelimiters("\t");
+                    while (!parser.EndOfData)
+                    {
+                        string[] fields = parser.ReadFields();
+                        var dept = new DepartmentInfo();
+                        dept.Id = Guid.NewGuid();
+                        dept.DeptSap = Int32.Parse(fields[0].ToString());
+                        dept.DeptUpper = Int32.Parse(fields[1].ToString());
+                        dept.DeptStableCode = fields[2].ToString();
+                        dept.DeptChangeCode = fields[3].ToString();
+                        dept.DeptOldCode = fields[4].ToString();
+
+                        dept.DeptShort = fields[5].ToString();
+                        dept.DeptShort1 = fields[6].ToString();
+                        dept.DeptShort2 = fields[7].ToString();
+                        dept.DeptShort3 = fields[8].ToString();
+                        dept.DeptShort4 = fields[9].ToString();
+                        dept.DeptShort5 = fields[10].ToString();
+                        dept.DeptShort6 = fields[11].ToString();
+                        dept.DeptShort7 = fields[12].ToString();
+
+                        dept.DeptFull = fields[13].ToString();
+                        dept.DeptFull1 = fields[14].ToString();
+                        dept.DeptFull2 = fields[15].ToString();
+                        dept.DeptFull3 = fields[16].ToString();
+                        dept.DeptFull4 = fields[17].ToString();
+                        dept.DeptFull5 = fields[18].ToString();
+                        dept.DeptFull6 = fields[19].ToString();
+                        dept.DeptFull7 = fields[20].ToString();
+
+                        dept.DeptFullEng = fields[21].ToString() == "NULL" ? null : fields[21].ToString();
+                        dept.DeptFullEng1 = fields[22].ToString();
+                        dept.DeptFullEng2 = fields[23].ToString();
+                        dept.DeptFullEng3 = fields[24].ToString();
+                        dept.DeptFullEng4 = fields[25].ToString();
+                        dept.DeptFullEng5 = fields[26].ToString();
+                        dept.DeptFullEng6 = fields[27].ToString();
+                        dept.DeptFullEng7 = fields[28].ToString();
+
+                        dept.DeptStatus = fields[29].ToString();
+                        dept.DeptClass = fields[30].ToString();
+                        dept.DeptArea = fields[31].ToString();
+                        dept.DeptTel = fields[32].ToString();
+                        dept.DeptEffectDate = DateTime.ParseExact(fields[33].ToString().Substring(0, 10), "yyyy-MM-dd", CultureInfo.CurrentCulture);
+                        dept.DeptOrderNo = fields[34].ToString();
+                        dept.DeptEffectOff = fields[35].ToString().ToUpper() == "NULL" ? (DateTime?)null: DateTime.ParseExact(fields[35].ToString(), "yyyy-MM-dd", CultureInfo.CurrentCulture);
+                        dept.DeptAt = fields[36].ToString();
+                        dept.DeptMoiCode = fields[37].ToString();
+                        dept.CostCenterCode = fields[38].ToString();
+                        dept.CostCenterName = fields[39].ToString();
+                        dept.DeptOrder = fields[40].ToString();
+
+                        dept.NewCreateTimeStamp("Seed");
+                        departments.Add(dept);
+                    }
+                }
+            }
+
+            return departments;
         }
 
         //private List<PositionInfo> ReadTextPositionInfo()

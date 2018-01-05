@@ -71,11 +71,18 @@ namespace BudgetControl.Migrations
                         CostCenterCode = c.String(maxLength: 10),
                         CostCenterName = c.String(maxLength: 200),
                         DeptOrder = c.String(maxLength: 2),
+                        CreatedBy = c.String(maxLength: 128),
+                        CreatedAt = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 128),
+                        ModifiedAt = c.DateTime(),
+                        DeletedBy = c.String(maxLength: 128),
+                        DeletedAt = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.DeptSap, unique: true)
                 .Index(t => t.DeptUpper)
-                .Index(t => t.CostCenterCode);
+                .Index(t => t.CostCenterCode)
+                .Index(t => t.DeletedAt);
             
             CreateTable(
                 "dbo.LevelInfo",
@@ -170,6 +177,7 @@ namespace BudgetControl.Migrations
             DropIndex("dbo.PeaInfo", new[] { "PeaCode" });
             DropIndex("dbo.LevelInfo", new[] { "DeletedAt" });
             DropIndex("dbo.LevelInfo", new[] { "LevelCode" });
+            DropIndex("dbo.DepartmentInfo", new[] { "DeletedAt" });
             DropIndex("dbo.DepartmentInfo", new[] { "CostCenterCode" });
             DropIndex("dbo.DepartmentInfo", new[] { "DeptUpper" });
             DropIndex("dbo.DepartmentInfo", new[] { "DeptSap" });
