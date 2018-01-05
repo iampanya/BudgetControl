@@ -381,6 +381,7 @@
     <Content Include="Data\CostCenter.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\CostCenter_20180101.txt" />
     <Content Include="Data\Department.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
