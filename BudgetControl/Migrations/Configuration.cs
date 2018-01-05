@@ -71,6 +71,7 @@ namespace BudgetControl.Migrations
 
             #endregion
 
+
             #region Migration : MoreEmployeeInfo
 
             var baInfos = ReadTextBA();
@@ -87,6 +88,10 @@ namespace BudgetControl.Migrations
 
             var departments = ReadTextDepartment();
             departments.ForEach(d => context.DepartmentInfos.AddOrUpdate(c => c.DeptSap, d));
+            context.SaveChanges();
+
+            var employees = ReadTextEmployeeIDM();
+            employees.ForEach(e => context.Employees.AddOrUpdate(c => c.EmployeeID, e));
             context.SaveChanges();
 
             #endregion
@@ -417,33 +422,58 @@ namespace BudgetControl.Migrations
             return departments;
         }
 
-        //private List<PositionInfo> ReadTextPositionInfo()
-        //{
-        //    List<PositionInfo> positions = new List<PositionInfo>();
-        //    path = Path.Combine(basepath, @"Data\Position.txt");
+        private List<Employee> ReadTextEmployeeIDM()
+        {
+            List<Employee> employees = new List<Employee>();
+            path = Path.Combine(basepath, @"Data\Employee_20180101.txt");
 
-        //    using (StreamReader reader = new StreamReader(path))
-        //    {
-        //        using (TextFieldParser parser = new TextFieldParser(reader))
-        //        {
-        //            parser.TextFieldType = FieldType.Delimited;
-        //            parser.SetDelimiters("\t");
-        //            while (!parser.EndOfData)
-        //            {
-        //                string[] fields = parser.ReadFields();
-        //                var position = new PositionInfo();
-        //                position.Id = Guid.NewGuid();
-        //                position.PositionCode = fields[0].Trim();
-        //                position.PositionDescShort = fields[1].Trim();
-        //                position.PostionDesc = fields[2].Trim();
-        //                position.NewCreateTimeStamp("Seed");
-        //                positions.Add(position);
-        //            }
-        //        }
-        //    }
+            using (StreamReader reader = new StreamReader(path))
+            {
+                using (TextFieldParser parser = new TextFieldParser(reader))
+                {
+                    parser.TextFieldType = FieldType.Delimited;
+                    parser.SetDelimiters("\t");
+                    while (!parser.EndOfData)
+                    {
+                        string[] fields = parser.ReadFields();
+                        var emp = new Employee();
+                        emp.EmployeeID = fields[0].ToString().TrimStart(new char[] { '0' });
+                        emp.TitleName = fields[1].ToString();
+                        emp.FirstName = fields[2].ToString();
+                        emp.LastName = fields[3].ToString();
 
-        //    return positions;
-        //}
+                        emp.PositionCode = fields[4].ToString();
+                        emp.PositionDescShort = fields[5].ToString();
+                        emp.PostionDesc = fields[6].ToString();
+                        emp.LevelCode = fields[7].ToString();
+                        emp.Email = fields[8].ToString();
+                        int deptsap;
+                        emp.DepartmentSap = Int32.TryParse(fields[9].ToString(), out deptsap) ? (int?)deptsap : null;
+                        emp.StaffDate = fields[10].ToString();
+                        emp.EntryDate = fields[11].ToString();
+                        emp.RetiredDate = fields[12].ToString();
+                        emp.BaCode = fields[13].ToString();
+                        emp.PeaCode = fields[14].ToString();
+                        emp.StatusCode = fields[15].ToString();
+                        emp.StatusName = fields[16].ToString();
+
+                        EmployeeGroup employeeGroup;
+                        emp.Group = Enum.TryParse<EmployeeGroup>(fields[17].ToString(), out employeeGroup) ? employeeGroup : EmployeeGroup.None;
+                        emp.CostCenterID = fields[18].ToString();
+
+                        emp.JobTitle = emp.PositionDescShort;
+                        emp.JobLevel = 9;
+                        emp.Status = RecordStatus.Active;
+                        emp.NewModifyTimeStamp("Seed");
+
+
+                        employees.Add(emp);
+                    }
+                }
+            }
+
+            return employees;
+        }
 
         #endregion
 
