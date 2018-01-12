@@ -585,14 +585,15 @@ namespace BudgetControl.Controllers
                     }
                 }
 
-                StringBuilder csvFile = new StringBuilder();
-                foreach (var budget in budgets)
-                {
-                    csvFile.Append(budget.AccountID + "," + budget.CostCenterID + "," + budget.BudgetAmount);
-                    csvFile.Append(Environment.NewLine);
-                }
+                //// Write to file
+                //StringBuilder csvFile = new StringBuilder();
+                //foreach (var budget in budgets)
+                //{
+                //    csvFile.Append(budget.AccountID + "," + budget.CostCenterID + "," + budget.BudgetAmount);
+                //    csvFile.Append(Environment.NewLine);
+                //}
 
-                System.IO.File.WriteAllText(@"C:/budget.txt", csvFile.ToString());
+                //System.IO.File.WriteAllText(@"C:/budget.txt", csvFile.ToString());
 
                 //3.Save to database
                 using (var context = new BudgetContext())
