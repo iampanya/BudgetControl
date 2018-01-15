@@ -74,25 +74,21 @@ namespace BudgetControl.Migrations
 
             #region Migration : MoreEmployeeInfo
 
-            //var baInfos = ReadTextBA();
-            //baInfos.ForEach(b => context.BussinessAreaInfos.AddOrUpdate(c => c.BaCode, b));
-            //context.SaveChanges();
+            var baInfos = ReadTextBA();
+            baInfos.ForEach(b => context.BussinessAreaInfos.AddOrUpdate(c => c.BaCode, b));
+            context.SaveChanges();
 
-            //var peaInfos = ReadTextPeaInfo();
-            //peaInfos.ForEach(p => context.PeaInfos.AddOrUpdate(c => c.PeaCode, p));
-            //context.SaveChanges();
+            var peaInfos = ReadTextPeaInfo();
+            peaInfos.ForEach(p => context.PeaInfos.AddOrUpdate(c => c.PeaCode, p));
+            context.SaveChanges();
 
-            //var levelInfos = ReadTextLevelInfo();
-            //levelInfos.ForEach(l => context.LevelInfos.AddOrUpdate(c => c.LevelCode, l));
-            //context.SaveChanges();
+            var levelInfos = ReadTextLevelInfo();
+            levelInfos.ForEach(l => context.LevelInfos.AddOrUpdate(c => c.LevelCode, l));
+            context.SaveChanges();
 
-            //var departments = ReadTextDepartment();
-            //departments.ForEach(d => context.DepartmentInfos.AddOrUpdate(c => c.DeptSap, d));
-            //context.SaveChanges();
-
-            //var costcenters = ReadTextCostCenter_2018();
-            //costcenters.ForEach(a => context.CostCenters.AddOrUpdate(c => c.CostCenterID, a));
-            //context.SaveChanges();
+            var departments = ReadTextDepartment();
+            departments.ForEach(d => context.DepartmentInfos.AddOrUpdate(c => c.DeptSap, d));
+            context.SaveChanges();
 
             var costcenters = ReadTextCostCenter_2018();
             costcenters.ForEach(a => context.CostCenters.AddOrUpdate(c => c.CostCenterID, a));
@@ -498,15 +494,15 @@ namespace BudgetControl.Migrations
                     {
                         string[] fields = parser.ReadFields();
                         var costcenter = new CostCenter();
-                        if (!fields[1].ToString().Contains("ยกเลิก"))
-                        {
+                        //if (!fields[1].ToString().Contains("ยกเลิก"))
+                        //{
                             costcenter.CostCenterID = fields[0].ToString();
                             costcenter.CostCenterName = fields[1].ToString();
                             costcenter.ShortName = fields[1].ToString().Split(new char[] { '-' })[0];
                             costcenter.Status = RecordStatus.Active;
                             costcenter.NewCreateTimeStamp("Seed");
                             costcenters.Add(costcenter);
-                        }
+                        //}
                     }
                 }
             }
