@@ -851,15 +851,19 @@ namespace BudgetControl.Controllers
             {
                 List<CostCenter> costcenters;
                 CostCenter working = AuthManager.GetWorkingCostCenter();
-                using (var ccRepo = new CostCenterRepository())
-                {
-                    costcenters = ccRepo.Get()
-                        .Where(c =>
-                            c.CostCenterID.StartsWith(working.CostCenterTrim) &&
-                            c.Status == RecordStatus.Active
-                        ).OrderBy(c => c.CostCenterID).ToList();
-                }
+                CostCenterManager ccaManager = new CostCenterManager();
+                costcenters = ccaManager.GetWithChildren(working.CostCenterID);
                 returnobj.SetSuccess(costcenters);
+
+                //using (var ccRepo = new CostCenterRepository())
+                //{
+                //    costcenters = ccRepo.Get()
+                //        .Where(c =>
+                //            c.CostCenterID.StartsWith(working.CostCenterTrim) &&
+                //            c.Status == RecordStatus.Active
+                //        ).OrderBy(c => c.CostCenterID).ToList();
+                //}
+                //
             }
             catch (Exception ex)
             {
