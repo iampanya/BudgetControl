@@ -171,6 +171,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Manager\AuthorizeManager.cs" />
     <Compile Include="Manager\BudgetManager.cs" />
     <Compile Include="Manager\BudgetTransactionManager.cs" />
     <Compile Include="Manager\ContractorManager.cs" />
