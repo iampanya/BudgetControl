@@ -100,6 +100,10 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
         vm.deleteBudget = deleteBudget;
         vm.getBudgetData = getBudgetData;
 
+        vm.canEdit = false;
+        if (authInfo.getWorkingCostCenter().CostCenterID == 'H301022010')
+            vm.canEdit = true;
+
         initialData();
 
         function initialData() {

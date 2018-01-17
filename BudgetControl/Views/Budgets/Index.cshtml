@@ -80,7 +80,7 @@
                             <a ui-sref="viewbudget({ id: budget.BudgetID })" title="รายละเอียด">
                                 <i class="fa fa-list" aria-hidden="true"></i>
                             </a>
-                            <span ng-if="budget.isAdmin">
+                            <span ng-if="vm.canEdit">
                                 |
                                 <a ui-sref="editbudget({ id: budget.BudgetID })" title="แก้ไข">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
