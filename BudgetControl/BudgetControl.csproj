@@ -202,6 +202,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AuthorizeCostCenter.cs" />
     <Compile Include="Models\Base\IRecordTimeStamp.cs" />
     <Compile Include="Models\Base\RecordTimeStamp.cs" />
     <Compile Include="Models\Budget.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Models\PeaInfo.cs" />
     <Compile Include="Models\Statement.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\WorkingCC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sessions\SessionItems.cs" />
     <Compile Include="Sessions\AuthManger.cs" />
@@ -371,6 +373,9 @@
     <Content Include="Content\Loader.css" />
     <Content Include="Content\ngProgress.css" />
     <Content Include="Data\Account.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Authorize_CostCenter.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\BAInfo.txt">

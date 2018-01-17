@@ -74,28 +74,32 @@ namespace BudgetControl.Migrations
 
             #region Migration : MoreEmployeeInfo
 
-            var baInfos = ReadTextBA();
-            baInfos.ForEach(b => context.BussinessAreaInfos.AddOrUpdate(c => c.BaCode, b));
-            context.SaveChanges();
+            //var baInfos = ReadTextBA();
+            //baInfos.ForEach(b => context.BussinessAreaInfos.AddOrUpdate(c => c.BaCode, b));
+            //context.SaveChanges();
 
-            var peaInfos = ReadTextPeaInfo();
-            peaInfos.ForEach(p => context.PeaInfos.AddOrUpdate(c => c.PeaCode, p));
-            context.SaveChanges();
+            //var peaInfos = ReadTextPeaInfo();
+            //peaInfos.ForEach(p => context.PeaInfos.AddOrUpdate(c => c.PeaCode, p));
+            //context.SaveChanges();
 
-            var levelInfos = ReadTextLevelInfo();
-            levelInfos.ForEach(l => context.LevelInfos.AddOrUpdate(c => c.LevelCode, l));
-            context.SaveChanges();
+            //var levelInfos = ReadTextLevelInfo();
+            //levelInfos.ForEach(l => context.LevelInfos.AddOrUpdate(c => c.LevelCode, l));
+            //context.SaveChanges();
 
-            var departments = ReadTextDepartment();
-            departments.ForEach(d => context.DepartmentInfos.AddOrUpdate(c => c.DeptSap, d));
-            context.SaveChanges();
+            //var departments = ReadTextDepartment();
+            //departments.ForEach(d => context.DepartmentInfos.AddOrUpdate(c => c.DeptSap, d));
+            //context.SaveChanges();
 
-            var costcenters = ReadTextCostCenter_2018();
-            costcenters.ForEach(a => context.CostCenters.AddOrUpdate(c => c.CostCenterID, a));
-            context.SaveChanges();
+            //var costcenters = ReadTextCostCenter_2018();
+            //costcenters.ForEach(a => context.CostCenters.AddOrUpdate(c => c.CostCenterID, a));
+            //context.SaveChanges();
 
-            var employees = ReadTextEmployeeIDM();
-            employees.ForEach(e => context.Employees.AddOrUpdate(c => c.EmployeeID, e));
+            //var employees = ReadTextEmployeeIDM();
+            //employees.ForEach(e => context.Employees.AddOrUpdate(c => c.EmployeeID, e));
+            //context.SaveChanges();
+
+            var authorizes = InitAuthorizeCostCenter();
+            authorizes.ForEach(e => context.AuthorizeCostCenters.AddOrUpdate(c => new { c.CostCenterCode, c.Condition, c.CCAStart, c.CCAEnd }, e));
             context.SaveChanges();
 
             #endregion
@@ -509,6 +513,48 @@ namespace BudgetControl.Migrations
 
             return costcenters;
 
+        }
+
+        private List<AuthorizeCostCenter> InitAuthorizeCostCenter()
+        {
+            List<AuthorizeCostCenter> authorizes = new List<AuthorizeCostCenter>();
+
+            path = Path.Combine(basepath, @"Data\Authorize_CostCenter.txt");
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                using (TextFieldParser parser = new TextFieldParser(reader))
+                {
+                    parser.TextFieldType = FieldType.Delimited;
+                    parser.SetDelimiters("\t");
+                    while (!parser.EndOfData)
+                    {
+                        string[] fields = parser.ReadFields();
+                        var authorize = new AuthorizeCostCenter();
+                        authorize.Id = Guid.NewGuid();
+                        authorize.AuthorizeType = AuthorizeType.CostCenter;
+                        authorize.CostCenterCode = fields[1].ToString();
+                        authorize.Condition = ConditionType.ExactMatch;
+                        authorize.CCAStart = fields[3].ToString();
+                        authorize.CCAEnd = fields[4].ToString();
+
+                        authorize.CanView = true;
+                        authorize.CanEdit = true;
+                        authorize.CanWithdraw = true;
+                        authorize.CanDelete = true;
+
+                        //authorize.CanView = Boolean.Parse(fields[5].ToString());
+                        //authorize.CanEdit = Boolean.Parse(fields[6].ToString());
+                        //authorize.CanWithdraw = Boolean.Parse(fields[7].ToString());
+                        //authorize.CanDelete = Boolean.Parse(fields[8].ToString());
+
+                        authorize.NewCreateTimeStamp("Seed");
+                        authorizes.Add(authorize);
+                    }
+                }
+            }
+
+            return authorizes;
         }
 
         #endregion

@@ -36,6 +36,9 @@ namespace BudgetControl.DAL
         public DbSet<LevelInfo> LevelInfos { get; set; }
         public DbSet<PeaInfo> PeaInfos { get; set; }
 
+        public DbSet<AuthorizeCostCenter> AuthorizeCostCenters { get; set; }
+        public DbSet<WorkingCC> WorkingCCs { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -8,6 +8,34 @@ namespace BudgetControl.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.AuthorizeCostCenter",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        AuthorizeType = c.Int(nullable: false),
+                        EmployeeNo = c.String(maxLength: 8),
+                        CostCenterCode = c.String(maxLength: 10),
+                        Condition = c.Int(nullable: false),
+                        CCAStart = c.String(maxLength: 10),
+                        CCAEnd = c.String(maxLength: 10),
+                        CanView = c.Boolean(nullable: false),
+                        CanWithdraw = c.Boolean(nullable: false),
+                        CanEdit = c.Boolean(nullable: false),
+                        CanDelete = c.Boolean(nullable: false),
+                        AuthorizeCode = c.String(maxLength: 32),
+                        CreatedBy = c.String(maxLength: 128),
+                        CreatedAt = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 128),
+                        ModifiedAt = c.DateTime(),
+                        DeletedBy = c.String(maxLength: 128),
+                        DeletedAt = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.EmployeeNo)
+                .Index(t => t.CostCenterCode)
+                .Index(t => t.DeletedAt);
+            
+            CreateTable(
                 "dbo.BusinessAreaInfo",
                 c => new
                     {
@@ -121,6 +149,26 @@ namespace BudgetControl.Migrations
                 .Index(t => t.PeaCode, unique: true)
                 .Index(t => t.DeletedAt);
             
+            CreateTable(
+                "dbo.WorkingCC",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        EmployeeNo = c.String(maxLength: 8),
+                        Condition = c.Int(nullable: false),
+                        CCAStart = c.String(maxLength: 10),
+                        CCAEnd = c.String(maxLength: 10),
+                        CreatedBy = c.String(maxLength: 128),
+                        CreatedAt = c.DateTime(),
+                        ModifiedBy = c.String(maxLength: 128),
+                        ModifiedAt = c.DateTime(),
+                        DeletedBy = c.String(maxLength: 128),
+                        DeletedAt = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.EmployeeNo)
+                .Index(t => t.DeletedAt);
+            
             AddColumn("dbo.Account", "DeletedBy", c => c.String(maxLength: 128));
             AddColumn("dbo.Account", "DeletedAt", c => c.DateTime());
             AddColumn("dbo.Budget", "DeletedBy", c => c.String(maxLength: 128));
@@ -172,6 +220,8 @@ namespace BudgetControl.Migrations
         public override void Down()
         {
             AddColumn("dbo.Employee", "Password", c => c.String(maxLength: 32));
+            DropIndex("dbo.WorkingCC", new[] { "DeletedAt" });
+            DropIndex("dbo.WorkingCC", new[] { "EmployeeNo" });
             DropIndex("dbo.User", new[] { "DeletedAt" });
             DropIndex("dbo.PeaInfo", new[] { "DeletedAt" });
             DropIndex("dbo.PeaInfo", new[] { "PeaCode" });
@@ -183,6 +233,9 @@ namespace BudgetControl.Migrations
             DropIndex("dbo.DepartmentInfo", new[] { "DeptSap" });
             DropIndex("dbo.BusinessAreaInfo", new[] { "DeletedAt" });
             DropIndex("dbo.BusinessAreaInfo", new[] { "BaCode" });
+            DropIndex("dbo.AuthorizeCostCenter", new[] { "DeletedAt" });
+            DropIndex("dbo.AuthorizeCostCenter", new[] { "CostCenterCode" });
+            DropIndex("dbo.AuthorizeCostCenter", new[] { "EmployeeNo" });
             DropIndex("dbo.Statement", new[] { "DeletedAt" });
             DropIndex("dbo.PaymentCounter", new[] { "DeletedAt" });
             DropIndex("dbo.Employee", new[] { "DeletedAt" });
@@ -227,10 +280,12 @@ namespace BudgetControl.Migrations
             DropColumn("dbo.Budget", "DeletedBy");
             DropColumn("dbo.Account", "DeletedAt");
             DropColumn("dbo.Account", "DeletedBy");
+            DropTable("dbo.WorkingCC");
             DropTable("dbo.PeaInfo");
             DropTable("dbo.LevelInfo");
             DropTable("dbo.DepartmentInfo");
             DropTable("dbo.BusinessAreaInfo");
+            DropTable("dbo.AuthorizeCostCenter");
         }
     }
 }
