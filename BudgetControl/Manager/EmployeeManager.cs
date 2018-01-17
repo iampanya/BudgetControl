@@ -27,6 +27,25 @@ namespace BudgetControl.Manager
 
         #endregion
 
+        #region Read
+
+        public List<Employee> GetInCostcenter(string costcenterid)
+        {
+            List<Employee> employees = new List<Employee>();
+
+
+            return employees;
+        }
+
+        public List<Employee> GetInCostcenterWithChildren(string costcenterid)
+        {
+            List<Employee> employees = new List<Employee>();
+
+
+            return employees;
+        }
+
+        #endregion
 
         #region Update
 
