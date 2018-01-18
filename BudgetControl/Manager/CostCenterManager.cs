@@ -57,7 +57,7 @@ namespace BudgetControl.Manager
                     WHERE CostCenterID IN ( 
 	                    SELECT CostCenterCode
 	                    FROM DepartmentInfo 
-	                    WHERE DeptChangeCode LIKE CONCAT(REPLACE(RTRIM(REPLACE(@DeptCode,'0',' ')),' ','0') , '%') 
+	                    WHERE DeptChangeCode LIKE REPLACE(RTRIM(REPLACE(@DeptCode,'0',' ')),' ','0') + '%'
                     ) AND Status = 1
                 ";
 
