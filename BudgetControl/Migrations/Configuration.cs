@@ -74,29 +74,29 @@ namespace BudgetControl.Migrations
 
             #region Migration : MoreEmployeeInfo
 
-            //var baInfos = ReadTextBA();
-            //baInfos.ForEach(b => context.BussinessAreaInfos.AddOrUpdate(c => c.BaCode, b));
-            //context.SaveChanges();
+            var baInfos = ReadTextBA();
+            baInfos.ForEach(b => context.BussinessAreaInfos.AddOrUpdate(c => c.BaCode, b));
+            context.SaveChanges();
 
-            //var peaInfos = ReadTextPeaInfo();
-            //peaInfos.ForEach(p => context.PeaInfos.AddOrUpdate(c => c.PeaCode, p));
-            //context.SaveChanges();
+            var peaInfos = ReadTextPeaInfo();
+            peaInfos.ForEach(p => context.PeaInfos.AddOrUpdate(c => c.PeaCode, p));
+            context.SaveChanges();
 
-            //var levelInfos = ReadTextLevelInfo();
-            //levelInfos.ForEach(l => context.LevelInfos.AddOrUpdate(c => c.LevelCode, l));
-            //context.SaveChanges();
+            var levelInfos = ReadTextLevelInfo();
+            levelInfos.ForEach(l => context.LevelInfos.AddOrUpdate(c => c.LevelCode, l));
+            context.SaveChanges();
 
-            //var departments = ReadTextDepartment();
-            //departments.ForEach(d => context.DepartmentInfos.AddOrUpdate(c => c.DeptSap, d));
-            //context.SaveChanges();
+            var departments = ReadTextDepartment();
+            departments.ForEach(d => context.DepartmentInfos.AddOrUpdate(c => c.DeptSap, d));
+            context.SaveChanges();
 
-            //var costcenters = ReadTextCostCenter_2018();
-            //costcenters.ForEach(a => context.CostCenters.AddOrUpdate(c => c.CostCenterID, a));
-            //context.SaveChanges();
+            var costcenters = ReadTextCostCenter_2018();
+            costcenters.ForEach(a => context.CostCenters.AddOrUpdate(c => c.CostCenterID, a));
+            context.SaveChanges();
 
-            //var employees = ReadTextEmployeeIDM();
-            //employees.ForEach(e => context.Employees.AddOrUpdate(c => c.EmployeeID, e));
-            //context.SaveChanges();
+            var employees = ReadTextEmployeeIDM();
+            employees.ForEach(e => context.Employees.AddOrUpdate(c => c.EmployeeID, e));
+            context.SaveChanges();
 
             var authorizes = InitAuthorizeCostCenter();
             authorizes.ForEach(e => context.AuthorizeCostCenters.AddOrUpdate(c => new { c.CostCenterCode, c.Condition, c.CCAStart, c.CCAEnd }, e));
