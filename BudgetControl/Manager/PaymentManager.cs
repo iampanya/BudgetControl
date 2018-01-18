@@ -1,8 +1,11 @@
 ﻿using BudgetControl.DAL;
 using BudgetControl.Models;
+using BudgetControl.Models.Base;
+using BudgetControl.Sessions;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +14,20 @@ namespace BudgetControl.Manager
     public class PaymentManager
     {
         private BudgetContext _db;
+
+        #region Sql Command
+
+        private string cmd_payment_summary =
+            @"
+                SELECT * 
+                FROM Payment p
+                WHERE CostCenterID = @CostCenterID
+	                AND Year = @Year
+	                AND Status = 1
+                ORDER BY p.PaymentNo DESC
+            ";
+
+        #endregion
 
         #region Constructor
 
@@ -30,6 +47,79 @@ namespace BudgetControl.Manager
 
         public Payment Payment { get; set; }
 
+        #endregion
+
+
+        #region Read
+
+        public IEnumerable<Payment> GetOverall(string year, string costcenterid)
+        {
+            List<Payment> payments = new List<Payment>();
+
+            using (SqlConnection conn = new SqlConnection(SqlManager.ConnectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(cmd_payment_summary, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Year", year);
+                    cmd.Parameters.AddWithValue("@CostCenterID", costcenterid);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Payment payment = new Payment();
+                            payment.PaymentID = Guid.Parse(reader["PaymentID"].ToString());
+                            payment.CostCenterID = reader["CostCenterID"].ToString();
+                            payment.Year = reader["Year"].ToString();
+                            payment.PaymentNo = reader["PaymentNo"].ToString();
+                            payment.Sequence = Int32.Parse(reader["Sequece"].ToString());
+                            payment.Description = reader["Sequence"].ToString();
+                            payment.RequestBy = reader["RequestBy"].ToString();
+                            payment.PaymentDate = DateTime.Parse(reader["PaymentDate"].ToString());
+                            payment.TotalAmount = Decimal.Parse(reader["TotalAmount"].ToString());
+                            RecordStatus status;
+                            payment.Status = Enum.TryParse<RecordStatus>(reader["Status"].ToString(), out status) ? status : RecordStatus.Remove;
+                            PaymentType type;
+                            payment.Type = Enum.TryParse<PaymentType>(reader["Type"].ToString(), out type) ? type : PaymentType.Internal;
+
+
+                            payments.Add(payment);
+                        }
+                    }
+                }
+
+
+            }
+
+                return payments;
+        }
+
+
+        public IEnumerable<Payment> GetOverall_Old()
+        {
+            CostCenter working;
+            List<Payment> payments;
+
+            // 1. Get working costcenter.
+            working = AuthManager.GetWorkingCostCenter();
+
+            // 2. Get payment data.
+            using (PaymentRepository paymentRepo = new PaymentRepository())
+            {
+                payments = paymentRepo.Get()
+                    .Where(
+                        p =>
+                            p.CostCenterID.StartsWith(working.CostCenterTrim)
+                            && p.Status == RecordStatus.Active
+                    )
+                    .OrderBy(p => p.PaymentDate)
+                    .ToList();
+
+            }
+            return payments;
+        }
         #endregion
 
         #region Methods
