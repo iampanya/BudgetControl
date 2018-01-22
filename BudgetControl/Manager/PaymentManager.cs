@@ -74,7 +74,7 @@ namespace BudgetControl.Manager
                             payment.CostCenterID = reader["CostCenterID"].ToString();
                             payment.Year = reader["Year"].ToString();
                             payment.PaymentNo = reader["PaymentNo"].ToString();
-                            payment.Sequence = Int32.Parse(reader["Sequece"].ToString());
+                            payment.Sequence = Int32.Parse(reader["Sequence"].ToString());
                             payment.Description = reader["Sequence"].ToString();
                             payment.RequestBy = reader["RequestBy"].ToString();
                             payment.PaymentDate = DateTime.Parse(reader["PaymentDate"].ToString());
@@ -86,7 +86,7 @@ namespace BudgetControl.Manager
                             PaymentType type;
                             payment.Type = Enum.TryParse<PaymentType>(reader["Type"].ToString(), out type) ? type : PaymentType.Internal;
 
-                            payment.ContractorID = reader.GetGuid(reader.GetOrdinal("ContractorID"));
+                            payment.ContractorID = reader.IsDBNull(reader.GetOrdinal("ContractorID")) ? null : (Guid?) reader.GetGuid(reader.GetOrdinal("ContractorID"));
                             
                             
                             payments.Add(payment);
