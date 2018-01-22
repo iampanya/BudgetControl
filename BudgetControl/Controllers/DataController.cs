@@ -49,29 +49,20 @@ namespace BudgetControl.Controllers
         #region Payment
 
         [HttpGet]
-        private ActionResult Payments()
+        private ActionResult Payments(string year, string costcenterid)
         {
             try
             {
                 CostCenter working;
                 List<Payment> payments;
+                PaymentManager pManager = new PaymentManager();
 
                 // 1. Get working costcenter.
                 working = AuthManager.GetWorkingCostCenter();
 
-                // 2. Get payment data.
-                using (PaymentRepository paymentRepo = new PaymentRepository())
-                {
-                    payments = paymentRepo.Get()
-                        .Where(
-                            p =>
-                                p.CostCenterID.StartsWith(working.CostCenterTrim)
-                                && p.Status == RecordStatus.Active
-                        )
-                        .OrderBy(p => p.PaymentDate)
-                        .ToList();
-
-                }
+                // 2. Get Payment data
+                payments = pManager.GetOverall(year, costcenterid).ToList();
+               
                 // 3. Set Return result
                 returnobj.SetSuccess(payments);
 
@@ -88,14 +79,14 @@ namespace BudgetControl.Controllers
         }
 
         [HttpGet]
-        public ActionResult Payment(string id)
+        public ActionResult Payment(string id, string year, string costcenterid)
         {
             Payment payment;
             List<BudgetTransaction> transactions = new List<BudgetTransaction>();
             // 1. If id is null or empty, then return all payments.
             if (String.IsNullOrEmpty(id))
             {
-                return Payments();
+                return Payments(year, costcenterid);
             }
 
             // 2. Get payment by id
