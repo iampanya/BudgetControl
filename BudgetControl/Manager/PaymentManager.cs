@@ -79,12 +79,16 @@ namespace BudgetControl.Manager
                             payment.RequestBy = reader["RequestBy"].ToString();
                             payment.PaymentDate = DateTime.Parse(reader["PaymentDate"].ToString());
                             payment.TotalAmount = Decimal.Parse(reader["TotalAmount"].ToString());
+
                             RecordStatus status;
                             payment.Status = Enum.TryParse<RecordStatus>(reader["Status"].ToString(), out status) ? status : RecordStatus.Remove;
+
                             PaymentType type;
                             payment.Type = Enum.TryParse<PaymentType>(reader["Type"].ToString(), out type) ? type : PaymentType.Internal;
 
-
+                            payment.ContractorID = reader.GetGuid(reader.GetOrdinal("ContractorID"));
+                            
+                            
                             payments.Add(payment);
                         }
                     }
