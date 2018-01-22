@@ -75,7 +75,7 @@ namespace BudgetControl.Manager
                             payment.Year = reader["Year"].ToString();
                             payment.PaymentNo = reader["PaymentNo"].ToString();
                             payment.Sequence = Int32.Parse(reader["Sequence"].ToString());
-                            payment.Description = reader["Sequence"].ToString();
+                            payment.Description = reader["Description"].ToString();
                             payment.RequestBy = reader["RequestBy"].ToString();
                             payment.PaymentDate = DateTime.Parse(reader["PaymentDate"].ToString());
                             payment.TotalAmount = Decimal.Parse(reader["TotalAmount"].ToString());
