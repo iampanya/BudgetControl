@@ -19,7 +19,11 @@
                     ปีงบประมาณ:
                 </span>
                 <span class="col-md-6">
-                    <select class="form-control input-sm" ng-model="vm.year" ng-options="c.Year as c.Year for c in vm.years | orderBy:'Year'"></select>
+                    <select class="form-control input-sm" 
+                            ng-model="vm.year" 
+                            ng-options="y as y for y in vm.years"
+                            ng-change="vm.getPaymentData();">
+                    </select>
                 </span>
             </h3>
         </div>
@@ -30,7 +34,12 @@
                 ศูนย์ต้นทุน:
             </span>
             <span class="col-md-8">
-                <select class="form-control input-sm" ng-model="vm.costcenter" ng-options="c.CostCenterID as c.CostCenterName for c in vm.costcenters"></select>
+                <select class="form-control input-sm" 
+                        ng-model="vm.costcenter" 
+                        ng-options="c.CostCenterID as c.CostCenterName for c in vm.costcenters"
+                        ng-change="vm.getPaymentData();">
+
+                </select>
             </span>
         </h3>
     </div>
@@ -86,7 +95,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="payment in vm.payments | filter: { Year: vm.year } | filter:{ CostCenterID : vm.costcenter} | filter: vm.filter | orderBy: vm.propertyName: vm.reverse">
+        <tr ng-repeat="payment in vm.payments |  orderBy: vm.propertyName: vm.reverse">
             <td class="text-center"> {{ $index + 1 }} </td>
             <td class="text-center"> {{ payment.PaymentNo }}</td>
             <td> {{ payment.Description }} </td>

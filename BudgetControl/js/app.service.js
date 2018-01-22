@@ -24,7 +24,7 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
     }
 
     api.payment = function () {
-        return $resource('data/payment/:id', null, {
+        return $resource('data/payment/:id?year=:year&costcenterid=:costcenterid', null, {
             'save': { method: 'POST' },
             'update': { method: 'PUT' },
             'remove': { method: 'DELETE'}

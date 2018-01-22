@@ -17,43 +17,64 @@
         vm.year = '';
         vm.filter = '';
 
+
+        vm.deletePayment = deletePayment;
+        vm.sortBy = sortBy;
+        vm.getPaymentData = getPaymentData;
+
         // Default sort by PaymentNO Desc
         vm.reverse = true;
         vm.propertyName = 'PaymentNo';
 
-        vm.deletePayment = deletePayment;
-        vm.sortBy = sortBy;
+        initialData();
 
-        // 1. Get payment data from server.
-        apiService.payment().get().$promise.then(callSuccess, callError);
+        function initialData() {
+            vm.costcenter = authInfo.getWorkingCostCenter().CostCenterID;
 
+            populateYearList();
 
-        apiService.costcenter().get().$promise.then(callCostCenterSuccess, callError);
+            populateCostCenterList();
 
-        //// 1.1 Call to server success.
-        function callSuccess(response) {
-            vm.payments = hr.respondSuccess(response);
-            
+            getPaymentData();
+        }
+
+        function getPaymentData() {
+            apiService.payment().get({ year: vm.year, costcenterid: vm.costcenter }).$promise.then(callSuccess, callError);
+
+            function callSuccess(response) {
+                vm.payments = hr.respondSuccess(response);    
+                console.log(vm.payments);
+            }
+        }
+
+        function populateYearList() {
+            // Populate year list from 2559 to current + 1 and set default to current year
             vm.years = [];
             var currentYear = new Date().getFullYear();
             for (var i = 2016; i <= currentYear + 1; i++) {
-                vm.years.push({ Year: i + 543 + '' });
+                vm.years.push(i + 543 + '');
             }
+
             vm.year = currentYear + 543 + '';
         }
 
-        //// 1.2 Call to server fail.
+        function populateCostCenterList() {
+            // 1. Get Costcenter from server
+            apiService.costcenter().get().$promise.then(callCostCenterSuccess, callError);
+
+            // Call CostCenter success
+            function callCostCenterSuccess(response) {
+                vm.costcenters = hr.respondSuccess(response);
+                if (vm.costcenters.length < 1) {
+                    vm.costcenters.push({ CostCenterID: authInfo.getWorkingCostCenter().CostCenterID, CostCenter: authInfo.getWorkingCostCenter() });
+                }
+            }
+        }
+
         function callError(e) {
             hr.respondError(e);
         }
 
-        function callCostCenterSuccess(response) {
-            vm.costcenters = hr.respondSuccess(response);
-            if (vm.costcenters.length < 1) {
-                vm.costcenters.push({ CostCenterID: authInfo.getWorkingCostCenter().CostCenterID, CostCenter: authInfo.getWorkingCostCenter() });
-            }
-            vm.costcenter = authInfo.getWorkingCostCenter().CostCenterID;
-        }
 
         function deletePayment(payment) {
             openModal('', null, payment);
@@ -99,6 +120,7 @@
             });
         };
 
+    
     }
 
 
