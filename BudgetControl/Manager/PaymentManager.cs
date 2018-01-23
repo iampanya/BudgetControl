@@ -19,12 +19,40 @@ namespace BudgetControl.Manager
 
         private string cmd_payment_summary =
             @"
-                SELECT * 
-                FROM Payment p
-                WHERE CostCenterID = @CostCenterID
-	                AND Year = @Year
-	                AND Status = 1
-                ORDER BY p.PaymentNo DESC
+            SELECT
+                dbo.Payment.PaymentID,
+                dbo.Payment.CostCenterID,
+                dbo.Payment.[Year],
+                dbo.Payment.Sequence,
+                dbo.Payment.Description,
+                dbo.Payment.RequestBy,
+                dbo.Payment.PaymentDate,
+                dbo.Payment.TotalAmount,
+                dbo.Payment.Status,
+                dbo.Payment.CreatedBy,
+                dbo.Payment.CreatedAt,
+                dbo.Payment.ModifiedBy,
+                dbo.Payment.ModifiedAt,
+                dbo.Payment.PaymentNo,
+                dbo.Payment.Type AS PaymentType,
+                dbo.Payment.ContractorID,
+                dbo.Payment.DeletedBy,
+                dbo.Payment.DeletedAt,
+                dbo.Employee.TitleName,
+                dbo.Employee.FirstName,
+                dbo.Employee.LastName,
+                dbo.Contractor.Name AS ContractorName
+            FROM
+                dbo.Payment
+                LEFT OUTER JOIN dbo.Employee ON dbo.Payment.RequestBy = dbo.Employee.EmployeeID
+                LEFT OUTER JOIN dbo.Contractor ON dbo.Payment.ContractorID = dbo.Contractor.ID
+                LEFT OUTER JOIN dbo.CostCenter ON dbo.Payment.CostCenterID = dbo.CostCenter.CostCenterID
+            WHERE
+                dbo.Payment.CostCenterID = @CostCenterID AND
+                dbo.Payment.[Year] = @Year AND
+                dbo.Employee.Status = 1
+            ORDER BY
+                dbo.Payment.PaymentNo DESC
             ";
 
         #endregion
