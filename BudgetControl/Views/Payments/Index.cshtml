@@ -74,9 +74,9 @@
                 </a>
             </th>
             <th class="col-md-2 text-center">
-                <a ng-click="vm.sortBy('Requester.FullName')">
+                <a ng-click="vm.sortBy('RequestByName')">
                     ผู้เบิก
-                    <span ng-show="vm.propertyName === 'Requester.FullName'" class="sortorder" ng-class="{reverse: vm.reverse}"></span>
+                    <span ng-show="vm.propertyName === 'RequestByName'" class="sortorder" ng-class="{reverse: vm.reverse}"></span>
                 </a>
             </th>
             <th class="col-md-2 text-center">
@@ -95,13 +95,13 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="payment in vm.payments |  orderBy: vm.propertyName: vm.reverse">
+        <tr ng-repeat="payment in vm.payments | filter: vm.filter |  orderBy: vm.propertyName: vm.reverse">
             <td class="text-center"> {{ $index + 1 }} </td>
             <td class="text-center"> {{ payment.PaymentNo }}</td>
             <td> {{ payment.Description }} </td>
             <td class="text-center"> {{ payment.RequestByName }} </td>
             <td class="text-center"> {{ payment.TotalAmount | number:2 }} </td>
-            <td class="text-center"> {{ payment.PaymentDate | date:'dd MMM yyyy' }} </td>
+            <td class="text-center"> {{ payment.PaymentDateText }} </td>
             <td class="text-center">
                 <a ui-sref="viewpayment({id:payment.PaymentID})" title="รายละเอียด">
                     <i class="fa fa-list" aria-hidden="true"></i>

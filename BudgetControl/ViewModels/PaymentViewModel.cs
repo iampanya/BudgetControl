@@ -86,7 +86,7 @@ namespace BudgetControl.ViewModels
                 else
                 {
 
-                    return String.Join(" ", new String[] { TitleName, FirstName, LastName });
+                    return String.Join(" ", new String[] { FirstName, LastName });
                 }
             }
         }
