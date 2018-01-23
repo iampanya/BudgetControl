@@ -18,7 +18,9 @@ namespace BudgetControl.Manager
 
         #region Sql Command
 
-        private string cmd_payment_summary =
+        #region Get Payment List
+
+        private string cmd_get_payment_list =
             @"
             SELECT
 	            dbo.Payment.PaymentID,
@@ -59,6 +61,13 @@ namespace BudgetControl.Manager
 
         #endregion
 
+        #region Get Payment Detail
+
+
+        #endregion
+
+        #endregion
+
         #region Constructor
 
         public PaymentManager()
@@ -90,7 +99,7 @@ namespace BudgetControl.Manager
             {
                 conn.Open();
 
-                using (SqlCommand cmd = new SqlCommand(cmd_payment_summary, conn))
+                using (SqlCommand cmd = new SqlCommand(cmd_get_payment_list, conn))
                 {
                     cmd.Parameters.AddWithValue("@Year", year);
                     cmd.Parameters.AddWithValue("@CostCenterID", costcenterid);
@@ -135,7 +144,6 @@ namespace BudgetControl.Manager
                 return vms;
         }
 
-
         public IEnumerable<Payment> GetOverall_Old()
         {
             CostCenter working;
@@ -159,6 +167,17 @@ namespace BudgetControl.Manager
             }
             return payments;
         }
+
+        public void GetPaymentDetail(string paymentid)
+        {
+
+        }
+
+        public void GetPaymentDetail(Guid paymentid)
+        {
+            
+        }
+
         #endregion
 
         #region Methods
