@@ -2,6 +2,7 @@
 using BudgetControl.Models;
 using BudgetControl.Models.Base;
 using BudgetControl.Sessions;
+using BudgetControl.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -20,28 +21,29 @@ namespace BudgetControl.Manager
         private string cmd_payment_summary =
             @"
             SELECT
-                dbo.Payment.PaymentID,
-                dbo.Payment.CostCenterID,
-                dbo.Payment.[Year],
-                dbo.Payment.Sequence,
-                dbo.Payment.Description,
-                dbo.Payment.RequestBy,
-                dbo.Payment.PaymentDate,
-                dbo.Payment.TotalAmount,
-                dbo.Payment.Status,
-                dbo.Payment.CreatedBy,
-                dbo.Payment.CreatedAt,
-                dbo.Payment.ModifiedBy,
-                dbo.Payment.ModifiedAt,
-                dbo.Payment.PaymentNo,
-                dbo.Payment.Type AS PaymentType,
-                dbo.Payment.ContractorID,
-                dbo.Payment.DeletedBy,
-                dbo.Payment.DeletedAt,
-                dbo.Employee.TitleName,
-                dbo.Employee.FirstName,
-                dbo.Employee.LastName,
-                dbo.Contractor.Name AS ContractorName
+	            dbo.Payment.PaymentID,
+	            dbo.Payment.CostCenterID,
+	            dbo.CostCenter.CostCenterName,
+	            dbo.Payment.[Year],
+	            dbo.Payment.PaymentNo,
+	            dbo.Payment.Sequence,
+	            dbo.Payment.Description,
+	            dbo.Payment.PaymentDate,
+	            dbo.Payment.TotalAmount,
+	            dbo.Payment.Type AS PaymentType,
+	            dbo.Payment.RequestBy,
+	            dbo.Employee.TitleName,
+	            dbo.Employee.FirstName,
+	            dbo.Employee.LastName,
+	            dbo.Payment.ContractorID,
+	            dbo.Contractor.Name AS ContractorName,
+	            dbo.Payment.Status,
+	            dbo.Payment.CreatedBy,
+	            dbo.Payment.CreatedAt,
+	            dbo.Payment.ModifiedBy,
+	            dbo.Payment.ModifiedAt,
+	            dbo.Payment.DeletedBy,
+	            dbo.Payment.DeletedAt
             FROM
                 dbo.Payment
                 LEFT OUTER JOIN dbo.Employee ON dbo.Payment.RequestBy = dbo.Employee.EmployeeID
@@ -50,7 +52,7 @@ namespace BudgetControl.Manager
             WHERE
                 dbo.Payment.CostCenterID = @CostCenterID AND
                 dbo.Payment.[Year] = @Year AND
-                dbo.Employee.Status = 1
+                dbo.Payment.Status = 1
             ORDER BY
                 dbo.Payment.PaymentNo DESC
             ";
@@ -80,9 +82,9 @@ namespace BudgetControl.Manager
 
         #region Read
 
-        public IEnumerable<Payment> GetOverall(string year, string costcenterid)
+        public IEnumerable<PaymentViewModel> GetOverall(string year, string costcenterid)
         {
-            List<Payment> payments = new List<Payment>();
+            List<PaymentViewModel> vms = new List<PaymentViewModel>();
 
             using (SqlConnection conn = new SqlConnection(SqlManager.ConnectionString))
             {
@@ -97,27 +99,32 @@ namespace BudgetControl.Manager
                     {
                         while (reader.Read())
                         {
-                            Payment payment = new Payment();
-                            payment.PaymentID = Guid.Parse(reader["PaymentID"].ToString());
-                            payment.CostCenterID = reader["CostCenterID"].ToString();
-                            payment.Year = reader["Year"].ToString();
-                            payment.PaymentNo = reader["PaymentNo"].ToString();
-                            payment.Sequence = Int32.Parse(reader["Sequence"].ToString());
-                            payment.Description = reader["Description"].ToString();
-                            payment.RequestBy = reader["RequestBy"].ToString();
-                            payment.PaymentDate = DateTime.Parse(reader["PaymentDate"].ToString());
-                            payment.TotalAmount = Decimal.Parse(reader["TotalAmount"].ToString());
+                            PaymentViewModel vm = new PaymentViewModel();
+                            vm.PaymentID = Guid.Parse(reader["PaymentID"].ToString());
+                            vm.CostCenterID = reader["CostCenterID"].ToString();
+                            vm.CostCenterName = reader["CostCenterName"].ToString();
+                            vm.Year = reader["Year"].ToString();
+                            vm.PaymentNo = reader["PaymentNo"].ToString();
+                            vm.Sequence = Int32.Parse(reader["Sequence"].ToString());
+                            vm.Description = reader["Description"].ToString();
+                            vm.PaymentDate = DateTime.Parse(reader["PaymentDate"].ToString());
+                            vm.TotalAmount = Decimal.Parse(reader["TotalAmount"].ToString());
+
+                            vm.RequestBy = reader["RequestBy"].ToString();
+                            vm.TitleName = reader["TitleName"].ToString();
+                            vm.FirstName = reader["FirstName"].ToString();
+                            vm.LastName = reader["LastName"].ToString();
+
+                            vm.ContractorID = reader.IsDBNull(reader.GetOrdinal("ContractorID")) ? null : (Guid?) reader.GetGuid(reader.GetOrdinal("ContractorID"));
+                            vm.ContractorName = reader["ContractorName"].ToString();
 
                             RecordStatus status;
-                            payment.Status = Enum.TryParse<RecordStatus>(reader["Status"].ToString(), out status) ? status : RecordStatus.Remove;
+                            vm.Status = Enum.TryParse(reader["Status"].ToString(), out status) ? status : RecordStatus.Remove;
 
                             PaymentType type;
-                            payment.Type = Enum.TryParse<PaymentType>(reader["Type"].ToString(), out type) ? type : PaymentType.Internal;
+                            vm.Type = Enum.TryParse(reader["PaymentType"].ToString(), out type) ? type : PaymentType.Internal;
 
-                            payment.ContractorID = reader.IsDBNull(reader.GetOrdinal("ContractorID")) ? null : (Guid?) reader.GetGuid(reader.GetOrdinal("ContractorID"));
-                            
-                            
-                            payments.Add(payment);
+                            vms.Add(vm);
                         }
                     }
                 }
@@ -125,7 +132,7 @@ namespace BudgetControl.Manager
 
             }
 
-                return payments;
+                return vms;
         }
 
 
