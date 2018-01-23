@@ -3,6 +3,7 @@ using BudgetControl.Models;
 using BudgetControl.Models.Base;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -14,7 +15,7 @@ namespace BudgetControl.ViewModels
 
         public PaymentViewModel()
         {
-            this.Statements = new List<StatementViewModel>();
+
         }
 
         public PaymentViewModel(Payment payment)
@@ -34,10 +35,7 @@ namespace BudgetControl.ViewModels
             this.RequestBy = payment.RequestBy;
             this.PaymentDate = payment.PaymentDate;
             this.TotalAmount = payment.TotalAmount;
-            this.ControlBy = payment.ControlBy;
-            this.Status = payment.Status.ToString();
-            this.Controller = payment.Controller;
-            this.Requester = payment.Requester;
+            this.Status = payment.Status;
         }
 
         #endregion
@@ -45,39 +43,78 @@ namespace BudgetControl.ViewModels
         #region Fields
 
         public Guid PaymentID { get; set; }
+
         public string CostCenterID { get; set; }
         public string CostCenterName { get; set; }
+
         public string Year { get; set; }
-        public string PaymentNo { get; set; }
+
         public int Sequence { get; set; }
+
+        public string PaymentNo { get; set; }
+
         public string Description { get; set; }
-        public string RequestBy { get; set; }
+
         public DateTime PaymentDate { get; set; }
+
         public decimal TotalAmount { get; set; }
-        public string ControlBy { get; set; }
-        public string Status { get; set; }
 
-        public Employee Requester { get; set; }
-        public Employee Controller { get; set; }
+        public string RequestBy { get; set; }
+        public string TitleName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public Guid? ContractorID { get; set; }
+        public string ContractorName { get; set; }
 
-        public List<StatementViewModel> Statements { get; set; }
+        public RecordStatus Status { get; set; }
+        public PaymentType Type { get; set; }
+
+        public RecordTimeStamp RecordTimeStamp { get; set; }
+
 
         #endregion
 
-        #region Additional Method
-        public void GetDetails()
+
+        public string RequestByName
         {
-            this.Statements = new List<StatementViewModel>();
-            using (StatementRepository statementRep = new StatementRepository())
+            get
             {
-                statementRep
-                    .GetByPayment(this.PaymentID)
-                    .ToList()
-                    .ForEach(s => this.Statements.Add(new StatementViewModel(s)));
+                if(Type == PaymentType.Contractor)
+                {
+                    return ContractorName;
+                }
+                else
+                {
+
+                    return String.Join(" ", new String[] { TitleName, FirstName, LastName });
+                }
             }
         }
 
-        #endregion
+        public string StatusText
+        {
+            get
+            {
+                return Status.ToString();
+            }
+        }
+
+        public string TypeText
+        {
+            get
+            {
+                return Type.ToString();
+            }
+        }
+
+        public string PaymentDateText
+        {
+            get
+            {
+                return PaymentDate.ToString("d MMM yy", new CultureInfo("th-TH"));
+            }
+        }
+
     }
 
 

@@ -52,14 +52,8 @@ namespace BudgetControl.Models
             this.RequestBy = paymentviewmodel.RequestBy;
             this.PaymentDate = paymentviewmodel.PaymentDate;
             this.TotalAmount = paymentviewmodel.TotalAmount;
-            this.ControlBy = paymentviewmodel.ControlBy;
 
             this.Statements = new List<Statement>();
-            if (paymentviewmodel.Statements != null)
-            {
-                paymentviewmodel.Statements.ForEach(
-                    s => this.Statements.Add(new Statement(s)));
-            }
         }
 
 
