@@ -54,7 +54,7 @@ namespace BudgetControl.Controllers
             try
             {
                 CostCenter working;
-                List<Payment> payments;
+                List<PaymentViewModel> payments;
                 PaymentManager pManager = new PaymentManager();
 
                 // 1. Get working costcenter.
