@@ -15,27 +15,27 @@ namespace BudgetControl.ViewModels
 
         public PaymentViewModel()
         {
-
+            RecordTimeStamp = new RecordTimeStamp();
         }
 
         public PaymentViewModel(Payment payment)
         {
-            if (payment == null)
-            {
-                throw new ArgumentNullException();
-            }
+            //if (payment == null)
+            //{
+            //    throw new ArgumentNullException();
+            //}
 
-            this.PaymentID = payment.PaymentID;
-            this.CostCenterID = payment.CostCenterID;
-            this.CostCenterName = payment.CostCenter.CostCenterName;
-            this.Year = payment.Year;
-            this.Sequence = payment.Sequence;
-            this.PaymentNo = payment.PaymentNo;
-            this.Description = payment.Description;
-            this.RequestBy = payment.RequestBy;
-            this.PaymentDate = payment.PaymentDate;
-            this.TotalAmount = payment.TotalAmount;
-            this.Status = payment.Status;
+            //this.PaymentID = payment.PaymentID;
+            //this.CostCenterID = payment.CostCenterID;
+            //this.CostCenterName = payment.CostCenter.CostCenterName;
+            //this.Year = payment.Year;
+            //this.Sequence = payment.Sequence;
+            //this.PaymentNo = payment.PaymentNo;
+            //this.Description = payment.Description;
+            //this.RequestBy = payment.RequestBy;
+            //this.PaymentDate = payment.PaymentDate;
+            //this.TotalAmount = payment.TotalAmount;
+            //this.Status = payment.Status;
         }
 
         #endregion
@@ -46,19 +46,15 @@ namespace BudgetControl.ViewModels
 
         public string CostCenterID { get; set; }
         public string CostCenterName { get; set; }
-
         public string Year { get; set; }
-
         public int Sequence { get; set; }
-
         public string PaymentNo { get; set; }
-
         public string Description { get; set; }
-
         public DateTime PaymentDate { get; set; }
-
         public decimal TotalAmount { get; set; }
 
+        // Request By 
+        public PaymentType Type { get; set; }
         public string RequestBy { get; set; }
         public string TitleName { get; set; }
         public string FirstName { get; set; }
@@ -66,11 +62,12 @@ namespace BudgetControl.ViewModels
         public Guid? ContractorID { get; set; }
         public string ContractorName { get; set; }
 
+        // Record Info
         public RecordStatus Status { get; set; }
-        public PaymentType Type { get; set; }
-
         public RecordTimeStamp RecordTimeStamp { get; set; }
 
+        // Trascation
+        public List<TransactionViewModels> Trasactions { get; set; }
 
         #endregion
 
