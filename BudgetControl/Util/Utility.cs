@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -42,5 +44,23 @@ namespace BudgetControl.Util
 
         }
 
+        public static string ToDateText(DateTime? date)
+        {
+            try
+            {
+                if (date == null)
+                {
+                    return "-";
+                }
+                else
+                {
+                    return ((DateTime)date).ToString("d MMM yyyy", new CultureInfo("th-TH"));
+                }
+            }
+            catch(Exception ex)
+            {
+                return "-";
+            }
+        }
     }
 }
