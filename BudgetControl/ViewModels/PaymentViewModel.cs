@@ -67,7 +67,7 @@ namespace BudgetControl.ViewModels
         public RecordTimeStamp RecordTimeStamp { get; set; }
 
         // Trascation
-        public List<TransactionViewModels> Trasactions { get; set; }
+        public List<TransactionViewModels> Transactions { get; set; }
 
         #endregion
 
