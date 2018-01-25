@@ -3,6 +3,7 @@ using BudgetControl.Models;
 using BudgetControl.Models.Base;
 using BudgetControl.Sessions;
 using BudgetControl.ViewModels;
+using BudgetControl.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -113,6 +114,7 @@ namespace BudgetControl.Manager
 
                 SELECT	bt.BudgetTransactionID,
 		                bt.BudgetID, 
+		                b.Year,
 		                b.CostCenterID,
 		                c.CostCenterName,
 		                b.AccountID,
@@ -265,6 +267,7 @@ namespace BudgetControl.Manager
 
                             vm.BudgetTransactionID = Guid.Parse(reader["BudgetTransactionID"].ToString());
                             vm.BudgetID = Guid.Parse(reader["BudgetID"].ToString());
+                            vm.Year = reader["Year"].ToString();
                             vm.CostCenterID = reader["CostCenterID"].ToString();
                             vm.CostCenterName = reader["CostCenterName"].ToString();
                             vm.AccountID = reader["AccountID"].ToString();
@@ -273,13 +276,21 @@ namespace BudgetControl.Manager
                             vm.PaymentID = Guid.Parse(reader["PaymentID"].ToString());
                             vm.Description = reader["Description"].ToString();
 
-                            decimal amount, previous, remain;
+                            decimal budgetamount, amount, previous, remain;
+                            vm.BudgetAmount = decimal.TryParse(reader["BudgetAmount"].ToString(), out budgetamount) ? budgetamount : 0;
                             vm.Amount = decimal.TryParse(reader["Amount"].ToString(), out amount) ? amount : 0;
                             vm.PreviousAmount = decimal.TryParse(reader["PreviousAmount"].ToString(), out previous) ? previous : 0;
                             vm.RemainAmount = decimal.TryParse(reader["RemainAmount"].ToString(), out remain) ? remain : 0;
 
                             RecordStatus status;
                             vm.Status = Enum.TryParse(reader["Status"].ToString(), out status) ? status : 0;
+
+                            vm.RecordTimeStamp.CreatedAt = reader.GetNullableDateTime("CreatedAt");
+                            vm.RecordTimeStamp.CreatedBy = reader["CreatedBy"].ToString();
+                            vm.RecordTimeStamp.ModifiedAt = reader.GetNullableDateTime("ModifiedAt");
+                            vm.RecordTimeStamp.ModifiedBy = reader["ModifiedBy"].ToString();
+                            vm.RecordTimeStamp.DeletedAt = reader.GetNullableDateTime("DeletedAt");
+                            vm.RecordTimeStamp.DeletedBy = reader["DeletedBy"].ToString();
 
                             transactions.Add(vm);
                         }
@@ -288,7 +299,8 @@ namespace BudgetControl.Manager
 
                 if (payment != null)
                 {
-                    payment.Trasactions = transactions;
+                    payment.RecordTimeStamp.GetRecordsNameInfo();
+                    payment.Transactions = transactions;
                 }
 
                 conn.Close();
@@ -384,6 +396,13 @@ namespace BudgetControl.Manager
 
             PaymentType type;
             vm.Type = Enum.TryParse(reader["PaymentType"].ToString(), out type) ? type : PaymentType.Internal;
+
+            vm.RecordTimeStamp.CreatedAt = reader.GetNullableDateTime("CreatedAt");
+            vm.RecordTimeStamp.CreatedBy = reader["CreatedBy"].ToString();
+            vm.RecordTimeStamp.ModifiedAt = reader.GetNullableDateTime("ModifiedAt"); 
+            vm.RecordTimeStamp.ModifiedBy = reader["ModifiedBy"].ToString();
+            vm.RecordTimeStamp.DeletedAt = reader.GetNullableDateTime("DeletedAt");
+            vm.RecordTimeStamp.DeletedBy = reader["DeletedBy"].ToString();
 
             return vm;
         }
