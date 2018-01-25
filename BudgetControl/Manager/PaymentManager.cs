@@ -61,8 +61,97 @@ namespace BudgetControl.Manager
 
         #endregion
 
+        #region Get Payment By ID
+
+        private string cmd_get_payment_by_id =
+            @"
+            SELECT TOP(1)
+	            dbo.Payment.PaymentID,
+	            dbo.Payment.CostCenterID,
+	            dbo.CostCenter.CostCenterName,
+	            dbo.Payment.[Year],
+	            dbo.Payment.PaymentNo,
+	            dbo.Payment.Sequence,
+	            dbo.Payment.Description,
+	            dbo.Payment.PaymentDate,
+	            dbo.Payment.TotalAmount,
+	            dbo.Payment.Type AS PaymentType,
+	            dbo.Payment.RequestBy,
+	            dbo.Employee.TitleName,
+	            dbo.Employee.FirstName,
+	            dbo.Employee.LastName,
+	            dbo.Payment.ContractorID,
+	            dbo.Contractor.Name AS ContractorName,
+	            dbo.Payment.Status,
+	            dbo.Payment.CreatedBy,
+	            dbo.Payment.CreatedAt,
+	            dbo.Payment.ModifiedBy,
+	            dbo.Payment.ModifiedAt,
+	            dbo.Payment.DeletedBy,
+	            dbo.Payment.DeletedAt
+            FROM
+                dbo.Payment
+                LEFT OUTER JOIN dbo.Employee ON dbo.Payment.RequestBy = dbo.Employee.EmployeeID
+                LEFT OUTER JOIN dbo.Contractor ON dbo.Payment.ContractorID = dbo.Contractor.ID
+                LEFT OUTER JOIN dbo.CostCenter ON dbo.Payment.CostCenterID = dbo.CostCenter.CostCenterID
+            WHERE
+                dbo.Payment.PaymentID = @PaymentID AND
+                dbo.Payment.Status = 1
+            ORDER BY
+                dbo.Payment.PaymentNo DESC
+            ";
+
+
+        #endregion
+
         #region Get Payment Detail
 
+        private string cmd_get_payment_transaction =
+            @"
+                --DECLARE @PaymentID uniqueidentifier
+                --SET @PaymentID = '4d774f97-20f1-4796-96dc-22876acc6f23'
+
+                SELECT	bt.BudgetTransactionID,
+		                bt.BudgetID, 
+		                b.CostCenterID,
+		                c.CostCenterName,
+		                b.AccountID,
+		                a.AccountName,
+		                bt.PaymentID,
+		                p.Description,
+		                bt.Amount,
+		                bt2.PreviousAmount,
+		                b.BudgetAmount,
+		                (b.BudgetAmount - bt2.PreviousAmount - bt.Amount) AS RemainAmount,
+		                bt.Status,
+		                bt.CreatedAt,
+		                bt.CreatedBy,
+		                bt.ModifiedAt,
+		                bt.ModifiedBy,
+		                bt.DeletedAt,
+		                bt.DeletedBy
+		
+                FROM BudgetTransaction bt
+	                LEFT OUTER JOIN (
+		                SELECT	t1.BudgetTransactionID, (SUM(t2.Amount) - t1.Amount) As PreviousAmount
+		                FROM	BudgetTransaction t1 
+				                LEFT OUTER JOIN BudgetTransaction t2 ON (t1.CreatedAt >= t2.CreatedAt)
+				                INNER JOIN Payment p ON (t1.PaymentID = p.PaymentID)
+		                WHERE	t1.PaymentID  = @PaymentID 
+				                AND t2.BudgetID = t1.BudgetID
+				                AND t2.Status = 1
+				                AND p.Status = 1
+		                GROUP BY t1.BudgetTransactionID, t1.Amount
+	                ) bt2 ON (bt.BudgetTransactionID = bt2.BudgetTransactionID)
+	                LEFT OUTER JOIN Budget b ON (bt.BudgetID = b.BudgetID)
+	                LEFT OUTER JOIN Account a ON (b.AccountID = a.AccountID)
+	                LEFT OUTER JOIN CostCenter c ON (b.CostCenterID = c.CostCenterID)
+	                INNER JOIN Payment p ON (bt.PaymentID = p.PaymentID)
+
+                WHERE	bt.PaymentID = @PaymentID	AND 
+		                bt.Status = 1		
+                ORDER BY b.AccountID
+            ";
 
         #endregion
 
@@ -108,40 +197,16 @@ namespace BudgetControl.Manager
                     {
                         while (reader.Read())
                         {
-                            PaymentViewModel vm = new PaymentViewModel();
-                            vm.PaymentID = Guid.Parse(reader["PaymentID"].ToString());
-                            vm.CostCenterID = reader["CostCenterID"].ToString();
-                            vm.CostCenterName = reader["CostCenterName"].ToString();
-                            vm.Year = reader["Year"].ToString();
-                            vm.PaymentNo = reader["PaymentNo"].ToString();
-                            vm.Sequence = Int32.Parse(reader["Sequence"].ToString());
-                            vm.Description = reader["Description"].ToString();
-                            vm.PaymentDate = DateTime.Parse(reader["PaymentDate"].ToString());
-                            vm.TotalAmount = Decimal.Parse(reader["TotalAmount"].ToString());
-
-                            vm.RequestBy = reader["RequestBy"].ToString();
-                            vm.TitleName = reader["TitleName"].ToString();
-                            vm.FirstName = reader["FirstName"].ToString();
-                            vm.LastName = reader["LastName"].ToString();
-
-                            vm.ContractorID = reader.IsDBNull(reader.GetOrdinal("ContractorID")) ? null : (Guid?) reader.GetGuid(reader.GetOrdinal("ContractorID"));
-                            vm.ContractorName = reader["ContractorName"].ToString();
-
-                            RecordStatus status;
-                            vm.Status = Enum.TryParse(reader["Status"].ToString(), out status) ? status : RecordStatus.Remove;
-
-                            PaymentType type;
-                            vm.Type = Enum.TryParse(reader["PaymentType"].ToString(), out type) ? type : PaymentType.Internal;
-
+                            PaymentViewModel vm = ConvertReaderToPaymentVM(reader);
                             vms.Add(vm);
                         }
                     }
                 }
 
-
+                conn.Close();
             }
 
-                return vms;
+            return vms;
         }
 
         public IEnumerable<Payment> GetOverall_Old()
@@ -168,14 +233,166 @@ namespace BudgetControl.Manager
             return payments;
         }
 
-        public void GetPaymentDetail(string paymentid)
+        public PaymentViewModel GetVMPaymentByID(string paymentid)
         {
+            PaymentViewModel payment = null;
+            List<TransactionViewModels> transactions = new List<TransactionViewModels>();
 
+            using (SqlConnection conn = new SqlConnection(SqlManager.ConnectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(cmd_get_payment_by_id, conn))
+                {
+                    cmd.Parameters.AddWithValue("PaymentID", paymentid);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            payment = ConvertReaderToPaymentVM(reader);
+                        }
+                    }
+                }
+
+                using (SqlCommand cmd = new SqlCommand(cmd_get_payment_transaction, conn))
+                {
+                    cmd.Parameters.AddWithValue("PaymentID", paymentid);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            TransactionViewModels vm = new TransactionViewModels();
+
+                            vm.BudgetTransactionID = Guid.Parse(reader["BudgetTransactionID"].ToString());
+                            vm.BudgetID = Guid.Parse(reader["BudgetID"].ToString());
+                            vm.CostCenterID = reader["CostCenterID"].ToString();
+                            vm.CostCenterName = reader["CostCenterName"].ToString();
+                            vm.AccountID = reader["AccountID"].ToString();
+                            vm.AccountName = reader["AccountName"].ToString();
+
+                            vm.PaymentID = Guid.Parse(reader["PaymentID"].ToString());
+                            vm.Description = reader["Description"].ToString();
+
+                            decimal amount, previous, remain;
+                            vm.Amount = decimal.TryParse(reader["Amount"].ToString(), out amount) ? amount : 0;
+                            vm.PreviousAmount = decimal.TryParse(reader["PreviousAmount"].ToString(), out previous) ? previous : 0;
+                            vm.RemainAmount = decimal.TryParse(reader["RemainAmount"].ToString(), out remain) ? remain : 0;
+
+                            RecordStatus status;
+                            vm.Status = Enum.TryParse(reader["Status"].ToString(), out status) ? status : 0;
+
+                            transactions.Add(vm);
+                        }
+                    }
+                }
+
+                if (payment != null)
+                {
+                    payment.Trasactions = transactions;
+                }
+
+                conn.Close();
+            }
+
+            return payment;
         }
 
-        public void GetPaymentDetail(Guid paymentid)
+        public PaymentViewModel GetVMPaymentByID(Guid paymentid)
         {
-            
+            return GetVMPaymentByID(paymentid.ToString());
+        }
+
+        public Payment GetRawPaymentByID(string paymentid)
+        {
+            Payment payment;
+            List<BudgetTransaction> transactions = new List<BudgetTransaction>();
+
+            using (PaymentRepository paymentRepo = new PaymentRepository())
+            {
+                payment = paymentRepo.GetById(paymentid);
+                if (payment == null)
+                {
+                    throw new Exception("ไม่พบข้อมูลการเบิกจ่ายที่เลือก");
+                }
+            }
+
+            //var manager = new BudgetTransactionManager();
+            //payment.BudgetTransactions = manager.SumTransaction(payment.BudgetTransactions.ToList());
+
+            payment.BudgetTransactions = payment.BudgetTransactions.Where(t => t.Status == RecordStatus.Active).ToList();
+
+            //Get budget data
+            using (BudgetRepository budgetRepo = new BudgetRepository())
+            {
+
+                payment.BudgetTransactions.ToList().ForEach(t => t.Budget = budgetRepo.GetById(t.BudgetID));
+
+                payment.BudgetTransactions = payment.BudgetTransactions.OrderBy(t => t.Budget.AccountID).ToList();
+            }
+
+            foreach (var item in payment.BudgetTransactions)
+            {
+                List<BudgetTransaction> listTransInBudget = item.Budget.BudgetTransactions
+                    .Where(t => t.Status == RecordStatus.Active && t.CreatedAt < item.CreatedAt).ToList();
+
+                item.PreviousAmount = 0;
+                listTransInBudget.ForEach(t => item.PreviousAmount += t.Amount);
+
+                item.RemainAmount = item.Budget.BudgetAmount - item.PreviousAmount - item.Amount;
+            }
+
+            // Get Controller name for printing
+            using (EmployeeRepository empRepo = new EmployeeRepository())
+            {
+                var controllerby = empRepo.GetById(payment.CreatedBy);
+                if (controllerby != null)
+                {
+                    payment.CreatedBy = payment.CreatedBy + " - " + controllerby.FullName;
+                }
+            }
+
+            return payment;
+        }
+
+        #endregion
+
+        #region New Methods
+
+        private PaymentViewModel ConvertReaderToPaymentVM(SqlDataReader reader)
+        {
+            PaymentViewModel vm = new PaymentViewModel();
+            vm.PaymentID = Guid.Parse(reader["PaymentID"].ToString());
+            vm.CostCenterID = reader["CostCenterID"].ToString();
+            vm.CostCenterName = reader["CostCenterName"].ToString();
+            vm.Year = reader["Year"].ToString();
+            vm.PaymentNo = reader["PaymentNo"].ToString();
+            vm.Sequence = Int32.Parse(reader["Sequence"].ToString());
+            vm.Description = reader["Description"].ToString();
+            vm.PaymentDate = DateTime.Parse(reader["PaymentDate"].ToString());
+            vm.TotalAmount = Decimal.Parse(reader["TotalAmount"].ToString());
+
+            vm.RequestBy = reader["RequestBy"].ToString();
+            vm.TitleName = reader["TitleName"].ToString();
+            vm.FirstName = reader["FirstName"].ToString();
+            vm.LastName = reader["LastName"].ToString();
+
+            vm.ContractorID = reader.IsDBNull(reader.GetOrdinal("ContractorID")) ? null : (Guid?)reader.GetGuid(reader.GetOrdinal("ContractorID"));
+            vm.ContractorName = reader["ContractorName"].ToString();
+
+            RecordStatus status;
+            vm.Status = Enum.TryParse(reader["Status"].ToString(), out status) ? status : RecordStatus.Remove;
+
+            PaymentType type;
+            vm.Type = Enum.TryParse(reader["PaymentType"].ToString(), out type) ? type : PaymentType.Internal;
+
+            return vm;
+        }
+
+        private TransactionViewModels ConvertReaderToTransactionVM(SqlDataReader reader)
+        {
+            TransactionViewModels vm = new TransactionViewModels();
+
+            return vm;
         }
 
         #endregion
@@ -194,10 +411,10 @@ namespace BudgetControl.Manager
                     var contractor = payment.Contractor;
                     payment = new Payment(payment);
                     payment.PrepareToSave();
-                    if(payment.Type == PaymentType.Contractor)
+                    if (payment.Type == PaymentType.Contractor)
                     {
                         var ctManager = new ContractorManager(_db);
-                        if(contractor.ID == Guid.Empty)
+                        if (contractor.ID == Guid.Empty)
                         {
                             contractor = ctManager.Add(payment.CostCenterID, contractor.Name);
                         }
@@ -214,7 +431,7 @@ namespace BudgetControl.Manager
 
                     // Get payment counter info
                     PaymentCounter pcounter = _db.PaymentCounters.Where(c => c.CostCenterID == payment.CostCenterID && c.Year == payment.Year).FirstOrDefault();
-                    if(pcounter == null)
+                    if (pcounter == null)
                     {
                         //if not exist, then add new one.
                         var shortName = _db.CostCenters.Where(c => c.CostCenterID == payment.CostCenterID).Select(s => s.ShortName).FirstOrDefault();
