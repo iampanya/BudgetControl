@@ -485,7 +485,7 @@
         vm.update = update;
         vm.print = print;
 
-        apiService.payment().get({ id: vm.paymentid }).$promise.then(callApiSuccess, callApiError);
+        apiService.payment().get({ id: vm.paymentid, type: 'vm'}).$promise.then(callApiSuccess, callApiError);
 
         function callApiSuccess(response) {
             vm.payment = hr.respondSuccess(response);
