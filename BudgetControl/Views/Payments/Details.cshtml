@@ -57,12 +57,12 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="transaction in vm.payment.BudgetTransactions">
+                <tr ng-repeat="transaction in vm.payment.Transactions">
                     <td class="text-center"> {{ $index + 1 }} </td>
-                    <td class="text-center"> {{ transaction.Budget.AccountID }}</td>
-                    <td class="text-center"> {{ transaction.Budget.Account.AccountName }}</td>
-                    <td class="text-center"> {{ transaction.Budget.Year }}</td>
-                    <td class="text-right"> {{ transaction.Budget.BudgetAmount | number: 2}}</td>
+                    <td class="text-center"> {{ transaction.AccountID }}</td>
+                    <td class="text-center"> {{ transaction.AccountName }}</td>
+                    <td class="text-center"> {{ transaction.Year }}</td>
+                    <td class="text-right"> {{ transaction.BudgetAmount | number: 2}}</td>
                     <td class="text-right"> {{ transaction.PreviousAmount | number: 2 }}</td>
                     <td class="text-right"> {{ transaction.Amount | number: 2 }}</td>
                     <td class="text-right"> {{ transaction.RemainAmount | number: 2}}</td>
@@ -75,7 +75,13 @@
 
             </tbody>
         </table>
-        <h4 class="text-center">ควบคุมงบโดย : {{ vm.payment.CreatedBy }}</h4>
+        <h4 class="text-center">บันทึกข้อมูลโดย : <span class="text-info">{{ vm.payment.RecordTimeStamp.ModifiedBy }} - {{ vm.payment.RecordTimeStamp.ModifiedByName }}</span></h4>
+        <h4 class="text-center">
+            วันที่
+            <span class="text-info"> {{ vm.payment.RecordTimeStamp.ModifiedDate }} </span>
+            เวลา
+            <span class="text-info"> {{ vm.payment.RecordTimeStamp.ModifiedTime }} </span>น.    
+        </h4>
     </div>
     <div class="row">
         <div class="col-md-2 col-md-offset-8">
@@ -106,12 +112,12 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="transaction in vm.payment.BudgetTransactions">
+            <tr ng-repeat="transaction in vm.payment.Transactions">
                 <td class="text-center"> {{ $index + 1 }} </td>
-                <td class="text-center"> {{ transaction.Budget.AccountID }}</td>
-                <td class="text-center"> {{ transaction.Budget.Account.AccountName }}</td>
-                <td class="text-center"> {{ transaction.Budget.Year }}</td>
-                <td class="text-right"> {{ transaction.Budget.BudgetAmount | number: 2}}</td>
+                <td class="text-center"> {{ transaction.AccountID }}</td>
+                <td class="text-center"> {{ transaction.AccountName }}</td>
+                <td class="text-center"> {{ transaction.Year }}</td>
+                <td class="text-right"> {{ transaction.BudgetAmount | number: 2}}</td>
                 <td class="text-right"> {{ transaction.PreviousAmount | number: 2 }}</td>
                 <td class="text-right"> {{ transaction.Amount | number: 2 }}</td>
                 <td class="text-right"> {{ transaction.RemainAmount | number: 2}}</td>
@@ -121,50 +127,9 @@
                 <th class="text-right">{{ vm.payment.TotalAmount | number: 2 }}</th>
                 <th class="text-center">บาท</th>
             </tr>
-        </tbody>
-    </table>
-    <h4 class="text-center">ควบคุมงบโดย : {{ vm.payment.CreatedBy }}</h4>
-
-</div>
-
-
-@*<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4>ลำดับการเบิกที่: {{ payment.Sequence }} </h4>
-        <p>ประจำปี: {{ payment.Year }} </p>
-        <p>เบิกโดย: {{ payment.Requester.FullName }} </p>
-        <p>จำนวนเงิน: {{ (payment.TotalAmount | number:0) + ' บาท'}} </p>
-        <p>ควบคุมงบโดย: {{ payment.Controller.FullName }} </p>
-    </div>
-    <table class="table table-bordered table-hover table-striped">
-        <thead>
-            <tr>
-                <th class="col-md-1 text-center">ลำดับ</th>
-                <th class="text-center">บัญชี</th>
-                <th class="col-md-2 text-center">งบประมาณ</th>
-                <th class="col-md-2 text-center">เบิก</th>
-                <th class="col-md-2 text-center">เบิกไปแล้ว</th>
-                <th class="col-md-2 text-center">คงเหลือ</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr ng-repeat="statement in payment.Statements">
-                <td class="text-center"> {{ $index + 1 }} </td>
-                <td> {{ statement.AccountName }} </td>
-                <td class="text-center"> {{ statement.BudgetAmount | number:0 }} </td>
-                <td class="text-center"> {{ statement.WithdrawAmount | number:0 }} </td>
-                <td class="text-center"> {{ statement.PreviousAmount | number:0 }} </td>
-                <td class="text-center"> {{ statement.RemainAmount | number:0 }} </td>
-            </tr>
 
         </tbody>
     </table>
+    <h4 class="text-center">บันทึกข้อมูลโดย : {{ vm.payment.RecordTimeStamp.ModifiedBy }} - {{ vm.payment.RecordTimeStamp.ModifiedByName }}</h4>
 
 </div>
-<div class="row">
-        <div class="col-md-2 col-md-offset-10">
-            <a ui-sref="payment" class="btn btn-primary btn-block">รายการจ่ายเงิน</a>
-        </div>
-
-</div>*@
