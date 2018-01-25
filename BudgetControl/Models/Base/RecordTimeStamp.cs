@@ -1,4 +1,6 @@
-﻿using BudgetControl.Sessions;
+﻿using BudgetControl.DAL;
+using BudgetControl.Sessions;
+using BudgetControl.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -60,7 +62,70 @@ namespace BudgetControl.Models.Base
         public DateTime? DeletedAt { get; set; }
 
         #endregion
+
+
+        #region NotMapped
+
+        [NotMapped]
+        public string CreatedByName { get; set; }
         
+        [NotMapped]
+        public string ModifiedByName { get; set; }
+        
+        [NotMapped]
+        public string DeletedByName { get; set; }
+
+
+        public string CreatedDate
+        {
+            get
+            {
+                return Utility.ToDateText(CreatedAt);
+            }
+        }
+
+        public string CreatedTime
+        {
+            get
+            {
+                return CreatedAt == null ? "-" : ((DateTime)CreatedAt).ToString("HH:mm:ss");
+            }
+        }
+
+        public string ModifiedDate
+        {
+            get
+            {
+                return Utility.ToDateText(ModifiedAt);
+            }
+        }
+
+        public string ModifiedTime
+        {
+            get
+            {
+                return ModifiedAt == null ? "-" : ((DateTime)ModifiedAt).ToString("HH:mm:ss");
+            }
+        }
+
+        public string DeletedDate
+        {
+            get
+            {
+                return Utility.ToDateText(DeletedAt);
+            }
+        }
+
+        public string DeletedTime
+        {
+            get
+            {
+                return DeletedAt == null ? "-" : ((DateTime)DeletedAt).ToString("HH:mm:ss");
+            }
+        }
+
+        #endregion
+
         #region Methods
 
         public void NewCreateTimeStamp(string createdby="")
@@ -123,6 +188,31 @@ namespace BudgetControl.Models.Base
             ModifiedBy = timestamp.ModifiedBy;
             ModifiedAt = timestamp.ModifiedAt;
         }
+
+        public void GetRecordsNameInfo()
+        {
+            string[] empId = new string[] { CreatedBy, ModifiedBy, DeletedBy };
+            empId = empId.Distinct().ToArray();
+
+            List<Employee> employees;
+            using(var db = new BudgetContext())
+            {
+                employees = db.Employees.Where(e => empId.Contains(e.EmployeeID)).ToList();
+            }
+
+            if(employees != null)
+            {
+                var createdby = employees.FirstOrDefault(e => e.EmployeeID == CreatedBy);
+                CreatedByName = createdby == null ? CreatedBy : String.Join(" ", createdby.FirstName, createdby.LastName);
+
+                var modifiedby = employees.FirstOrDefault(e => e.EmployeeID == ModifiedBy);
+                ModifiedByName = modifiedby == null ? ModifiedBy : String.Join(" ", modifiedby.FirstName, modifiedby.LastName);
+
+                var deletedby = employees.FirstOrDefault(e => e.EmployeeID == DeletedBy);
+                DeletedByName = deletedby == null ? DeletedBy : String.Join(" ", deletedby.FirstName, deletedby.LastName);
+            }
+        }
+
 
         #endregion
 
