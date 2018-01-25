@@ -23,6 +23,7 @@ namespace BudgetControl.ViewModels
 
         // Budget Infomation
         public Guid BudgetID { get; set; }
+        public string Year { get; set; }
         public string CostCenterID { get; set; }
         public string CostCenterName { get; set; }
         public string AccountID { get; set; }
