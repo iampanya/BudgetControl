@@ -224,6 +224,18 @@ namespace BudgetControl.Sessions
             }
         }
 
+        public static Employee GetEmployeeInfo()
+        {
+            try
+            {
+                return GetAuthentication().Employee;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         #endregion
 

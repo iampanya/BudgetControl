@@ -23,7 +23,9 @@ namespace BudgetControl.Sessions
             }
             this.Role = user.Role;
             this.User = user;
+            this.Employee = this.User.Employee;
             this.WorkingCostCenter = user.Employee.CostCenter;
+            
         }
 
         #endregion
@@ -40,6 +42,8 @@ namespace BudgetControl.Sessions
 
         public UserRole Role { get; set; }
         public User User { get; set; }
+        public Employee Employee { get; set; }
+        public DepartmentInfo WorkingDept { get; set; }
         public CostCenter WorkingCostCenter { get; set; }
 
     }
