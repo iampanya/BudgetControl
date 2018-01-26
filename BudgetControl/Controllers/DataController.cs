@@ -855,8 +855,21 @@ namespace BudgetControl.Controllers
             {
                 List<CostCenter> costcenters;
                 CostCenter working = AuthManager.GetWorkingCostCenter();
+                Employee employee = AuthManager.GetEmployeeInfo();
                 CostCenterManager ccaManager = new CostCenterManager();
-                costcenters = ccaManager.GetWithChildren(working.CostCenterID);
+
+                int deptsap;
+                if (employee.DepartmentSap == null)
+                {
+                    IdmManager idm = new IdmManager();
+                    Int32.TryParse(idm.GetEmployeeProfile(AuthManager.GetCurrentUser().EmployeeID).DepartmentSap, out deptsap);
+                }
+                else
+                {
+                    deptsap = (int)employee.DepartmentSap;
+                }
+
+                costcenters = ccaManager.GetWithChildren(deptsap);
                 returnobj.SetSuccess(costcenters);
 
                 //using (var ccRepo = new CostCenterRepository())
