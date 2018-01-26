@@ -69,12 +69,7 @@ namespace BudgetControl.Manager
                     {
                         while (reader.Read())
                         {
-                            CostCenter costcenter = new CostCenter();
-                            costcenter.CostCenterID = reader["CostCenterID"].ToString();
-                            costcenter.CostCenterName = reader["CostCenterName"].ToString();
-                            costcenter.ShortName = reader["ShortName"].ToString();
-                            costcenter.LongName = reader["LongName"].ToString();
-                            costcenter.Status = RecordStatus.Active;
+                            CostCenter costcenter = ConvertReaderToCostCenter(reader);
                             costcenters.Add(costcenter);
                         }
                     }
@@ -84,6 +79,55 @@ namespace BudgetControl.Manager
             return costcenters;
         }
 
+
+        public List<CostCenter> GetWithChildren(int deptsap)
+        {
+            List<CostCenter> costcenters = new List<CostCenter>();
+
+            using (SqlConnection conn = new SqlConnection(SqlManager.ConnectionString))
+            {
+                conn.Open();
+                string cmd_get_with_children = @"
+                    --DECLARE @DeptSap int
+                    --SET @DeptSap = 3108, 3180, 2946 
+
+                    ;WITH DeptTree as(
+                        SELECT * FROM DepartmentInfo
+                        WHERE DeptSap = @DeptSap
+
+                        UNION ALL
+
+                        SELECT d.* FROM DepartmentInfo d
+                        INNER JOIN DeptTree x ON d.DeptUpper= x.DeptSap
+                    )
+                    SELECT * 
+                    FROM CostCenter 
+                    WHERE CostCenterID IN 
+	                    (
+		                    SELECT CostCenterCode FROM DeptTree 
+	                    )
+	                AND [Status] = 1
+                    ORDER BY CostCenterID
+
+                ";
+
+                using (SqlCommand cmd = new SqlCommand(cmd_get_with_children, conn))
+                {
+
+                    cmd.Parameters.AddWithValue("DeptSap", deptsap);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            CostCenter costcenter = ConvertReaderToCostCenter(reader);
+                            costcenters.Add(costcenter);
+                        }
+                    }
+                }
+            }
+
+            return costcenters;
+        }
         #endregion
 
 
@@ -99,6 +143,22 @@ namespace BudgetControl.Manager
             costcenter.NewCreateTimeStamp();
             _db.CostCenters.Add(costcenter);
             _db.SaveChanges();
+            return costcenter;
+        }
+
+        #endregion
+
+
+        #region Methods
+
+        public CostCenter ConvertReaderToCostCenter(SqlDataReader reader)
+        {
+            CostCenter costcenter = new CostCenter();
+            costcenter.CostCenterID = reader["CostCenterID"].ToString();
+            costcenter.CostCenterName = reader["CostCenterName"].ToString();
+            costcenter.ShortName = reader["ShortName"].ToString();
+            costcenter.LongName = reader["LongName"].ToString();
+            costcenter.Status = RecordStatus.Active;
             return costcenter;
         }
 
