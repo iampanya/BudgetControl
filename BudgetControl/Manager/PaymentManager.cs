@@ -356,10 +356,17 @@ namespace BudgetControl.Manager
             // Get Controller name for printing
             using (EmployeeRepository empRepo = new EmployeeRepository())
             {
-                var controllerby = empRepo.GetById(payment.CreatedBy);
-                if (controllerby != null)
+                try
                 {
-                    payment.CreatedBy = payment.CreatedBy + " - " + controllerby.FullName;
+                    var controllerby = empRepo.GetById(payment.CreatedBy);
+                    if (controllerby != null)
+                    {
+                        payment.CreatedBy = payment.CreatedBy + " - " + controllerby.FullName;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    payment.CreatedBy = "ไม่พบข้อมูล";
                 }
             }
 
