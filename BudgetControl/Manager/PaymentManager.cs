@@ -497,6 +497,11 @@ namespace BudgetControl.Manager
                         }
                     }
 
+                    if(payment.CreatedBy == "Anonymous")
+                    {
+                        throw new Exception("พบข้อผิดพลาด: กรุณาเข้าสู่ระบบใหม่อีกครั้ง");
+                    }
+
                     dbTransaction.Commit();
                     return payment;
                 }
@@ -538,6 +543,11 @@ namespace BudgetControl.Manager
                     // Update transaction
                     var transmanager = new BudgetTransactionManager(_db);
                     transmanager.UpdateByPayment(payment, transactions);
+
+                    if (payment.ModifiedBy == "Anonymous")
+                    {
+                        throw new Exception("พบข้อผิดพลาด: กรุณาเข้าสู่ระบบใหม่อีกครั้ง");
+                    }
 
                     dbTransaction.Commit();
                 }
