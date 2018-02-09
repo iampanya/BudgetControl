@@ -1389,10 +1389,10 @@
   </wsdl:binding>
   <wsdl:service name="IdmServices">
     <wsdl:port name="IdmServicesSoap" binding="tns:IdmServicesSoap">
-      <soap:address location="https://idm.pea.co.th/webservices/IdmServices.asmx" />
+      <soap:address location="http://idm.pea.co.th/webservices/IdmServices.asmx" />
     </wsdl:port>
     <wsdl:port name="IdmServicesSoap12" binding="tns:IdmServicesSoap12">
-      <soap12:address location="https://idm.pea.co.th/webservices/IdmServices.asmx" />
+      <soap12:address location="http://idm.pea.co.th/webservices/IdmServices.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

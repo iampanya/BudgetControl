@@ -268,6 +268,7 @@
     </Content>
     <None Include="Connected Services\IdmEmployeeServices\configuration91.svcinfo" />
     <None Include="Connected Services\IdmEmployeeServices\configuration.svcinfo" />
+    <None Include="Connected Services\IdmEmployeeServices\EmployeeServices1.wsdl" />
     <None Include="Connected Services\IdmEmployeeServices\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -361,6 +362,7 @@
     </Content>
     <None Include="Connected Services\IdmServices\configuration91.svcinfo" />
     <None Include="Connected Services\IdmServices\configuration.svcinfo" />
+    <None Include="Connected Services\IdmServices\IdmServices1.wsdl" />
     <None Include="Connected Services\IdmServices\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -456,8 +458,6 @@
     <Content Include="Manual\UserManual.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Connected Services\IdmEmployeeServices\EmployeeServices.wsdl" />
-    <None Include="Connected Services\IdmServices\IdmServices.wsdl" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />

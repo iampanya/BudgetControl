@@ -555,10 +555,10 @@
   </wsdl:binding>
   <wsdl:service name="EmployeeServices">
     <wsdl:port name="EmployeeServicesSoap" binding="tns:EmployeeServicesSoap">
-      <soap:address location="https://idm.pea.co.th/webservices/EmployeeServices.asmx" />
+      <soap:address location="http://idm.pea.co.th/webservices/EmployeeServices.asmx" />
     </wsdl:port>
     <wsdl:port name="EmployeeServicesSoap12" binding="tns:EmployeeServicesSoap12">
-      <soap12:address location="https://idm.pea.co.th/webservices/EmployeeServices.asmx" />
+      <soap12:address location="http://idm.pea.co.th/webservices/EmployeeServices.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
