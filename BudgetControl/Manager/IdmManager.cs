@@ -81,12 +81,14 @@ namespace BudgetControl.Manager
                 };
                 emp = _empService.GetEmployeeInfoByEmployeeId(empInfoCriteria).ResultObject;
 
+                // Add costcenter if not exist
                 CostCenterManager cm = new CostCenterManager();
                 if(cm.GetByID(emp.CostCenterCode) == null)
                 {
                     cm.Add(emp.CostCenterCode, emp.CostCenterName, emp.DepartmentShort);
                 }
 
+                // Update employee profile
                 EmployeeManager em = new EmployeeManager();
                 em.UpdateFromIDM(emp);
 
