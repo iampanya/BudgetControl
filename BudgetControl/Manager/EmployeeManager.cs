@@ -83,6 +83,20 @@ namespace BudgetControl.Manager
                         employeeInDb.JobLevel = employee.JobLevel;
                         employeeInDb.CostCenterID = employee.CostCenterID;
                         employeeInDb.Status = RecordStatus.Active;
+
+                        employeeInDb.PositionCode = employee.PositionCode;
+                        employeeInDb.LevelCode = employee.LevelCode;
+                        employeeInDb.Email = employee.Email;
+                        employeeInDb.DepartmentSap = employee.DepartmentSap;
+                        employeeInDb.StaffDate = employee.StaffDate;
+                        employeeInDb.EntryDate = employee.EntryDate;
+                        employeeInDb.RetiredDate = employee.RetiredDate;
+                        employeeInDb.BaCode = employee.BaCode;
+                        employeeInDb.PeaCode = employee.PeaCode;
+                        employeeInDb.StatusCode = employee.StatusCode;
+                        employeeInDb.StatusName = employee.StatusName;
+                        employeeInDb.Group = employee.Group;
+
                         employeeInDb.NewModifyTimeStamp();
                         _db.Entry(employeeInDb).State = System.Data.Entity.EntityState.Modified;
                         _db.SaveChanges();

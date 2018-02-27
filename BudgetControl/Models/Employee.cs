@@ -43,7 +43,7 @@ namespace BudgetControl.Models
             Email = profile.Email;
 
             int num;
-            DepartmentSap = Int32.TryParse(profile.Department, out num) ? num : (int ?)null;
+            DepartmentSap = Int32.TryParse(profile.DepartmentSap, out num) ? num : (int ?)null;
 
             StaffDate = profile.StaffDate;
             EntryDate = profile.EntryDate;
@@ -185,6 +185,19 @@ namespace BudgetControl.Models
             if (JobLevel != newEmp.JobLevel) return true;
             if (CostCenterID != newEmp.CostCenterID) return true;
             if (Status != newEmp.Status) return true;
+
+            if (PositionCode != newEmp.PositionCode) return true;
+            if (LevelCode != newEmp.LevelCode) return true;
+            if (Email != newEmp.Email) return true;
+            if (DepartmentSap != newEmp.DepartmentSap) return true;
+            if (StaffDate != newEmp.StaffDate) return true;
+            if (EntryDate != newEmp.EntryDate) return true;
+            if (RetiredDate != newEmp.RetiredDate) return true;
+            if (BaCode != newEmp.BaCode) return true;
+            if (PeaCode != newEmp.PeaCode) return true;
+            if (StatusCode != newEmp.StatusCode) return true;
+            if (StatusName != newEmp.StatusName) return true;
+            if (Group != newEmp.Group) return true;
 
             return false;
         }
