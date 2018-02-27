@@ -64,6 +64,7 @@ namespace BudgetControl.Manager
 
         #region Get Employee
 
+        // Get EmployeeProfile from Idm and update to local database
         public EmployeeProfile GetEmployeeProfile(string empno)
         {
 
