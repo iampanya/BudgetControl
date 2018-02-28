@@ -45,23 +45,28 @@ namespace BudgetControl
                     "~/Scripts/ui-bootstrap-tpls-2.5.0.min.js"
                 ));
 
-            bundles.Add(new ScriptBundle("~/bundles/angular-script")
+            bundles.Add(new ScriptBundle("~/bundles/polyfill")
                 .Include(
-                    "~/js/app.js",
-                    "~/js/app.run.js",
-                    "~/js/app.route.js",
-                    "~/js/app.filter.js",
-                    "~/js/handle.response.service.js",
-                    "~/js/app.service.js",
-                    "~/js/app.idm.service.js",
-                    "~/js/user.service.js",
-                    "~/js/message.service.js",
-                    "~/js/budget.controller.js",
-                    "~/js/footer.controller.js",
-                    "~/js/payment.controller.js",
-                    "~/js/user.controller.js",
-                    "~/js/report.controller.js"
-                ));
+                    "~/js/polyfill.js"
+                    ));
+
+            bundles.Add(new ScriptBundle("~/bundles/angular-script")
+                  .Include(
+                      "~/js/app.js",
+                      "~/js/app.run.js",
+                      "~/js/app.route.js",
+                      "~/js/app.filter.js",
+                      "~/js/handle.response.service.js",
+                      "~/js/app.service.js",
+                      "~/js/app.idm.service.js",
+                      "~/js/user.service.js",
+                      "~/js/message.service.js",
+                      "~/js/budget.controller.js",
+                      "~/js/footer.controller.js",
+                      "~/js/payment.controller.js",
+                      "~/js/user.controller.js",
+                      "~/js/report.controller.js"
+                  ));
         }
     }
 }

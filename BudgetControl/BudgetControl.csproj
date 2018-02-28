@@ -429,6 +429,7 @@
     <Content Include="js\footer.controller.js" />
     <Content Include="js\handle.response.service.js" />
     <Content Include="js\message.service.js" />
+    <Content Include="js\polyfill.js" />
     <Content Include="js\report.controller.js" />
     <Content Include="js\user.controller.js" />
     <Content Include="js\user.service.js" />
