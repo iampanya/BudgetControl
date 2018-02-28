@@ -701,7 +701,7 @@ namespace BudgetControl.Controllers
         #region Employee
 
         [HttpGet]
-        private ActionResult Employees()
+        private ActionResult Employees(string retireYear = "")
         {
             try
             {
@@ -710,7 +710,44 @@ namespace BudgetControl.Controllers
                     List<EmployeeViewModel> empviewmodel = new List<EmployeeViewModel>();
                     var emp = empRep.Get().ToList();
 
-                    emp = emp.Where(e => e.StatusCode != "D").ToList();
+
+                    if (String.IsNullOrEmpty(retireYear))
+                    {
+                        emp = emp.Where(e => e.StatusCode != "D").ToList();
+                    }
+                    else
+                    {
+                        int iRetireYear;
+                        List<String> retiredList = new List<string>();
+
+                        // check parameter 
+                        if(Int32.TryParse(retireYear, out iRetireYear))
+                        {
+                            emp.ForEach(e =>
+                            {
+                                if (!String.IsNullOrEmpty(e.RetiredDate))
+                                {
+                                    var retiredDate = e.RetiredDate.Trim();
+                                    if (retiredDate.Length == 10)
+                                    {
+                                        int year;
+                                        if(Int32.TryParse(retiredDate.Substring(retiredDate.Length - 4, 4), out year))
+                                        {
+                                            // Remove Employee retired 
+                                            if(iRetireYear > year)
+                                            {
+                                                retiredList.Add(e.EmployeeID);
+                                            }
+                                        }
+                                        
+                                    }
+                                }
+                            });
+                        }
+
+                        emp.RemoveAll(e => retiredList.Contains(e.EmployeeID));
+
+                    }
 
                     emp.ForEach(
                         e => empviewmodel.Add(new EmployeeViewModel(e))
@@ -727,11 +764,11 @@ namespace BudgetControl.Controllers
         }
 
         [HttpGet]
-        public ActionResult Employee(string id)
+        public ActionResult Employee(string id, string retireYear = "")
         {
             if (id == null)
             {
-                return Employees();
+                return Employees(retireYear);
             }
 
             try
