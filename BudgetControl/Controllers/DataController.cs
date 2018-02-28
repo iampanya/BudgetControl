@@ -708,7 +708,11 @@ namespace BudgetControl.Controllers
                 using (EmployeeRepository empRep = new EmployeeRepository())
                 {
                     List<EmployeeViewModel> empviewmodel = new List<EmployeeViewModel>();
-                    empRep.Get().ToList().ForEach(
+                    var emp = empRep.Get().ToList();
+
+                    emp = emp.Where(e => e.StatusCode != "D").ToList();
+
+                    emp.ForEach(
                         e => empviewmodel.Add(new EmployeeViewModel(e))
                     );
                     returnobj = new ReturnObject(true, "", empviewmodel);
