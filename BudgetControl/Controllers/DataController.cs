@@ -801,7 +801,6 @@ namespace BudgetControl.Controllers
         {
             try
             {
-                CostCenter working;
                 List<Budget> budgets;
 
                 if (String.IsNullOrEmpty(year))
@@ -810,10 +809,24 @@ namespace BudgetControl.Controllers
                 }
 
                 // 1. Get working costcenter.
-                working = AuthManager.GetWorkingCostCenter();
+                CostCenter working = AuthManager.GetWorkingCostCenter();
+                Employee employee = AuthManager.GetEmployeeInfo();
+
+                int deptsap;
+                if (employee.DepartmentSap == null)
+                {
+                    IdmManager idm = new IdmManager();
+                    Int32.TryParse(idm.GetEmployeeProfile(AuthManager.GetCurrentUser().EmployeeID).DepartmentSap, out deptsap);
+                }
+                else
+                {
+                    deptsap = (int)employee.DepartmentSap;
+                }
+
+
 
                 // 2. Get budget by query
-                budgets = _reportManger.SummaryReport(working, year).ToList();
+                budgets = _reportManger.SummaryReport(deptsap, year).ToList();
                 returnobj.SetSuccess(budgets);
 
             }

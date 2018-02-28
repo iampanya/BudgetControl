@@ -15,36 +15,70 @@ namespace BudgetControl.Manager
         string conn_string = ConfigurationManager.ConnectionStrings["BudgetContext"].ConnectionString;
 
         string cmd_summary_report = @"
-            SELECT	b.AccountID
-		            , a.AccountName
-		            , MAX(total_budget.BudgetAmount) As BudgetAmount
-		            , ISNULL(MAX(total_payment.WithdrawAmount), 0) AS WithdrawAmount
-		            , ISNULL(MAX(total_budget.BudgetAmount) - MAX(total_payment.WithdrawAmount), 0) AS RemainAmount
-            FROM Budget b
-	            LEFT OUTER JOIN (
-		            SELECT b.AccountID, SUM(b.BudgetAmount) As BudgetAmount
-		            FROM budget b
-		            WHERE b.CostCenterID LIKE @CostCenterID
-				            AND b.Year = @Year
-				            AND b.Status = 1
-		            GROUP BY b.AccountID
-	            ) AS total_budget ON (b.AccountID = total_budget.AccountID)
-	            LEFT OUTER JOIN (
-		            SELECT b.AccountID, ISNULL(SUM(t.Amount), 0) AS WithdrawAmount
-			            FROM payment p 
-				            INNER JOIN BudgetTransaction t on (p.PaymentID = t.PaymentID)
-				            INNER JOIN Budget b on (t.BudgetID = b.BudgetID)
-			            WHERE b.CostCenterID like @CostCenterID
-					            AND p.year = @Year
-					            AND p.status = 1 and t.Status = 1
-			            GROUP BY b.AccountID
-	            ) AS total_payment ON (b.AccountID = total_payment.AccountID)
-	            LEFT OUTER JOIN Account a ON (b.AccountID = a.AccountID)
-            WHERE b.CostCenterID LIKE @CostCenterID
-		            AND b.Year = @Year
-		            AND b.Status = 1
-            GROUP BY b.AccountID, a.AccountName
-            ORDER BY b.AccountID
+---- Summary Report
+--DECLARE @Year varchar(4)
+--SET @Year = '2561'
+
+--DECLARE @DeptSap int
+--SET @DeptSap = 3180 -- ฝบพ
+--SET @DeptSap = 7731 -- ผสบ
+--SET @DeptSap = 7730 -- กรท
+--SET @DeptSap = 3108 -- แกลง
+
+-- Get CostCenter Belong To
+DECLARE  @CostCenter TABLE(CostCenterID  varchar(10))
+;WITH DeptTree as(
+    SELECT * FROM DepartmentInfo
+    WHERE DeptSap = @DeptSap
+
+    UNION ALL
+
+    SELECT d.* FROM DepartmentInfo d
+    INNER JOIN DeptTree x ON d.DeptUpper= x.DeptSap
+) 
+
+INSERT INTO @CostCenter (CostCenterID)
+(
+	SELECT CostCenterID 
+	FROM CostCenter 
+	WHERE CostCenterID IN 
+		(
+			SELECT CostCenterCode FROM DeptTree 
+		)
+		AND [Status] = 1
+)
+
+-- Get Summary Report
+SELECT	b.AccountID
+		, a.AccountName
+		, MAX(total_budget.BudgetAmount) As BudgetAmount
+		, ISNULL(MAX(total_payment.WithdrawAmount), 0) AS WithdrawAmount
+		, ISNULL(ISNULL(MAX(total_budget.BudgetAmount),0) - ISNULL(MAX(total_payment.WithdrawAmount), 0), 0) AS RemainAmount
+FROM Budget b
+	LEFT OUTER JOIN (
+		SELECT b.AccountID, SUM(b.BudgetAmount) As BudgetAmount
+		FROM budget b
+		WHERE b.CostCenterID IN (SELECT * FROM @CostCenter)
+				AND b.Year = @Year
+				AND b.Status = 1
+		GROUP BY b.AccountID
+	) AS total_budget ON (b.AccountID = total_budget.AccountID)
+	LEFT OUTER JOIN (
+		SELECT b.AccountID, ISNULL(SUM(t.Amount), 0) AS WithdrawAmount
+			FROM payment p 
+				INNER JOIN BudgetTransaction t on (p.PaymentID = t.PaymentID)
+				INNER JOIN Budget b on (t.BudgetID = b.BudgetID)
+			WHERE b.CostCenterID IN (SELECT * FROM @CostCenter)
+					AND p.year = @Year
+					AND p.status = 1 and t.Status = 1
+			GROUP BY b.AccountID
+	) AS total_payment ON (b.AccountID = total_payment.AccountID)
+	LEFT OUTER JOIN Account a ON (b.AccountID = a.AccountID)
+WHERE b.CostCenterID IN (SELECT * FROM @CostCenter)
+		AND b.Year = @Year
+		AND b.Status = 1
+GROUP BY b.AccountID, a.AccountName
+ORDER BY b.AccountID
         ";
 
         string cmd_individual_report = @"
@@ -77,7 +111,7 @@ namespace BudgetControl.Manager
 
         #region Summary Report
 
-        public IEnumerable<Budget> SummaryReport(CostCenter costcenter, string year)
+        public IEnumerable<Budget> SummaryReport(int deptSap, string year)
         {
             List<Budget> budgets = new List<Budget>();
             if (String.IsNullOrEmpty(year))
@@ -90,7 +124,7 @@ namespace BudgetControl.Manager
                 conn.Open();
 
                 SqlCommand cmd = new SqlCommand(cmd_summary_report, conn);
-                cmd.Parameters.AddWithValue("CostCenterID", costcenter.CostCenterTrim + "%");
+                cmd.Parameters.AddWithValue("DeptSap", deptSap);
                 cmd.Parameters.AddWithValue("Year", year);
 
                 SqlDataReader reader = cmd.ExecuteReader();
