@@ -1,7 +1,12 @@
 ﻿<div>
-    <h3>รายงานการเบิกจ่ายรายบุคคล</h3>
-    
-    <hr/>
+    <h3>
+        รายงานการเบิกจ่ายรายบุคคลประจำปี :
+        <span class="text-info">{{ vm.year }}</span>
+        ของ :
+        <span class="text-info">{{ vm.employee.Description }}</span>
+    </h3>
+
+    <hr />
     <div class="row">
         <div class="col-md-12">
             <div class="form-inline">
@@ -9,11 +14,10 @@
 
                     <div class="form-group">
                         <label for="txtEmployee">ปีงบประมาณ : </label>
-                        <select id="txtEmployee" class="form-control"  
+                        <select id="txtEmployee" class="form-control"
                                 ng-model="vm.year"
                                 ng-options="y as y for y in vm.years"
-                                ng-change="vm.onYearChange()">
-                        </select>
+                                ng-change="vm.onYearChange()"></select>
                     </div>
 
                     <div class="form-group">
@@ -25,37 +29,36 @@
                     </div>
                 </div>
                 @*<div class="form-group pull-right">
-                    <input type="text" class="form-control" id="txtSearch" placeholder="Search . . .">
-                    <button class="btn btn-primary">ค้นหา</button>
-                </div>*@
+                        <input type="text" class="form-control" id="txtSearch" placeholder="Search . . .">
+                        <button class="btn btn-primary">ค้นหา</button>
+                    </div>*@
             </div>
         </div>
     </div>
-    
+
     <br />
+
     <table class="table table-bordered table-hover table-responsive table-striped">
         <thead>
             <tr>
                 <th class="text-center col-md-1">ลำดับ</th>
+                <th class="text-center">รหัสศูนย์ต้นทุน</th>
                 <th class="text-center">รหัสบัญชี</th>
                 <th class="text-center">ชื่อบัญชี</th>
                 <th class="text-center col-md-2">วงเงินที่ได้รับ</th>
                 <th class="text-center col-md-2">จำนวนเงินที่เบิก</th>
-                <th class="text-center col-md-1"></th>
+                @*<th class="text-center col-md-1"></th>*@
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="budget in vm.budgets">
                 <td class="text-center">{{ $index + 1 }}</td>
+                <td class="text-center">{{ budget.CostCenterID }}</td>
                 <td class="text-center">{{ budget.AccountID }}</td>
                 <td class="text-center">{{ budget.Account.AccountName}}</td>
                 <td class="text-center">{{ budget.BudgetAmount | number:2 }}</td>
                 <td class="text-center">{{ budget.WithdrawAmount | number:2 }}</td>
-                <td class="text-center">
-                    @*<a ng-click="" title="ยกเลิกงบประมาณ">
-                        <i class="fa fa-list" aria-hidden="true"></i>
-                    </a>*@
-                </td>
+                @*<td class="text-center"> </td>*@
             </tr>
 
             <tr>

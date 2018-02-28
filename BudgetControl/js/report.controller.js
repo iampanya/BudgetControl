@@ -54,6 +54,7 @@
         vm.budgets = [];
         vm.getReportData = getReportData;
         vm.onYearChange = onYearChange;
+        vm.employee = {};
 
         populateYearList();
         getEmployee();
@@ -70,11 +71,12 @@
 
         function getReportData() {
             apiService.individualreport().get({ id: vm.userid, year: vm.year }).$promise.then(callApiSuccess, callApiError);
+
+       
         }
-        
         function callApiSuccess(response) {
             vm.budgets = hr.respondSuccess(response);
-            console.log(vm.budgets);
+            vm.employee = vm.employees.find(function (e) { return e.EmployeeID === vm.userid; });
         }
 
         function callApiError(e) {
