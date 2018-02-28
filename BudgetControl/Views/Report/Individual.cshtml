@@ -11,7 +11,8 @@
                         <label for="txtEmployee">ปีงบประมาณ : </label>
                         <select id="txtEmployee" class="form-control"  
                                 ng-model="vm.year"
-                                ng-options="y as y for y in vm.years">
+                                ng-options="y as y for y in vm.years"
+                                ng-change="vm.onYearChange()">
                         </select>
                     </div>
 

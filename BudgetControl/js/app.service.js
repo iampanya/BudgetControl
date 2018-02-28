@@ -4,7 +4,7 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
     var api = {}
 
     api.employee = function () {
-        return $resource('data/employee/:id')
+        return $resource('data/employee/:id?retireYear=:retireYear')
     }
 
     api.costcenter = function () {

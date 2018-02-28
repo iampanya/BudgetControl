@@ -53,15 +53,19 @@
         vm.employees = [];
         vm.budgets = [];
         vm.getReportData = getReportData;
+        vm.onYearChange = onYearChange;
 
         populateYearList();
+        getEmployee();
 
-        apiService.employee().get().$promise.then(callEmpSuccess, callApiError);
+        function getEmployee() {
+            apiService.employee().get({ retireYear: vm.year }).$promise.then(callEmpSuccess, callApiError);
 
-        function callEmpSuccess(response) {
-            vm.employees = hr.respondSuccess(response);
-            // Set default RequestBy to current user
-            getReportData();
+            function callEmpSuccess(response) {
+                vm.employees = hr.respondSuccess(response);
+                // Set default RequestBy to current user
+                getReportData();
+            }
         }
 
         function getReportData() {
@@ -88,6 +92,14 @@
             vm.year = currentYear + 543 + '';
         }
 
+        function onYearChange() {
+            apiService.employee().get({ retireYear: vm.year }).$promise.then(callEmpSuccess, callApiError);
+
+            function callEmpSuccess(response) {
+                vm.employees = hr.respondSuccess(response);
+                // Set default RequestBy to current user
+            }
+        }
         
     }
 })();
