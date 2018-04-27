@@ -188,6 +188,7 @@
         vm.payment = {};            // payment form data 
         vm.transactions = [];       // transaction inside payment
         vm.contractors = [];        // Contractor List
+        vm.isSubmitting = false;
 
         // Payment Type
         vm.paymentType = {
@@ -315,6 +316,7 @@
         function submit() {
             vm.addNewTransactionError = "";
             if (vm.transactions.length > 0) {
+                vm.isSubmitting = true;
                 preparePaymentToSave();                
                 apiService.payment().save(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
             }
@@ -328,10 +330,12 @@
                 if (response.isSuccess) {
                     openModal('lg', null, paymentid);
                 }
+                vm.isSubmitting = false;
             }
 
             function callPaymentError(e) {
                 hr.repondError(e);
+                vm.isSubmitting = false;
             }
         }
 
@@ -570,6 +574,8 @@
         vm.transactions = [];       // transaction inside payment
         vm.contractors = [];        // Contractor List
 
+        vm.isSubmitting = false;
+
         // Payment Type
         vm.paymentType = {
             internal: 1,
@@ -687,6 +693,7 @@
         function submit() {
             vm.addNewTransactionError = "";
             if (vm.transactions.length > 0) {
+                vm.isSubmitting = true;
                 preparePaymentToSave();
                 apiService.payment().update(vm.payment).$promise.then(callPaymentSuccess, callPaymentError);
             }
@@ -700,10 +707,12 @@
                 if (response.isSuccess) {
                     openModal('lg', null, vm.payment.PaymentID);
                 }
+                vm.isSubmitting = false;
             }
 
             function callPaymentError(e) {
                 hr.repondError(e);
+                vm.isSubmitting = false;
             }
         }
 

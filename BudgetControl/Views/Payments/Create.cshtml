@@ -230,7 +230,7 @@
                     </a>
                 </div>
                 <div class="col-md-2 col-sm-3 col-xs-6">
-                    <button type="button" ng-click="vm.submit()" class="btn btn-primary btn-lg btn-block" ng-disabled="frmPayment.$invalid">
+                    <button type="button" ng-click="vm.submit()" class="btn btn-primary btn-lg btn-block" ng-disabled="frmPayment.$invalid || vm.isSubmitting">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i>
                         บันทึก
                     </button>
