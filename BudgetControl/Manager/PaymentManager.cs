@@ -450,10 +450,21 @@ namespace BudgetControl.Manager
 
                     // 2. Add payment to context
                     var paymentRepo = new PaymentRepository(_db);
-                    payment.Sequence = paymentRepo.Get()
-                        .Where(p => p.CostCenterID == payment.CostCenterID && p.Year == payment.Year)
-                        .ToList()
-                        .Count + 1;
+                    payment.Sequence = _db.Database.SqlQuery<int>("" +
+                        @"
+                            SELECT COUNT(*) + 1 AS Sequence 
+                            FROM Payment 
+                            where CostCenterID = @CostCenterID   
+                                and year = @Year
+                        "
+                        , new SqlParameter("CostCenterID", payment.CostCenterID)
+                        , new SqlParameter("Year", payment.Year)
+                    ).FirstOrDefault();
+
+                    //payment.Sequence = paymentRepo.Get()
+                    //    .Where(p => p.CostCenterID == payment.CostCenterID && p.Year == payment.Year)
+                    //    .ToList()
+                    //    .Count + 1;
 
                     // Get payment counter info
                     PaymentCounter pcounter = _db.PaymentCounters.Where(c => c.CostCenterID == payment.CostCenterID && c.Year == payment.Year).FirstOrDefault();
