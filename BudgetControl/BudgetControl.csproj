@@ -202,6 +202,10 @@
     <Compile Include="Migrations\201801030800470_MoreEmployeeInfo.Designer.cs">
       <DependentUpon>201801030800470_MoreEmployeeInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805180802102_AddIndexToYearColumn.cs" />
+    <Compile Include="Migrations\201805180802102_AddIndexToYearColumn.Designer.cs">
+      <DependentUpon>201805180802102_AddIndexToYearColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AuthorizeCostCenter.cs" />
@@ -555,6 +559,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801030800470_MoreEmployeeInfo.resx">
       <DependentUpon>201801030800470_MoreEmployeeInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805180802102_AddIndexToYearColumn.resx">
+      <DependentUpon>201805180802102_AddIndexToYearColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
