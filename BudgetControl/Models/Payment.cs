@@ -62,9 +62,11 @@ namespace BudgetControl.Models
         #region Fields
 
         public Guid PaymentID { get; set; }
+
         public string CostCenterID { get; set; }
         
         [StringLength(4)]
+        [Index()]
         public string Year { get; set; }
         
         [StringLength(35)]
