@@ -27,6 +27,7 @@ namespace BudgetControl.Models
         public string CostCenterID { get; set; }
 
         [StringLength(4)]
+        [Index()]
         public string Year { get; set; }    
         
         [StringLength(30)]
