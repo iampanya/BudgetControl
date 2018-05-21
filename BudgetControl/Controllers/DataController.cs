@@ -98,7 +98,9 @@ namespace BudgetControl.Controllers
             }
             else
             {
-                payment = pManager.GetRawPaymentByID(id);
+                PaymentViewModel vm = pManager.GetVMPaymentByID(id);
+                payment = new Payment(vm);
+                //payment = pManager.GetRawPaymentByID(id);
                 returnobj.SetSuccess(payment);
             }
             
