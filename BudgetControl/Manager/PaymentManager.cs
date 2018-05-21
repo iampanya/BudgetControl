@@ -584,8 +584,48 @@ namespace BudgetControl.Manager
                     paymentRepo.Save();
 
                     // Update transaction
-                    var transmanager = new BudgetTransactionManager(_db);
-                    transmanager.UpdateByPayment(payment, transactions);
+                    //var transmanager = new BudgetTransactionManager(_db);
+                    //transmanager.UpdateByPayment(payment, transactions);
+
+                    if (transactions != null)
+                    {
+                        // DELTE Old payment
+                        using(SqlCommand cmd = new SqlCommand("DELETE FROM BudgetTransaction WHERE PaymentID = @PaymentID", _db.Database.Connection as SqlConnection, _db.Database.CurrentTransaction.UnderlyingTransaction as SqlTransaction))
+                        {
+                            cmd.Parameters.AddWithValue("@PaymentID", payment.PaymentID);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        // Insert New Item
+                        foreach (var item in transactions)
+                        {
+                            item.PaymentID = payment.PaymentID;
+
+                            //prepare to create
+                            item.BudgetTransactionID = Guid.NewGuid();
+                            item.Type = TransactionType.Transaction;
+                            item.Status = RecordStatus.Active;
+                            item.NewCreateTimeStamp();
+
+                            using (SqlCommand cmd = new SqlCommand(DbCmdTxt.cmd_upsert_budget_transaction, _db.Database.Connection as SqlConnection, _db.Database.CurrentTransaction.UnderlyingTransaction as SqlTransaction))
+                            {
+                                cmd.Parameters.AddWithValue("@Id", item.BudgetTransactionID);
+                                cmd.Parameters.AddWithValue("@BudgetId", item.BudgetID);
+                                cmd.Parameters.AddWithValue("@PaymentId", item.PaymentID);
+                                cmd.Parameters.AddWithValue("@Description", item.Description ?? string.Empty);
+                                cmd.Parameters.AddWithValue("@Amount", item.Amount);
+                                cmd.Parameters.AddWithValue("@PreviousAmount", item.PreviousAmount);
+                                cmd.Parameters.AddWithValue("@RemainAmount", item.RemainAmount);
+                                cmd.Parameters.AddWithValue("@Type", item.Type);
+                                cmd.Parameters.AddWithValue("@Status", item.Status);
+                                cmd.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
+                                cmd.Parameters.AddWithValue("@CreatedAt", item.CreatedAt);
+                                cmd.Parameters.AddWithValue("@ModifiedBy", item.ModifiedBy);
+                                cmd.Parameters.AddWithValue("@ModifiedAt", item.ModifiedAt);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
 
                     if (payment.ModifiedBy == "Anonymous")
                     {
