@@ -41,19 +41,30 @@ namespace BudgetControl.Models
             this.Type = payment.Type;
         }
 
-        public Payment(PaymentViewModel paymentviewmodel)
+        public Payment(PaymentViewModel vm)
         {
-            this.PaymentID = paymentviewmodel.PaymentID;
-            this.CostCenterID = paymentviewmodel.CostCenterID;
-            this.Year = paymentviewmodel.Year;
-            this.Sequence = paymentviewmodel.Sequence;
-            this.PaymentNo = paymentviewmodel.PaymentNo;
-            this.Description = paymentviewmodel.Description;
-            this.RequestBy = paymentviewmodel.RequestBy;
-            this.PaymentDate = paymentviewmodel.PaymentDate;
-            this.TotalAmount = paymentviewmodel.TotalAmount;
+            this.PaymentID = vm.PaymentID;
+            this.CostCenterID = vm.CostCenterID;
+            this.Year = vm.Year;
+            this.PaymentNo = vm.PaymentNo;
+            this.Sequence = vm.Sequence;
+            this.Description = vm.Description;
+            this.RequestBy = vm.RequestBy;
+            this.PaymentDate = vm.PaymentDate;
+            this.TotalAmount = vm.TotalAmount;
+            this.Status = vm.Status;
+            this.Type = vm.Type;
+            this.ContractorID = vm.ContractorID;
 
-            this.Statements = new List<Statement>();
+            if(vm.Transactions != null)
+            {
+                this.BudgetTransactions = new List<BudgetTransaction>();
+                foreach(var item in vm.Transactions)
+                {
+                    var trans = new BudgetTransaction(item);
+                    BudgetTransactions.Add(trans);
+                }
+            }
         }
 
 
