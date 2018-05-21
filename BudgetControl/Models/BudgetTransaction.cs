@@ -56,6 +56,37 @@ namespace BudgetControl.Models
             this.Status = tran.Status;
         }
 
+        public BudgetTransaction(TransactionViewModels vm)
+        {
+            BudgetTransactionID = vm.BudgetTransactionID;
+            BudgetID = vm.BudgetID;
+            PaymentID = vm.PaymentID;
+            Description = vm.Description;
+            Amount = vm.Amount;
+            PreviousAmount = vm.PreviousAmount;
+            RemainAmount = vm.RemainAmount;
+            Status = vm.Status;
+
+            Budget = new Budget()
+            {
+                Year = vm.Year,
+                BudgetAmount = vm.BudgetAmount,
+                CostCenterID = vm.CostCenterID,
+                AccountID = vm.AccountID
+            };
+
+            Budget.Account = new Account()
+            {
+                AccountID = vm.AccountID,
+                AccountName = vm.AccountName,
+            };
+
+            Budget.CostCenter = new CostCenter()
+            {
+                CostCenterID = vm.CostCenterID,
+                CostCenterName = vm.CostCenterName
+            };
+        }
        
 
         #endregion
