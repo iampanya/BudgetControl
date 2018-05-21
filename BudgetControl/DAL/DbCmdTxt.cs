@@ -16,7 +16,9 @@ UPDATE BudgetTransaction SET
 	Amount = @Amount
 	, ModifiedBy = @ModifiedBy
 	, ModifiedAt = @ModifiedAt
-WHERE BudgetID = @BudgetID AND PaymentID = @PaymentID
+WHERE BudgetID = @BudgetID 
+	AND PaymentID = @PaymentID
+	AND Status = 1
 
 IF @@ROWCOUNT = 0
 	BEGIN
@@ -30,6 +32,7 @@ IF @@ROWCOUNT = 0
 				, PreviousAmount
 				, RemainAmount
 				, Type
+				, Status
 				, CreatedBy
 				, CreatedAt
 				, ModifiedBy
@@ -45,6 +48,7 @@ IF @@ROWCOUNT = 0
 				, @PreviousAmount
 				, @RemainAmount
 				, @Type
+				, @Status
 				, @CreatedBy
 				, @CreatedAt
 				, @ModifiedBy
