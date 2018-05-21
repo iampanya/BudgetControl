@@ -162,6 +162,7 @@
     <Compile Include="DAL\BudgetContext.cs" />
     <Compile Include="DAL\BudgetRepository.cs" />
     <Compile Include="DAL\CostCenterRepository.cs" />
+    <Compile Include="DAL\DbCmdTxt.cs" />
     <Compile Include="DAL\EmployeeRepository.cs" />
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="DAL\PaymentRepository.cs" />
