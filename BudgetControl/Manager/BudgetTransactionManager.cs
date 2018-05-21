@@ -106,18 +106,7 @@ namespace BudgetControl.Manager
             try
             {
                 BudgetTransaction tranindb;
-
-                // Get data from database
-                //using (var transRepo = new TransactionRepository())
-                //{
-
-                //    tranindb = transRepo.Get()
-                //    .FirstOrDefault(
-                //        t =>
-                //            t.PaymentID == transaction.PaymentID &&
-                //            t.BudgetID == transaction.BudgetID
-                //        );
-                //}
+                
                 var transRepo = new TransactionRepository(_db);
                 var tranindbs = transRepo.Get()
                     .Where(

@@ -101,59 +101,7 @@ namespace BudgetControl.Controllers
                 payment = pManager.GetRawPaymentByID(id);
                 returnobj.SetSuccess(payment);
             }
-
-            //// 2. Get payment by id
-            //try
-            //{
-            //    using (PaymentRepository paymentRepo = new PaymentRepository())
-            //    {
-            //        payment = paymentRepo.GetById(id);
-            //        if (payment == null)
-            //        {
-            //            throw new Exception("ไม่พบข้อมูลงบประมาณที่เลือก");
-            //        }
-            //    }
-
-            //    //var manager = new BudgetTransactionManager();
-            //    //payment.BudgetTransactions = manager.SumTransaction(payment.BudgetTransactions.ToList());
-
-            //    payment.BudgetTransactions = payment.BudgetTransactions.Where(t => t.Status == RecordStatus.Active).ToList();
-
-            //    //Get budget data
-            //    using (BudgetRepository budgetRepo = new BudgetRepository())
-            //    {
-
-            //        payment.BudgetTransactions.ToList().ForEach(t => t.Budget = budgetRepo.GetById(t.BudgetID));
-
-            //        payment.BudgetTransactions = payment.BudgetTransactions.OrderBy(t => t.Budget.AccountID).ToList();
-            //        returnobj.SetSuccess(payment);
-            //    }
-
-            //    foreach (var item in payment.BudgetTransactions)
-            //    {
-            //        List<BudgetTransaction> listTransInBudget = item.Budget.BudgetTransactions
-            //            .Where(t => t.Status == RecordStatus.Active && t.CreatedAt < item.CreatedAt).ToList();
-
-            //        item.PreviousAmount = 0;
-            //        listTransInBudget.ForEach(t => item.PreviousAmount += t.Amount);
-
-            //        item.RemainAmount = item.Budget.BudgetAmount - item.PreviousAmount - item.Amount;
-            //    }
-
-            //    // Get Controller name for printing
-            //    using (EmployeeRepository empRepo = new EmployeeRepository())
-            //    {
-            //        var controllerby = empRepo.GetById(payment.CreatedBy);
-            //        if(controllerby != null)
-            //        {
-            //            payment.CreatedBy = payment.CreatedBy + " - " + controllerby.FullName;
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    returnobj.SetError(ex.Message);
-            //}
+            
             // 3. Return to client
             return Content(returnobj.ToJson(), "application/json");
         }
