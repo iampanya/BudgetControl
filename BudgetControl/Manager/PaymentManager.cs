@@ -498,17 +498,49 @@ namespace BudgetControl.Manager
                     paymentRepo.Save();
 
                     // 3. Add each budget transaction by BudgetTransactionManager
-                    BudgetTransactionManager transactionManager = new BudgetTransactionManager(_db);
+                    //BudgetTransactionManager transactionManager = new BudgetTransactionManager(_db);
+                    //if (transactions != null)
+                    //{
+                    //    foreach (var item in transactions)
+                    //    {
+                    //        item.PaymentID = payment.PaymentID;
+                    //        transactionManager.AddOrUpdate(item);
+                    //    }
+                    //}
+
                     if (transactions != null)
                     {
                         foreach (var item in transactions)
                         {
                             item.PaymentID = payment.PaymentID;
-                            transactionManager.AddOrUpdate(item);
+
+                            //prepare to create
+                            item.BudgetTransactionID = Guid.NewGuid();
+                            item.Type = TransactionType.Transaction;
+                            item.Status = RecordStatus.Active;
+                            item.NewCreateTimeStamp();
+
+                            using (SqlCommand cmd = new SqlCommand(DbCmdTxt.cmd_upsert_budget_transaction, _db.Database.Connection as SqlConnection, _db.Database.CurrentTransaction.UnderlyingTransaction as SqlTransaction))
+                            {
+                                cmd.Parameters.AddWithValue("@Id", item.BudgetTransactionID);
+                                cmd.Parameters.AddWithValue("@BudgetId", item.BudgetID);
+                                cmd.Parameters.AddWithValue("@PaymentId", item.PaymentID);
+                                cmd.Parameters.AddWithValue("@Description", item.Description ?? string.Empty);
+                                cmd.Parameters.AddWithValue("@Amount", item.Amount);
+                                cmd.Parameters.AddWithValue("@PreviousAmount", item.PreviousAmount);
+                                cmd.Parameters.AddWithValue("@RemainAmount", item.RemainAmount);
+                                cmd.Parameters.AddWithValue("@Type", item.Type);
+                                cmd.Parameters.AddWithValue("@Status", item.Status);
+                                cmd.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
+                                cmd.Parameters.AddWithValue("@CreatedAt", item.CreatedAt);
+                                cmd.Parameters.AddWithValue("@ModifiedBy", item.ModifiedBy);
+                                cmd.Parameters.AddWithValue("@ModifiedAt", item.ModifiedAt);
+                                cmd.ExecuteNonQuery();
+                            }
                         }
                     }
 
-                    if(payment.CreatedBy == "Anonymous")
+                    if (payment.CreatedBy == "Anonymous")
                     {
                         throw new Exception("พบข้อผิดพลาด: กรุณาเข้าสู่ระบบใหม่อีกครั้ง");
                     }
