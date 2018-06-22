@@ -229,6 +229,20 @@
 })();
 
 
+/************** ChangeWorkingCCACtrl ************/
+(function () {
+    'use strict';
+    angular
+        .module('budgetApp')
+        .controller('ChangeWorkingCCACtrl', ChangeWorkingCCACtrl)
+
+    ChangeWorkingCCACtrl.$inject = ['$scope'];
+
+    function ChangeWorkingCCACtrl($scope) {
+
+    }
+
+})();
 
 
 

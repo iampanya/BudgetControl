@@ -92,6 +92,13 @@
                 controllerAs: 'vm'
             })
 
+            .state('changeworkingcca', {
+                url: '/changeworkingcca',
+                templateUrl: 'User/ChangeWorkingCostCenter',
+                controller: 'ChangeWorkingCCACtrl',
+                controllerAs: 'vm'
+            })
+
             // Report
             .state('summaryreport', {
                 url: '/report/summary',
