@@ -239,6 +239,37 @@
     ChangeWorkingCCACtrl.$inject = ['$scope'];
 
     function ChangeWorkingCCACtrl($scope) {
+        var vm = this;
+
+        vm.form = {
+            CurrentCostCenterId: 'H301023010',
+            NewCostCenterId: '',
+        }
+        
+        vm.saveChange = saveChange;
+
+        // 1. Set submit button
+        resetBtnSubmit();
+
+
+
+        // Function
+        function saveChange() {
+            console.log('savechange called');
+        }
+
+        function resetBtnSubmit() {
+            vm.btnSubmit = {
+                text: 'บันทึก',
+                disabled: false
+            }
+        }
+        function disabledBtnSubmit() {
+            vm.btnSubmit = {
+                text: 'กำลังบันทึกข้อมูล...',
+                disabled: true
+            }
+        }
 
     }
 
