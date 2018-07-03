@@ -40,8 +40,8 @@ namespace BudgetControl.Controllers
                     working.NewCreateTimeStamp();
                     db.WorkingCCs.Add(working);
                     db.SaveChanges();
+                    returnobj.SetSuccess(working);
                 }
-                    returnobj.SetSuccess("");
             }
             catch (Exception ex)
             {
