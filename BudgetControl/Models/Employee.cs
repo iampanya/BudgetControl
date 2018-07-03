@@ -39,6 +39,8 @@ namespace BudgetControl.Models
             Status = RecordStatus.Active;
 
             PositionCode = profile.PositionCode;
+            PositionDescShort = profile.PositionDescShort;
+            PostionDesc = profile.Position;
             LevelCode = profile.LevelCode;
             Email = profile.Email;
 
