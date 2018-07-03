@@ -158,6 +158,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
+    <Compile Include="Controllers\WorkingCCController.cs" />
     <Compile Include="DAL\AccountRepository.cs" />
     <Compile Include="DAL\BudgetContext.cs" />
     <Compile Include="DAL\BudgetRepository.cs" />

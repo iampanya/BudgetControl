@@ -38,6 +38,7 @@ namespace BudgetControl.DAL
 
         public DbSet<AuthorizeCostCenter> AuthorizeCostCenters { get; set; }
         public DbSet<WorkingCC> WorkingCCs { get; set; }
+        public DbSet<CurrentWorkingCC> CurrentWorkingCCs { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -28,6 +28,8 @@ namespace BudgetControl.Models
         [StringLength(10)]
         public string WorkingCostCenterID { get; set; }
 
+
+
         #endregion
     }
 
