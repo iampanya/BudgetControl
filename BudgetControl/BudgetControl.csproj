@@ -208,6 +208,10 @@
     <Compile Include="Migrations\201805180802102_AddIndexToYearColumn.Designer.cs">
       <DependentUpon>201805180802102_AddIndexToYearColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807030814274_AddCurrentWorkingCC.cs" />
+    <Compile Include="Migrations\201807030814274_AddCurrentWorkingCC.Designer.cs">
+      <DependentUpon>201807030814274_AddCurrentWorkingCC.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AuthorizeCostCenter.cs" />
@@ -566,6 +570,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805180802102_AddIndexToYearColumn.resx">
       <DependentUpon>201805180802102_AddIndexToYearColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807030814274_AddCurrentWorkingCC.resx">
+      <DependentUpon>201807030814274_AddCurrentWorkingCC.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
