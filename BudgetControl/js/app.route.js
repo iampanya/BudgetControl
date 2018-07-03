@@ -44,7 +44,7 @@
                 controller: 'DetailBudgetCtrl',
                 controllerAs: 'vm'
             })
-            
+
             // Payment page
             .state('payment', {
                 url: '/payment',
@@ -106,7 +106,7 @@
                 controller: 'ReportCtrl',
                 controllerAs: 'vm'
             })
-            
+
             .state('individualreport', {
                 url: '/report/individual/:id',
                 templateUrl: 'Report/Individual',
@@ -114,6 +114,13 @@
                 controllerAs: 'vm'
             })
 
+            //admin
+            .state('admin-manage-working-cc', {
+                url: '/admin/manage-working-cc',
+                templateUrl: 'Admin/ManageWorkingCC',
+                controller: '',
+                controllerAs: 'vm'
+            })
 
             // Error
             .state('error401', {

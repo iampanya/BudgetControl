@@ -437,6 +437,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\budget-background.jpg" />
+    <Content Include="js\admin.controller.js" />
     <Content Include="js\app.idm.service.js" />
     <Content Include="js\footer.controller.js" />
     <Content Include="js\handle.response.service.js" />
