@@ -217,6 +217,7 @@
     <Compile Include="Models\BusinessAreaInfo.cs" />
     <Compile Include="Models\Contractor.cs" />
     <Compile Include="Models\CostCenter.cs" />
+    <Compile Include="Models\CurrentWorkingCC.cs" />
     <Compile Include="Models\DepartmentInfo.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\LevelInfo.cs" />
