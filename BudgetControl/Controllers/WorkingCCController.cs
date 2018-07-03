@@ -1,4 +1,6 @@
-﻿using BudgetControl.ViewModels;
+﻿using BudgetControl.DAL;
+using BudgetControl.Models;
+using BudgetControl.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,11 +30,18 @@ namespace BudgetControl.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddWorkingCC()
+        public ActionResult AddWorkingCC(WorkingCC working)
         {
             try
             {
-                returnobj.SetSuccess("");
+                using (var db = new BudgetContext())
+                {
+                    working.Id = Guid.NewGuid();
+                    working.NewCreateTimeStamp();
+                    db.WorkingCCs.Add(working);
+                    db.SaveChanges();
+                }
+                    returnobj.SetSuccess("");
             }
             catch (Exception ex)
             {
