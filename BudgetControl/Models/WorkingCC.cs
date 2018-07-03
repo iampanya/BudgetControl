@@ -27,6 +27,10 @@ namespace BudgetControl.Models
         [Index()]
         public string EmployeeNo { get; set; }
 
+        [StringLength(10)]
+        [Index()]
+        public string CostCenterCode { get; set; }
+
         public ConditionType Condition { get; set; }
 
         [StringLength(10)]
