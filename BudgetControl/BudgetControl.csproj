@@ -148,6 +148,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\IdmController.cs" />
     <Compile Include="Controllers\ManualController.cs" />
@@ -538,6 +539,8 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Manual\Index.cshtml" />
     <Content Include="Views\User\ChangeWorkingCostCenter.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\ManageWorkingCC.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

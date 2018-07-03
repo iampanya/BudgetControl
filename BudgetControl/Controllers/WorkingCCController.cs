@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace BudgetControl.Controllers
 {
-    public class WorkingCCController : ApiController
+    public class WorkingCCController : Controller
     {
         private ReturnObject returnobj = new ReturnObject();
 
