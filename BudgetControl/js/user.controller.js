@@ -91,11 +91,14 @@
         
         function loggedin() {
             vm.userinfo = authInfo.getUser();
+            vm.workingCC = authInfo.getWorkingCostCenter();
+            console.log(vm.workingCC);
             vm.isAuthen = true;
         }
 
         function loggedout() {
             vm.userinfo = {};
+            vm.workingCC = {};
             vm.isAuthen = false;
             $state.go('login');
         }

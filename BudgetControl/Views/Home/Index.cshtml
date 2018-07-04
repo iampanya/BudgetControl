@@ -65,9 +65,19 @@
                                 <span class="caret"></span>
                             </a>
                             @*<ul class="dropdown-menu" role="menu">
+                                <li><a ui-sref="changeworkingcca"><i class="fa fa-key text-primary" aria-hidden="true"></i>เปลี่ยนศูนย์ต้นทุน</a></li>
                                 <li><a href="#"><i class="fa fa-address-book text-primary" aria-hidden="true"></i> ข้อมูลส่วนตัว</a></li>
-                                <li><a ui-sref="changepassword"><i class="fa fa-key text-primary" aria-hidden="true"></i> เปลี่ยนรหัสผ่าน</a></li>
-                            </ul>*@
+                                    <li><a ui-sref="changepassword"><i class="fa fa-key text-primary" aria-hidden="true"></i> เปลี่ยนรหัสผ่าน</a></li>
+                                </ul>*@
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <i class="fa fa-cog" aria-hidden="true"></i> {{ vm.workingCC.CostCenterID }}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a ui-sref="changeworkingcca">เปลี่ยนศูนย์ต้นทุน</a></li>
+                            </ul>
                         </li>
                         <li><a ng-click="vm.logout()">ออกจากระบบ <i class="fa fa-sign-out" aria-hidden="true"></i>  </a></li>
                     </ul>
@@ -125,7 +135,7 @@
                         </ul>
                     </div>
                 </div>
-                <br/>
+                <br />
             </footer>
         </div>
     </div>
