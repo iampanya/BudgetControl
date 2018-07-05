@@ -160,7 +160,19 @@ namespace BudgetControl.Sessions
         {
             try
             {
+                
                 SessionItems session = new SessionItems(user);
+                using (var db = new BudgetContext())
+                {
+                    var lastestCostCenter = db.CurrentWorkingCCs
+                        .Where(c => c.EmployeeID == user.EmployeeID)
+                        .OrderByDescending(c => c.ModifiedAt)
+                        .FirstOrDefault();
+                    if(lastestCostCenter != null)
+                    {
+                        session.WorkingCostCenter = db.CostCenters.Where(c => c.CostCenterID == lastestCostCenter.WorkingCostCenterID).FirstOrDefault();
+                    }
+                }
                 HttpContext.Current.Session["Authentication"] = session;
             }
             catch (Exception ex)
