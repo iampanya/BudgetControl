@@ -169,6 +169,27 @@ namespace BudgetControl.Sessions
             }
         }
 
+        public static void RegisterSession(SessionItems session)
+        {
+            try
+            {
+                HttpContext.Current.Session["Authentication"] = session;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public static void ChangeWorkingCostcenter(CostCenter costcenter)
+        {
+            var currentSession = GetAuthentication();
+            currentSession.WorkingCostCenter = costcenter;
+            RegisterSession(currentSession);
+        }
+
+
         public static SessionItems GetAuthentication()
         {
             var authen = (SessionItems)HttpContext.Current.Session["Authentication"];
