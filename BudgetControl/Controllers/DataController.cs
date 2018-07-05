@@ -863,15 +863,20 @@ namespace BudgetControl.Controllers
                 CostCenterManager ccaManager = new CostCenterManager();
 
                 int deptsap;
-                if (employee.DepartmentSap == null)
+                using (var db = new BudgetContext())
                 {
-                    IdmManager idm = new IdmManager();
-                    Int32.TryParse(idm.GetEmployeeProfile(AuthManager.GetCurrentUser().EmployeeID).DepartmentSap, out deptsap);
+                    deptsap = db.DepartmentInfos.FirstOrDefault(d => d.CostCenterCode == working.CostCenterID).DeptSap;
                 }
-                else
-                {
-                    deptsap = (int)employee.DepartmentSap;
-                }
+
+                //if (employee.DepartmentSap == null)
+                //{
+                //    IdmManager idm = new IdmManager();
+                //    Int32.TryParse(idm.GetEmployeeProfile(AuthManager.GetCurrentUser().EmployeeID).DepartmentSap, out deptsap);
+                //}
+                //else
+                //{
+                //    deptsap = (int)employee.DepartmentSap;
+                //}
 
                 costcenters = ccaManager.GetWithChildren(deptsap);
                 returnobj.SetSuccess(costcenters);
