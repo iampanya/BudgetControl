@@ -5,43 +5,47 @@
 
 <h2>กำหนดสิทธิ์ ศูนย์ต้นทุนในการทำงาน</h2>
 
-<div class="row">
-    <div class="col-md-12">
-        <form class="form-inline">
-            <div class="form-group pull-right">
-                <input type="text" class="form-control" placeholder="รหัสพนักงาน, รหัสศูนย์ต้นทุน"/>
-                <input type="submit" class="btn btn-primary" value="ค้นหา" />
-            </div>
-        </form>
-    </div>
-</div>
+<div class="main-content">
 
-<div class="row" style="margin-top:5px;">
-    <div class="col-md-12">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th class="text-center">ลำดับ</th>
-                    <th class="text-center">รหัสพนักงาน</th>
-                    <th class="text-center">ศูนย์ต้นทุน</th>
-                    <th class="text-center">เงื่อนไข</th>
-                    <th class="text-center">ศูนย์ต้นทุนเริ่มต้น</th>
-                    <th class="text-center">ศูนย์ต้นทุนสิ้นสุด</th>
-                    <th class="text-center"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </tbody>
-        </table>
-        <button class="btn btn-primary pull-right" ng-click="vm.openCreateForm()">เพิ่มรายการ</button>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-inline">
+                <div class="form-group pull-right">
+                    <input type="text" class="form-control" placeholder="รหัสพนักงาน, รหัสศูนย์ต้นทุน" />
+                    <input type="submit" class="btn btn-primary" value="ค้นหา" />
+                </div>
+            </form>
+        </div>
     </div>
+
+    <div class="row" style="margin-top:5px;">
+        <div class="col-md-12">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">ลำดับ</th>
+                        <th class="text-center">รหัสพนักงาน</th>
+                        <th class="text-center">ศูนย์ต้นทุน</th>
+                        <th class="text-center">เงื่อนไข</th>
+                        <th class="text-center">ศูนย์ต้นทุนเริ่มต้น</th>
+                        <th class="text-center">ศูนย์ต้นทุนสิ้นสุด</th>
+                        <th class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary pull-right" ng-click="vm.openCreateForm()">เพิ่มรายการ</button>
+        </div>
+    </div>
+
 </div>

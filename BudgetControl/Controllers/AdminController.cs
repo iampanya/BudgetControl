@@ -22,6 +22,11 @@ namespace BudgetControl.Controllers
             return View();
         }
 
+        public ActionResult AddWorkingCC()
+        {
+            return View();
+        }
+
         #endregion
     }
 }
