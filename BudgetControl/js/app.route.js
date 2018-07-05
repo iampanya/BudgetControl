@@ -118,7 +118,7 @@
             .state('admin-manage-working-cc', {
                 url: '/admin/manage-working-cc',
                 templateUrl: 'Admin/ManageWorkingCC',
-                controller: '',
+                controller: 'ManageWorkingCCCtrl',
                 controllerAs: 'vm'
             })
 
