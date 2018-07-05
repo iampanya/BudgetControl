@@ -1,4 +1,5 @@
 ﻿using BudgetControl.DAL;
+using BudgetControl.Models;
 using BudgetControl.Sessions;
 using BudgetControl.Util;
 using BudgetControl.ViewModels;
@@ -162,6 +163,16 @@ namespace BudgetControl.Controllers
                 {
                     var costcenter = db.CostCenters.Where(c => c.CostCenterID == costcenterid).FirstOrDefault();
                     AuthManager.ChangeWorkingCostcenter(costcenter);
+
+                    // Save history to database
+                    CurrentWorkingCC current = new CurrentWorkingCC();
+                    current.Id = Guid.NewGuid();
+                    current.WorkingCostCenterID = costcenter.CostCenterID;
+                    current.EmployeeID = AuthManager.GetCurrentUser().EmployeeID;
+                    current.NewCreateTimeStamp();
+                    db.CurrentWorkingCCs.Add(current);
+                    db.SaveChanges();
+
                     returnobj.SetSuccess(AuthManager.GetAuthentication());
                 }
             }
