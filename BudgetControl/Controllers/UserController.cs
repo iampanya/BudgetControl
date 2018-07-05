@@ -151,6 +151,30 @@ namespace BudgetControl.Controllers
 
         #endregion
 
+        #region Change Working Costcenter
+
+        [HttpPost]
+        public ActionResult ChangeCostCenter(string costcenterid)
+        {
+            try
+            {
+                using (var db = new BudgetContext())
+                {
+                    var costcenter = db.CostCenters.Where(c => c.CostCenterID == costcenterid).FirstOrDefault();
+                    AuthManager.ChangeWorkingCostcenter(costcenter);
+                    returnobj.SetSuccess(AuthManager.GetAuthentication());
+                }
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
+        #endregion
+
 
         [ActionName("Current")]
         public ActionResult CurrentUser()
