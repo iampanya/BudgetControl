@@ -50,9 +50,17 @@
         var vm = this;
         vm.save = save;
         vm.close = close;
+        vm.form = {
+            EmployeeNo: '',
+            CostCenterCode: '',
+            Condition: '',
+            CCAStart: '',
+            CCAEnd: '',
+        }
 
         function save() {
             console.log('save called');
+            console.log(vm.form);
         }
 
         function close() {
