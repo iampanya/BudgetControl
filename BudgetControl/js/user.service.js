@@ -40,7 +40,9 @@
             logout: logout,
             getAuthen: getAuthen,
             changePass: changePass,
-            current: current
+            current: current,
+            changeWorkingCostCenter: changeWorkingCostCenter,
+            getWorkingList: getWorkingList
         }
         return api
 
@@ -68,6 +70,14 @@
 
         function current() {
             return $resource('user/current')
+        }
+
+        function changeWorkingCostCenter() {
+            return $resource('user/ChangeCostCenter?costcenterid=:costcenterid', {}, { send: { method: 'POST' } })
+        }
+
+        function getWorkingList() {
+            return $resource('workingcc/get')
         }
     }
 
@@ -110,9 +120,7 @@
         function getWorkingCostCenter() {
             return working;
         }
-
-
-
+       
         function isLoggedIn() {
             return (session) ? session : false
         }

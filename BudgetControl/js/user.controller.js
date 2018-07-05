@@ -239,26 +239,61 @@
         .module('budgetApp')
         .controller('ChangeWorkingCCACtrl', ChangeWorkingCCACtrl)
 
-    ChangeWorkingCCACtrl.$inject = ['$scope'];
+    ChangeWorkingCCACtrl.$inject = ['$state', '$scope', 'authInfo', 'userApi'];
 
-    function ChangeWorkingCCACtrl($scope) {
+    function ChangeWorkingCCACtrl($state, $scope, authInfo, userApi) {
         var vm = this;
+        vm.listCostCenter = [];
 
         vm.form = {
-            CurrentCostCenterId: 'H301023010',
+            CurrentCostCenterId: authInfo.getWorkingCostCenter().CostCenterID,
             NewCostCenterId: '',
         }
+
+        vm.costcenterList = [];
         
         vm.saveChange = saveChange;
 
         // 1. Set submit button
         resetBtnSubmit();
 
+        // 2. Get Costcenter list
+        getCostCenterList();
+
+        function getCostCenterList() {
+            userApi.getWorkingList().get().$promise.then(
+                function (data) {
+                    if (data.isSuccess) {
+                        vm.costcenterList = data.Result;
+                    }
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
+        }
+
 
 
         // Function
         function saveChange() {
             console.log('savechange called');
+            userApi.changeWorkingCostCenter().send({ costcenterid: vm.form.NewCostCenterId }).$promise.then(changeSuccess, changeFail);
+        }
+
+        function changeSuccess(data) {
+            console.log(data);
+            if (data.isSuccess) {
+                authInfo.setSession(data.Result);
+                $state.go('home');
+            }
+            else {
+                changeFail(data.Message);
+            }
+        }
+
+        function changeFail(error) {
+            console.log(error);
         }
 
         function resetBtnSubmit() {

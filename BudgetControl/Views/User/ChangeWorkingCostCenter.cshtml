@@ -19,11 +19,10 @@
                     </div>
                     <div class="form-group">
                         <label for="selectNewCostCenterId">ศูนย์ต้นทุนใหม่:</label>
-                        <select class="form-control" id="selectNewCostCenterId">
-                            <option>test</option>
-                            <option>test</option>
-                            <option>test</option>
-                            <option>test</option>
+                        <select class="form-control" id="selectNewCostCenterId" 
+                                ng-model="vm.form.NewCostCenterId"
+                                ng-options="c.CostCenterID as c.CostCenterID + ' - '  + c.CostCenterName for c in vm.costcenterList">
+                            <option value="">===== กรุณาเลือก =====</option>
                         </select>
                     </div>
 
