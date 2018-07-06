@@ -9,9 +9,9 @@
 
     <div class="row">
         <div class="col-md-12">
-            <form class="form-inline">
+            <form class="form-inline" ng-submit="vm.getConditionList()">
                 <div class="form-group pull-right">
-                    <input type="text" class="form-control" placeholder="รหัสพนักงาน, รหัสศูนย์ต้นทุน" />
+                    <input type="text" class="form-control" placeholder="รหัสพนักงาน, รหัสศูนย์ต้นทุน" ng-model="vm.filter" />
                     <input type="submit" class="btn btn-primary" value="ค้นหา" />
                 </div>
             </form>
@@ -33,14 +33,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                    <tr ng-repeat="item in vm.conditionList">
+                        <td class="text-center"> {{ $index + 1 }} </td>
+                        <td class="text-center"> {{ item.EmployeeNo }} </td>
+                        <td class="text-center"> {{ item.CostCenterCode }} </td>
+                        <td class="text-center"> {{ item.Condition }} </td>
+                        <td class="text-center"> {{ item.CCAStart }} </td>
+                        <td class="text-center"> {{ item.CCAEnd }} </td>
+                        <td class="text-center">
+                            <a ng-click="vm.deleteCondition(item)" title="ลบ">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

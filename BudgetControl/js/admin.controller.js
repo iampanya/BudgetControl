@@ -8,11 +8,40 @@
     angular.module('budgetApp')
         .controller('ManageWorkingCCCtrl', ManageWorkingCCCtrl);
 
-    ManageWorkingCCCtrl.$inject = ['$uibModal']
+    ManageWorkingCCCtrl.$inject = ['$uibModal', 'apiService'];
 
-    function ManageWorkingCCCtrl($uibModal) {
+    function ManageWorkingCCCtrl($uibModal, apiService) {
         var vm = this;
+        vm.filter = '';
+        vm.conditionList = [];
+
         vm.openCreateForm = openCreateForm;
+        vm.getConditionList = getConditionList;
+        vm.deleteCondition = deleteCondition;
+
+
+        function getConditionList() {
+            apiService.workingCondition().get({ filter: vm.filter }).$promise
+                .then(
+                    function (data) {
+                        if (data.isSuccess) {
+                            vm.conditionList = data.Result;
+                        }
+                        else {
+
+                        }
+                    },
+                    function (error) {
+                        console.log(error);
+                    }
+                );
+        }
+
+        function deleteCondition(condition) {
+            console.log('delete id : ' + condition.Id);
+        }
+
+
 
         function openCreateForm() {
 
