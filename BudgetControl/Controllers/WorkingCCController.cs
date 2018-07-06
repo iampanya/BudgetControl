@@ -4,6 +4,7 @@ using BudgetControl.Sessions;
 using BudgetControl.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -98,6 +99,27 @@ namespace BudgetControl.Controllers
                     db.WorkingCCs.Add(working);
                     db.SaveChanges();
                     returnobj.SetSuccess(working);
+                }
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteCondition(Guid? id)
+        {
+            try
+            {
+                using (var db = new BudgetContext())
+                {
+                    var entity = db.WorkingCCs.Find(id);
+                    db.Entry(entity).State = EntityState.Deleted;
+                    db.SaveChanges();
+                    returnobj.SetSuccess(entity);
                 }
             }
             catch (Exception ex)

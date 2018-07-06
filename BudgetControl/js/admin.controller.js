@@ -8,9 +8,9 @@
     angular.module('budgetApp')
         .controller('ManageWorkingCCCtrl', ManageWorkingCCCtrl);
 
-    ManageWorkingCCCtrl.$inject = ['$uibModal', 'apiService'];
+    ManageWorkingCCCtrl.$inject = ['$uibModal', 'apiService', 'msgService'];
 
-    function ManageWorkingCCCtrl($uibModal, apiService) {
+    function ManageWorkingCCCtrl($uibModal, apiService, msgService) {
         var vm = this;
         vm.filter = '';
         vm.conditionList = [];
@@ -28,17 +28,36 @@
                             vm.conditionList = data.Result;
                         }
                         else {
-
+                            msgService.setErrorMsg('ไม่สามารถดึงข้อมูลได้ : ' + data.Message);
                         }
                     },
-                    function (error) {
+                function (error) {
+                    msgService.setErrorMsg('ไม่สามารถดึงข้อมูลได้ : ' + error.statusText);
                         console.log(error);
                     }
                 );
         }
 
         function deleteCondition(condition) {
-            console.log('delete id : ' + condition.Id);
+            apiService.deleteCondition().delete({ id: condition.Id }).$promise
+                .then(
+                function (data) {
+                    if (data.isSuccess) {
+                        var index = vm.conditionList.findIndex(function (obj) {
+                            return obj.Id == condition.Id;
+                        });
+                        vm.conditionList.splice(index, 1);
+                        msgService.setSuccessMsg('ลบรายการสำเร็จ');
+                    }
+                    else {
+                        msgService.setErrorMsg('ไม่สามารถลบรายการได้ : ' + data.Message);
+                    }
+                },
+                function (error) {
+                    console.log(error);
+                    msgService.setErrorMsg('ไม่สามารถลบรายการได้ : ' + data.statusText);
+                }
+                );
         }
 
 
@@ -100,7 +119,7 @@
                     }
                 },
                 function (error) {
-                    displayError(error);
+                    displayError(error.statusText);
                     console.log(error);
                 }
             )

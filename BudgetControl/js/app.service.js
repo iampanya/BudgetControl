@@ -72,6 +72,10 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
         return $resource('workingcc/getcondition?filter=:filter');
     }
 
+    api.deleteCondition = function () {
+        return $resource('workingcc/DeleteCondition/:id');
+    }
+
     return api
 }])
 
