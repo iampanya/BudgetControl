@@ -63,6 +63,25 @@ namespace BudgetControl.Controllers
             return Content(returnobj.ToJson(), "application/json");
         }
 
+        [HttpGet]
+        public ActionResult GetCondition(string filter)
+        {
+            try
+            {
+                using (var db = new BudgetContext())
+                {
+                    var result = db.WorkingCCs.Where(w => w.EmployeeNo == filter || w.CostCenterCode.ToLower() == filter.ToLower()).ToList();
+                    returnobj.SetSuccess(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
         [HttpPost]
         public ActionResult AddWorkingCC(WorkingCC working)
         {
