@@ -104,6 +104,14 @@ namespace BudgetControl.Migrations
 
             #endregion
 
+            #region Migration: Add Current Working Costcenter
+
+            var conditions = ReadWorkingCondition();
+            conditions.ForEach(e => context.WorkingCCs.AddOrUpdate(w => new { w.CostCenterCode, w.Condition, w.CCAStart, w.CCAEnd }, e));
+            context.SaveChanges();
+
+            #endregion
+
         }
 
         #region Get Data from txt file
@@ -555,6 +563,37 @@ namespace BudgetControl.Migrations
             }
 
             return authorizes;
+        }
+
+        #endregion
+
+        #region Method for Migration: Add Current Working Costcenter
+
+        private List<WorkingCC> ReadWorkingCondition()
+        {
+            List<WorkingCC> conditions = new List<WorkingCC>();
+            path = Path.Combine(basepath, @"Data\WorkingCondition.txt");
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                using (TextFieldParser parser = new TextFieldParser(reader))
+                {
+                    parser.TextFieldType = FieldType.Delimited;
+                    parser.SetDelimiters("\t");
+                    while (!parser.EndOfData)
+                    {
+                        string[] fields = parser.ReadFields();
+                        var condition = new WorkingCC();
+                        condition.Id = Guid.NewGuid();
+                        condition.CostCenterCode = fields[0].Trim();
+                        condition.Condition = (ConditionType)Enum.Parse(typeof(ConditionType), fields[1].Trim());
+                        condition.CCAStart = fields[2].Trim();
+                        condition.NewCreateTimeStamp("Seed");
+                        conditions.Add(condition);
+                    }
+                }
+            }
+            return conditions;
         }
 
         #endregion
