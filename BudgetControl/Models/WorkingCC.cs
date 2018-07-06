@@ -38,7 +38,36 @@ namespace BudgetControl.Models
 
         [StringLength(10)]
         public string CCAEnd { get; set; }
-        
+
+        #endregion
+
+        #region Methods
+
+        public bool IsValid()
+        {
+            if(String.IsNullOrEmpty(EmployeeNo) && String.IsNullOrEmpty(CostCenterCode))
+            {
+                return false;
+            }
+
+            if (String.IsNullOrEmpty(CCAStart))
+            {
+                return false;
+            }
+
+            if(Condition == ConditionType.Between && String.IsNullOrEmpty(CCAEnd))
+            {
+                return false;
+            }
+            
+            if(!Enum.IsDefined(typeof(ConditionType), Condition))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         #endregion
 
 
