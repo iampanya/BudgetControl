@@ -126,7 +126,7 @@
         }
         
         function close() {
-            console.log('close called');
+            $uibModalInstance.dismiss();
         }
 
         function displayError(msg) {
