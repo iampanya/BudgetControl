@@ -68,6 +68,10 @@ namespace BudgetControl.Controllers
         {
             try
             {
+                if (!working.IsValid())
+                {
+                    throw new Exception("กรุณาระบุข้อมูลให้ครบถ้วน");
+                }
                 using (var db = new BudgetContext())
                 {
                     working.Id = Guid.NewGuid();

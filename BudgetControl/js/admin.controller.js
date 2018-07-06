@@ -44,12 +44,13 @@
     angular.module('budgetApp')
         .controller('AddWorkingCCCtrl', AddWorkingCCCtrl);
 
-    AddWorkingCCCtrl.$inject = ['$uibModal', '$uibModalInstance']
+    AddWorkingCCCtrl.$inject = ['$uibModal', '$uibModalInstance', 'userApi']
 
-    function AddWorkingCCCtrl($uibModal, $uibModalInstance) {
+    function AddWorkingCCCtrl($uibModal, $uibModalInstance, userApi) {
         var vm = this;
         vm.save = save;
         vm.close = close;
+        vm.errorMessage = '';
         vm.form = {
             EmployeeNo: '',
             CostCenterCode: '',
@@ -59,13 +60,36 @@
         }
 
         function save() {
-            console.log('save called');
-            console.log(vm.form);
+            clearError();
+            userApi.addWorkingList().send(vm.form).$promise.then(
+                function (data) {
+                    if (data.isSuccess) {
+                        $uibModalInstance.close(true);
+                    }
+                    else {
+                        displayError(data.Message);                        
+                    }
+                },
+                function (error) {
+                    displayError(error);
+                    console.log(error);
+                }
+            )
         }
-
+        
         function close() {
             console.log('close called');
         }
+
+        function displayError(msg) {
+            vm.errorMessage = msg;
+        }
+
+        function clearError() {
+            vm.errorMessage = '';
+        }
+
+        
 
     }
 })();

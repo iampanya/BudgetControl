@@ -42,7 +42,8 @@
             changePass: changePass,
             current: current,
             changeWorkingCostCenter: changeWorkingCostCenter,
-            getWorkingList: getWorkingList
+            getWorkingList: getWorkingList,
+            addWorkingList: addWorkingList
         }
         return api
 
@@ -77,7 +78,11 @@
         }
 
         function getWorkingList() {
-            return $resource('workingcc/get')
+            return $resource('workingcc/get');
+        }
+
+        function addWorkingList() {
+            return $resource('workingcc/AddWorkingCC', {}, { send: { method: 'POST' } });
         }
     }
 
