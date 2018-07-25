@@ -185,6 +185,7 @@
     <Compile Include="Manager\PaymentManager.cs" />
     <Compile Include="Manager\ReportManager.cs" />
     <Compile Include="Manager\SqlManager.cs" />
+    <Compile Include="Manager\UploadManager.cs" />
     <Compile Include="Migrations\201610310919051_InitialCreate.cs" />
     <Compile Include="Migrations\201610310919051_InitialCreate.Designer.cs">
       <DependentUpon>201610310919051_InitialCreate.cs</DependentUpon>
