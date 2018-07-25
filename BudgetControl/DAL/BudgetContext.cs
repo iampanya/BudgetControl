@@ -1,4 +1,5 @@
 ﻿using BudgetControl.Models;
+using BudgetControl.Models.Temp;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -40,6 +41,11 @@ namespace BudgetControl.DAL
         public DbSet<WorkingCC> WorkingCCs { get; set; }
         public DbSet<CurrentWorkingCC> CurrentWorkingCCs { get; set; }
 
+        #region Temp
+
+        public DbSet<TempBudget> TempBudgets { get; set; }
+
+        #endregion
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

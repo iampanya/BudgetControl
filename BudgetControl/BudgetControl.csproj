@@ -213,6 +213,10 @@
     <Compile Include="Migrations\201807030814274_AddCurrentWorkingCC.Designer.cs">
       <DependentUpon>201807030814274_AddCurrentWorkingCC.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807250657265_UploadTempBudget.cs" />
+    <Compile Include="Migrations\201807250657265_UploadTempBudget.Designer.cs">
+      <DependentUpon>201807250657265_UploadTempBudget.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AuthorizeCostCenter.cs" />
@@ -231,6 +235,7 @@
     <Compile Include="Models\PaymentCounter.cs" />
     <Compile Include="Models\PeaInfo.cs" />
     <Compile Include="Models\Statement.cs" />
+    <Compile Include="Models\Temp\TempBudget.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WorkingCC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -581,6 +586,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807030814274_AddCurrentWorkingCC.resx">
       <DependentUpon>201807030814274_AddCurrentWorkingCC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807250657265_UploadTempBudget.resx">
+      <DependentUpon>201807250657265_UploadTempBudget.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
