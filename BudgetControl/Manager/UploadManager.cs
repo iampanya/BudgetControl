@@ -1,8 +1,10 @@
 ﻿using BudgetControl.DAL;
 using BudgetControl.Models.Temp;
+using BudgetControl.Util;
 using BudgetControl.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -88,16 +90,53 @@ namespace BudgetControl.Manager
                         });
                     }
                 }
-                // insert into tempbudget
+                DateTime now = DateTime.Now;
+                tempBudgets.ForEach(i => { i.UploadBy = "admin"; i.UploadTime = now; });
+
+                // Insert into tempbudget
                 using (var db = new BudgetContext())
                 {
-                    using (var sqlBulkCopy = new SqlBulkCopy(db.Database.Connection as SqlConnection))
+                    db.Database.Connection.Open();
+
+                    using (var transaction = db.Database.BeginTransaction())
                     {
+                        try
+                        {
+
+                            // 1. Delete old temp data
+                            db.Database.ExecuteSqlCommand("DELETE FROM TempBudget Where UploadBy = @UploadBy", new SqlParameter("@UploadBy", "admin"));
+
+                            // 2. Insert new temp data
+                            DataTable dt = Utility.ToDatatable(tempBudgets);
+                            using (var sqlBulkCopy = new SqlBulkCopy(db.Database.Connection as SqlConnection, SqlBulkCopyOptions.TableLock, db.Database.CurrentTransaction.UnderlyingTransaction as SqlTransaction))
+                            {
+                                sqlBulkCopy.BulkCopyTimeout = 2000;
+                                sqlBulkCopy.DestinationTableName = "TempBudget";
+                                sqlBulkCopy.ColumnMappings.Add("Id", "Id");
+                                sqlBulkCopy.ColumnMappings.Add("AccountID", "AccountID");
+                                sqlBulkCopy.ColumnMappings.Add("AccountName", "AccountName");
+                                sqlBulkCopy.ColumnMappings.Add("CostCenterID", "CostCenterID");
+                                sqlBulkCopy.ColumnMappings.Add("Year", "Year");
+                                sqlBulkCopy.ColumnMappings.Add("BudgetAmount", "BudgetAmount");
+                                sqlBulkCopy.ColumnMappings.Add("UploadBy", "UploadBy");
+                                sqlBulkCopy.ColumnMappings.Add("UploadTime", "UploadTime");
+
+                                sqlBulkCopy.WriteToServer(dt);
+                            }
+                            db.SaveChanges();
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            throw ex;
+                        }
 
                     }
+                    
                 }
 
-                    return budgetfile;
+                return budgetfile;
 
             }
             catch (Exception ex)

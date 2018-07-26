@@ -588,7 +588,7 @@ namespace BudgetControl.Controllers
 
 
         [HttpPost]
-        public ActionResult ReadBudgetFile(UploadBudgetModel formdata)
+        public ActionResult ReadBudgetFile_Old(UploadBudgetModel formdata)
         {
             List<Account> accounts = new List<Account>();
             List<Budget> budgets = new List<Budget>();
@@ -643,6 +643,17 @@ namespace BudgetControl.Controllers
             }
 
 
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
+        [HttpPost]
+        public ActionResult ReadBudgetFile(UploadBudgetModel formdata)
+        {
+            List<BudgetFileModel> budgetfile = new List<BudgetFileModel>();
+            var manager = new UploadManager();
+            budgetfile = manager.ReadBudgetFile(formdata);
+
+            returnobj.SetSuccess(budgetfile);
             return Content(returnobj.ToJson(), "application/json");
         }
 
