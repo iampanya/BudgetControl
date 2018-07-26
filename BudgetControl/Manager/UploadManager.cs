@@ -1,9 +1,11 @@
 ﻿using BudgetControl.DAL;
+using BudgetControl.Models;
 using BudgetControl.Models.Temp;
 using BudgetControl.Util;
 using BudgetControl.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -18,6 +20,63 @@ namespace BudgetControl.Manager
         public UploadManager()
         {
 
+        }
+
+        #endregion
+
+        #region cmd
+
+        private static string cmd_upsert_tempbudget
+        {
+            get
+            {
+                return @"
+--DECLARE @UploadBy varchar(10)
+--SET @UploadBy = 'admin'
+
+MERGE INTO Budget AS TARGET
+USING TempBudget AS SOURCE
+ON		TARGET.Year = source.Year 
+	AND TARGET.AccountID = SOURCE.AccountID
+	AND TARGET.CostCenterID = SOURCE.CostCenterID
+WHEN MATCHED  AND SOURCE.UploadBy = @UploadBy THEN 
+	UPDATE SET	TARGET.BudgetAmount = SOURCE.BudgetAmount
+				, TARGET.Status = 1
+				, TARGET.ModifiedBy = SOURCE.UploadBy
+				, TARGET.ModifiedAt = SOURCE.UploadTime
+
+WHEN NOT MATCHED AND SOURCE.UploadBy = @UploadBy THEN
+		INSERT (BudgetID
+				, AccountID
+				, CostCenterID
+				, Sequence
+				, Year
+				, BudgetAmount
+				, WithdrawAmount
+				, RemainAmount
+				, Status
+				, CreatedBy
+				, CreatedAt
+				, ModifiedBy
+				, ModifiedAt
+		) 
+		VALUES ( SOURCE.Id
+				, SOURCE.AccountId
+				, SOURCE.CostCenterId
+				, 0
+				, SOURCE.Year
+				, SOURCE.BudgetAmount
+				, 0
+				, 0
+				, 1
+				, UploadBy
+				, UploadTime
+				, UploadBy
+				, UploadTime
+		);
+
+                ";
+            }
         }
 
         #endregion
@@ -144,6 +203,40 @@ namespace BudgetControl.Manager
                 throw ex;
             }
 
+        }
+
+        public int UpsertBudget(string uploadby)
+        {
+            int rowaffected = 0;
+            using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["BudgetContext"].ConnectionString))
+            {
+                conn.Open();
+                using (var tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (var cmd = new SqlCommand(cmd_upsert_tempbudget, conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@UploadBy", uploadby);
+                            rowaffected = cmd.ExecuteNonQuery();
+                        }
+
+                        using (var cmd = new SqlCommand("DELETE FROM TempBudget Where UploadBy = @UploadBy", conn, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@UploadBy", uploadby);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return rowaffected;
+                    }
+                    catch(Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
         }
     }
 }

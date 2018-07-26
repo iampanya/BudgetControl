@@ -491,7 +491,7 @@ namespace BudgetControl.Controllers
         //}
 
         [HttpPost]
-        public ActionResult UploadBudget(List<BudgetFileModel> filedata)
+        public ActionResult UploadBudget_Old(List<BudgetFileModel> filedata)
         {
             List<Account> accounts = new List<Account>();
             List<Budget> budgets = new List<Budget>();
@@ -645,6 +645,27 @@ namespace BudgetControl.Controllers
 
             return Content(returnobj.ToJson(), "application/json");
         }
+
+        [HttpPost]
+        public ActionResult UploadBudget(List<BudgetFileModel> filedata)
+        {
+            List<Account> accounts = new List<Account>();
+            List<Budget> budgets = new List<Budget>();
+
+            try
+            {
+                var manager = new UploadManager();
+                var row = manager.UpsertBudget("admin");
+                returnobj.SetSuccess("นำเข้าข้อมูลสำเร็จ: " + row.ToString() + " รายการ");
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
 
         [HttpPost]
         public ActionResult ReadBudgetFile(UploadBudgetModel formdata)
