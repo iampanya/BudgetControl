@@ -823,8 +823,9 @@
                 if (vm.payment.Type == vm.paymentType.internal) {
                     vm.requestbynormal.employeecode = vm.payment.RequestBy;
                 }
-                else if (vm.paymentType == vm.paymentType.pea) {
-                    vm.requestbypea.employeecode = vm.employeecode;
+                else if (vm.payment.Type == vm.paymentType.pea) {
+                    vm.requestbypea.employeecode = vm.payment.RequestBy;
+                    getEmployeeProfile();
                 }
                 else if (vm.payment.Type == vm.paymentType.contractor) {
                     vm.requestbyother.id = vm.payment.ContractorID;
