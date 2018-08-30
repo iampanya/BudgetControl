@@ -253,9 +253,13 @@ namespace BudgetControl.Manager
                     budget.BudgetAmount = decimal.Parse(reader["BudgetAmount"].ToString());
                     budget.WithdrawAmount = decimal.Parse(reader["WithdrawAmount"].ToString());
                     budget.RemainAmount = decimal.Parse(reader["RemainAmount"].ToString());
-                    budget.CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString());
+                    DateTime createAt;
+                    budget.CreatedAt = DateTime.TryParse(reader["CreatedAt"].ToString(), out createAt) ? createAt : (DateTime?)null;
+                    //budget.CreatedAt = DateTime.TryParse(reader["CreatedAt"].ToString());
                     budget.CreatedBy = reader["CreatedBy"].ToString();
-                    budget.ModifiedAt = DateTime.Parse(reader["ModifiedAt"].ToString());
+                    DateTime modifiedAt;
+                    budget.ModifiedAt = DateTime.TryParse(reader["ModifiedAt"].ToString(), out modifiedAt) ? modifiedAt : (DateTime?)null;
+                    //budget.ModifiedAt = DateTime.Parse(reader["ModifiedAt"].ToString());
                     budget.ModifiedBy = reader["ModifiedBy"].ToString();
                     budgets.Add(budget);
                 }

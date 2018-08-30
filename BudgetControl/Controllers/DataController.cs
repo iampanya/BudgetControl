@@ -895,22 +895,30 @@ namespace BudgetControl.Controllers
                 CostCenterManager ccaManager = new CostCenterManager();
 
                 int deptsap;
+                DepartmentInfo deptInfo;
                 using (var db = new BudgetContext())
                 {
-                    deptsap = db.DepartmentInfos.FirstOrDefault(d => d.CostCenterCode == working.CostCenterID).DeptSap;
+                    deptInfo = db.DepartmentInfos.FirstOrDefault(d => d.CostCenterCode == working.CostCenterID);
+                }
+                
+                if(deptInfo == null)
+                {
+                    using (var ccRepo = new CostCenterRepository())
+                    {
+                        costcenters = ccRepo.Get()
+                            .Where(c =>
+                                c.CostCenterID.StartsWith(working.CostCenterTrim) &&
+                                c.Status == RecordStatus.Active
+                            ).OrderBy(c => c.CostCenterID).ToList();
+                    }
+
+                }
+                else
+                {
+                    deptsap = deptInfo.DeptSap;
+                    costcenters = ccaManager.GetWithChildren(deptsap);
                 }
 
-                //if (employee.DepartmentSap == null)
-                //{
-                //    IdmManager idm = new IdmManager();
-                //    Int32.TryParse(idm.GetEmployeeProfile(AuthManager.GetCurrentUser().EmployeeID).DepartmentSap, out deptsap);
-                //}
-                //else
-                //{
-                //    deptsap = (int)employee.DepartmentSap;
-                //}
-
-                costcenters = ccaManager.GetWithChildren(deptsap);
                 returnobj.SetSuccess(costcenters);
 
                 //using (var ccRepo = new CostCenterRepository())
