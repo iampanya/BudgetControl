@@ -5,8 +5,7 @@
 
 <h2>Transaction {{ vm.test }}</h2>
 <div class="container">
-
-        <div id="grid1" ui-grid="{ data: vm.myData }" class="grid"></div>
-
-
+    <div class="row">
+        <div id="grid1" ui-grid="vm.gridOptions" class="grid" ui-grid-resize-columns></div>
+    </div>
 </div>

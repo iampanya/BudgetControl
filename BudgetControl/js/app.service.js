@@ -31,6 +31,10 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
         });
     }
 
+    api.paymenttransaction = function () {
+        return $resource('data/paymenttransaction?year=:year&costcenterid=:costcenterid')
+    }
+
 
     api.summaryreport = function () {
         return $resource('data/SummaryReport?year=:year');

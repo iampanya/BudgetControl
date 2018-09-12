@@ -884,26 +884,44 @@
 
     function PaymentTransactionCtrl($state, $stateParams, apiService, hr) {
         var vm = this;
-        vm.myData = [
-            {
-                firstName: "Cox",
-                lastName: "Carney",
-                company: "Enormo",
-                employed: true
-            },
-            {
-                firstName: "Lorraine",
-                lastName: "Wise",
-                company: "Comveyer",
-                employed: false
-            },
-            {
-                firstName: "Nancy",
-                lastName: "Waters",
-                company: "Fuelton",
-                employed: false
-            }
-        ];
+     
+        apiService.paymenttransaction().get({ year: '2561', costcenterid: 'H301023010' }).$promise.then(callApiSuccess, callApiError);
+
+        function callApiSuccess(response) {
+            vm.transaction = hr.respondSuccess(response);
+            console.log(vm.transaction);
+        }
+
+        function callApiError(e) {
+            hr.respondError(e);
+        }
+
+        vm.gridOptions = {
+            enableSorting: true,
+            enableFiltering: true,
+            enableColumnResizing: true,
+            columnDefs: [
+                {
+                    name: 'rowNum',
+                    displayName: 'ลำดับ',
+                    cellTemplate: '<div class="ui-grid-cell-contents text-center">{{grid.renderContainers.body.visibleRowCache.indexOf(row) + 1}}</div>',
+                    enableFiltering: false,
+                    headerCellClass: 'text-center',
+                    width: 50
+                },
+
+                //{ name: 'rowNum', displayName: 'Row Number', cellTemplate: '{{rowRenderIndex + 1}}' },
+                //{ field: 'index', displayName: 'Index', width: '50', cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+(grid.options.paginationPageSize*(grid.options.paginationCurrentPage-1))+1}}</div>' },
+                { name: 'รหัสบัญชี', field: 'AccountID', headerCellClass: 'text-center', cellClass: 'text-center'},
+                { name: 'ชื่อบัญชี', field: 'AccountName', headerCellClass: 'text-center', cellClass: 'text-center' },
+                { name: 'เลขที่การเบิกจ่าย', field: 'PaymentNo', headerCellClass: 'text-center', cellClass: 'text-center' },
+                { name: 'รายละเอียด', field: 'Description', headerCellClass: 'text-center', cellClass: 'text-center' },
+                { name: 'ผู้เบิก', field: 'RequestByFullName', headerCellClass: 'text-center', cellClass: 'text-center' },
+                { name: 'วันที่', field: 'CreatedAtText', headerCellClass: 'text-center', cellClass: 'text-center' },
+                { name: 'จำนวน', field: 'Amount', headerCellClass: 'text-center', cellClass: 'text-center' }
+            ],
+            data: 'vm.transaction'
+        };
     }
 })();
 
