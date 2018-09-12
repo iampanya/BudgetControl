@@ -373,6 +373,61 @@ namespace BudgetControl.Manager
             return payment;
         }
 
+        public List<PaymentTransactionViewModel> GetPaymentTransaction(string year, string costcenterid)
+        {
+            List<PaymentTransactionViewModel> vms = new List<PaymentTransactionViewModel>();
+
+            string cmd_get_payment_transaction = @"
+                SELECT trans.BudgetTransactionID
+		                , acc.AccountID
+		                , acc.AccountName
+		                , p.PaymentNo
+		                , p.Description
+		                , p.RequestBy
+		                , emp.FirstName + ' ' + emp.LastName AS RequestByFullName
+		                , p.CreatedAt
+		                , trans.Amount
+                FROM Payment p 
+	                INNER JOIN BudgetTransaction trans ON (p.PaymentID = trans.PaymentID)
+	                INNER JOIN Budget budget ON (trans.BudgetID = budget.BudgetID)
+	                INNER JOIN Account acc ON (budget.AccountID = acc.AccountID)
+	                INNER JOIN Employee emp ON (p.RequestBy = emp.EmployeeID)
+	
+                WHERE p.Year = @Year
+                AND p.CostCenterID = @CostCenterID
+                AND budget.AccountID LIKE @AccountID
+                AND p.Status = 1
+                AND trans.Status = 1
+
+                ORDER BY p.CreatedAt
+            ";
+
+            using (SqlConnection conn = new SqlConnection(SqlManager.ConnectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(cmd_get_payment_transaction, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Year", year);
+                    cmd.Parameters.AddWithValue("@CostCenterID", costcenterid);
+                    cmd.Parameters.AddWithValue("@AccountID", "%");
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PaymentTransactionViewModel vm = ConvertReaerToPaymentTransactionVM(reader);
+                            vms.Add(vm);
+                        }
+                    }
+                }
+
+                conn.Close();
+            }
+
+            return vms;
+        }
+
         #endregion
 
         #region New Methods
@@ -417,6 +472,25 @@ namespace BudgetControl.Manager
         private TransactionViewModels ConvertReaderToTransactionVM(SqlDataReader reader)
         {
             TransactionViewModels vm = new TransactionViewModels();
+
+            return vm;
+        }
+
+        private PaymentTransactionViewModel ConvertReaerToPaymentTransactionVM(SqlDataReader reader)
+        {
+            PaymentTransactionViewModel vm = new PaymentTransactionViewModel();
+
+            vm.BudgetTransactionID = reader["BudgetTransactionID"].ToString();
+            vm.AccountID = reader["AccountID"].ToString();
+            vm.AccountName = reader["AccountName"].ToString();
+            vm.PaymentNo = reader["PaymentNo"].ToString();
+            vm.Description = reader["Description"].ToString();
+            vm.RequestBy = reader["RequestBy"].ToString();
+            vm.RequestByFullName = reader["RequestByFullName"].ToString();
+            DateTime createdAt;
+            vm.CreatedAt = DateTime.TryParse(reader["CreatedAt"].ToString(), out createdAt) ? createdAt : DateTime.MinValue;
+            decimal amount;
+            vm.Amount = decimal.TryParse(reader["Amount"].ToString(), out amount) ? amount : 0; 
 
             return vm;
         }

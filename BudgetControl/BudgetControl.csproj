@@ -470,7 +470,6 @@
     <Content Include="Scripts\angular-resource.min.js" />
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular-touch.min.js" />
-    <Content Include="Scripts\angular-ui-grid\fonts\ui-grid.svg" />
     <Content Include="Scripts\angular-ui-grid\index.js" />
     <Content Include="Scripts\angular-ui-grid\ui-grid.auto-resize.js" />
     <Content Include="Scripts\angular-ui-grid\ui-grid.auto-resize.min.js" />
@@ -542,9 +541,6 @@
     <Content Include="Scripts\angular-ui-grid\CHANGELOG.md" />
     <Content Include="Scripts\angular-ui-grid\package.json" />
     <Content Include="Scripts\angular-ui-grid\README.md" />
-    <Content Include="Scripts\angular-ui-grid\fonts\ui-grid.eot" />
-    <Content Include="Scripts\angular-ui-grid\fonts\ui-grid.ttf" />
-    <Content Include="Scripts\angular-ui-grid\fonts\ui-grid.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

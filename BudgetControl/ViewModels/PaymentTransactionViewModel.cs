@@ -15,7 +15,7 @@ namespace BudgetControl.ViewModels
 
         #region Fields
 
-        public Guid BudgetTransactionID { get; set; }
+        public string BudgetTransactionID { get; set; }
         public string AccountID { get; set; }
         public string AccountName { get; set; }
         public string PaymentNo { get; set; }
@@ -23,7 +23,7 @@ namespace BudgetControl.ViewModels
         public string RequestBy { get; set; }
         public string RequestByFullName { get; set; }
         public DateTime CreatedAt { get; set; }
-        public string Amount { get; set; }
+        public decimal Amount { get; set; }
 
         #endregion
 

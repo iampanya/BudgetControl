@@ -196,6 +196,34 @@ namespace BudgetControl.Controllers
             return Content(returnobj.ToJson(), "application/json");
         }
 
+        [HttpGet]
+        public ActionResult PaymentTransaction(string year, string costcenterid)
+        {
+            try
+            {
+                CostCenter working;
+                List<PaymentTransactionViewModel> vms;
+                PaymentManager pManager = new PaymentManager();
+
+                // 1. Get working costcenter.
+                working = AuthManager.GetWorkingCostCenter();
+
+                // 2. Get Payment data
+                vms = pManager.GetPaymentTransaction(year, costcenterid).ToList();
+
+                // 3. Set Return result
+                returnobj.SetSuccess(vms);
+
+            }
+            catch (Exception ex)
+            {
+
+                returnobj.SetError(ex.Message);
+            }
+
+            // 3. Return to client
+            return Content(Utility.ParseToJson(returnobj), "application/json");
+        }
 
 
         #endregion
