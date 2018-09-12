@@ -43,6 +43,11 @@ namespace BudgetControl.Controllers
             return View();
         }
 
+        public ActionResult Transaction()
+        {
+            return View();
+        }
+
         #endregion
 
         #region Dispose

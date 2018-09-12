@@ -873,6 +873,39 @@
 
 })();
 
+(function () {
+    'use strict';
+
+    angular
+        .module('budgetApp')
+        .controller('PaymentTransactionCtrl', PaymentTransactionCtrl);
+
+    PaymentTransactionCtrl.$inject = ['$state', '$stateParams', 'apiService', 'handleResponse'];
+
+    function PaymentTransactionCtrl($state, $stateParams, apiService, hr) {
+        var vm = this;
+        vm.myData = [
+            {
+                firstName: "Cox",
+                lastName: "Carney",
+                company: "Enormo",
+                employed: true
+            },
+            {
+                firstName: "Lorraine",
+                lastName: "Wise",
+                company: "Comveyer",
+                employed: false
+            },
+            {
+                firstName: "Nancy",
+                lastName: "Waters",
+                company: "Fuelton",
+                employed: false
+            }
+        ];
+    }
+})();
 
 
 //budgetApp.controller('DetailPaymentController',

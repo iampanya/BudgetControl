@@ -393,6 +393,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\fonts\ui-grid.svg" />
     <Content Include="Content\Loader.css" />
     <Content Include="Content\ngProgress.css" />
     <Content Include="Data\Account.txt">
@@ -468,6 +469,7 @@
     <Content Include="Scripts\angular-resource.min.js" />
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular-touch.min.js" />
+    <Content Include="Scripts\angular-ui-grid\fonts\ui-grid.svg" />
     <Content Include="Scripts\angular-ui-grid\index.js" />
     <Content Include="Scripts\angular-ui-grid\ui-grid.auto-resize.js" />
     <Content Include="Scripts\angular-ui-grid\ui-grid.auto-resize.min.js" />
@@ -531,11 +533,17 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\ui-grid.eot" />
+    <Content Include="Content\fonts\ui-grid.ttf" />
+    <Content Include="Content\fonts\ui-grid.woff" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <Content Include="Scripts\angular-ui-grid\CHANGELOG.md" />
     <Content Include="Scripts\angular-ui-grid\package.json" />
     <Content Include="Scripts\angular-ui-grid\README.md" />
+    <Content Include="Scripts\angular-ui-grid\fonts\ui-grid.eot" />
+    <Content Include="Scripts\angular-ui-grid\fonts\ui-grid.ttf" />
+    <Content Include="Scripts\angular-ui-grid\fonts\ui-grid.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -600,6 +608,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ManageWorkingCC.cshtml" />
     <Content Include="Views\Admin\AddWorkingCC.cshtml" />
+    <Content Include="Views\Payments\Transaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

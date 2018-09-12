@@ -66,6 +66,13 @@
                 controllerAs: 'vm'
             })
 
+            .state('transaction', {
+                url: '/payment/transaction',
+                templateUrl: 'Payments/Transaction',
+                controller: 'PaymentTransactionCtrl',
+                controllerAs: 'vm'
+            })
+
             .state('viewpayment', {
                 url: '/payment/:id',
                 templateUrl: 'Payments/Details',
