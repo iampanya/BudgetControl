@@ -29,7 +29,8 @@ namespace BudgetControl
                       "~/Content/ngProgress.css",
                       "~/Content/Site.css",
                       "~/Content/Loader.css",
-                      "~/Content/font-awesome.min.css"
+                      "~/Content/font-awesome.min.css",
+                      "~/Scripts/angular-ui-grid/ui-grid.min.css"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular")
@@ -68,6 +69,11 @@ namespace BudgetControl
                       "~/js/report.controller.js",
                       "~/js/admin.controller.js"
                   ));
+
+            bundles.Add(new ScriptBundle("~/bundles/ui-grid")
+                    .Include(
+                        "~/Scripts/angular-ui-grid/ui-grid.min.js"
+                ));
         }
     }
 }
