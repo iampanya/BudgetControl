@@ -139,7 +139,10 @@
                     addPayment();
                     addItem('viewpayment', 'รายละเอียด')
                     break;
-                
+                case 'transaction':
+                    addPayment();
+                    addItem('transaction', 'รายการตัดงบ')
+                    break;
             }
             
             
