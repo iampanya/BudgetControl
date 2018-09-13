@@ -945,6 +945,11 @@
             enableSorting: true,
             enableFiltering: true,
             enableColumnResizing: true,
+            enableGridMenu: true,
+            exporterMenuPdf: false,
+            exporterMenuCsv: false,
+            exporterExcelFilename: 'export-payment-transaction.xlsx',
+            exporterExcelSheetName: 'Sheet1',
             columnDefs: [
                 {
                     name: 'rowNum',

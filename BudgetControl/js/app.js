@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var budgetApp = angular.module('budgetApp', ['ngRoute', 'ngResource', 'ngAnimate', 'ngProgress', 'ui.router', 'ui.bootstrap', 'ui.grid', 'ui.grid.resizeColumns']);
+var budgetApp = angular.module('budgetApp', ['ngRoute', 'ngResource', 'ngAnimate', 'ngProgress', 'ui.router', 'ui.bootstrap', 'ui.grid', 'ui.grid.resizeColumns', 'ui.grid.exporter']);
 
 
 (function () {

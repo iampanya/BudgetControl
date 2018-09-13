@@ -72,7 +72,10 @@ namespace BudgetControl
 
             bundles.Add(new ScriptBundle("~/bundles/ui-grid")
                     .Include(
-                        "~/Scripts/angular-ui-grid/ui-grid.min.js"
+                        "~/Scripts/angular-ui-grid/ui-grid.min.js",
+                        "~/Scripts/lodash.min.js",
+                        "~/Scripts/jszip.min.js",
+                        "~/Scripts/excel-builder.dist.min.js"
                 ));
         }
     }
