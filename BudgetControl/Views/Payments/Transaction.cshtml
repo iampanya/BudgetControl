@@ -1,11 +1,44 @@
 ﻿
 @{
-    ViewBag.Title = "Transaction";
+    ViewBag.Title = "รายการตัดงบ";
 }
 
-<h2>Transaction {{ vm.test }}</h2>
-    <div class="row">
-        <div class="col-lg-12">
-            <div id="grid1" ui-grid="vm.gridOptions" class="grid" ui-grid-resize-columns></div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <h3>
+                <span class="pull-left">
+                    ปีงบประมาณ:
+                </span>
+                <span class="col-md-6">
+                    <select class="form-control input-sm"
+                            ng-model="vm.year"
+                            ng-options="y as y for y in vm.years"
+                            ng-change="vm.getPaymentTransactionData();"></select>
+                </span>
+            </h3>
         </div>
     </div>
+    <div class="col-md-5">
+        <h3>
+            <span class="pull-left">
+                ศูนย์ต้นทุน:
+            </span>
+            <span class="col-md-8">
+                <select class="form-control input-sm"
+                        ng-model="vm.costcenter"
+                        ng-options="c.CostCenterID as c.CostCenterName for c in vm.costcenters"
+                        ng-change="vm.getPaymentTransactionData();"></select>
+            </span>
+        </h3>
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-success pull-right"><i class="fa fa-file-excel-o" aria-hidden="true"> Export to Excel </i></button>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-lg-12">
+        <div id="grid1" ui-grid="vm.gridOptions" class="grid" ui-grid-resize-columns></div>
+    </div>
+</div>

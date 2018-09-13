@@ -880,19 +880,64 @@
         .module('budgetApp')
         .controller('PaymentTransactionCtrl', PaymentTransactionCtrl);
 
-    PaymentTransactionCtrl.$inject = ['$state', '$stateParams', 'apiService', 'handleResponse'];
+    PaymentTransactionCtrl.$inject = ['$state', '$stateParams', 'apiService', 'handleResponse', 'authInfo'];
 
-    function PaymentTransactionCtrl($state, $stateParams, apiService, hr) {
+    function PaymentTransactionCtrl($state, $stateParams, apiService, hr, authInfo) {
         var vm = this;
-     
-        apiService.paymenttransaction().get({ year: '2561', costcenterid: 'H301023010' }).$promise.then(callApiSuccess, callApiError);
 
-        function callApiSuccess(response) {
-            vm.transaction = hr.respondSuccess(response);
-            console.log(vm.transaction);
+        vm.costcenters = [];
+        vm.costcenter = '';
+        vm.years = [];
+        vm.year = '';
+        vm.getPaymentTransactionData = getPaymentTransactionData;
+
+
+        initialData();
+
+        function initialData() {
+            vm.costcenter = authInfo.getWorkingCostCenter().CostCenterID;
+
+            populateYearList();
+
+            populateCostCenterList();
+
+            getPaymentTransactionData();
         }
 
-        function callApiError(e) {
+        function populateYearList() {
+            // Populate year list from 2559 to current + 1 and set default to current year
+            vm.years = [];
+            var currentYear = new Date().getFullYear();
+            for (var i = 2016; i <= currentYear + 1; i++) {
+                vm.years.push(i + 543 + '');
+            }
+
+            vm.year = currentYear + 543 + '';
+        }
+
+        function populateCostCenterList() {
+            // 1. Get Costcenter from server
+            apiService.costcenter().get().$promise.then(callCostCenterSuccess, callError);
+
+            // Call CostCenter success
+            function callCostCenterSuccess(response) {
+                vm.costcenters = hr.respondSuccess(response);
+                if (vm.costcenters.length < 1) {
+                    vm.costcenters.push({ CostCenterID: authInfo.getWorkingCostCenter().CostCenterID, CostCenter: authInfo.getWorkingCostCenter() });
+                }
+            }
+        }
+
+        function getPaymentTransactionData() {
+            apiService.paymenttransaction().get({ year: vm.year, costcenterid: vm.costcenter }).$promise.then(callApiSuccess, callError);
+
+            function callApiSuccess(response) {
+                vm.transaction = hr.respondSuccess(response);
+                console.log(vm.transaction);
+            }
+        }
+     
+        function callError(e) {
             hr.respondError(e);
         }
 
@@ -912,13 +957,13 @@
 
                 //{ name: 'rowNum', displayName: 'Row Number', cellTemplate: '{{rowRenderIndex + 1}}' },
                 //{ field: 'index', displayName: 'Index', width: '50', cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+(grid.options.paginationPageSize*(grid.options.paginationCurrentPage-1))+1}}</div>' },
-                { name: 'รหัสบัญชี', field: 'AccountID', headerCellClass: 'text-center', cellClass: 'text-center'},
+                { name: 'รหัสบัญชี', field: 'AccountID', headerCellClass: 'text-center', cellClass: 'text-center', width: 120},
                 { name: 'ชื่อบัญชี', field: 'AccountName', headerCellClass: 'text-center', cellClass: 'text-center' },
                 { name: 'เลขที่การเบิกจ่าย', field: 'PaymentNo', headerCellClass: 'text-center', cellClass: 'text-center' },
                 { name: 'รายละเอียด', field: 'Description', headerCellClass: 'text-center', cellClass: 'text-center' },
                 { name: 'ผู้เบิก', field: 'RequestByFullName', headerCellClass: 'text-center', cellClass: 'text-center' },
                 { name: 'วันที่', field: 'CreatedAtText', headerCellClass: 'text-center', cellClass: 'text-center' },
-                { name: 'จำนวน', field: 'Amount', headerCellClass: 'text-center', cellClass: 'text-center' }
+                { name: 'จำนวน', field: 'Amount', headerCellClass: 'text-center', cellClass: 'text-right', cellFilter: 'number: 2', width: 120}
             ],
             data: 'vm.transaction'
         };
