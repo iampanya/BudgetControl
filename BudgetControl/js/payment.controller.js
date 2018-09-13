@@ -880,9 +880,9 @@
         .module('budgetApp')
         .controller('PaymentTransactionCtrl', PaymentTransactionCtrl);
 
-    PaymentTransactionCtrl.$inject = ['$state', '$stateParams', 'apiService', 'handleResponse', 'authInfo'];
+    PaymentTransactionCtrl.$inject = ['$state', '$stateParams', 'apiService', 'handleResponse', 'authInfo', 'uiGridConstants'];
 
-    function PaymentTransactionCtrl($state, $stateParams, apiService, hr, authInfo) {
+    function PaymentTransactionCtrl($state, $stateParams, apiService, hr, authInfo, uiGridConstants) {
         var vm = this;
 
         vm.costcenters = [];
@@ -946,10 +946,13 @@
             enableFiltering: true,
             enableColumnResizing: true,
             enableGridMenu: true,
+            exporterMenuAllData: false,
             exporterMenuPdf: false,
             exporterMenuCsv: false,
             exporterExcelFilename: 'export-payment-transaction.xlsx',
             exporterExcelSheetName: 'Sheet1',
+            showGridFooter: true,
+            showColumnFooter: true,
             columnDefs: [
                 {
                     name: 'rowNum',
@@ -966,9 +969,13 @@
                 { name: 'ชื่อบัญชี', field: 'AccountName', headerCellClass: 'text-center', cellClass: 'text-center' },
                 { name: 'เลขที่การเบิกจ่าย', field: 'PaymentNo', headerCellClass: 'text-center', cellClass: 'text-center' },
                 { name: 'รายละเอียด', field: 'Description', headerCellClass: 'text-center', cellClass: 'text-center' },
-                { name: 'ผู้เบิก', field: 'RequestByFullName', headerCellClass: 'text-center', cellClass: 'text-center' },
+                { name: 'รหัสพนักงานผู้เบิก', field: 'RequestBy', headerCellClass: 'text-center', cellClass: 'text-center', },
+                { name: 'ผู้เบิก', field: 'RequestByFullName', headerCellClass: 'text-center', cellClass: 'text-center', visible: false },
                 { name: 'วันที่', field: 'CreatedAtText', headerCellClass: 'text-center', cellClass: 'text-center' },
-                { name: 'จำนวน', field: 'Amount', headerCellClass: 'text-center', cellClass: 'text-right', cellFilter: 'number: 2', width: 120}
+                {
+                    name: 'จำนวน', field: 'Amount', headerCellClass: 'text-center', cellClass: 'text-right', cellFilter: 'number: 2', width: 120,
+                    aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true, footerCellClass: 'text-right'
+                }
             ],
             data: 'vm.transaction'
         };
