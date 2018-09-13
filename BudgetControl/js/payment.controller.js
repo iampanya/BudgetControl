@@ -933,7 +933,6 @@
 
             function callApiSuccess(response) {
                 vm.transaction = hr.respondSuccess(response);
-                console.log(vm.transaction);
             }
         }
      
