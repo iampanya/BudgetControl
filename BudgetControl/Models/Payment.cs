@@ -55,6 +55,13 @@ namespace BudgetControl.Models
             this.Status = vm.Status;
             this.Type = vm.Type;
             this.ContractorID = vm.ContractorID;
+            
+            if(vm.Type == PaymentType.Contractor && vm.ContractorID != null)
+            {
+                Contractor = new Contractor();
+                Contractor.ID = (Guid)vm.ContractorID;
+                Contractor.Name = vm.ContractorName;
+            }
 
             if(vm.Transactions != null)
             {
