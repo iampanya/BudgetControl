@@ -21,7 +21,23 @@
     CreateOverTimeCtrl.$inject = ['$state']
 
     function CreateOverTimeCtrl($state) {
+        var vm = this;
 
+        vm.otList = [];
+        vm.addList = addList;
+
+        vm.addList();
+
+        function addList() {
+            vm.otList.push({
+                salary: '0',
+                multiply: 1,
+                hours: 0,
+                money: 0
+            });
+            console.log(vm.otList);
+        }
+        return vm;
     }
 
 })();

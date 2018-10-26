@@ -38,7 +38,8 @@ budgetApp.filter('unique', function () {
                 return 0;
             var sum = 0;
             angular.forEach(data, function (value) {
-                sum = sum + parseInt(value[key]);
+                //sum = sum + parseInt(value[key]);
+                sum = sum + parseFloat(value[key]);
             });
             return sum;
         }

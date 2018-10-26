@@ -3,5 +3,42 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>คำนวณค่าล่วงเวลา</h2>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="col-md-1 text-center">ลำดับ</th>
+            <th class="col-md-3 text-center">เงินเดือน</th>
+            <th class="col-md-2 text-center">จำนวนเท่า</th>
+            <th class="col-md-1">จำนวนชั่วโมง</th>
+            <th class="text-center">จำนวนเงิน</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="row in vm.otList">
+            <td class="text-center">{{ $index +1 }}</td>
+            <td class="text-center">
+                <input class="form-control" type="number" ng-model="row.salary"/>
+            </td>
+            <td class="text-center">
+                <select class="form-control" ng-model="row.multiply">
+                    <option value="1">1 เท่า</option>
+                    <option value="1.5">1.5 เท่า</option>
+                    <option value="3">3 เท่า</option>
+                </select>
+            </td >
+            <td>
+                <input class="form-control" type="number" ng-model="row.hours" />
+            </td>
+            <td class="text-center">
+                {{ row.money = ((row.salary / 210) * row.multiply * row.hours).toFixed(2) }}
+            </td>
+        </tr>
 
+        <tr>
+            <td colspan="4" class="text-right">รวม</td>
+            <td class="text-center">{{(vm.otList | total: 'money') | number: 2}}</td>
+        </tr>
+    </tbody>
+</table>
+<button class="btn btn-primary" ng-click="vm.addList()">เพิ่มรายการ</button>
