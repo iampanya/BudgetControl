@@ -106,6 +106,23 @@
                 controllerAs: 'vm'
             })
 
+            /**
+             *  OVERTIME
+             * */
+            .state('overtime', {
+                url: '/overtime',
+                templateUrl: 'OverTime/Index',
+                controller: 'OverTimeCtrl',
+                controllerAs: 'vm'
+            })
+
+            .state('newovertime', {
+                url: '/overtime/create',
+                templateUrl: 'OverTime/Create',
+                controller: 'CreateOverTimeCtrl',
+                controllerAs: 'vm'
+            })
+
             // Report
             .state('summaryreport', {
                 url: '/report/summary',

@@ -152,6 +152,7 @@
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\IdmController.cs" />
     <Compile Include="Controllers\ManualController.cs" />
+    <Compile Include="Controllers\OverTimeController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\BudgetsController.cs" />
@@ -453,6 +454,7 @@
     <Content Include="js\footer.controller.js" />
     <Content Include="js\handle.response.service.js" />
     <Content Include="js\message.service.js" />
+    <Content Include="js\overtime.controller.js" />
     <Content Include="js\polyfill.js" />
     <Content Include="js\report.controller.js" />
     <Content Include="js\user.controller.js" />
@@ -613,12 +615,15 @@
     <Content Include="Views\Admin\ManageWorkingCC.cshtml" />
     <Content Include="Views\Admin\AddWorkingCC.cshtml" />
     <Content Include="Views\Payments\Transaction.cshtml" />
+    <Content Include="Views\OverTime\Create.cshtml" />
+    <Content Include="Views\OverTime\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Api\" />
     <Folder Include="Views\Data\" />
     <Folder Include="Views\Idm\" />
+    <Folder Include="Views\Util\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

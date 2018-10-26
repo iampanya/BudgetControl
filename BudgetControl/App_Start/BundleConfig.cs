@@ -67,7 +67,8 @@ namespace BudgetControl
                       "~/js/payment.controller.js",
                       "~/js/user.controller.js",
                       "~/js/report.controller.js",
-                      "~/js/admin.controller.js"
+                      "~/js/admin.controller.js",
+                      "~/js/overtime.controller.js"
                   ));
 
             bundles.Add(new ScriptBundle("~/bundles/ui-grid")
