@@ -127,12 +127,17 @@
                     <div class="col-md-4">
                         <p>&copy; @DateTime.Now.Year - ระบบควบคุมงบประมาณ</p>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-5">
                         <ul class="list-inline">
                             <li><a ng-click="vm.aboutus()">เกี่ยวกับเรา</a> | </li>
                             <li><a ng-click="vm.notice()">ประกาศ & ข่าวสาร</a> |</li>
                             <li><a ng-click="vm.document()">คู่มือการใช้งาน</a> |</li>
                             <li><a ng-click="vm.contactus()">แจ้งปัญหาการใช้งาน</a> </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <ul class="list-inline">
+                            <li class="pull-right"><a ui-sref="newovertime">คำนวนค่าล่วงเวลา</a> </li>
                         </ul>
                     </div>
                 </div>
