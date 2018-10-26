@@ -25,17 +25,23 @@
 
         vm.otList = [];
         vm.addList = addList;
+        vm.removeList = removeList;
 
         vm.addList();
 
         function addList() {
             vm.otList.push({
                 salary: '0',
-                multiply: 1,
-                hours: 0,
+                multiply: "1",
+                hours: 1,
                 money: 0
             });
-            console.log(vm.otList);
+        }
+
+
+        function removeList() {
+            vm.otList = [];
+            addList();
         }
         return vm;
     }
