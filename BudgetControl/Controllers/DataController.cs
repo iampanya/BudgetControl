@@ -822,16 +822,22 @@ namespace BudgetControl.Controllers
                 CostCenter working = AuthManager.GetWorkingCostCenter();
                 Employee employee = AuthManager.GetEmployeeInfo();
 
+
                 int deptsap;
-                if (employee.DepartmentSap == null)
+
+                using (var db = new BudgetContext())
                 {
-                    IdmManager idm = new IdmManager();
-                    Int32.TryParse(idm.GetEmployeeProfile(AuthManager.GetCurrentUser().EmployeeID).DepartmentSap, out deptsap);
+                    deptsap = db.DepartmentInfos.Where(c => c.CostCenterCode == working.CostCenterID).Select(c => c.DeptSap).FirstOrDefault();
                 }
-                else
-                {
-                    deptsap = (int)employee.DepartmentSap;
-                }
+                //if (employee.DepartmentSap == null)
+                //{
+                //    IdmManager idm = new IdmManager();
+                //    Int32.TryParse(idm.GetEmployeeProfile(AuthManager.GetCurrentUser().EmployeeID).DepartmentSap, out deptsap);
+                //}
+                //else
+                //{
+                //    deptsap = (int)employee.DepartmentSap;
+                //}
 
 
 
