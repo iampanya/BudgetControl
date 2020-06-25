@@ -1,4 +1,17 @@
 ﻿
+<style>
+    p.content {
+        text-indent: 50px;
+        font-size: 1.2em;
+        line-height: 35px;
+        color: #311b92;
+    }
+    p.sorry {
+        text-align: center;
+        font-size: 1.2em;
+        color: #311b92;
+    }
+</style>
 <div class="modal-header">
 
     <button type="button" ng-click="vm.close()" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></span></button>
@@ -6,15 +19,57 @@
 </div>
 
 <div class="modal-body">
-    <h3>อัพเดทการปรับปรุงโปรแกรม วันที่ 29 ธันวาคม 2560</h3>
-    @*<ul>
-        <li>
-            <span class="text-primary">การเข้าสู่ระบบ</span> - ให้ใช้รหัสพนักงาน และรหัสผ่านแบบเดียวกันกับที่ใช้เข้าคอมพิวเตอร์
-        </li>
-        <li>
-            <span class="text-primary">ข้อมูลงบประมาณ</span> - กรท. จะเป็นผู้อัพเดทจำนวนเงินงบประมาณจากระบบ SAP ให้ ทุกๆ 3 เดือน
-        </li>
-    </ul>*@
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                       ประกาศผลกระทบจากไวรัส Maze Ransomeware 
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <p class="content">
+                        เนื่องจากการไฟฟ้าส่วนภูมิภาคได้ถูกโจมตีด้วยไวรัส Maze Ransomeware ทำให้ฐานข้อมูลของระบบตัดงบประมาณประจำปี 2563 ความเสียหายทั้งหมด
+                    </p>
+                    <p class="content">
+                        ปัจจุบัน กรท.(ก2) ได้ดำเนินการกู้คืนระบบ และเพิ่มยอดงบประมาณ และยอดรวมการเบิกจ่ายจากระบบ SAP ของปี 2563 ให้เรียบร้อยแล้ว (ข้อมูลจาก SAP วันที่ 23 มิ.ย.63)
+                    </p>
+                    <br />
+                    <p class="sorry">ขออภัยในความไม่สะดวก </p>
+                    <p class="sorry">กรท.(ก2) เบอร์โทร 10361 - 10362 </p>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        อัพเดทการปรับปรุงโปรแกรม วันที่ 29 ธันวาคม 2560
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <dl class="dl-horizontal dl-notice">
+                        <dt>การเข้าสู่ระบบ</dt>
+                        <dd>ท่านสามารถใช้ <mark>รหัสประจำตัวพนักงาน</mark> และ <mark>รหัสผ่าน</mark> ชุดเดียวกับที่ใช้ตอนเปิดเครื่อง (เข้า Windows) </dd>
+
+                        <dt>ข้อมูลงบประมาณ</dt>
+                        <dd>1. ปิดการแก้ไขจำนวนเงินงบประมาณ ที่นำเข้ามาจากระบบ SAP โดย กรท. จะเป็นผู้อัพเดทวงเงินที่ได้รับให้ ทุกๆ 3 เดือน </dd>
+                        <dd>2. สามารถเพิ่มบัญชีงบประมาณ ที่ไม่มีใน SAP ได้ แต่วงเงินที่ได้รับจะเป็น 0 บาทเท่านั้น</dd>
+
+                        <dt>การเบิกจ่าย</dt>
+                        <dd>สามารถเบิกจ่ายให้กับ <mark>พนักงานนอกศูนย์ต้นทุน</mark> และ <mark>บุคคลภายนอก</mark> ได้</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    @*<h3>อัพเดทการปรับปรุงโปรแกรม วันที่ 29 ธันวาคม 2560</h3>
     <dl class="dl-horizontal dl-notice">
         <dt>การเข้าสู่ระบบ</dt>
         <dd>ท่านสามารถใช้ <mark>รหัสประจำตัวพนักงาน</mark> และ <mark>รหัสผ่าน</mark> ชุดเดียวกับที่ใช้ตอนเปิดเครื่อง (เข้า Windows) </dd>
@@ -25,7 +80,7 @@
 
         <dt>การเบิกจ่าย</dt>
         <dd>สามารถเบิกจ่ายให้กับ <mark>พนักงานนอกศูนย์ต้นทุน</mark> และ <mark>บุคคลภายนอก</mark> ได้</dd>
-    </dl>
+    </dl>*@
 </div>
 
 <div class="modal-footer">
