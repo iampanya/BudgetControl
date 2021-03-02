@@ -160,31 +160,35 @@ namespace BudgetControl.Controllers
             {
                 try
                 {
-                    var paymentRepo = new PaymentRepository(_db);
-                    var payment = paymentRepo.GetById(id);
-                    List<BudgetTransaction> budgetTransaction;
-
-                    if (payment == null)
-                    {
-                        throw new Exception("ไม่พบข้อมูลการจ่ายเงิน");
-                    }
-                    payment.Status = RecordStatus.Remove;
-                    paymentRepo.Update(payment);
-                    paymentRepo.Save();
-
-                    if (payment.BudgetTransactions != null)
-                    {
-                        var transRepo = new TransactionRepository(_db);
-                        budgetTransaction = payment.BudgetTransactions.ToList();
-                        budgetTransaction.ForEach(t =>
-                        {
-                            t.Status = RecordStatus.Remove;
-                            transRepo.Update(t);
-                        });
-                        transRepo.Save();
-                    }
+                    _db.Database.ExecuteSqlCommand(string.Format("DELETE FROM BudgetTransaction WHERE PaymentID = '{0}'", id));
+                    _db.Database.ExecuteSqlCommand(string.Format("DELETE FROM Payment WHERE PaymentID = '{0}'", id));
                     transaction.Commit();
-                    returnobj.SetSuccess(payment);
+                    returnobj.SetSuccess(true);
+                    //var paymentRepo = new PaymentRepository(_db);
+                    //var payment = paymentRepo.GetById(id);
+                    //List<BudgetTransaction> budgetTransaction;
+
+                    //if (payment == null)
+                    //{
+                    //    throw new Exception("ไม่พบข้อมูลการจ่ายเงิน");
+                    //}
+                    //payment.Status = RecordStatus.Remove;
+                    //paymentRepo.Update(payment);
+                    //paymentRepo.Save();
+
+                    //if (payment.BudgetTransactions != null)
+                    //{
+                    //    var transRepo = new TransactionRepository(_db);
+                    //    budgetTransaction = payment.BudgetTransactions.ToList();
+                    //    budgetTransaction.ForEach(t =>
+                    //    {
+                    //        t.Status = RecordStatus.Remove;
+                    //        transRepo.Update(t);
+                    //    });
+                    //    transRepo.Save();
+                    //}
+                    //transaction.Commit();
+                    //returnobj.SetSuccess(payment);
                 }
                 catch (Exception ex)
                 {
