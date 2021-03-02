@@ -49,7 +49,7 @@ namespace BudgetControl.Models
 
             StaffDate = profile.StaffDate;
             EntryDate = profile.EntryDate;
-            RetiredDate = profile.RetiredDate;
+            RetiredDate = profile.RetiredDate.Length > 10 ? "31/12/9999" : profile.RetiredDate;
 
             BaCode = profile.BaCode;
             PeaCode = profile.Peacode;
