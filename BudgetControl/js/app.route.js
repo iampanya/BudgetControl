@@ -149,7 +149,7 @@
             // budget mt
             .state('requestbudgetmt', {
                 url: '/budge-mt/request',
-                templateUrl: 'BudgetMT/Request',
+                templateUrl: 'BudgetMT/RequestView',
                 controller: 'RequestBudgetMTCtrl',
                 controllerAs: 'vm'
             })

@@ -30,7 +30,8 @@ namespace BudgetControl
                       "~/Content/Site.css",
                       "~/Content/Loader.css",
                       "~/Content/font-awesome.min.css",
-                      "~/Scripts/angular-ui-grid/ui-grid.min.css"
+                      "~/Scripts/angular-ui-grid/ui-grid.min.css",
+                      "~/Scripts/DataTables/datatables.min.css"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular")
@@ -43,7 +44,8 @@ namespace BudgetControl
                     "~/Scripts/angular-animate.min.js",
                     "~/Scripts/angular-touch.min.js",
                     "~/Scripts/ngprogress.min.js",
-                    "~/Scripts/ui-bootstrap-tpls-2.5.0.min.js"
+                    "~/Scripts/ui-bootstrap-tpls-2.5.0.min.js",
+                    "~/Scripts/sweetalert211.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/polyfill")
@@ -78,6 +80,11 @@ namespace BudgetControl
                         "~/Scripts/lodash.min.js",
                         "~/Scripts/jszip.min.js",
                         "~/Scripts/excel-builder.dist.min.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/datatable")
+                    .Include(
+                        "~/Scripts/DataTables/datatables.min.js"
                 ));
         }
     }

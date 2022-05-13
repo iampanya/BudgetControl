@@ -80,6 +80,17 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
         return $resource('workingcc/DeleteCondition/:id');
     }
 
+    // budget mt
+    api.budgetmt = function () {
+        return $resource(
+            'budgetmt/request?year=:year',
+            null,
+            {
+                'save': { method: 'POST' },
+            }
+        )
+    }
+
     return api
 }])
 

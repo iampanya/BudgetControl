@@ -2,5 +2,80 @@
     Layout = null;
 }
 
-    transaction budget mt {{ vm.year }} 
-    sdasadf
+<div class="row">
+    <div class="col-md-2 col-md-offset-10">
+        <a ui-sref="requestbudgetmt" class="btn btn-primary btn-block">
+            เบิกจ่ายงบฝึกอบรม
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <h3>
+                <span class="pull-left">
+                    ปีงบประมาณ:
+                </span>
+                <span class="col-md-6">
+                    <select class="form-control input-sm"
+                            ng-model="vm.formRequest.Year"
+                            ng-options="y as y for y in vm.years"
+                            ng-change="vm.getPaymentData();">
+                    </select>
+                </span>
+            </h3>
+        </div>
+    </div>
+</div>
+
+<br />
+<table class="table table-hover table-striped table-bordered" id="tableList">
+    <thead>
+        <tr class="bg-primary">
+            <th class="text-center">รหัส MT</th>
+            <th class="text-center">หัวข้อการประชุม</th>
+            <th class="text-center">หน่วยงานรับผิดชอบ</th>
+            <th class="text-center">กลุ่มผู้เข้าร่วมประชุม</th>
+            <th class="text-center">วันที่</th>
+            <th class="text-center">สถานที่</th>
+            <th class="text-center">จำนวน (คน)</th>
+            <th class="text-center">มื้อเช้า</th>
+            <th class="text-center">มื้อบ่าย</th>
+            <th class="text-center">ค่าใช้จ่าย</th>
+            <th class="text-center">ยอดคงเหลือ</th>
+            <th class="col-md-1 text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="transaction in vm.transactions ">
+            <td class="text-center" style="white-space:nowrap;"> {{ transaction.MTNo }}</td>
+            <td> {{ transaction.Title }} </td>
+            <td class="text-center"> {{ transaction.OwnerDeprtment }} </td>
+            <td class="text-center"> {{ transaction.Participant }} </td>
+            <td class="text-center"> {{ transaction.SeminarDateText }} </td>
+            <td class="text-center"> {{ transaction.Location }} </td>
+            <td class="text-center"> {{ transaction.ParticipantCount }} </td>
+            <td class="text-center">
+                <i class="fa fa-check" aria-hidden="true" ng-if="transaction.HasMealMorning"></i>
+                <i class="fa fa-times" aria-hidden="true" ng-if="!transaction.HasMealMorning"></i>
+            </td>
+            <td class="text-center">
+                <i class="fa fa-check" aria-hidden="true" ng-if="transaction.HasMealAfternoon"></i>
+                <i class="fa fa-times" aria-hidden="true" ng-if="!transaction.HasMealAfternoon"></i>
+            </td>
+            <td class="text-right"> {{ transaction.TotalAmountText }} </td>
+            <td class="text-right"> {{ transaction.RemainAmountText }} </td>
+            <td class="text-center">
+                <a ui-sref="editpayment({id:payment.PaymentID})" title="แก้ไข">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </a>|
+                <a ng-click="vm.deletePayment(payment)" title="ยกเลิกการจ่ายเงิน">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>
+
+
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -9,8 +9,7 @@
         <div class="card">
             <fieldset>
                 <legend>
-                    เบิกจ่ายงบประมาณบัญชี 52030030 ศูนย์ต้นทุน H301000040
-                    <span class="text-primary"> {{ vm.payment.CostCenterID }} </span>
+                    เบิกจ่ายงบประมาณฝึกอบรม @*52030030 ศูนย์ต้นทุน H301000040*@
                 </legend>
 
                 <div class="row">
@@ -20,7 +19,6 @@
                             <div class="col-md-2">
                                 <select class="form-control"
                                         ng-model="vm.formRequest.Year"
-                                        ng-change="vm.onYearChange()"
                                         ng-options="y as y for y in vm.years">
                                 </select>
                             </div>
@@ -84,7 +82,7 @@
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox"
-                                               ng-model="vm.formRequest.MealMorning"
+                                               ng-model="vm.formRequest.HasMealMorning"
                                                ng-change="vm.calculateTotalAmount()"
                                                value="morning"> เช้า
                                     </label>
@@ -92,7 +90,7 @@
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" 
-                                               ng-model="vm.formRequest.MealAfternoon" 
+                                               ng-model="vm.formRequest.HasMealAfternoon" 
                                                ng-change="vm.calculateTotalAmount()"
                                                value="afternoon"> บ่าย
                                     </label>
@@ -108,7 +106,7 @@
                                 หมายเหตุ:
                             </label>
                             <div class="col-md-10">
-                                <textarea ng-model="vm.formRequest.Participant" ng-required="true" class="form-control" id="textParticipant" placeholder="" rows="3"></textarea>
+                                <textarea ng-model="vm.formRequest.Remark" ng-required="true" class="form-control" id="textParticipant" placeholder="" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="form-group">

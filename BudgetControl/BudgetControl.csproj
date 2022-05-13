@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BudgetControl</RootNamespace>
     <AssemblyName>BudgetControl</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -23,6 +23,7 @@
     <NuGetPackageImportStamp>b855282f</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.0.123\lib\net461\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -54,6 +58,7 @@
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -65,8 +70,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
@@ -75,9 +79,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -119,6 +121,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -226,6 +229,7 @@
     <Compile Include="Models\Base\IRecordTimeStamp.cs" />
     <Compile Include="Models\Base\RecordTimeStamp.cs" />
     <Compile Include="Models\Budget.cs" />
+    <Compile Include="Models\BudgetMT\BudgetMTTransaction.cs" />
     <Compile Include="Models\BudgetTransaction.cs" />
     <Compile Include="Models\BusinessAreaInfo.cs" />
     <Compile Include="Models\Contractor.cs" />
@@ -500,7 +504,98 @@
     <Content Include="Scripts\angular-ui-grid\CHANGELOG.md" />
     <Content Include="Scripts\angular-ui-grid\package.json" />
     <Content Include="Scripts\angular-ui-grid\README.md" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\common.scss" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\mixins.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.bootstrap.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.bootstrap.min.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.bootstrap4.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.bootstrap4.min.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.bootstrap5.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.bootstrap5.min.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.bulma.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.bulma.min.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.dataTables.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.dataTables.min.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.foundation.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.foundation.min.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.jqueryui.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.jqueryui.min.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.semanticui.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\css\buttons.semanticui.min.css" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.bootstrap.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.bootstrap4.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.bootstrap5.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.bootstrap5.min.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.bulma.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.bulma.min.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.colVis.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.colVis.min.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.dataTables.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.dataTables.min.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.foundation.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.foundation.min.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.html5.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.html5.min.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.jqueryui.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.jqueryui.min.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.print.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.print.min.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.semanticui.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\buttons.semanticui.min.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\dataTables.buttons.js" />
+    <Content Include="Scripts\DataTables\Buttons-2.2.3\js\dataTables.buttons.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.bootstrap.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.bootstrap.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.bootstrap4.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.bootstrap5.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.bootstrap5.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.bulma.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.bulma.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.dataTables.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.dataTables.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.foundation.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.foundation.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.jqueryui.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.jqueryui.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.semanticui.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\dataTables.semanticui.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\jquery.dataTables.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\css\jquery.dataTables.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\images\sort_asc.png" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\images\sort_asc_disabled.png" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\images\sort_both.png" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\images\sort_desc.png" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\images\sort_desc_disabled.png" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.bootstrap.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.bootstrap4.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.bootstrap5.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.bootstrap5.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.bulma.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.bulma.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.dataTables.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.dataTables.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.foundation.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.foundation.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.jqueryui.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.jqueryui.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.semanticui.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\dataTables.semanticui.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\jquery.dataTables.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.12.0\js\jquery.dataTables.min.js" />
+    <Content Include="Scripts\DataTables\datatables.css" />
+    <Content Include="Scripts\DataTables\datatables.js" />
+    <Content Include="Scripts\DataTables\datatables.min.css" />
+    <Content Include="Scripts\DataTables\datatables.min.js" />
+    <Content Include="Scripts\DataTables\jQuery-3.6.0\jquery-3.6.0.js" />
+    <Content Include="Scripts\DataTables\jQuery-3.6.0\jquery-3.6.0.min.js" />
+    <Content Include="Scripts\DataTables\JSZip-2.5.0\jszip.js" />
+    <Content Include="Scripts\DataTables\JSZip-2.5.0\jszip.min.js" />
     <Content Include="Scripts\excel-builder.dist.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -519,6 +614,7 @@
     <Content Include="Scripts\ngprogress.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sweetalert211.js" />
     <Content Include="Scripts\ui-bootstrap-tpls-2.5.0.min.js" />
     <Content Include="Scripts\underscore-min.js" />
     <Content Include="Scripts\_references.js" />
@@ -574,7 +670,7 @@
     <Content Include="Views\Payments\Transaction.cshtml" />
     <Content Include="Views\OverTime\Create.cshtml" />
     <Content Include="Views\OverTime\Index.cshtml" />
-    <Content Include="Views\BudgetMT\Request.cshtml" />
+    <Content Include="Views\BudgetMT\RequestView.cshtml" />
     <Content Include="Views\BudgetMT\Transaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
