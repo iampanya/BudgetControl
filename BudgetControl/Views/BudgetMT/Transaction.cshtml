@@ -67,10 +67,10 @@
             <td class="text-right"> {{ transaction.TotalAmountText }} </td>
             <td class="text-right"> {{ transaction.RemainAmountText }} </td>
             <td class="text-center">
-                <a ui-sref="editpayment({id:payment.PaymentID})" title="แก้ไข">
+                <a ui-sref="editrequestbudgetmt({id: transaction.Id})" title="แก้ไข">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </a>|
-                <a ng-click="vm.deletePayment(payment)" title="ยกเลิกการจ่ายเงิน">
+                <a ng-click="vm.modalConfirmDelete(transaction)" title="ยกเลิกการจ่ายเงิน">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                 </a>
 

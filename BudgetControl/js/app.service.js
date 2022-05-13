@@ -87,8 +87,15 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
             null,
             {
                 'save': { method: 'POST' },
+                'delete': { method: 'DELETE' },
             }
         )
+    }
+
+    api.requestmt = function () {
+        return $resource(
+            'budgetmt/getrequestbyid/:id'
+        );
     }
 
     return api

@@ -30,6 +30,35 @@ namespace BudgetControl.Controllers
         }
 
         #region API
+        [HttpGet]
+        public ActionResult GetRequestById(Guid id)
+        {
+            try
+            {
+                string ownerCostcenter = AuthManager.GetAuthentication().Employee.CostCenterID;
+                using (var conn = new SqlConnection(conn_string))
+                {
+                    conn.Open();
+
+                    var result = conn.QueryFirstOrDefault<BudgetMTTransaction>("[sp_BudgetMT_Transaction_GetById]"
+                        , new
+                        {
+                            @Id = id,
+                        }
+                        , commandType: System.Data.CommandType.StoredProcedure
+                    );
+                    returnobj.SetSuccess(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+
+
+            return Content(returnobj.ToJson(), "application/json");
+        }
+
         public ActionResult Request(string year)
         {
             try
@@ -110,7 +139,7 @@ namespace BudgetControl.Controllers
         {
             try
             {
-                string ownerCostcenter = AuthManager.GetAuthentication().Employee.CostCenterID;
+                string deleteBy = AuthManager.GetCurrentUser().UserName;
                 using (var conn = new SqlConnection(conn_string))
                 {
                     conn.Open();
@@ -119,6 +148,7 @@ namespace BudgetControl.Controllers
                         , new
                         {
                             @Id = id,
+                            @DeleteBy = deleteBy
                         }
                         , commandType: System.Data.CommandType.StoredProcedure
                     );
@@ -133,6 +163,8 @@ namespace BudgetControl.Controllers
 
             return Content(returnobj.ToJson(), "application/json");
         }
+
+
 
         #endregion
     }

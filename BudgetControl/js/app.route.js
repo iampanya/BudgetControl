@@ -154,6 +154,13 @@
                 controllerAs: 'vm'
             })
 
+            .state('editrequestbudgetmt', {
+                url: '/budge-mt/eidtrequest/:id',
+                templateUrl: 'BudgetMT/RequestView',
+                controller: 'EditRequestBudgetMTCtrl',
+                controllerAs: 'vm'
+            })
+
             .state('transcationbudgetmt', {
                 url: '/budge-mt/transaction',
                 templateUrl: 'BudgetMT/Transaction',
