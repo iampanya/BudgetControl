@@ -8,7 +8,7 @@ namespace BudgetControl
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            BundleTable.EnableOptimizations = true;
+            //BundleTable.EnableOptimizations = true;
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -63,6 +63,7 @@ namespace BudgetControl
                       "~/js/user.service.js",
                       "~/js/message.service.js",
                       "~/js/budget.controller.js",
+                      "~/js/budgetmt.controller.js",
                       "~/js/footer.controller.js",
                       "~/js/payment.controller.js",
                       "~/js/user.controller.js",

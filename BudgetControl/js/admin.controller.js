@@ -18,8 +18,7 @@
         vm.openCreateForm = openCreateForm;
         vm.getConditionList = getConditionList;
         vm.deleteCondition = deleteCondition;
-
-
+        
         function getConditionList() {
             apiService.workingCondition().get({ filter: vm.filter }).$promise
                 .then(

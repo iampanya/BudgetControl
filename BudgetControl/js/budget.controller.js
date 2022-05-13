@@ -512,3 +512,6 @@ budgetApp.controller('CreateBudgetController', ['$scope', 'apiService', 'funcFac
     }
 
 })();
+
+
+

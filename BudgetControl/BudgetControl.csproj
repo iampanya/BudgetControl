@@ -152,6 +152,7 @@
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\IdmController.cs" />
     <Compile Include="Controllers\ManualController.cs" />
+    <Compile Include="Controllers\BudgetMTController.cs" />
     <Compile Include="Controllers\OverTimeController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -406,6 +407,7 @@
     <Content Include="Images\budget-background.jpg" />
     <Content Include="js\admin.controller.js" />
     <Content Include="js\app.idm.service.js" />
+    <Content Include="js\budgetmt.controller.js" />
     <Content Include="js\footer.controller.js" />
     <Content Include="js\handle.response.service.js" />
     <Content Include="js\message.service.js" />
@@ -572,6 +574,8 @@
     <Content Include="Views\Payments\Transaction.cshtml" />
     <Content Include="Views\OverTime\Create.cshtml" />
     <Content Include="Views\OverTime\Index.cshtml" />
+    <Content Include="Views\BudgetMT\Request.cshtml" />
+    <Content Include="Views\BudgetMT\Transaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

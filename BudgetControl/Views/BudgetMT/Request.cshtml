@@ -1,0 +1,149 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div>
+    <form method="post" name="frmRequest">
+
+        <div class="card">
+            <fieldset>
+                <legend>
+                    เบิกจ่ายงบประมาณบัญชี 52030030 ศูนย์ต้นทุน H301000040
+                    <span class="text-primary"> {{ vm.payment.CostCenterID }} </span>
+                </legend>
+
+                <div class="row">
+                    <div class="form-horizontal col-md-12">
+                        <div class="form-group">
+                            <label for="txtYear" class="col-md-2 control-label">ปีงบประมาณ<span class="text-danger">*</span></label>
+                            <div class="col-md-2">
+                                <select class="form-control"
+                                        ng-model="vm.formRequest.Year"
+                                        ng-change="vm.onYearChange()"
+                                        ng-options="y as y for y in vm.years">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="txtTile">
+                                หัวข้อการประชุม<span class="text-danger">*</span>:
+                            </label>
+                            <div class="col-md-10">
+                                <input type="text" ng-model="vm.formRequest.Title" ng-required="true" class="form-control" id="txtTile" placeholder="หัวข้อ">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="textOwnerDepartment">
+                                หน่วยงานรับผิดชอบ<span class="text-danger">*</span>:
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" ng-model="vm.formRequest.OwnerDepartment" ng-required="true" class="form-control" id="textOwnerDepartment" placeholder="">
+                            </div>
+
+                            <label class="control-label col-md-2" for="textParticipant">
+                                กลุ่มผู้เข้าร่วมประชุม<span class="text-danger">*</span>:
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" ng-model="vm.formRequest.Participant" ng-required="true" class="form-control" id="textParticipant" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="textSeminarDate">
+                                วันที่จัดประชุม<span class="text-danger">*</span>:
+                            </label>
+                            <div class="col-md-4">
+                                <input type="date" ng-model="vm.formRequest.SeminarDate" ng-required="true" class="form-control" id="textSeminarDate" placeholder="">
+                            </div>
+                            <label class="control-label col-md-2" for="textLocation">
+                                สถานที่<span class="text-danger">*</span>:
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" ng-model="vm.formRequest.Location" ng-required="true" class="form-control" id="textLocation" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="textParticipantCount">
+                                จำนวนคน<span class="text-danger">*</span>:
+                            </label>
+                            <div class="col-md-4">
+                                <input type="number"
+                                       ng-model="vm.formRequest.ParticipantCount"
+                                       ng-required="true"
+                                       ng-change="vm.calculateTotalAmount()"
+                                       class="form-control"
+                                       id="textParticipantCount" placeholder="">
+                            </div>
+                            <label class="control-label col-md-2">
+                                จำนวน (มื้อ)<span class="text-danger">*</span>:
+                            </label>
+                            <div class="col-md-4 form-inline">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox"
+                                               ng-model="vm.formRequest.MealMorning"
+                                               ng-change="vm.calculateTotalAmount()"
+                                               value="morning"> เช้า
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" 
+                                               ng-model="vm.formRequest.MealAfternoon" 
+                                               ng-change="vm.calculateTotalAmount()"
+                                               value="afternoon"> บ่าย
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="textParticipant">
+                                หมายเหตุ:
+                            </label>
+                            <div class="col-md-10">
+                                <textarea ng-model="vm.formRequest.Participant" ng-required="true" class="form-control" id="textParticipant" placeholder="" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="textTotalAmount">
+                                ค่าใช้จ่าย<span class="text-danger">*</span>:
+                            </label>
+                            <div class="col-md-10">
+                                <input type="number" ng-model="vm.formRequest.TotalAmount" ng-required="true" class="form-control" id="textTotalAmount" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+
+
+            <hr />
+
+
+            <div class="row">
+                <div class="col-md-2 col-sm-3 col-xs-6 col-md-offset-8 col-sm-offset-6">
+                    <a ui-sref="payment" class="btn btn-lg btn-default btn-block">
+                        กลับหน้าจอ
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-6">
+                    <button type="button" ng-click="vm.submit()" class="btn btn-primary btn-lg btn-block" ng-disabled="frmRequest.$invalid || vm.isSubmitting">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        บันทึก
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>

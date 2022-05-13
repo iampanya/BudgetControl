@@ -146,6 +146,21 @@
                 controllerAs: 'vm'
             })
 
+            // budget mt
+            .state('requestbudgetmt', {
+                url: '/budge-mt/request',
+                templateUrl: 'BudgetMT/Request',
+                controller: 'RequestBudgetMTCtrl',
+                controllerAs: 'vm'
+            })
+
+            .state('transcationbudgetmt', {
+                url: '/budge-mt/transaction',
+                templateUrl: 'BudgetMT/Transaction',
+                controller: 'TransactionBudgetMTCtrl',
+                controllerAs: 'vm'
+            })
+
             // Error
             .state('error401', {
                 url: '/error401',
