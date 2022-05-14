@@ -87,6 +87,7 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
             null,
             {
                 'save': { method: 'POST' },
+                'update': { method: 'PUT' },
                 'delete': { method: 'DELETE' },
             }
         )

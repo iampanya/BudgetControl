@@ -31,7 +31,8 @@ namespace BudgetControl
                       "~/Content/Loader.css",
                       "~/Content/font-awesome.min.css",
                       "~/Scripts/angular-ui-grid/ui-grid.min.css",
-                      "~/Scripts/DataTables/datatables.min.css"
+                      "~/Scripts/DataTables/datatables.min.css",
+                      "~/Content/tiny-date-picker.css"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular")
@@ -45,7 +46,8 @@ namespace BudgetControl
                     "~/Scripts/angular-touch.min.js",
                     "~/Scripts/ngprogress.min.js",
                     "~/Scripts/ui-bootstrap-tpls-2.5.0.min.js",
-                    "~/Scripts/sweetalert211.js"
+                    "~/Scripts/sweetalert211.js",
+                    "~/Scripts/tiny-date-picker.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/polyfill")

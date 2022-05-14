@@ -1,5 +1,6 @@
 ﻿using BudgetControl.Models.BudgetMT;
 using BudgetControl.Sessions;
+using BudgetControl.Util;
 using BudgetControl.ViewModels;
 using Dapper;
 using System;
@@ -47,6 +48,7 @@ namespace BudgetControl.Controllers
                         }
                         , commandType: System.Data.CommandType.StoredProcedure
                     );
+                    result.InputSeminarDate = result.SeminarDate?.ToString("dd/MM/yyyy");
                     returnobj.SetSuccess(result);
                 }
             }
@@ -98,7 +100,7 @@ namespace BudgetControl.Controllers
                 int mealCount = (formData.HasMealMorning ? 1 : 0) + (formData.HasMealAfternoon ? 1 : 0);
                 int mealPrice = 35;
                 formData.TotalAmount = formData.ParticipantCount * mealPrice * mealCount;
-
+                formData.SeminarDate = formData.InputSeminarDate.ToDate(); 
                 using (var conn = new SqlConnection(conn_string))
                 {
                     conn.Open();
@@ -165,6 +167,55 @@ namespace BudgetControl.Controllers
         }
 
 
+        [HttpPut]
+        [ActionName("Request")]
+        public ActionResult UpdateRequest(BudgetMTTransaction formData)
+        {
+            try
+            {
+                formData.ModifiedBy = AuthManager.GetCurrentUser().EmployeeID;
+                //formData.OwnerCostCenter = AuthManager.GetAuthentication().Employee.CostCenterID;
+                int mealCount = (formData.HasMealMorning ? 1 : 0) + (formData.HasMealAfternoon ? 1 : 0);
+                int mealPrice = 35;
+                formData.TotalAmount = formData.ParticipantCount * mealPrice * mealCount;
+
+                formData.SeminarDate = formData.InputSeminarDate.ToDate();
+
+                using (var conn = new SqlConnection(conn_string))
+                {
+                    conn.Open();
+
+                    var result = conn.QueryFirstOrDefault<BudgetMTTransaction>("sp_BudgetMT_Transaction_Update"
+                        , new
+                        {
+                            @Id = formData.Id,
+                            @Year = formData.Year,
+                            @Title = formData.Title,
+                            @OwnerDepartment = formData.OwnerDepartment,
+                            @OwnerCostCenter = formData.OwnerCostCenter,
+                            @Participant = formData.Participant,
+                            @SeminarDate = formData.SeminarDate,
+                            @Location = formData.Location,
+                            @ParticipantCount = formData.ParticipantCount,
+                            @HasMealMorning = formData.HasMealMorning,
+                            @HasMealAfternoon = formData.HasMealAfternoon,
+                            @Remark = formData.Remark,
+                            @TotalAmount = formData.TotalAmount,
+                            @RemainAmount = formData.RemainAmount,
+                            @ModifiedBy = formData.ModifiedBy
+                        }
+                        , commandType: System.Data.CommandType.StoredProcedure
+                    );
+                    returnobj.SetSuccess(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                returnobj.SetError(ex.Message);
+            }
+
+            return Content(returnobj.ToJson(), "application/json");
+        }
 
         #endregion
     }

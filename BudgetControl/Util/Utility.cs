@@ -46,7 +46,7 @@ namespace BudgetControl.Util
 
         }
 
-        public static string ToDateText(DateTime? date)
+        public static string ToDateText(DateTime? date, string format = "d MMM yyyy")
         {
             try
             {
@@ -56,13 +56,19 @@ namespace BudgetControl.Util
                 }
                 else
                 {
-                    return ((DateTime)date).ToString("d MMM yyyy", new CultureInfo("th-TH"));
+                    return ((DateTime)date).ToString(format, new CultureInfo("th-TH"));
                 }
             }
             catch(Exception ex)
             {
                 return "-";
             }
+        }
+
+        public static DateTime? ToDate(this string dateText)
+        {
+            DateTime result;
+            return DateTime.TryParseExact(dateText, "dd/MM/yyyy", new CultureInfo("th-TH"), DateTimeStyles.None, out result) ? result : (DateTime?)null;
         }
 
         public static DataTable ToDatatable<T>(List<T> data)
@@ -89,5 +95,7 @@ namespace BudgetControl.Util
             }
             return table;
         }
+
+
     }
 }

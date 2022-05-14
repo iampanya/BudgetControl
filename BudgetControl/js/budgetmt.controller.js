@@ -32,6 +32,13 @@
             console.log('prepare data');
 
             populateYearList();
+
+            initDatePicker('#textSeminarDate');
+
+            //setTimeout(() => {
+            //    console.log('init datepicker');
+            //    initDatePicker('#textSeminarDate');
+            //}, 1000)
         }
 
         function populateYearList() {
@@ -48,6 +55,7 @@
         function calculateTotalAmount() {
             let mealCount = (vm.formRequest.HasMealMorning ? 1 : 0) + (vm.formRequest.HasMealAfternoon ? 1 : 0);
             vm.formRequest.TotalAmount = parseInt(vm.formRequest.ParticipantCount) * (35 * mealCount);
+
         }
 
         function submit() {
@@ -253,6 +261,8 @@
 
             apiService.requestmt().get({ id: transactionid }).$promise.then(callAPISuccess, callAPIError);
 
+            initDatePicker('#textSeminarDate');
+
             function callAPISuccess(response) {
                 if (response.isSuccess) {
                     vm.formRequest = response.Result;
@@ -290,7 +300,7 @@
         function submit() {
             console.log(vm.formRequest);
             vm.isSubmitting = true;
-            apiService.budgetmt().save(vm.formRequest).$promise.then(callSaveRequestSuccess, callSaveRequestError);
+            apiService.budgetmt().update(vm.formRequest).$promise.then(callSaveRequestSuccess, callSaveRequestError);
 
             function callSaveRequestSuccess(response) {
                 console.log(response);

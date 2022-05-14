@@ -16,7 +16,7 @@ namespace BudgetControl.Models.BudgetMT
         public string OwnerDepartment { get; set; }
         public string OwnerCostCenter { get; set; }
         public string Participant { get; set; }
-        public DateTime SeminarDate { get; set; }
+        public DateTime? SeminarDate { get; set; }
         public string Location { get; set; }
         public int ParticipantCount { get; set; }
         public bool HasMealMorning { get; set; }
@@ -37,9 +37,11 @@ namespace BudgetControl.Models.BudgetMT
         {
             get
             {
-                return SeminarDate.ToString("d MMM yy", new CultureInfo("th-TH"));
+                return SeminarDate?.ToString("d MMM yy", new CultureInfo("th-TH"));
             }
         }
+
+        public string InputSeminarDate { get; set; } // format = dd/MM/yyyy 
 
         public string TotalAmountText
         {

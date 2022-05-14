@@ -403,6 +403,7 @@
     <Content Include="Content\fonts\ui-grid.svg" />
     <Content Include="Content\Loader.css" />
     <Content Include="Content\ngProgress.css" />
+    <Content Include="Content\tiny-date-picker.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -615,6 +616,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sweetalert211.js" />
+    <Content Include="Scripts\tiny-date-picker.js" />
     <Content Include="Scripts\ui-bootstrap-tpls-2.5.0.min.js" />
     <Content Include="Scripts\underscore-min.js" />
     <Content Include="Scripts\_references.js" />

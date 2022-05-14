@@ -5,7 +5,7 @@
 
 <div>
     <form method="post" name="frmRequest">
-
+        <input type="hidden" name="id" ng-model="vm.formRequest.Id" />
         <div class="card">
             <fieldset>
                 <legend>
@@ -51,7 +51,7 @@
                                 วันที่จัดประชุม<span class="text-danger">*</span>:
                             </label>
                             <div class="col-md-4">
-                                <input type="date" ng-model="vm.formRequest.SeminarDate" ng-required="true" class="form-control" id="textSeminarDate" placeholder="">
+                                <input type="text" ng-model="vm.formRequest.InputSeminarDate" ng-required="true" class="form-control" id="textSeminarDate" placeholder="" readonly>
                             </div>
                             <label class="control-label col-md-2" for="textLocation">
                                 สถานที่<span class="text-danger">*</span>:
