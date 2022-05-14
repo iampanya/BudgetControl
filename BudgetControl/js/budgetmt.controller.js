@@ -164,7 +164,7 @@
                     setTimeout(function () {
                         table = $('#tableList').DataTable({
                             dom: 'lBftp',
-                            buttons: [{ extend: 'excel', className:'btn btn-success' }]
+                            buttons: [{ extend: 'excel', className:'btn btn-success', title: 'สรุปการเบิกจ่ายงบฝึกอบรม' }]
                         });
                     }, 1000);
                 }
