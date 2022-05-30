@@ -67,7 +67,8 @@
                 console.log(response);
 
                 if (response.isSuccess) {
-                    Swal.fire('บันทึกข้อมูลสำเร็จ', response.Result.MTNo, 'success').then(gotoIndexPage);
+                    let message = `ศูนย์ต้นทุน H301000040 <br/> รหัสบัญชี 52030030 <br/> ลำดับการเบิกที่: ${response.Result.MTNo}`;
+                    Swal.fire('บันทึกข้อมูลสำเร็จ', message, 'success').then(gotoIndexPage);
                 }
                 else {
                     Swal.fire('Error', response.Message, 'error');
@@ -306,7 +307,9 @@
                 console.log(response);
 
                 if (response.isSuccess) {
-                    Swal.fire('บันทึกข้อมูลสำเร็จ', response.Result.MTNo, 'success').then(gotoIndexPage);
+
+                    let message = `ศูนย์ต้นทุน H301000040 <br/> รหัสบัญชี 52030030 <br/> ลำดับการเบิกที่: ${response.Result.MTNo}`;
+                    Swal.fire('บันทึกข้อมูลสำเร็จ', message, 'success').then(gotoIndexPage);
                 }
                 else {
                     Swal.fire('Error', response.Message, 'error');
