@@ -19,6 +19,7 @@ namespace BudgetControl.Models.BudgetMT
         public DateTime? SeminarDate { get; set; }
         public string Location { get; set; }
         public int ParticipantCount { get; set; }
+        public int MealCount { get; set; }
         public bool HasMealMorning { get; set; }
         public bool HasMealAfternoon { get; set; }
         public string Remark { get; set; }

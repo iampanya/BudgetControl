@@ -97,9 +97,9 @@ namespace BudgetControl.Controllers
             {
                 formData.CreatedBy = AuthManager.GetCurrentUser().EmployeeID;
                 formData.OwnerCostCenter = AuthManager.GetAuthentication().Employee.CostCenterID;
-                int mealCount = (formData.HasMealMorning ? 1 : 0) + (formData.HasMealAfternoon ? 1 : 0);
+                //int mealCount = (formData.HasMealMorning ? 1 : 0) + (formData.HasMealAfternoon ? 1 : 0);
                 int mealPrice = 35;
-                formData.TotalAmount = formData.ParticipantCount * mealPrice * mealCount;
+                formData.TotalAmount = formData.MealCount * mealPrice;
                 formData.SeminarDate = formData.InputSeminarDate.ToDate(); 
                 using (var conn = new SqlConnection(conn_string))
                 {
@@ -116,6 +116,7 @@ namespace BudgetControl.Controllers
                             @SeminarDate = formData.SeminarDate,
                             @Location = formData.Location,
                             @ParticipantCount = formData.ParticipantCount,
+                            @MealCount = formData.MealCount,
                             @HasMealMorning = formData.HasMealMorning,
                             @HasMealAfternoon = formData.HasMealAfternoon,
                             @Remark = formData.Remark,
@@ -177,7 +178,7 @@ namespace BudgetControl.Controllers
                 //formData.OwnerCostCenter = AuthManager.GetAuthentication().Employee.CostCenterID;
                 int mealCount = (formData.HasMealMorning ? 1 : 0) + (formData.HasMealAfternoon ? 1 : 0);
                 int mealPrice = 35;
-                formData.TotalAmount = formData.ParticipantCount * mealPrice * mealCount;
+                formData.TotalAmount = formData.MealCount * mealPrice;
 
                 formData.SeminarDate = formData.InputSeminarDate.ToDate();
 
@@ -197,6 +198,7 @@ namespace BudgetControl.Controllers
                             @SeminarDate = formData.SeminarDate,
                             @Location = formData.Location,
                             @ParticipantCount = formData.ParticipantCount,
+                            @MealCount = formData.MealCount,
                             @HasMealMorning = formData.HasMealMorning,
                             @HasMealAfternoon = formData.HasMealAfternoon,
                             @Remark = formData.Remark,

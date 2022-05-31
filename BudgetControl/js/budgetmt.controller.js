@@ -53,8 +53,8 @@
         }
 
         function calculateTotalAmount() {
-            let mealCount = (vm.formRequest.HasMealMorning ? 1 : 0) + (vm.formRequest.HasMealAfternoon ? 1 : 0);
-            vm.formRequest.TotalAmount = parseInt(vm.formRequest.ParticipantCount) * (35 * mealCount);
+            //let mealCount = (vm.formRequest.HasMealMorning ? 1 : 0) + (vm.formRequest.HasMealAfternoon ? 1 : 0);
+            vm.formRequest.TotalAmount = parseInt(vm.formRequest.MealCount) * 35;
 
         }
 
@@ -292,8 +292,8 @@
         }
 
         function calculateTotalAmount() {
-            let mealCount = (vm.formRequest.HasMealMorning ? 1 : 0) + (vm.formRequest.HasMealAfternoon ? 1 : 0);
-            vm.formRequest.TotalAmount = parseInt(vm.formRequest.ParticipantCount) * (35 * mealCount);
+            //let mealCount = (vm.formRequest.HasMealMorning ? 1 : 0) + (vm.formRequest.HasMealAfternoon ? 1 : 0);
+            vm.formRequest.TotalAmount = parseInt(vm.formRequest.MealCount) * 35;
         }
 
         
