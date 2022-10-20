@@ -1,4 +1,7 @@
-﻿<div>
+﻿@{
+    Layout = null;
+}
+<div>
     <h2 class="text-center">ตารางสรุปการเบิกจ่ายเปรียบเทียบกับงบประมาณ</h2>
     <div class="form-inline">
         <h3 class="text-center">
@@ -7,12 +10,11 @@
                     ng-model="vm.year"
                     ng-options="y as y for y in vm.years"
                     ng-change="vm.getReportData()">
-
             </select>
         </h3>
     </div>
     <h4 class="text-center">{{ vm.working.CostCenterName }}</h4>
-    <br/>
+    <br />
     <table class="table table-bordered table-hover table-striped">
         <thead>
             <tr>
