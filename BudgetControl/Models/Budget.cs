@@ -118,7 +118,7 @@ namespace BudgetControl.Models
                 try
                 {
 
-                    return AuthManager.GetCurrentUser().UserName.Trim() == this.CreatedBy.Trim() ? true : false;
+                    return AuthManager.GetCurrentUser().UserName?.Trim() == this.CreatedBy?.Trim() ? true : false;
                 }
                 catch(Exception ex)
                 {
