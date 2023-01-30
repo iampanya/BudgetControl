@@ -139,6 +139,7 @@
         vm.transactions = [];
         vm.years = [];
         vm.formRequest = {};
+        vm.getTransactionList = getTransactionList;
         var table;
 
         //methods
@@ -152,6 +153,7 @@
         }
 
         function getTransactionList() {
+            console.log('get transaction list');
             vm.transactions = [];
             apiService.budgetmt().get({ year: vm.formRequest.Year }).$promise.then(callApiSuccess, callApiError)
 
