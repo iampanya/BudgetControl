@@ -61,7 +61,7 @@ namespace BudgetControl.Controllers
             return Content(returnobj.ToJson(), "application/json");
         }
 
-        public ActionResult Request(string year)
+        public ActionResult Request(string year, string costcenter)
         {
             try
             {
@@ -74,7 +74,8 @@ namespace BudgetControl.Controllers
                         , new
                         {
                             @Year = year,
-                            @CostCenter = ownerCostcenter
+                            @CostCenter = costcenter,
+                            @OwnerCostCenter = ownerCostcenter
                         }
                         , commandType: System.Data.CommandType.StoredProcedure
                     );

@@ -32,6 +32,9 @@ namespace BudgetControl.Models.BudgetMT
         public string DeletedBy { get; set; }
         public DateTime? DeletedDate { get; set; }
 
+        public string BudgetCostCenter { get; set; }
+        public string AccountID { get; set; }
+
         #region Additional field
 
         public string SeminarDateText

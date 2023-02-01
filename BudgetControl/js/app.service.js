@@ -83,7 +83,7 @@ budgetApp.factory('apiService', ['$resource', function ($resource) {
     // budget mt
     api.budgetmt = function () {
         return $resource(
-            'budgetmt/request?year=:year',
+            'budgetmt/request?year=:year&costcenter=:costcenter',
             null,
             {
                 'save': { method: 'POST' },

@@ -27,8 +27,22 @@
             </h3>
         </div>
     </div>
-    <div class="col-md-4" style="padding-top: 1em;">
-        <h4>ศูนย์ต้นทุน <span class="text-primary">H301000040</span></h4>
+    <div class="col-md-4" >
+        <div class="form-group">
+            <h3>
+                <span class="pull-left">
+                    ศูนย์ต้นทุน:
+                </span>
+                <span class="col-md-6">
+                    <select class="form-control input-sm"
+                            ng-model="vm.formRequest.CostCenter"
+                            ng-options="c.id as c.name for c in vm.costcenters"
+                            ng-change="vm.getTransactionList();">
+                    </select>
+                </span>
+            </h3>
+        </div>
+        @*<h4>ศูนย์ต้นทุน <span class="text-primary">H301000040</span></h4>*@
     </div>
     <div class="col-md-4" style="padding-top: 1em;">
         <h4>รหัสบัญชี <span class="text-primary">52030030</span></h4>
@@ -40,6 +54,7 @@
     <thead>
         <tr class="bg-primary">
             <th class="text-center">รหัส MT</th>
+            <th class="text-center">ศูนย์ต้นทุน</th>
             <th class="text-center">หัวข้อการประชุม</th>
             <th class="text-center">หน่วยงานรับผิดชอบ</th>
             <th class="text-center">กลุ่มผู้เข้าร่วมประชุม</th>
@@ -47,7 +62,7 @@
             <th class="text-center">สถานที่</th>
             <th class="text-center">จำนวนอาหารว่าง (ชุด)</th>
             @*<th class="text-center">มื้อเช้า</th>
-            <th class="text-center">มื้อบ่าย</th>*@
+        <th class="text-center">มื้อบ่าย</th>*@
             <th class="text-center">ค่าใช้จ่าย</th>
             <th class="text-center">ยอดคงเหลือ</th>
             <th class="col-md-1 text-center"></th>
@@ -56,6 +71,7 @@
     <tbody>
         <tr ng-repeat="transaction in vm.transactions ">
             <td class="text-center" style="white-space:nowrap;"> {{ transaction.MTNo }}</td>
+            <td> {{ transaction.BudgetCostCenter }} </td>
             <td> {{ transaction.Title }} </td>
             <td class="text-center"> {{ transaction.OwnerDepartment }} </td>
             <td class="text-center"> {{ transaction.Participant }} </td>
@@ -63,15 +79,15 @@
             <td class="text-center"> {{ transaction.Location }} </td>
             <td class="text-center"> {{ transaction.MealCount }} </td>
             @*<td class="text-center">
-                <i class="fa fa-check" aria-hidden="true" ng-if="transaction.HasMealMorning"></i>
-                <i class="fa fa-times" aria-hidden="true" ng-if="!transaction.HasMealMorning"></i>
-                <span style="display:none" ng-if="transaction.HasMealMorning">Yes</span>
-            </td>
-            <td class="text-center">
-                <i class="fa fa-check" aria-hidden="true" ng-if="transaction.HasMealAfternoon"></i>
-                <i class="fa fa-times" aria-hidden="true" ng-if="!transaction.HasMealAfternoon"></i>
-                <span style="display: none" ng-if="transaction.HasMealAfternoon">Yes</span>
-            </td>*@
+            <i class="fa fa-check" aria-hidden="true" ng-if="transaction.HasMealMorning"></i>
+            <i class="fa fa-times" aria-hidden="true" ng-if="!transaction.HasMealMorning"></i>
+            <span style="display:none" ng-if="transaction.HasMealMorning">Yes</span>
+        </td>
+        <td class="text-center">
+            <i class="fa fa-check" aria-hidden="true" ng-if="transaction.HasMealAfternoon"></i>
+            <i class="fa fa-times" aria-hidden="true" ng-if="!transaction.HasMealAfternoon"></i>
+            <span style="display: none" ng-if="transaction.HasMealAfternoon">Yes</span>
+        </td>*@
             <td class="text-right"> {{ transaction.TotalAmountText }} </td>
             <td class="text-right"> {{ transaction.RemainAmountText }} </td>
             <td class="text-center">

@@ -67,7 +67,7 @@
                 console.log(response);
 
                 if (response.isSuccess) {
-                    let message = `ศูนย์ต้นทุน H301000040 <br/> รหัสบัญชี 52030030 <br/> ลำดับการเบิกที่: ${response.Result.MTNo}`;
+                    let message = `ศูนย์ต้นทุน ${response.Result.BudgetCostCenter} <br/> รหัสบัญชี ${response.Result.AccountID} <br/> ลำดับการเบิกที่: ${response.Result.MTNo}`;
                     Swal.fire('บันทึกข้อมูลสำเร็จ', message, 'success').then(gotoIndexPage);
                 }
                 else {
@@ -138,6 +138,7 @@
         var vm = this;
         vm.transactions = [];
         vm.years = [];
+        vm.costcenters = [{ id: 'H301010000', name: 'กฟก.2 ฝวบ.' }, { id: 'H301020000', name: 'กฟก.2 ฝบพ.' }, { id: 'H301030000', name: 'กฟก.2 ฝปบ.' }, { id: 'H301000040', name: 'กฟก.2 กอก. ผพอ.' }];
         vm.formRequest = {};
         vm.getTransactionList = getTransactionList;
         var table;
@@ -149,13 +150,14 @@
 
         function prepareData() {
             populateYearList();
+            populateCostcenterList();
             getTransactionList();
         }
 
         function getTransactionList() {
             console.log('get transaction list');
             vm.transactions = [];
-            apiService.budgetmt().get({ year: vm.formRequest.Year }).$promise.then(callApiSuccess, callApiError)
+            apiService.budgetmt().get({ year: vm.formRequest.Year, costcenter: vm.formRequest.CostCenter }).$promise.then(callApiSuccess, callApiError)
 
             function callApiSuccess(data) {
                 if (data.isSuccess) {
@@ -167,7 +169,7 @@
                     setTimeout(function () {
                         table = $('#tableList').DataTable({
                             dom: 'lBftp',
-                            buttons: [{ extend: 'excel', className:'btn btn-success', title: 'สรุปการเบิกจ่ายงบฝึกอบรม' }]
+                            buttons: [{ extend: 'excel', className: 'btn btn-success', title: 'สรุปการเบิกจ่ายงบฝึกอบรม' }]
                         });
                     }, 1000);
                 }
@@ -180,6 +182,15 @@
                 hr.repondError(e);
                 vm.isSubmitting = false;
             }
+        }
+
+        function populateCostcenterList() {
+            let workingCostcenter = authInfo.getWorkingCostCenter().CostCenterID;
+            let budgetCostCenter = workingCostcenter.substring(0, 6) + '0000';
+            budgetCostCenter = budgetCostCenter == 'H301000000' ? 'H301000040' : budgetCostCenter;
+            console.log(budgetCostCenter);
+            vm.costcenters = vm.costcenters.filter((x) => x.id == budgetCostCenter || x.id == 'H301000040' || workingCostcenter == 'H301000040');
+            vm.formRequest.CostCenter = budgetCostCenter;
         }
 
         function populateYearList() {
@@ -298,7 +309,7 @@
             vm.formRequest.TotalAmount = parseInt(vm.formRequest.MealCount) * 35;
         }
 
-        
+
 
         function submit() {
             console.log(vm.formRequest);
@@ -334,6 +345,6 @@
             hr.respondError(e);
         }
 
-       
+
     }
 })();
