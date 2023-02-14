@@ -45,7 +45,7 @@
 
             vm.years = [];
             var currentYear = new Date().getFullYear();
-            for (var i = 2022; i <= currentYear; i++) {
+            for (var i = 2023; i <= currentYear; i++) {
                 vm.years.push(i + 543 + '');
             }
 
@@ -138,7 +138,7 @@
         var vm = this;
         vm.transactions = [];
         vm.years = [];
-        vm.costcenters = [{ id: 'H301010000', name: 'กฟก.2 ฝวบ.' }, { id: 'H301020000', name: 'กฟก.2 ฝบพ.' }, { id: 'H301030000', name: 'กฟก.2 ฝปบ.' }, { id: 'H301000040', name: 'กฟก.2 กอก. ผพอ.' }];
+        vm.costcenters = [ { id: 'H301000040', name: 'กฟก.2 กอก. ผพอ.' }, { id: 'H301010000', name: 'กฟก.2 ฝวบ.' }, { id: 'H301020000', name: 'กฟก.2 ฝบพ.' }, { id: 'H301030000', name: 'กฟก.2 ฝปบ.' }];
         vm.formRequest = {};
         vm.getTransactionList = getTransactionList;
         var table;
@@ -186,11 +186,12 @@
 
         function populateCostcenterList() {
             let workingCostcenter = authInfo.getWorkingCostCenter().CostCenterID;
-            let budgetCostCenter = workingCostcenter.substring(0, 6) + '0000';
-            budgetCostCenter = budgetCostCenter == 'H301000000' ? 'H301000040' : budgetCostCenter;
-            console.log(budgetCostCenter);
-            vm.costcenters = vm.costcenters.filter((x) => x.id == budgetCostCenter || x.id == 'H301000040' || workingCostcenter == 'H301000040');
-            vm.formRequest.CostCenter = budgetCostCenter;
+            //let budgetCostCenter = workingCostcenter.substring(0, 6) + '0000';
+            //budgetCostCenter = budgetCostCenter == 'H301000000' ? 'H301000040' : budgetCostCenter;
+            //console.log(budgetCostCenter);
+            vm.costcenters = vm.costcenters.filter((x) => x.id == workingCostcenter || x.id == 'H301000040' || workingCostcenter == 'H301000040');
+            //vm.costcenters = vm.costcenters.filter((x) => x.id == workingCostcenter || workingCostcenter == 'H301000040');
+            vm.formRequest.CostCenter = workingCostcenter;
         }
 
         function populateYearList() {

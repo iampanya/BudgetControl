@@ -66,6 +66,7 @@ namespace BudgetControl.Controllers
             try
             {
                 string ownerCostcenter = AuthManager.GetAuthentication().Employee.CostCenterID;
+                string workingCostCenter = AuthManager.GetAuthentication().WorkingCostCenter.CostCenterID;
                 using (var conn = new SqlConnection(conn_string))
                 {
                     conn.Open();
@@ -75,7 +76,7 @@ namespace BudgetControl.Controllers
                         {
                             @Year = year,
                             @CostCenter = costcenter,
-                            @OwnerCostCenter = ownerCostcenter
+                            @OwnerCostCenter = workingCostCenter
                         }
                         , commandType: System.Data.CommandType.StoredProcedure
                     );
