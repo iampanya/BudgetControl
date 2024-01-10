@@ -9,6 +9,7 @@ body {
     font-family: 'Kanit', san-serif;
     font-weight: 300;
     /*background-color: #eee;*/
+    font-size: 14px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -123,6 +124,9 @@ label {
 
 .sortorder.reverse:after {
     content: '\25bc';
+}
+select {
+    font-size: 1.2em;
 }
 
 .select-center{

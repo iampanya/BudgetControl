@@ -545,9 +545,16 @@ namespace BudgetControl.Manager
                     if (pcounter == null)
                     {
                         //if not exist, then add new one.
-                        var shortName = _db.CostCenters.Where(c => c.CostCenterID == payment.CostCenterID).Select(s => s.ShortName).FirstOrDefault();
-                        var split = shortName.Split(new char[] { ' ' });
-                        var shortCode = split[split.Length - 1].Trim(new char[] { ' ', '.' });
+                        var shortName = _db.CostCenters.Where(c => c.CostCenterID == payment.CostCenterID).Select(s => s.LongName).FirstOrDefault();
+
+                        //var split = shortName.Split(new char[] { ' ' });
+                        //var shortCode = split[split.Length - 1].Trim(new char[] { ' ', '.' });
+                        var shortCode = shortName.Replace("กบห.", "")
+                            .Replace("-บห.", "")
+                            .Replace("-บห", "")
+                            .Replace("(ก2)", "")
+                            .Split('/')
+                            .FirstOrDefault();
 
                         pcounter = new PaymentCounter()
                         {

@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    Layout = null;
+}
 <style>
     p.content {
         text-indent: 50px;
@@ -6,6 +8,7 @@
         line-height: 35px;
         color: #311b92;
     }
+
     p.sorry {
         text-align: center;
         font-size: 1.2em;
@@ -33,32 +36,32 @@
                     <p class="content">
                         เพิ่มเมนูสำหรับเบิกจ่ายงบประชุมชี้แจง ภายใน กฟก.2
                     </p>
-                    
+
                     <br />
                 </div>
             </div>
         </div>
         @*<div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="heading2">
-                <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="true" aria-controls="collapseOne">
-                        ประกาศผลกระทบจากไวรัส Maze Ransomeware
-                    </a>
-                </h4>
-            </div>
-            <div id="#collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
-                <div class="panel-body">
-                    <p class="content">
-                        เนื่องจากการไฟฟ้าส่วนภูมิภาคได้ถูกโจมตีด้วยไวรัส Maze Ransomeware ทำให้ฐานข้อมูลของระบบตัดงบประมาณประจำปี 2563 ความเสียหายทั้งหมด
-                    </p>
-                    <p class="content">
-                        ปัจจุบัน กรท.(ก2) ได้ดำเนินการกู้คืนระบบ และเพิ่มยอดงบประมาณ และยอดรวมการเบิกจ่ายจากระบบ SAP ของปี 2563 ให้เรียบร้อยแล้ว (ข้อมูลจาก SAP วันที่ 23 มิ.ย.63)
-                        <mark><u>หากพบปัญหาในการใช้งาน หรือข้อมูลงบประมาณไม่ถูกต้องกรุณาติดต่อกรท. เบอร์โทร 10361 - 10362</u></mark>
-                    </p>
-                    <br />
+                <div class="panel-heading" role="tab" id="heading2">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="true" aria-controls="collapseOne">
+                            ประกาศผลกระทบจากไวรัส Maze Ransomeware
+                        </a>
+                    </h4>
                 </div>
-            </div>
-        </div>*@
+                <div id="#collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
+                    <div class="panel-body">
+                        <p class="content">
+                            เนื่องจากการไฟฟ้าส่วนภูมิภาคได้ถูกโจมตีด้วยไวรัส Maze Ransomeware ทำให้ฐานข้อมูลของระบบตัดงบประมาณประจำปี 2563 ความเสียหายทั้งหมด
+                        </p>
+                        <p class="content">
+                            ปัจจุบัน กรท.(ก2) ได้ดำเนินการกู้คืนระบบ และเพิ่มยอดงบประมาณ และยอดรวมการเบิกจ่ายจากระบบ SAP ของปี 2563 ให้เรียบร้อยแล้ว (ข้อมูลจาก SAP วันที่ 23 มิ.ย.63)
+                            <mark><u>หากพบปัญหาในการใช้งาน หรือข้อมูลงบประมาณไม่ถูกต้องกรุณาติดต่อกรท. เบอร์โทร 10361 - 10362</u></mark>
+                        </p>
+                        <br />
+                    </div>
+                </div>
+            </div>*@
 
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingTwo">
@@ -88,17 +91,17 @@
     </div>
 
     @*<h3>อัพเดทการปรับปรุงโปรแกรม วันที่ 29 ธันวาคม 2560</h3>
-    <dl class="dl-horizontal dl-notice">
-        <dt>การเข้าสู่ระบบ</dt>
-        <dd>ท่านสามารถใช้ <mark>รหัสประจำตัวพนักงาน</mark> และ <mark>รหัสผ่าน</mark> ชุดเดียวกับที่ใช้ตอนเปิดเครื่อง (เข้า Windows) </dd>
+        <dl class="dl-horizontal dl-notice">
+            <dt>การเข้าสู่ระบบ</dt>
+            <dd>ท่านสามารถใช้ <mark>รหัสประจำตัวพนักงาน</mark> และ <mark>รหัสผ่าน</mark> ชุดเดียวกับที่ใช้ตอนเปิดเครื่อง (เข้า Windows) </dd>
 
-        <dt>ข้อมูลงบประมาณ</dt>
-        <dd>1. ปิดการแก้ไขจำนวนเงินงบประมาณ ที่นำเข้ามาจากระบบ SAP โดย กรท. จะเป็นผู้อัพเดทวงเงินที่ได้รับให้ ทุกๆ 3 เดือน </dd>
-        <dd>2. สามารถเพิ่มบัญชีงบประมาณ ที่ไม่มีใน SAP ได้ แต่วงเงินที่ได้รับจะเป็น 0 บาทเท่านั้น</dd>
+            <dt>ข้อมูลงบประมาณ</dt>
+            <dd>1. ปิดการแก้ไขจำนวนเงินงบประมาณ ที่นำเข้ามาจากระบบ SAP โดย กรท. จะเป็นผู้อัพเดทวงเงินที่ได้รับให้ ทุกๆ 3 เดือน </dd>
+            <dd>2. สามารถเพิ่มบัญชีงบประมาณ ที่ไม่มีใน SAP ได้ แต่วงเงินที่ได้รับจะเป็น 0 บาทเท่านั้น</dd>
 
-        <dt>การเบิกจ่าย</dt>
-        <dd>สามารถเบิกจ่ายให้กับ <mark>พนักงานนอกศูนย์ต้นทุน</mark> และ <mark>บุคคลภายนอก</mark> ได้</dd>
-    </dl>*@
+            <dt>การเบิกจ่าย</dt>
+            <dd>สามารถเบิกจ่ายให้กับ <mark>พนักงานนอกศูนย์ต้นทุน</mark> และ <mark>บุคคลภายนอก</mark> ได้</dd>
+        </dl>*@
 </div>
 
 <div class="modal-footer">

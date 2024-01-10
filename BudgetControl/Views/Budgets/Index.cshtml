@@ -22,7 +22,7 @@
                         ปีงบประมาณ:
                     </span>
                     <span class="col-md-6">
-                        <select class="form-control input-sm" 
+                        <select class="form-control" 
                                 ng-model="vm.year" 
                                 ng-options="y as y for y in vm.years"
                                 ng-change="vm.getBudgetData();">
@@ -37,7 +37,7 @@
                     ศูนย์ต้นทุน:
                 </span>
                 <span class="col-md-8">
-                    <select class="form-control input-sm" 
+                    <select class="form-control" 
                             ng-model="vm.costcenter" 
                             ng-options="c.CostCenterID as c.CostCenterName for c in vm.costcenters"
                             ng-change="vm.getBudgetData();">

@@ -11,7 +11,7 @@
             <fieldset>
                 <legend>
                     เบิกจ่ายงบประมาณ ศูนย์ต้นทุน:
-                    <span class="text-primary"> {{ vm.payment.CostCenterID }} </span>
+                    <span class="text-primary"> {{ vm.payment.CostCenterID }} - {{vm.CostCenter.CostCenterName}} </span>
                 </legend>
 
                 <div class="row">
@@ -72,8 +72,7 @@
                                                ng-model="vm.requestbypea.employeecode"
                                                ng-keypress="$event.keyCode === 13 && vm.getEmployeeProfile()"
                                                ng-blur="vm.getEmployeeProfile()"
-                                               ng-required="true"
-                                               >
+                                               ng-required="true">
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" type="button" ng-click="vm.getEmployeeProfile();">
                                                 <i class="fa fa-search" aria-hidden="true"></i>
@@ -92,11 +91,12 @@
                                            ng-model="vm.requestbypea.position"
                                            ng-disabled="true" />
                                 </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control text-center" placeholder="รหัสศูนย์ต้นทุน"
-                                           ng-model="vm.requestbypea.costcenterid"
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control text-center" placeholder="ศูนย์ต้นทุน"
+                                           ng-model="vm.requestbypea.costcenter"
                                            ng-disabled="true" />
                                 </div>
+                               
                             </div>
 
                             <div ng-if="vm.payment.Type == vm.paymentType.contractor">
@@ -209,7 +209,7 @@
                             </span>
                         </td>
                         <td class="text-center">
-                            <a ng-click="vm.removeTransaction( transaction.Budget.BudgetID )">
+                            <a ng-click="vm.removeTransaction( transaction.BudgetID )">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             </a>
                         </td>

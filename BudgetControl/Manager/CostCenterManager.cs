@@ -92,23 +92,22 @@ namespace BudgetControl.Manager
                     --SET @DeptSap = 3108, 3180, 2946 
 
                     ;WITH DeptTree as(
-                        SELECT * FROM DepartmentInfo
-                        WHERE DeptSap = @DeptSap
+                        SELECT * FROM V_department
+                        WHERE dept_sap = @DeptSap
 
                         UNION ALL
 
-                        SELECT d.* FROM DepartmentInfo d
-                        INNER JOIN DeptTree x ON d.DeptUpper= x.DeptSap
+                        SELECT d.* FROM V_department d
+                        INNER JOIN DeptTree x ON d.dept_upper= x.dept_sap
                     )
                     SELECT * 
                     FROM CostCenter 
                     WHERE CostCenterID IN 
 	                    (
-		                    SELECT CostCenterCode FROM DeptTree 
+		                    SELECT cost_center_code FROM DeptTree 
 	                    )
-	                AND [Status] = 1
+                    AND [Status] = 1
                     ORDER BY CostCenterID
-
                 ";
 
                 using (SqlCommand cmd = new SqlCommand(cmd_get_with_children, conn))

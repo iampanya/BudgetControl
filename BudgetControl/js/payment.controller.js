@@ -189,6 +189,7 @@
         vm.transactions = [];       // transaction inside payment
         vm.contractors = [];        // Contractor List
         vm.isSubmitting = false;
+        vm.CostCenter = {};
 
         // Payment Type
         vm.paymentType = {
@@ -387,6 +388,8 @@
                 vm.requestbypea.name = empProfile.Description;
                 vm.requestbypea.position = empProfile.JobTitle;
                 vm.requestbypea.costcenterid = empProfile.CostCenterID;
+                vm.requestbypea.costcentername = empProfile.CostCenterName;
+                vm.requestbypea.costcenter = empProfile.CostCenterID + ' - ' + empProfile.CostCenterName;
             }
         }
 
@@ -397,6 +400,7 @@
 
             // 1. Get working costcenter id
             vm.payment.CostCenterID = authInfo.getWorkingCostCenter().CostCenterID;
+            vm.CostCenter = authInfo.getWorkingCostCenter();
             
             // 2. Get list of employees
             apiService.employee().get().$promise.then(callEmpSuccess, callError);
@@ -573,6 +577,7 @@
         vm.payment = {};            // payment form data 
         vm.transactions = [];       // transaction inside payment
         vm.contractors = [];        // Contractor List
+        vm.CostCenter = {};
 
         vm.isSubmitting = false;
 
@@ -664,6 +669,8 @@
 
         function removeTransaction(budgetid) {
             // 1. Find index of budgetid in transactions
+            console.log(budgetid);
+            console.log(vm.transactions);
             var index = vm.transactions.findIndex(function (obj) {
                 return obj.BudgetID == budgetid;
             });
@@ -766,6 +773,8 @@
                 vm.requestbypea.name = empProfile.Description;
                 vm.requestbypea.position = empProfile.JobTitle;
                 vm.requestbypea.costcenterid = empProfile.CostCenterID;
+                vm.requestbypea.costcentername = empProfile.CostCenterName;
+                vm.requestbypea.costcenter = empProfile.CostCenterID + ' - ' + empProfile.CostCenterName;
             }
         }
 
@@ -773,6 +782,7 @@
         function prepareData() {
 
             var costcenterid = authInfo.getWorkingCostCenter().CostCenterID;
+            vm.CostCenter = authInfo.getWorkingCostCenter();
 
             // 1. Get list of employees
             apiService.employee().get().$promise.then(callEmpSuccess, callError);
