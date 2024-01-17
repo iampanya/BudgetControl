@@ -47,18 +47,27 @@ namespace BudgetControl.Manager
             {
                 conn.Open();
                 string cmd_get_with_children = @"
-                    DECLARE @DeptCode varchar(15)
-                    SELECT TOP(1) @DeptCode = DeptChangeCode
-                    FROM DepartmentInfo 
-                    WHERE CostCenterCode = @CostCenterCode
+                    DECLARE @CostCenterId varchar(12) = 'H305101020'
+                    DECLARE @DeptSap int
+                    SELECT @DeptSap = dept_sap FROM  V_department where cost_center_code = @CostCenterCode
 
+                    ;WITH DeptTree as(
+                        SELECT * FROM V_department
+                        WHERE dept_sap = @DeptSap
+
+                        UNION ALL
+
+                        SELECT d.* FROM V_department d
+                        INNER JOIN DeptTree x ON d.dept_upper= x.dept_sap
+                    )
                     SELECT * 
-                    FROM CostCenter
-                    WHERE CostCenterID IN ( 
-	                    SELECT CostCenterCode
-	                    FROM DepartmentInfo 
-	                    WHERE DeptChangeCode LIKE REPLACE(RTRIM(REPLACE(@DeptCode,'0',' ')),' ','0') + '%'
-                    ) AND Status = 1
+                    FROM CostCenter 
+                    WHERE CostCenterID IN 
+	                    (
+		                    SELECT cost_center_code FROM DeptTree 
+	                    )
+                    AND [Status] = 1
+                    ORDER BY CostCenterID
                 ";
 
                 using (SqlCommand cmd = new SqlCommand(cmd_get_with_children, conn))

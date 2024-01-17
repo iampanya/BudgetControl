@@ -932,30 +932,32 @@ namespace BudgetControl.Controllers
                 Employee employee = AuthManager.GetEmployeeInfo();
                 CostCenterManager ccaManager = new CostCenterManager();
 
-                int deptsap;
-                DepartmentInfo deptInfo;
-                using (var db = new BudgetContext())
-                {
-                    deptInfo = db.DepartmentInfos.FirstOrDefault(d => d.CostCenterCode == working.CostCenterID);
-                }
-                
-                if(deptInfo == null)
-                {
-                    using (var ccRepo = new CostCenterRepository())
-                    {
-                        costcenters = ccRepo.Get()
-                            .Where(c =>
-                                c.CostCenterID.StartsWith(working.CostCenterTrim) &&
-                                c.Status == RecordStatus.Active
-                            ).OrderBy(c => c.CostCenterID).ToList();
-                    }
+                costcenters = ccaManager.GetWithChildren(working.CostCenterID);
 
-                }
-                else
-                {
-                    deptsap = deptInfo.DeptSap;
-                    costcenters = ccaManager.GetWithChildren(deptsap);
-                }
+                //int deptsap;
+                //DepartmentInfo deptInfo;
+                //using (var db = new BudgetContext())
+                //{
+                //    deptInfo = db.DepartmentInfos.FirstOrDefault(d => d.CostCenterCode == working.CostCenterID);
+                //}
+                
+                //if(deptInfo == null)
+                //{
+                //    using (var ccRepo = new CostCenterRepository())
+                //    {
+                //        costcenters = ccRepo.Get()
+                //            .Where(c =>
+                //                c.CostCenterID.StartsWith(working.CostCenterTrim) &&
+                //                c.Status == RecordStatus.Active
+                //            ).OrderBy(c => c.CostCenterID).ToList();
+                //    }
+
+                //}
+                //else
+                //{
+                //    deptsap = deptInfo.DeptSap;
+                //    costcenters = ccaManager.GetWithChildren(working.CostCenterID);
+                //}
 
                 returnobj.SetSuccess(costcenters);
 
